@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-01T23:12:51+00:00</updated>
+  <updated>2015-01-01T23:17:40+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[recrudesce]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
