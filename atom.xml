@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T20:19:32+00:00</updated>
+  <updated>2015-01-02T20:20:44+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -2873,8 +2873,9 @@ NB: in the test version, these 3 ports were in order, in the release version the
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Visiting these URL&rsquo;s provide the following page
-<a href="http://recrudesce.github.io/images/tr0ll2_002.png"><img src="http://recrudesce.github.io/images/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
+<p>Visiting these URL&rsquo;s provide the following page</p>
+
+<p><a href="http://recrudesce.github.io/images/tr0ll2_002.png"><img src="http://recrudesce.github.io/images/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
 
 <p>While it looks like the page is identical for each of the 4 directories, on closer inspection, one of the images shown is slightly larger than the rest - this was determined by downloading each image.</p>
 

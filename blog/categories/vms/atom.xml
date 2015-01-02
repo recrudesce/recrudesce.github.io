@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T20:19:32+00:00</updated>
+  <updated>2015-01-02T20:20:44+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -1604,8 +1604,9 @@ DOWNLOADED: 105 - FOUND: 0
 root@pwk:~/troll#
 </code></pre>
 
-<p>Visiting these URL&rsquo;s provide the following page
-<a href="/images/tr0ll2_002.png"><img src="/images/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
+<p>Visiting these URL&rsquo;s provide the following page</p>
+
+<p><a href="/images/tr0ll2_002.png"><img src="/images/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
 
 <p>While it looks like the page is identical for each of the 4 directories, on closer inspection, one of the images shown is slightly larger than the rest - this was determined by downloading each image.</p>
 
