@@ -9,7 +9,7 @@
   <meta name="author" content="recrudesce">
 
   
-  <meta name="description" content="Tweet Owl Up in My Grill Oct 26th, 2014 5:16 pm vm's So, while we were all sitting in #vulnhub (on Freenode) waiting forsuperkojiman to release &hellip;">
+  <meta name="description" content="So, while we were all sitting in #vulnhub (on Freenode) waiting forsuperkojiman to release Persistence, Swappage released OwlNest. I thought, what &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,92 +27,32 @@
   <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
 
   
 
 </head>
 
-<body >
-  <header role="banner" id="sidebar">
-    <!-- Logo -->
-<aside id="logo" class="clearfix">
-  <div class="clearfix">
-    <a href="/">FourFourFourFour</a>
-  </div>
-</aside>
+<body   >
+  <header role="banner"><hgroup>
+  <img src="/images/ah_frame_transparent.svg" />
+  <h1><a href="/">FourFourFourFour</a></h1>
+</hgroup>
 
-<ul id="menu">
-
-  <li class="title">
-    <h1 id="title"><a href="/">FourFourFourFour</a></h1>
-  </li>
-
-
-  <li class="subtitle">
-    <h2 id="subtitle">A Feeble Attempt At A Blog.</h2>
-  </li>
-
-  <li class="link">
-    <a href="/about/">about</a>
-  </li>
-
-  <li class="link">
-    <a href="http://twitter.com/recrudesce/">twitter</a>
-  </li>
-
-
-  <li class="link rss">
-    <a href="/atom.xml">rss feed</a>
-  </li>
-</ul>
-
-
-<form action="https://www.google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:recrudesce.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-
-
-<!-- Octopress Love -->
-<aside id="octopress_linkback">
-  <a href="http://octopress.org/">
-    <span class="unicode_square">
-      <span class="unicode_circle">
-        &nbsp;
-      </span>
-    </span>
-    <span class="octopress">Powered by Octopress</span>
-  </a>
-</aside>
-
-  </header>
-  <section id="main">
-    <article class="post">
-  <div class="sharing-box">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/10/26/owl-up-in-my-grill/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/10/26/owl-up-in-my-grill/" data-size="large">Tweet</a>
-  
-  
-  
-</div>
-
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
   
   <header>
     
-      <h2 class="entry-title">Owl Up in My Grill</h2>
+      <h1 class="entry-title">Owl Up in My Grill</h1>
     
-    
-      <p class="meta">
-        
+  </header>
 
 
 
-
-<time class='entry-date' datetime='2014-10-26T17:16:50+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:16 pm</span></time>
-		
 
 <span class="categories">
   
@@ -121,13 +61,7 @@
 </span>
 
 
-        
-      </p>
-    
-  </header>
-
-
-<p>So, while we were all sitting in #vulnhub (on Freenode) waiting for<a href="https://twitter.com/superkojiman">superkojiman</a> to release Persistence, <a href="https://twitter.com/swappage">Swappage</a> released <a href="vulnhub.com/entry/owlnest-102,102/">OwlNest</a>. I thought, what the hell, might as well use it to pass the time, right ? I was, however, not expecting it to take me 4 days&hellip;</p>
+<div class="entry-content"><p>So, while we were all sitting in #vulnhub (on Freenode) waiting for<a href="https://twitter.com/superkojiman">superkojiman</a> to release Persistence, <a href="https://twitter.com/swappage">Swappage</a> released <a href="vulnhub.com/entry/owlnest-102,102/">OwlNest</a>. I thought, what the hell, might as well use it to pass the time, right ? I was, however, not expecting it to take me 4 days&hellip;</p>
 
 <!-- more -->
 
@@ -262,7 +196,7 @@ login        login to shell with specified username and password</p>
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#109;&#101;&#x40;&#x6d;&#x65;&#46;&#x63;&#111;&#109;">&#109;&#x65;&#x40;&#x6d;&#x65;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo;
+root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#109;&#x65;&#x40;&#109;&#x65;&#x2e;&#x63;&#111;&#x6d;">&#x6d;&#x65;&#x40;&#x6d;&#101;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;
 root@pwk:~# ./owlbin
 Content-type: text/plain</p>
 
@@ -311,7 +245,7 @@ uid=1000(rmp) gid=1000(rmp) groups=1000(rmp),24(cdrom),25(floppy),29(audio),30(d
 <p>Once a public key is added to authorized_hosts, we can SSH in and obtain a full TTY shell.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-$ ssh <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#114;&#x6d;&#x70;&#64;&#49;&#55;&#50;&#46;&#x31;&#x36;&#x2e;&#x35;&#x36;&#x2e;&#x31;&#x33;&#x31;">&#x72;&#109;&#112;&#64;&#49;&#x37;&#x32;&#46;&#x31;&#54;&#46;&#53;&#x36;&#x2e;&#49;&#51;&#49;</a>
+$ ssh <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#114;&#x6d;&#112;&#x40;&#49;&#x37;&#x32;&#x2e;&#49;&#x36;&#x2e;&#x35;&#54;&#x2e;&#x31;&#x33;&#49;">&#114;&#109;&#112;&#x40;&#49;&#55;&#50;&#x2e;&#49;&#x36;&#x2e;&#53;&#54;&#46;&#49;&#x33;&#x31;</a>
 The authenticity of host &lsquo;172.16.56.131 (172.16.56.131)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is c0:f8:4e:c6:f9:28:14:5b:c3:ed:8a:00:51:aa:82:d5.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -534,18 +468,107 @@ True story is that i was looking for some ASCII art to place in the puzzles and 
 [/plain]</p>
 
 <p><img src="http://media.tumblr.com/69d8d838b215ce8aeb5bcee2cac8c67a/tumblr_inline_n6f627Eb3o1rv1fhg.gif" alt="" /></p>
+</div>
 
 
-
-</article>
-
-
-    <nav role="navigation" id="pagination">
-
-</nav>
-  </section>
+  <footer>
+    <p class="meta">
+      
   
 
+<span class="byline author vcard">Posted by <span class="fn">recrudesce</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-26T17:16:50+00:00" pubdate data-updated="true"></time>
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/10/26/owl-up-in-my-grill/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/10/26/owl-up-in-my-grill/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/26/please-do-not-feed-the-trolls/" title="Previous Post: Please do not feed the trolls.">&laquo; Please do not feed the trolls.</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/10/26/knock-knock-whos-there/" title="Next Post: Knock Knock... Who's There ?">Knock Knock&#8230; Who&#8217;s There ? &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <form action="https://www.google.com/search" method="get">
+      <fieldset role="search">
+        <input type="hidden" name="q" value="site:recrudesce.github.io" />
+        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      </fieldset>
+    </form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/">Because she was a princess she had a Pegasus.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/26/knock-knock-whos-there/">Knock Knock&#8230; Who&#8217;s There ?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/26/owl-up-in-my-grill/">Owl Up In My Grill</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/26/please-do-not-feed-the-trolls/">Please do not feed the trolls.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/">How Many Hackers Does It Take To Change A Lightbulb ?</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - recrudesce -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
   
 
 
@@ -566,6 +589,10 @@ True story is that i was looking for some ASCII art to place in the puzzles and 
 
 
 
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/javascripts/aharris.js"></script>
 
 </body>
 </html>
