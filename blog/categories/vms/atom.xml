@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T01:29:49+00:00</updated>
+  <updated>2015-01-02T01:36:12+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -1976,8 +1976,7 @@ a70354f0258dcc00292c72aab3c8b1e4
     <id>http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb</id>
     <content type="html"><![CDATA[<p>Whilst in the middle of cracking <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2</a>, <a href="https://twitter.com/leonjza">leonjza</a> decided to release <a href="http://vulnhub.com/entry/flick-1,99/">Flick</a> - a CTF that is sure to tax minds.  Naturally I decided to make myself feel like an unskilled loser, and downloaded it. Here&rsquo;s the story of how I rooted Flick first.</p>
 
-<p>{ % tweet <a href="https://twitter.com/recrudesce/statuses/499168321150124033">https://twitter.com/recrudesce/statuses/499168321150124033</a> align=&lsquo;left&rsquo; % }
-<blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! <a href="https://twitter.com/leonjza">@leonjza</a> <a href="https://twitter.com/VulnHub">@VulnHub</a> <a href="https://twitter.com/hashtag/flick?src=hash">#flick</a> <a href="https://twitter.com/hashtag/boot2root?src=hash">#boot2root</a> <a href="https://twitter.com/hashtag/vulnhub?src=hash">#vulnhub</a></p><footer><strong>Russ Watts (@recrudesce) <a href="https://twitter.com/recrudesce/statuses/499168321150124033">August 12</strong> <cite>2014</a></cite></footer></blockquote></p>
+<p><blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! @leonjza @VulnHub #flick #boot2root #vulnhub</p><footer><strong>Russ Watts (@recrudesce) <a href="https://twitter.com/recrudesce/statuses/499168321150124033">https://twitter.com/recrudesce/statuses/499168321150124033</a></strong></footer></blockquote></p>
 
 <!-- more -->
 
