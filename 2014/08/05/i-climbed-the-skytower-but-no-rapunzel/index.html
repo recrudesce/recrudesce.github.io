@@ -269,14 +269,22 @@
 
 <p>First things first, that SQLi filter - what did it look like in it&rsquo;s entirety ?</p>
 
-<p>[php]$sqlinjection = array(&ldquo;SELECT&rdquo;, &ldquo;TRUE&rdquo;, &ldquo;FALSE&rdquo;, &ldquo;&ndash;&rdquo;,&ldquo;OR&rdquo;, &ldquo;=&rdquo;, &ldquo;,&rdquo;, &ldquo;AND&rdquo;, &ldquo;NOT&rdquo;);
-$email = str_ireplace($sqlinjection, &ldquo;&rdquo;, $<em>POST[&lsquo;email&rsquo;]);
-$password = str_ireplace($sqlinjection, &ldquo;&rdquo;, $</em>POST[&lsquo;password&rsquo;]);[/php]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$sqlinjection</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;SELECT&quot;</span><span class="p">,</span> <span class="s2">&quot;TRUE&quot;</span><span class="p">,</span> <span class="s2">&quot;FALSE&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="s2">&quot;OR&quot;</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;AND&quot;</span><span class="p">,</span> <span class="s2">&quot;NOT&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$email</span> <span class="o">=</span> <span class="nb">str_ireplace</span><span class="p">(</span><span class="nv">$sqlinjection</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]);</span>
+</span><span class='line'><span class="nv">$password</span> <span class="o">=</span> <span class="nb">str_ireplace</span><span class="p">(</span><span class="nv">$sqlinjection</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Quite simple, but annoying none the less. Thankfully it was easily bypassed.
 It&rsquo;s obvious while looking at the /var/www/login.php file that the application uses a MySQL database to handle logins. The MySQL credentials are helpfully in plain text within the file</p>
 
-<p>[php]$db = new mysqli(&lsquo;localhost&rsquo;, &lsquo;root&rsquo;, &lsquo;root&rsquo;, &lsquo;SkyTech&rsquo;);[/php]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$db</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mysqli</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;SkyTech&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Using the mysql client, it is possible to obtain all users passwords, as they are stored unencrypted in the login table within the SkyTech database</p>
 

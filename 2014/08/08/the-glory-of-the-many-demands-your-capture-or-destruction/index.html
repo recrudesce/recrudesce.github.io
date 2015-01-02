@@ -717,7 +717,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>OK, so I can put things into the buffer and find them in the stack. However, there&rsquo;s a gotcha - ASLR is enabled on this box - we need to circumvent that. Could I write an application that has ASLR disabled, and run that, then use the system location from that and call it ? Probably&hellip; what about gdb, I know that <a href="http://www.outflux.net/blog/archives/2010/07/03/gdb-turns-off-aslr/">disables ASLR</a>, but it also disables SUID, so that&rsquo;s out. Google to the rescue ! The <a href="http://security.cs.pub.ro/hexcellents/wiki/kb/exploiting/home">following site</a> helpfully tells me that ulimit -s unlimited disables ASLR on 32bit systems, so that&rsquo;s my golden ticket.</p>
+<p>OK, so I can put things into the buffer and find them in the stack. However, there&rsquo;s a gotcha - ASLR is enabled on this box - we need to circumvent that. Could I write an application that has ASLR disabled, and run that, then use the system location from that and call it ? Probably&hellip; what about gdb, I know that <a href="http://www.outflux.net/blog/archives/2010/07/03/gdb-turns-off-aslr/">disables ASLR</a>, but it also disables SUID, so that&rsquo;s out. Google to the rescue ! The <a href="http://security.cs.pub.ro/hexcellents/wiki/kb/exploiting/home">following site</a> helpfully tells me that <code>ulimit -s unlimited</code> disables ASLR on 32bit systems, so that&rsquo;s my golden ticket.</p>
 
 <p>So, with ASLR temporarily disabled, I can find the location for the printf got pointer using objdump.</p>
 
