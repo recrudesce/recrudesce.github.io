@@ -88,17 +88,26 @@
 
 <p>Catting /etc/passwd gives us a list of users that are potentially useful</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ cat /etc/passwd
-cat /etc/passwd
-root:x:0:0:root:/root:/bin/bash
-george:x:1000:1000:george,,,:/home/george:/bin/bash
-jack:x:1001:1001::/home/jack:/bin/sh
-milk_4_life:x:1002:1002::/home/milk_4_life:/bin/sh
-developers:x:1003:1003::/home/developers:/bin/sh
-bazza:x:1004:1004::/home/bazza:/bin/sh
-oj:x:1005:1005::/home/oj:/bin/sh
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cat /etc/passwd
+</span><span class='line'>cat /etc/passwd
+</span><span class='line'>root:x:0:0:root:/root:/bin/bash
+</span><span class='line'>george:x:1000:1000:george,,,:/home/george:/bin/bash
+</span><span class='line'>jack:x:1001:1001::/home/jack:/bin/sh
+</span><span class='line'>milk_4_life:x:1002:1002::/home/milk_4_life:/bin/sh
+</span><span class='line'>developers:x:1003:1003::/home/developers:/bin/sh
+</span><span class='line'>bazza:x:1004:1004::/home/bazza:/bin/sh
+</span><span class='line'>oj:x:1005:1005::/home/oj:/bin/sh
+</span></code></pre></td></tr></table></div></figure>
+
 
 <hr />
 
@@ -108,24 +117,37 @@ oj:x:1005:1005::/home/oj:/bin/sh
 
 <p>A quick grep on the files in /super_secret_login_path_muhahaha/ for the word &ldquo;password&rdquo; results in the following</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ grep password /var/www/super_secret_login_path_muhahaha/<em>
-index.php:<INPUT name="password" id="password" type="password" value=""/>
-login.php:  $password = mysql_escape_string($_POST[&ldquo;password&rdquo;]);
-login.php:  // mysql_connect(&ldquo;127.0.0.1&rdquo;, &ldquo;Jack&rdquo;, &ldquo;zgcR6mU6pX&rdquo;) or die (&ldquo;Server Error&rdquo;); I&rsquo;ll change this back once development is done. Got sick of typing my password.
-login.php:  $sql = &ldquo;SELECT COUNT(</em>) FROM users WHERE username=&lsquo;$username&rsquo; and password=&lsquo;$password&rsquo;&rdquo;;
-personal.php:<INPUT name="password" id="password" type="password" value=""/>
-[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>grep password /var/www/super_secret_login_path_muhahaha/*
+</span><span class='line'>index.php:&lt;INPUT <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;password&quot;</span> <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;password&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;password&quot;</span> <span class="nv">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span>/&gt;
+</span><span class='line'>login.php:    <span class="nv">$password</span> <span class="o">=</span> mysql_escape_string<span class="o">(</span><span class="nv">$_POST</span><span class="o">[</span><span class="s2">&quot;password&quot;</span><span class="o">])</span><span class="p">;</span>
+</span><span class='line'>login.php:    // mysql_connect<span class="o">(</span><span class="s2">&quot;127.0.0.1&quot;</span>, <span class="s2">&quot;Jack&quot;</span>, <span class="s2">&quot;zgcR6mU6pX&quot;</span><span class="o">)</span> or die <span class="o">(</span><span class="s2">&quot;Server Error&quot;</span><span class="o">)</span><span class="p">;</span> I<span class="s1">&#39;ll change this back once development is done. Got sick of typing my password.</span>
+</span><span class='line'><span class="s1">login.php:   $sql = &quot;SELECT COUNT(*) FROM users WHERE username=&#39;</span><span class="nv">$username</span><span class="s1">&#39; and password=&#39;</span><span class="nv">$password</span><span class="err">&#39;</span><span class="s2">&quot;;</span>
+</span><span class='line'><span class="s2">personal.php:&lt;INPUT name=&quot;</span>password<span class="s2">&quot; id=&quot;</span>password<span class="s2">&quot; type=&quot;</span>password<span class="s2">&quot; value=&quot;</span><span class="err">&quot;</span>/&gt;
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Oooh, what do I spy with my little eye ? Could that be Jack&rsquo;s password commented out in login.php ? Let us try this password&hellip;</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ su jack
-Password: zgcR6mU6pX</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su jack
+</span><span class='line'>Password: zgcR6mU6pX
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>whoami
+</span><span class='line'>jack
+</span><span class='line'><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>$ whoami
-jack
-$[/plain]</p>
 
 <p>Well, that was easy. But then the 2nd hurdle usually is - you kinda get cocky after clearing the first one, that the second one is jumped based on pure thrill. Now we get to trip over on every hurdle between us and the finish line. Get the first aid kit ready, we&rsquo;re going to need it.</p>
 
@@ -163,12 +185,16 @@ V8xJ7ZUxsh67w/5s5s1JgEDQt+f4wckBc8Dx5k9SbS9iRUbZ0oLJ3IM8cUj3CDoo
 svsh0u4ZWj4SrLsEdErcNX6gGihRl/xs3qdVOpXtesSvxEQcWHLqtMY94tb29faD
 +oQPjG3V4cSY5r566esUAlCn7ooYyx6Dug==
 =svWU
-&mdash;&ndash;END PGP MESSAGE&mdash;&ndash;[/plain]</p>
+&mdash;&ndash;END PGP MESSAGE&mdash;&ndash;</p>
 
-<p>As suspected, Jack uses PGP on the local host, therefore his PGP keys are stored in /home/jack/.pgp, complete with a note giving us a password hint.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>As suspected, Jack uses PGP on the <span class="nb">local </span>host, therefore his PGP keys are stored in /home/jack/.pgp, <span class="nb">complete </span>with a note giving us a password hint.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ls -l .pgp
+
+<p> bash</p>
+
+<p>$ ls -l .pgp
 ls -l .pgp
 total 12
 -rwx&mdash;&mdash; 1 jack jack   39 Jun 18 12:35 note
@@ -176,16 +202,19 @@ total 12
 -rwx&mdash;&mdash; 1 jack jack  890 Jun 18 12:24 pgp.pub
 $ cat .pgp/note
 The usual password as with everything.
-$
-[/plain]</p>
+$</p>
 
-<p>We can assume the password is either <strong>g0tmi1k69</strong> or <strong>zgcR6mU6pX</strong>. GPG is installed, so the next logical step is to try and decrypt the email using either of these two passwords and Jack&rsquo;s PGP private key.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>We can assume the password is either **g0tmi1k69** or **zgcR6mU6pX**. GPG is installed, so the next logical step is to try and decrypt the email using either of these two passwords and Jack<span class="err">&#39;</span>s PGP private key.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ gpg &ndash;import .pgp/pgp.priv
+
+<p> bash</p>
+
+<p>$ gpg &ndash;import .pgp/pgp.priv
 gpg: key 3F18AB0A: secret key imported
 gpg: /home/jack/.gnupg/trustdb.gpg: trustdb created
-gpg: key 3F18AB0A: public key &ldquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#106;&#x61;&#99;&#x6b;&#64;&#99;&#x6f;&#x77;&#x6c;&#x6f;&#118;&#101;&#114;&#x73;&#x2e;&#99;&#111;&#x6d;">&#106;&#97;&#x63;&#107;&#x40;&#99;&#x6f;&#119;&#108;&#111;&#x76;&#101;&#x72;&#x73;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo; imported
+gpg: key 3F18AB0A: public key &ldquo;<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x6a;&#97;&#x63;&#107;&#x40;&#x63;&#111;&#x77;&#108;&#x6f;&#118;&#x65;&#114;&#x73;&#46;&#x63;&#111;&#x6d;">&#x6a;&#x61;&#x63;&#x6b;&#64;&#99;&#111;&#119;&#x6c;&#x6f;&#x76;&#101;&#x72;&#x73;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo; imported
 gpg: Total number processed: 1
 gpg:               imported: 1  (RSA: 1)
 gpg:       secret keys read: 1
@@ -193,30 +222,34 @@ gpg:   secret keys imported: 1
 $ gpg -o email.txt /var/mail/jack/received/message.eml</p>
 
 <p>You need a passphrase to unlock the secret key for
-user: &ldquo;<a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#106;&#97;&#99;&#x6b;&#64;&#x63;&#x6f;&#119;&#x6c;&#111;&#x76;&#x65;&#x72;&#115;&#46;&#99;&#x6f;&#109;">&#x6a;&#x61;&#x63;&#107;&#x40;&#99;&#x6f;&#x77;&#x6c;&#111;&#x76;&#101;&#x72;&#115;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;</p>
+user: &ldquo;<a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#106;&#97;&#99;&#x6b;&#64;&#x63;&#111;&#x77;&#108;&#x6f;&#118;&#x65;&#x72;&#115;&#46;&#99;&#111;&#109;">&#106;&#x61;&#x63;&#x6b;&#64;&#99;&#x6f;&#119;&#x6c;&#x6f;&#118;&#101;&#x72;&#115;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;</p>
 
 <p>2048-bit RSA key, ID 3F18AB0A, created 2014-06-18</p>
 
 <p>Enter passphrase: g0tmi1k69
 gpg: WARNING: cipher algorithm CAST5 not found in recipient preferences
 gpg: encrypted with 2048-bit RSA key, ID 3F18AB0A, created 2014-06-18
-      &ldquo;<a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#106;&#x61;&#x63;&#107;&#64;&#x63;&#x6f;&#x77;&#108;&#x6f;&#x76;&#101;&#114;&#115;&#x2e;&#99;&#x6f;&#x6d;">&#x6a;&#x61;&#99;&#107;&#64;&#x63;&#x6f;&#x77;&#108;&#111;&#x76;&#x65;&#x72;&#x73;&#46;&#99;&#x6f;&#x6d;</a>&rdquo;
+      &ldquo;<a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6a;&#x61;&#99;&#x6b;&#x40;&#99;&#x6f;&#119;&#x6c;&#111;&#118;&#101;&#x72;&#x73;&#x2e;&#x63;&#x6f;&#109;">&#106;&#x61;&#99;&#x6b;&#64;&#x63;&#x6f;&#119;&#108;&#111;&#118;&#101;&#114;&#x73;&#x2e;&#99;&#111;&#109;</a>&rdquo;
 gpg: WARNING: message was not integrity protected
 $ cat email.txt
 Ok Jack. I&rsquo;ve created the account &lsquo;milk_4_life&rsquo; as per your request. Please stop emailing me about this now or I&rsquo;m going to talk to HR like we discussed.</p>
 
-<p>The password is &lsquo;4J0WWvL5nS&rsquo;
-[/plain]</p>
+<p>The password is &lsquo;4J0WWvL5nS&rsquo;</p>
 
-<p>Thank you, Jack, for being a predictable - yet persistent - weirdo. A quick hop and a skip over to the worryingly named milk_4_life account and we can carry.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Thank you, Jack, <span class="k">for</span> being a predictable - yet persistent - weirdo. A quick hop and a skip over to the worryingly named milk_4_life account and we can carry.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ su milk_4_life
+
+<p> bash</p>
+
+<p>$ su milk_4_life
 Password: 4J0WWvL5nS</p>
 
 <p>$ whoami
 milk_4_life
-$ [/plain]</p>
+$
+&#8220;`</p>
 
 <p>Tomorrow we&rsquo;ll play a game. Oooh, cryptic.</p>
 </div>

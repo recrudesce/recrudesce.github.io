@@ -262,11 +262,7 @@
 	<div class="entry-content">
 		<p>Whilst in the middle of cracking <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2</a>, <a href="https://twitter.com/leonjza">leonjza</a> decided to release <a href="http://vulnhub.com/entry/flick-1,99/">Flick</a> - a CTF that is sure to tax minds.  Naturally I decided to make myself feel like an unskilled loser, and downloaded it. Here&rsquo;s the story of how I rooted Flick first.</p>
 
-<blockquote>root@flick:~# id
-uid=0(root) gid=0(root) groups=0(root)
-First ! [@leonjza](https://twitter.com/leonjza) [@VulnHub](https://twitter.com/VulnHub) [#flick](https://twitter.com/hashtag/flick?src=hash) [#boot2root](https://twitter.com/hashtag/boot2root?src=hash) [#vulnhub](https://twitter.com/hashtag/vulnhub?src=hash)
-> 
-> &#8211; Russ Watts (@recrudesce) [August 12, 2014](https://twitter.com/recrudesce/statuses/499168321150124033)</blockquote>
+<blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! [@leonjza](https://twitter.com/leonjza) [@VulnHub](https://twitter.com/VulnHub) [#flick](https://twitter.com/hashtag/flick?src=hash) [#boot2root](https://twitter.com/hashtag/boot2root?src=hash) [#vulnhub](https://twitter.com/hashtag/vulnhub?src=hash)</p><footer><strong>Russ Watts (@recrudesce) [August 12</strong> <cite>2014](https://twitter.com/recrudesce/statuses/499168321150124033)</cite></footer></blockquote>
 
 
 
@@ -507,9 +503,14 @@ Yup. [#vulnhub](https://twitter.com/hashtag/vulnhub?src=hash) [#xerxes2](https:/
 
 <p>The home folder for milk_4_life is pretty sparse, just a binary called &ldquo;game&rdquo;. However, it&rsquo;s owned by the george user, and has the suid attribute set.</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]$ ls -l
-total 20
-&mdash;s&ndash;x&ndash;x 1 george      george      5743 Jun 19 18:24 game[/plain]</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ls -l
+</span><span class='line'>total 20
+</span><span class='line'>---s--x--x <span class="m">1</span> george      george      <span class="m">5743</span> Jun <span class="m">19</span> 18:24 game
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Running the binary produces the following output, which doesn&rsquo;t tell us much other than it&rsquo;s &ldquo;listening&rdquo;. Like a overly intrusive neighbour.</p>
 
