@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T19:31:01+00:00</updated>
+  <updated>2015-01-02T19:45:07+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -52,19 +52,19 @@ root@kali:~#
 
 <p>8088, when visited with a browser, shows a lovely picture of a Pegasus. A quick look at the source doesn&rsquo;t reveal anything, and there&rsquo;s nothing hidden in the image file.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_001.png" alt="pegasus_001" /></a></p>
+<p><a href="/images/pegasus_001.png"><img src="/images/pegasus_001.png" alt="pegasus_001" /></a></p>
 
 <p>Time to brute force some directories/files. Experience has shown me that vulnerable VM creators are sneaky gits, so I opted to use a large dictionary here, just to see what it came up with. Because of this large dictionary, I had to use dirbuster instead of dirb, because dirb takes ages to parse large dictionary files. Prepare for some horrible UI screenshots&hellip;</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_002.png" alt="pegasus_002" /></a></p>
+<p><a href="/images/pegasus_002.png"><img src="/images/pegasus_002.png" alt="pegasus_002" /></a></p>
 
 <p>I&rsquo;m only interested in the files that returned HTTP 200, as these actually exist, so submit.php and codereview.php</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_003.png" alt="pegasus_003" /></a></p>
+<p><a href="/images/pegasus_003.png"><img src="/images/pegasus_003.png" alt="pegasus_003" /></a></p>
 
 <p>codereview.php POSTS to submit.php, so for the moment I can ignore submit.php and focus on codereview.php</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/12/pegasus_004.png" alt="pegasus_004" /></a></p>
+<p><a href="/images/pegasus_004.png"><img src="/images/pegasus_004.png" alt="pegasus_004" /></a></p>
 
 <p><img src="http://i527.photobucket.com/albums/cc352/gabzylovescrack/HTTYD/Shudder.gif" alt="" /></p>
 
