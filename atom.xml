@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T20:20:44+00:00</updated>
+  <updated>2015-01-02T20:22:49+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -2710,7 +2710,7 @@ NB: in the test version, these 3 ports were in order, in the release version the
 <!-- more -->
 
 
-<p><img src="http://www.zerodayclothing.com/products/designs/trinity_design.png" alt="" /></p>
+<p><img src="http://image.spreadshirt.com/image-server/v1/compositions/17487675/views/1,width=280,height=280,appearanceId=258.png/trinity-uses-nmap_design.png" alt="" /></p>
 
 <p>And so should you.</p>
 
@@ -3545,7 +3545,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
     <id>http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb</id>
     <content type="html"><![CDATA[<p>Whilst in the middle of cracking <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2</a>, <a href="https://twitter.com/leonjza">leonjza</a> decided to release <a href="http://vulnhub.com/entry/flick-1,99/">Flick</a> - a CTF that is sure to tax minds.  Naturally I decided to make myself feel like an unskilled loser, and downloaded it. Here&rsquo;s the story of how I rooted Flick first.</p>
 
-<blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! @leonjza @VulnHub #flick #boot2root #vulnhub</p><footer><strong>Russ Watts (@recrudesce)</strong> <cite><a href='https://twitter.com/recrudesce/statuses/499168321150124033'>twitter.com/recrudesce/statuses/&hellip;</a></cite></footer></blockquote>
+<blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! @leonjza @VulnHub #flick #boot2root #vulnhub</p><footer><strong>recrudesce</strong> <cite><a href='https://twitter.com/recrudesce/statuses/499168321150124033'>twitter.com/recrudesce/statuses/&hellip;</a></cite></footer></blockquote>
 
 
 
