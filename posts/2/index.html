@@ -9,7 +9,7 @@
   <meta name="author" content="recrudesce">
 
   
-  <meta name="description" content="Part 1 | Part 2 | Part 3 | Part 4 | Part 5 So, yesterday we got a shell on Hell as www-data. Today we&rsquo;ll escalate through some of the users on &hellip;">
+  <meta name="description" content="vm's Hell Walkthrough – Part 2 Part 1 | Part 2 | Part 3 | Part 4 | Part 5 So, yesterday we got a shell on Hell as www-data. Today we&rsquo;ll &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,62 +18,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://recrudesce.github.io/posts/2/">
+  <link rel="canonical" href="http://recrudesce.github.io/posts/2">
   <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery.sidr.min.js"></script>
+  <script src="/javascripts/ah-blue.js"></script>
+  
   
 
-</head>
+</head> 
 
 <body   >
-  <header role="banner"><hgroup>
-  <img src="/images/ah_frame_transparent.svg" />
-  <h1><a href="/">FourFourFourFour</a></h1>
-</hgroup>
+  <div class="aux-container">
+    <a id="nav-toggle" href="#sidr"></a>
+    <a id="search-toggle"></a>
+</div>
 
+<header class="header-container clearfix">
+        <a href="/"><img src="/images/ah-frame.svg" onerror="this.onerror=null; this.src='ah-frame.png'"></a>
 </header>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+
+  <div class="main-container">
+    <div class="main wrapper clearfix">
+    	
+    	<aside>
+			
+			  	<div class="search-container">
+					<form action="http://google.com/search" method="get">
+						<fieldset role="search">
+							<input type="hidden" name="q" value="site:blog.alexharr.is" />
+							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
+							<input class="submit" type="submit" value=""/>
+						</fieldset>
+					</form>
+				</div>
+			
+		  <div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		
+					<h3>Recent Posts</h3>
+<ul>
+	
+    <li>
+    	<a href="/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/">Because She Was a Princess She Had a Pegasus.</a>
+    </li>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/18/hell-walkthrough-part-2/">Hell Walkthrough – Part 2</a></h1>
+    <li>
+    	<a href="/blog/2014/10/26/knock-knock-whos-there/">Knock Knock&#8230; Who&#8217;s There ?</a>
+    </li>
     
-  </header>
+    <li>
+    	<a href="/blog/2014/10/26/owl-up-in-my-grill/">Owl Up in My Grill</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/10/26/please-do-not-feed-the-trolls/">Please Do Not Feed the Trolls.</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/">How Many Hackers Does It Take to Change a Lightbulb ?</a>
+    </li>
+    
+</ul>
 
 
-  
-    <p class="meta">
+
+
+
+				
+        	</li>
+        	<li>
+        		<ul>
+                    <li>Projects - <a href="http://www.alexharr.is" target="_blank">alexharr.is</a>
+        			<li>Github - <a href="http://www.github.com/alexharris" target="_blank">github.com/alexharris</a></li>
+                    <li>Twitter - <a href="http://www.twitter.com/alexharris6" target="_blank">@alexharris6</a></li>
+                    <li>Email - <a href="mailto:alexharris6@gmail.com" target="_blank">alexharris6 at gmail</a></li>
+        		</ul>
+        	</li>
+        </ul>
+    </nav>
+</div>
+		</aside>
+		
       
 
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T21:27:04+01:00" pubdate data-updated="true"></time>
+<article>
+	<header>
+  <div class="article-tags">
       
-    </p>
-  
-  
 
 <span class="categories">
   
@@ -82,52 +122,50 @@
 </span>
 
 
-  <div class="entry-content"><p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | Part 2 | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
+  </div>
+  
+    <h1><a href="/blog/2014/07/18/hell-walkthrough-part-2/">
+      Hell Walkthrough – Part 2
+    </a></h1>
+  
+</header>
+
+  <section><p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | Part 2 | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
 
 <p>So, yesterday we got a shell on Hell as www-data. Today we&rsquo;ll escalate through some of the users on our quest to root.  If you&rsquo;ve not read <a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a>, I suggest you do so now.  I&rsquo;ll wait.  Go on, don&rsquo;t be shy, I&rsquo;ll still be here when you get back.</p>
 
 <p>Done ?  Great - let us continue.</p>
 
-</div>
+</section>
   
   
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/18/hell-walkthrough-part-2/">Read on &rarr;</a>
-    </footer>
+  <footer>
+      <div class="article-date">
+        
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2014-07-18T21:27:04+01:00" pubdate data-updated="true"></time></div>
+  </footer>
   
-  
-    <article>
+
+
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/hell-walkthrough-part-1/">Hell Walkthrough - Part 1</a></h1>
-    
-  </header>
-
-
-  
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T20:37:23+01:00" pubdate data-updated="true"></time>
-      
-    </p>
-  
-  
 
 <span class="categories">
   
@@ -136,7 +174,15 @@
 </span>
 
 
-  <div class="entry-content"><p>Part 1 | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
+  </div>
+  
+    <h1><a href="/blog/2014/07/17/hell-walkthrough-part-1/">
+      Hell Walkthrough - Part 1
+    </a></h1>
+  
+</header>
+
+  <section><p>Part 1 | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
 
 <p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
 
@@ -149,46 +195,36 @@
 
 
 
-</div>
+</section>
   
   
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/17/hell-walkthrough-part-1/">Read on &rarr;</a>
-    </footer>
+  <footer>
+      <div class="article-date">
+        
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2014-07-17T20:37:23+01:00" pubdate data-updated="true"></time></div>
+  </footer>
   
-  
-    <article>
+
+
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/hell-walkthrough/">Hell Walkthrough</a></h1>
-    
-  </header>
-
-
-  
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T16:17:18+01:00" pubdate data-updated="true"></time>
-      
-    </p>
-  
-  
 
 <span class="categories">
   
@@ -197,7 +233,15 @@
 </span>
 
 
-  <div class="entry-content"><p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
+  </div>
+  
+    <h1><a href="/blog/2014/07/17/hell-walkthrough/">
+      Hell Walkthrough
+    </a></h1>
+  
+</header>
+
+  <section><p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
 
 <p>A lot of the techniques in this VM are known to me apart from the very last step. I will go through my thought process for each step and how I managed to go from enumeration to a root shell.</p>
 
@@ -208,46 +252,36 @@
 
 
 
-</div>
+</section>
   
   
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/17/hell-walkthrough/">Read on &rarr;</a>
-    </footer>
+  <footer>
+      <div class="article-date">
+        
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2014-07-17T16:17:18+01:00" pubdate data-updated="true"></time></div>
+  </footer>
   
-  
-    <article>
+
+
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/29/bsides-london-a-retrospective/">BSides London - a Retrospective</a></h1>
-    
-  </header>
-
-
-  
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-29T21:23:22+01:00" pubdate data-updated="true"></time>
-      
-    </p>
-  
-  
 
 <span class="categories">
   
@@ -256,49 +290,47 @@
 </span>
 
 
-  <div class="entry-content"><p>BSides London, BSides London&hellip; what can I say about BSides London&hellip;
+  </div>
+  
+    <h1><a href="/blog/2014/04/29/bsides-london-a-retrospective/">
+      BSides London - a Retrospective
+    </a></h1>
+  
+</header>
+
+  <section><p>BSides London, BSides London&hellip; what can I say about BSides London&hellip;
 Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention like Defcon you will be sorely disappointed. But the size doesn&rsquo;t matter when you get to meet revered infosec people like <a href="https://twitter.com/jack_daniel">Jack Daniel</a> (Tenable) , <a href="https://twitter.com/mckeay">Martin McKeay</a>, <a href="https://twitter.com/todb">Tod Beardsley</a> (Metasploit) et al and talk to them on a one to one level about anything (I had a conversation about Hello Kitty with Tod B - that says a lot). Oh, and don&rsquo;t forget the fact that staff members from the ever so epic Offensive Security were there too - I&rsquo;m looking at you <a href="https://twitter.com/g0tmi1k">g0tmi1k</a> :D It was also nice to meet up with <a href="https://twitter.com/NullMode_">Nullmode</a> (forever known as N0tmi1k) and <a href="https://twitter.com/arr0way">Arr0way</a> as well and chat randomly about anything and everything that came to mind.</p>
 
-</div>
+</section>
   
   
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/29/bsides-london-a-retrospective/">Read on &rarr;</a>
-    </footer>
+  <footer>
+      <div class="article-date">
+        
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2014-04-29T21:23:22+01:00" pubdate data-updated="true"></time></div>
+  </footer>
   
-  
-    <article>
+
+
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/24/bsideslondon-and-infosec/">BSidesLondon and Infosec</a></h1>
-    
-  </header>
-
-
-  
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-24T11:17:02+01:00" pubdate data-updated="true"></time>
-      
-    </p>
-  
-  
 
 <span class="categories">
   
@@ -307,47 +339,32 @@ Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention 
 </span>
 
 
-  <div class="entry-content"><p>With less than a week to go before <a href="https://www.securitybsides.org.uk">BSides London</a> and <a href="http://www.infosec.co.uk">Infosec 2014</a>, I&rsquo;m trying to list out all the people/companies I want to talk to, and also determine whether to take my laptop or my tablet - I&rsquo;m thinking laptop&hellip;</p>
+  </div>
+  
+    <h1><a href="/blog/2014/04/24/bsideslondon-and-infosec/">
+      BSidesLondon and Infosec
+    </a></h1>
+  
+</header>
+
+  <section><p>With less than a week to go before <a href="https://www.securitybsides.org.uk">BSides London</a> and <a href="http://www.infosec.co.uk">Infosec 2014</a>, I&rsquo;m trying to list out all the people/companies I want to talk to, and also determine whether to take my laptop or my tablet - I&rsquo;m thinking laptop&hellip;</p>
 
 <p>Anyway, quick and simple post this one - I&rsquo;ll be at both events.  You can tweet me <a href="https://twitter.com/recrudesce">@recrudesce</a> if you want to meet up and say &ldquo;hi&rdquo;.</p>
 
 <p>If you&rsquo;re going too, have a good time - remember to get loads of swag ;)</p>
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/20/oscp-review/">OSCP Review</a></h1>
-    
-  </header>
-
-
-  
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-20T17:11:33+01:00" pubdate data-updated="true"></time>
-      
-    </p>
-  
-  
 
 <span class="categories">
   
@@ -356,83 +373,63 @@ Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention 
 </span>
 
 
-  <div class="entry-content"><p>Have you ever purposefully put yourself in a situation that makes you run around the house in glee, and then five minutes later makes you want to put your head through a door ?  No ?  Maybe you should try OSCP.  If being constantly told to &ldquo;try harder&rdquo; doesn&rsquo;t make you want to embed a brick into your eye socket, then maybe this is for you&hellip;</p>
+  </div>
+  
+    <h1><a href="/blog/2014/04/20/oscp-review/">
+      OSCP Review
+    </a></h1>
+  
+</header>
+
+  <section><p>Have you ever purposefully put yourself in a situation that makes you run around the house in glee, and then five minutes later makes you want to put your head through a door ?  No ?  Maybe you should try OSCP.  If being constantly told to &ldquo;try harder&rdquo; doesn&rsquo;t make you want to embed a brick into your eye socket, then maybe this is for you&hellip;</p>
 
 <p>After much research into the Certified Ethical Hacker course, the term &ldquo;OSCP&rdquo; kept cropping up in my google searches.  OSCP&hellip; OSCP&hellip;  what is this mythical OSCP of which you speak !?</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/20/oscp-review/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-    <a class="next" href="1">Newer &rarr;</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <form action="https://www.google.com/search" method="get">
-      <fieldset role="search">
-        <input type="hidden" name="q" value="site:recrudesce.github.io" />
-        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-      </fieldset>
-    </form>
-  
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/">Because she was a princess she had a Pegasus.</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/26/knock-knock-whos-there/">Knock Knock&#8230; Who&#8217;s There ?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/26/owl-up-in-my-grill/">Owl Up In My Grill</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/26/please-do-not-feed-the-trolls/">Please do not feed the trolls.</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/">How Many Hackers Does It Take To Change A Lightbulb ?</a>
-      </li>
-    
-  </ul>
 </section>
+  
+  
+  <footer>
+      <div class="article-date">
+        
+
+
+
 
 
 
 
 
   
-</aside>
+
+
+<time datetime="2014-04-20T17:11:33+01:00" pubdate data-updated="true"></time></div>
+  </footer>
+  
+
+
+
+</article>
+
+<div class="pagination">
+
+
+
+<a class="next" href="1">Newer &rarr;</a>
+
+</div>
 
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - recrudesce -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
+  <footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
 </footer>
+
+
   
+
 
 
 
@@ -445,17 +442,13 @@ Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention 
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
 
 
 
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/aharris.js"></script>
 
 </body>
 </html>

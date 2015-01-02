@@ -9,7 +9,7 @@
   <meta name="author" content="recrudesce">
 
   
-  <meta name="description" content="SkyTower is available from Vulnhub, and is a quick brain teaser that everyone is encouraged to try. It doesn&rsquo;t take long, so it&rsquo;s fun to &hellip;">
+  <meta name="description" content="vm's I Climbed the SkyTower, but No Rapunzel :( SkyTower is available from Vulnhub, and is a quick brain teaser that everyone is encouraged to try. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,41 +18,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://recrudesce.github.io/blog/2014/08/05/i-climbed-the-skytower-but-no-rapunzel/">
+  <link rel="canonical" href="http://recrudesce.github.io/blog/2014/08/05/i-climbed-the-skytower-but-no-rapunzel">
   <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="FourFourFourFour" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
-
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery.sidr.min.js"></script>
+  <script src="/javascripts/ah-blue.js"></script>
+  
   
 
-</head>
+</head> 
 
 <body   >
-  <header role="banner"><hgroup>
-  <img src="/images/ah_frame_transparent.svg" />
-  <h1><a href="/">FourFourFourFour</a></h1>
-</hgroup>
+  <div class="aux-container">
+    <a id="nav-toggle" href="#sidr"></a>
+    <a id="search-toggle"></a>
+</div>
 
+<header class="header-container clearfix">
+        <a href="/"><img src="/images/ah-frame.svg" onerror="this.onerror=null; this.src='ah-frame.png'"></a>
 </header>
-  <div id="main">
-    <div id="content">
+
+  <div class="main-container">
+    <div class="main wrapper clearfix">
+    	
+    	<aside>
+			
+			  	<div class="search-container">
+					<form action="http://google.com/search" method="get">
+						<fieldset role="search">
+							<input type="hidden" name="q" value="site:blog.alexharr.is" />
+							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
+							<input class="submit" type="submit" value=""/>
+						</fieldset>
+					</form>
+				</div>
+			
+		  <div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		
+					<h3>Recent Posts</h3>
+<ul>
+	
+    <li>
+    	<a href="/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/">Because She Was a Princess She Had a Pegasus.</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/10/26/knock-knock-whos-there/">Knock Knock&#8230; Who&#8217;s There ?</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/10/26/owl-up-in-my-grill/">Owl Up in My Grill</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/10/26/please-do-not-feed-the-trolls/">Please Do Not Feed the Trolls.</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/">How Many Hackers Does It Take to Change a Lightbulb ?</a>
+    </li>
+    
+</ul>
+
+
+
+
+
+				
+        	</li>
+        	<li>
+        		<ul>
+                    <li>Projects - <a href="http://www.alexharr.is" target="_blank">alexharr.is</a>
+        			<li>Github - <a href="http://www.github.com/alexharris" target="_blank">github.com/alexharris</a></li>
+                    <li>Twitter - <a href="http://www.twitter.com/alexharris6" target="_blank">@alexharris6</a></li>
+                    <li>Email - <a href="mailto:alexharris6@gmail.com" target="_blank">alexharris6 at gmail</a></li>
+        		</ul>
+        	</li>
+        </ul>
+    </nav>
+</div>
+		</aside>
+		
       <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">I Climbed the SkyTower, but No Rapunzel :(</h1>
-    
-  </header>
-
-
-
+<article>
+	<header>
+  <div class="article-tags">
+      
 
 <span class="categories">
   
@@ -61,7 +120,15 @@
 </span>
 
 
-<div class="entry-content"><p>SkyTower is available from <a href="http://vulnhub.com/entry/skytower-1,96/">Vulnhub</a>, and is a quick brain teaser that everyone is encouraged to try. It doesn&rsquo;t take long, so it&rsquo;s fun to see if you can do in your lunchbreak. The walkthrough is going to be short and sweet - maybe with a few GIFs thrown in for good measure.</p>
+  </div>
+  
+    <h1>
+      I Climbed the SkyTower, but No Rapunzel :(
+    </h1>
+  
+</header>
+
+  <section><p>SkyTower is available from <a href="http://vulnhub.com/entry/skytower-1,96/">Vulnhub</a>, and is a quick brain teaser that everyone is encouraged to try. It doesn&rsquo;t take long, so it&rsquo;s fun to see if you can do in your lunchbreak. The walkthrough is going to be short and sweet - maybe with a few GIFs thrown in for good measure.</p>
 
 <!-- more -->
 
@@ -152,12 +219,12 @@ tcp        0      0 0.0.0.0:222             0.0.0.0:*               LISTEN      
 <p>Let us SSH into it with the provided credentials</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#106;&#x6f;&#104;&#x6e;&#64;&#x31;&#50;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#x31;">&#106;&#111;&#x68;&#x6e;&#64;&#x31;&#50;&#55;&#x2e;&#48;&#46;&#x30;&#x2e;&#49;</a> -p 222
+root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#111;&#x68;&#x6e;&#64;&#x31;&#50;&#55;&#46;&#48;&#46;&#x30;&#x2e;&#49;">&#106;&#111;&#x68;&#x6e;&#x40;&#49;&#50;&#55;&#46;&#48;&#46;&#x30;&#46;&#x31;</a> -p 222
 The authenticity of host &lsquo;[127.0.0.1]:222 ([127.0.0.1]:222)&rsquo; can&rsquo;t be established.
 ECDSA key fingerprint is f6:3b:95:46:6e:a7:0f:72:1a:67:9e:9b:8a:48:5e:3d.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added &lsquo;[127.0.0.1]:222&rsquo; (ECDSA) to the list of known hosts.
-<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#49;&#x32;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#x31;">&#106;&#x6f;&#x68;&#110;&#64;&#49;&#x32;&#x37;&#x2e;&#x30;&#x2e;&#48;&#x2e;&#x31;</a>&rsquo;s password:
+<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#106;&#x6f;&#x68;&#110;&#x40;&#x31;&#50;&#x37;&#46;&#48;&#x2e;&#48;&#x2e;&#49;">&#x6a;&#x6f;&#x68;&#x6e;&#64;&#x31;&#x32;&#x37;&#x2e;&#x30;&#x2e;&#x30;&#46;&#49;</a>&rsquo;s password:
 Linux SkyTower 3.2.0-4-amd64 #1 SMP Debian 3.2.54-2 x86_64</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -174,8 +241,8 @@ root@pwk:~#[/plain]</p>
 
 <p>Seems like the admins have been clever, and have edited this users .bashrc file to terminate the session upon connection. It is possible to use the -t argument of the SSH client to execute an application when a connection is made, so how about running a shell ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#106;&#111;&#104;&#x6e;&#64;&#49;&#50;&#x37;&#46;&#x30;&#x2e;&#x30;&#x2e;&#49;">&#x6a;&#x6f;&#x68;&#110;&#64;&#49;&#x32;&#55;&#x2e;&#x30;&#46;&#48;&#46;&#x31;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
-<a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#106;&#111;&#x68;&#x6e;&#64;&#x31;&#x32;&#55;&#46;&#x30;&#x2e;&#x30;&#46;&#49;">&#x6a;&#111;&#x68;&#110;&#x40;&#49;&#50;&#x37;&#x2e;&#x30;&#x2e;&#x30;&#x2e;&#x31;</a>&rsquo;s password: hereisjohn
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#x6a;&#x6f;&#104;&#110;&#x40;&#x31;&#x32;&#x37;&#46;&#x30;&#46;&#48;&#46;&#x31;">&#106;&#111;&#x68;&#x6e;&#x40;&#49;&#50;&#55;&#46;&#48;&#x2e;&#48;&#x2e;&#x31;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
+<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x6a;&#111;&#x68;&#110;&#x40;&#x31;&#50;&#x37;&#x2e;&#48;&#x2e;&#x30;&#x2e;&#49;">&#x6a;&#x6f;&#104;&#x6e;&#x40;&#49;&#x32;&#x37;&#46;&#48;&#46;&#x30;&#x2e;&#x31;</a>&rsquo;s password: hereisjohn
 john@SkyTower:~$[/plain]</p>
 
 <p>First things first, that SQLi filter - what did it look like in it&rsquo;s entirety ?</p>
@@ -222,9 +289,9 @@ mysql> show tables;
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
 | id | email               | password     |
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
-|  1 | <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6a;&#x6f;&#104;&#x6e;&#x40;&#x73;&#107;&#121;&#x74;&#101;&#x63;&#x68;&#46;&#x63;&#111;&#109;">&#106;&#x6f;&#x68;&#x6e;&#x40;&#115;&#107;&#121;&#x74;&#x65;&#x63;&#x68;&#x2e;&#x63;&#111;&#109;</a>    | hereisjohn   |
-|  2 | <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#115;&#97;&#114;&#x61;&#64;&#115;&#x6b;&#x79;&#116;&#101;&#99;&#x68;&#x2e;&#x63;&#111;&#109;">&#115;&#x61;&#x72;&#x61;&#64;&#115;&#x6b;&#x79;&#116;&#x65;&#99;&#x68;&#46;&#99;&#111;&#109;</a>    | ihatethisjob |
-|  3 | <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#119;&#x69;&#x6c;&#108;&#105;&#97;&#109;&#64;&#115;&#x6b;&#x79;&#116;&#x65;&#x63;&#x68;&#46;&#x63;&#x6f;&#x6d;">&#119;&#x69;&#x6c;&#108;&#105;&#97;&#x6d;&#x40;&#115;&#x6b;&#121;&#116;&#101;&#x63;&#x68;&#46;&#x63;&#x6f;&#109;</a> | senseable    |
+|  1 | <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#106;&#111;&#104;&#x6e;&#x40;&#115;&#107;&#x79;&#x74;&#101;&#99;&#104;&#46;&#x63;&#x6f;&#109;">&#106;&#111;&#104;&#110;&#x40;&#115;&#x6b;&#121;&#116;&#101;&#x63;&#x68;&#x2e;&#99;&#x6f;&#x6d;</a>    | hereisjohn   |
+|  2 | <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#115;&#97;&#x72;&#97;&#64;&#115;&#107;&#121;&#x74;&#101;&#x63;&#x68;&#x2e;&#x63;&#x6f;&#x6d;">&#x73;&#x61;&#x72;&#97;&#64;&#x73;&#107;&#x79;&#116;&#101;&#x63;&#104;&#46;&#x63;&#x6f;&#109;</a>    | ihatethisjob |
+|  3 | <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x77;&#x69;&#108;&#x6c;&#x69;&#x61;&#109;&#64;&#115;&#x6b;&#x79;&#x74;&#x65;&#x63;&#x68;&#46;&#x63;&#x6f;&#x6d;">&#x77;&#x69;&#108;&#108;&#105;&#x61;&#109;&#x40;&#115;&#107;&#121;&#x74;&#101;&#x63;&#104;&#x2e;&#99;&#x6f;&#x6d;</a> | senseable    |
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
 3 rows in set (0.00 sec)</p>
 
@@ -251,8 +318,8 @@ john@SkyTower:~$
 <p>We&rsquo;re hitting on the same issue that we had with John - SSH -t to the rescue once again, but this time using a different shell (for some reason /bin/bash does not work)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x73;&#x61;&#114;&#97;&#64;&#x31;&#50;&#x37;&#x2e;&#48;&#46;&#48;&#x2e;&#49;">&#115;&#x61;&#114;&#97;&#64;&#49;&#50;&#55;&#x2e;&#48;&#46;&#x30;&#x2e;&#x31;</a> -p 222 -t /bin/sh
-<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#115;&#97;&#x72;&#97;&#x40;&#x31;&#50;&#55;&#x2e;&#48;&#46;&#48;&#46;&#49;">&#x73;&#97;&#114;&#x61;&#64;&#49;&#x32;&#x37;&#x2e;&#48;&#x2e;&#48;&#x2e;&#49;</a>&rsquo;s password: ihatethisjob
+root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#115;&#x61;&#114;&#x61;&#64;&#x31;&#50;&#55;&#x2e;&#48;&#x2e;&#x30;&#x2e;&#x31;">&#115;&#x61;&#114;&#97;&#x40;&#49;&#x32;&#x37;&#46;&#48;&#46;&#48;&#46;&#x31;</a> -p 222 -t /bin/sh
+<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#115;&#97;&#114;&#97;&#64;&#x31;&#x32;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#x31;">&#x73;&#x61;&#114;&#97;&#x40;&#49;&#x32;&#x37;&#46;&#48;&#46;&#x30;&#46;&#x31;</a>&rsquo;s password: ihatethisjob
 $[/plain]</p>
 
 <p><img src="http://i.imgur.com/PbksBXu.gif" alt="" /></p>
@@ -281,108 +348,25 @@ uid=0(root) gid=0(root) groups=0(root)
 root@SkyTower:/home/sara# [/plain]</p>
 
 <p><img src="http://38.media.tumblr.com/5e829faafb14759c51d20dae54525c29/tumblr_n964zghd0h1qz581wo2_500.gif" alt="" /></p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">recrudesce</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-05T23:49:01+01:00" pubdate data-updated="true"></time>
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://recrudesce.github.io/blog/2014/08/05/i-climbed-the-skytower-but-no-rapunzel/" data-via="recrudesce" data-counturl="http://recrudesce.github.io/blog/2014/08/05/i-climbed-the-skytower-but-no-rapunzel/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/07/21/hell-walkthrough-part-5/" title="Previous Post: Hell Walkthrough – Part 5">&laquo; Hell Walkthrough – Part 5</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/08/08/the-glory-of-the-many-demands-your-capture-or-destruction/" title="Next Post: The Glory of The Many Demands your Capture or Destruction.">The Glory of The Many Demands your Capture or Destruction. &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-</div>
-
-<aside class="sidebar">
-  
-    <form action="https://www.google.com/search" method="get">
-      <fieldset role="search">
-        <input type="hidden" name="q" value="site:recrudesce.github.io" />
-        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-      </fieldset>
-    </form>
-  
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/">Because she was a princess she had a Pegasus.</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/26/knock-knock-whos-there/">Knock Knock&#8230; Who&#8217;s There ?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/26/owl-up-in-my-grill/">Owl Up In My Grill</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/26/please-do-not-feed-the-trolls/">Please do not feed the trolls.</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/">How Many Hackers Does It Take To Change A Lightbulb ?</a>
-      </li>
-    
-  </ul>
 </section>
 
 
 
-
-
-  
-</aside>
-
-
+	
+</article>
+</div>
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - recrudesce -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
+  <footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
 </footer>
+
+
   
+
 
 
 
@@ -395,17 +379,13 @@ root@SkyTower:/home/sara# [/plain]</p>
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
 
 
 
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/aharris.js"></script>
 
 </body>
 </html>
