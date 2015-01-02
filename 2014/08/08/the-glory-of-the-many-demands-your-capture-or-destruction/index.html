@@ -282,7 +282,7 @@
 
 <p>What is interesting about this MP3 is not what you can hear, but what you can see in the waveform. Much like the demon face in Windowlicker by Aphex Twin, here we have a hidden image in the spectrogram. If you want to know how to find this, take a look at <a href="http://lifehacker.com/5807289/how-to-hide-secret-messages-and-codes-in-audio-files">this Lifehacker article</a>.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_001.png" alt="xerxes2_001" /></a></p>
+<p><a href="/images/xerxes2_001.png"><img src="/images/xerxes2_001.png" alt="xerxes2_001" /></a></p>
 
 <p>This, however, is just a diversion. The image is of <a href="http://shodan.wikia.com/wiki/Xerxes">Xerxes</a> from System Shock 2, but the whole MP3 is an easter egg - but a cool one none the less ! Let&rsquo;s move on.</p>
 
@@ -292,11 +292,11 @@
 
 <p>So, with port 4444 crossed out, lets have a look at some other ports. 8888 is my next target, which returns nothing if you netcat to it, but provides an Python based Notebook application. This page also gives us an insight into the name of one of the users - delacroix.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_002.png" alt="xerxes2_002" /></a></p>
+<p><a href="/images/xerxes2_002.png"><img src="/images/xerxes2_002.png" alt="xerxes2_002" /></a></p>
 
 <p>It is possible to run commands through this application by creating a new notebook, and prefixing all commands with !. As an example, I&rsquo;ve created a new notebook and have run the whoami command in the screenshot below (you&rsquo;ll note that id didn&rsquo;t work)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_003.png" alt="xerxes2_003" /></a></p>
+<p><a href="/images/xerxes2_003.png"><img src="/images/xerxes2_003.png" alt="xerxes2_003" /></a></p>
 
 <p>At this point I decided to be sneaky and make this download and run a reverse Meterpreter binary&hellip; I created my binary using msfpayload, hosted it on an internal HTTP server, and then set up a multi/handler to accept the connection.</p>
 
@@ -341,7 +341,7 @@
 
 <p>The following command pasted into the Python notebook application downloads the binary from the HTTP server to /tmp, makes it executable, and then executes it.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_004.png" alt="xerxes2_004" /></a></p>
+<p><a href="/images/xerxes2_004.png"><img src="/images/xerxes2_004.png" alt="xerxes2_004" /></a></p>
 
 <p>A reverse connection is received by the multi/handler, which allows us to get a shell as delacroix, but it disconnects after a certain amount of time.</p>
 
@@ -372,7 +372,7 @@
 
 <p>It seems that I&rsquo;ve been scuppered, and that Xerxes is terminating my connection, as seen on the Python Notebook page</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_005.png" alt="xerxes2_005" /></a></p>
+<p><a href="/images/xerxes2_005.png"><img src="/images/xerxes2_005.png" alt="xerxes2_005" /></a></p>
 
 <p>However, it looks like I have a small window before the session is terminated - because of this I am able to be quick and echo my SSH public key added to the authorized_keys file, which allows me to subsequently SSH in as delacroix sans password.</p>
 
@@ -1761,7 +1761,7 @@
 
 <p>Turns out the PDF I had was corrupt, and that the actual PDF looks like this</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png" alt="xerxes2_006" /></a></p>
+<p><a href="/images/xerxes2_006.png"><img src="/images/xerxes2_006.png" alt="xerxes2_006" /></a></p>
 
 <p><img src="http://img3.wikia.nocookie.net/__cb20130417220142/mlp/images/6/61/FANMADE_Derp_by_WorkingOrder.gif" alt="" /></p>
 
@@ -1780,7 +1780,7 @@
 
 <p>OK, so, how to I boot this PDF I wonder ? Well, turns out this technique has already been used by <a href="https://www.alchemistowl.org/pocorgtfo/pocorgtfo02.pdf">PoC||GTFO with their 2nd edition</a> - check out section 8 to see instructions on using qemu. X11 forwarding required - luckily I set up X11 forwarding ages ago. Using the command found in PoC||GTFO002, I ended up with the following screen</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png" alt="xerxes2_007" /></a></p>
+<p><a href="/images/xerxes2_007.png"><img src="/images/xerxes2_007.png" alt="xerxes2_007" /></a></p>
 
 <p>Nice, a password.  Lets get that dump file decrypted.</p>
 

@@ -198,11 +198,11 @@
 
 <p>This looks like something we&rsquo;ll need a username and password for. As none are known, this port is being ignored for now. Port 80&rsquo;s where it&rsquo;s at then.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_001.png" alt="owlnest_001" /></a></p>
+<p><a href="/images/owlnest_001.png"><img src="/images/owlnest_001.png" alt="owlnest_001" /></a></p>
 
 <p>The Register link allows us to create a new user, which we can use to log in and look around</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_002.png" alt="owlnest_002" /></a></p>
+<p><a href="/images/owlnest_002.png"><img src="/images/owlnest_002.png" alt="owlnest_002" /></a></p>
 
 <p>But it seems we&rsquo;re not allowed to use the Upload feature, because we&rsquo;re not &ldquo;admin&rdquo;. An interesting point to note here is that the URL for the Upload feature is <a href="http://172.16.56.131/uploadform.php?page=forms/form.php,">http://172.16.56.131/uploadform.php?page=forms/form.php,</a> which means we could possibly leverage it for LFI. No other links on the site work in this way.</p>
 
@@ -225,19 +225,19 @@
 
 <p>Could we cheat the system and register a user with the name &ldquo;admin&rdquo; and then add 11 spaces after it plus a random character ? We can assume that the registration form will truncate any characters over 16. Tamper data is our friend here - the form can be filled in with the username of &ldquo;admin&rdquo; and then intercepted with Tamper data (or Burp, if you want) to modify the username POST variable to &ldquo;admin           a&rdquo; and submitted.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_003.png" alt="owlnest_003" /></a></p>
+<p><a href="/images/owlnest_003.png"><img src="/images/owlnest_003.png" alt="owlnest_003" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_004.png" alt="owlnest_004" /></a></p>
+<p><a href="/images/owlnest_004.png"><img src="/images/owlnest_004.png" alt="owlnest_004" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_005.png" alt="owlnest_005" /></a></p>
+<p><a href="/images/owlnest_005.png"><img src="/images/owlnest_005.png" alt="owlnest_005" /></a></p>
 
 <p>Once this malicious user is created, it is possible to then log in with the username of &ldquo;admin&rdquo; and the password we set for &ldquo;admin           a&rdquo;.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_006.png" alt="owlnest_006" /></a></p>
+<p><a href="/images/owlnest_006.png"><img src="/images/owlnest_006.png" alt="owlnest_006" /></a></p>
 
 <p>Which allows access to the Upload feature (not that we&rsquo;re going to use it for it&rsquo;s intended use)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_007.png" alt="owlnest_007" /></a></p>
+<p><a href="/images/owlnest_007.png"><img src="/images/owlnest_007.png" alt="owlnest_007" /></a></p>
 
 <hr />
 
@@ -252,17 +252,17 @@
 
 <p>Which when called with no arguments shows the following</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_008.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_008.png" alt="owlnest_008" /></a></p>
+<p><a href="/images/owlnest_008.png"><img src="/images/owlnest_008.png" alt="owlnest_008" /></a></p>
 
 <p>It is possible to browse to the application folder, which shows that the application is actually 601kb - a bit much just to parse an upload form.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_009.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_009.png" alt="owlnest_009" /></a></p>
+<p><a href="/images/owlnest_009.png"><img src="/images/owlnest_009.png" alt="owlnest_009" /></a></p>
 
 <h2>Owls Well That Ends Well</h2>
 
 <p>The uploadform.php page can be used to provide us with a base64 encoded copy of the upload binary, which means it will not be parsed or executed.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/owlnest_010.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/owlnest_010.png" alt="owlnest_010" /></a></p>
+<p><a href="/images/owlnest_010.png"><img src="/images/owlnest_010.png" alt="owlnest_010" /></a></p>
 
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 

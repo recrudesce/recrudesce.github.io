@@ -81,7 +81,7 @@
 
 <p>A lot of the techniques in this VM are known to me apart from the very last step. I will go through my thought process for each step and how I managed to go from enumeration to a root shell.</p>
 
-<blockquote><p>[@0x42424242](https://twitter.com/0x42424242) Finally rooted your fucking VM :P</p><footer><strong>recrudesce (@recrudesce)</strong> <cite><a href='https://twitter.com/recrudesce/statuses/489505727887978496'>twitter.com/recrudesce/statuses/&hellip;</a></cite></footer></blockquote>
+<blockquote><p>@0x42424242 Finally rooted your fucking VM :P</p><footer><strong>recrudesce (@recrudesce)</strong> <cite><a href='https://twitter.com/recrudesce/statuses/489505727887978496'>twitter.com/recrudesce/statuses/&hellip;</a></cite></footer></blockquote>
 
 
 <!-- more -->
@@ -132,19 +132,19 @@
 
 <p>Visting the web server in a browser presents a pretty boring page that welcomes us to the server and shows a cartoon.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png" alt="" /></a></p>
+<p><a href="/images/hell_001.png"><img src="/images/hell_001.png" alt="hell_001" /></a></p>
 
 <p>This doesn&rsquo;t give us much to go on, therefore let&rsquo;s try out some simple things any pentester should try - let&rsquo;s see if a robots.txt file exists.  Well what do you know&hellip;</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png" alt="" /></a></p>
+<p><a href="/images/hell_002.png"><img src="/images/hell_002.png" alt="hell_002" /></a></p>
 
 <p>The /personal/ folder shows a creepy shrine site (this is incidentally the closest I&rsquo;ve ever been to the face of a cow)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png" alt="" /></a></p>
+<p><a href="/images/hell_003.png"><img src="/images/hell_003.png" alt="hell_003" /></a></p>
 
 <p>Yeah, creepy&hellip; The /super_secret_login_path_muhahaha/ folder presents a login page</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png" alt="" /></a></p>
+<p><a href="/images/hell_004.png"><img src="/images/hell_004.png" alt="hell_004" /></a></p>
 
 <hr />
 
@@ -204,28 +204,28 @@
 
 <p>Success, username <strong>jack</strong>, password <strong>g0tmi1k69</strong> (yes, more creepiness, this Jack guy needs locking up). Using these credentials presents us with a management style interface</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png" alt="" /></a></p>
+<p><a href="/images/hell_005.png"><img src="/images/hell_005.png" alt="hell_005" /></a></p>
 
 <p>I won&rsquo;t explain each section, but the two sections we are going to use are Notes and Personal.
 Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temporary storage&rdquo;, which is assumed to be /tmp as this is usually what people define as temporary storage.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png" alt="hell_009" /></a></p>
+<p><a href="/images/hell_009.png"><img src="/images/hell_009.png" alt="hell_009" /></a></p>
 
 <p>Personal presents another login page, which sets a cookie which has an attribute that increases with each failed login.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png" alt="" /></a></p>
+<p><a href="/images/hell_006.png"><img src="/images/hell_006.png" alt="hell_006" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png" alt="" /></a></p>
+<p><a href="/images/hell_007.png"><img src="/images/hell_007.png" alt="hell_007" /></a></p>
 
 <p>When you hit 3 failed logins, the page reverts to the main panel, and adds an error message to the top.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png" alt="hell_015" /></a></p>
+<p><a href="/images/hell_015.png"><img src="/images/hell_015.png" alt="hell_015" /></a></p>
 
 <p>On further investigation, the <strong>intruder</strong> attribute of the cookie is set which defines the file that is included at the top of the panel. I wonder if there&rsquo;s a local file inclusion vulnerability there.  I went about editing the cookie to try and include other files on the filesystem.  After a few minutes of frustration, I worked out that the code was filtering any instance of ../ in the include path - however, being the sneaky person I am, I discovered this can be bypassed by using &hellip;.// or &hellip;/./ instead.  Here&rsquo;s /etc/passwd included by setting the <strong>intruder</strong> cookie attribute to &hellip;.//&hellip;.//&hellip;.//&hellip;.//etc/passwd</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png" alt="hell_008" /></a></p>
+<p><a href="/images/hell_008.png"><img src="/images/hell_008.png" alt="hell_008" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png" alt="" /></a></p>
+<p><a href="/images/hell_010.png"><img src="/images/hell_010.png" alt="hell_010" /></a></p>
 
 <p>It looks like the page parses any code (HTML etc) in the included file, therefore we can poison the note.txt file with PHP via the Notes feature, and include it to execute the code.  First, a PHP based reverse staged Meterpreter is created and hosted on an HTTP server.</p>
 
@@ -268,19 +268,19 @@ Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temp
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png" alt="hell_011" /></a></p>
+<p><a href="/images/hell_011.png"><img src="/images/hell_011.png" alt="hell_011" /></a></p>
 
 <p>Three failed logins are once again performed via the Personal feature to create the cookie, which is modified to include /tmp/note.txt (which includes our download PHP command)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png" alt="hell_012" /></a></p>
+<p><a href="/images/hell_012.png"><img src="/images/hell_012.png" alt="hell_012" /></a></p>
 
 <p>When the main panel page is reloaded, our poisoned note.txt file is included, the PHP is parsed and our payload file is downloaded.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png" alt="hell_013" /></a></p>
+<p><a href="/images/hell_013.png"><img src="/images/hell_013.png" alt="hell_013" /></a></p>
 
 <p>We&rsquo;re onto something here !  The cookie is edited once again to include /tmp/sneaky.txt and the panel page reloaded to execute stage 1 of our Meterpreter payload, which makes a connection to our waiting handler.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png" alt="hell_014" /></a></p>
+<p><a href="/images/hell_014.png"><img src="/images/hell_014.png" alt="hell_014" /></a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -391,11 +391,11 @@ Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temp
 
 <p>The first thing that draws my eye is the g0tmi1k_pics folder. It&rsquo;s somewhere you know you don&rsquo;t want to go, but seems to have this strange come-hither vibe about it. It&rsquo;s like a car crash&hellip; gruesome but you can&rsquo;t help but look. So I did. Now I wish I didn&rsquo;t. Exhibit A, and B, and C.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/1.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/1.jpg" alt="1" /></a></p>
+<p><a href="/images/1.jpg"><img src="/images/1.jpg" alt="1" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/2.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/2.jpg" alt="2" /></a></p>
+<p><a href="/images/2.jpg"><img src="/images/2.jpg" alt="2" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/3.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/3.jpg" alt="3" /></a></p>
+<p><a href="/images/3.jpg"><img src="/images/3.jpg" alt="3" /></a></p>
 
 <p>Yeah&hellip;
 Jack, you&rsquo;re a strange one, I&rsquo;ll give you that. Hang on, I think I can hear the men in white coats knocking. Yup, they&rsquo;re asking for you - shall I tell them you&rsquo;re &ldquo;out&rdquo; ?</p>

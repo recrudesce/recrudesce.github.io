@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T19:45:07+00:00</updated>
+  <updated>2015-01-02T20:13:52+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -985,7 +985,7 @@ NB: in the test version, these 3 ports were in order, in the release version the
 
 <p>The HTTP server is hosting a simple page, which displays an image of a door, and text asking us to look deeper.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/knockknock_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/knockknock_001.png" alt="knockknock_001" /></a></p>
+<p><a href="http://recrudesce.github.io/images/knockknock_001.png"><img src="http://recrudesce.github.io/images/knockknock_001.png" alt="knockknock_001" /></a></p>
 
 <p>Now, if that&rsquo;s not an invitation to look inside the JPG, then I don&rsquo;t know what is.</p>
 
@@ -2131,11 +2131,11 @@ NB: in the test version, these 3 ports were in order, in the release version the
 
 <p>This looks like something we&rsquo;ll need a username and password for. As none are known, this port is being ignored for now. Port 80&rsquo;s where it&rsquo;s at then.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_001.png" alt="owlnest_001" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_001.png"><img src="http://recrudesce.github.io/images/owlnest_001.png" alt="owlnest_001" /></a></p>
 
 <p>The Register link allows us to create a new user, which we can use to log in and look around</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_002.png" alt="owlnest_002" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_002.png"><img src="http://recrudesce.github.io/images/owlnest_002.png" alt="owlnest_002" /></a></p>
 
 <p>But it seems we&rsquo;re not allowed to use the Upload feature, because we&rsquo;re not &ldquo;admin&rdquo;. An interesting point to note here is that the URL for the Upload feature is <a href="http://172.16.56.131/uploadform.php?page=forms/form.php,">http://172.16.56.131/uploadform.php?page=forms/form.php,</a> which means we could possibly leverage it for LFI. No other links on the site work in this way.</p>
 
@@ -2158,19 +2158,19 @@ NB: in the test version, these 3 ports were in order, in the release version the
 
 <p>Could we cheat the system and register a user with the name &ldquo;admin&rdquo; and then add 11 spaces after it plus a random character ? We can assume that the registration form will truncate any characters over 16. Tamper data is our friend here - the form can be filled in with the username of &ldquo;admin&rdquo; and then intercepted with Tamper data (or Burp, if you want) to modify the username POST variable to &ldquo;admin           a&rdquo; and submitted.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_003.png" alt="owlnest_003" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_003.png"><img src="http://recrudesce.github.io/images/owlnest_003.png" alt="owlnest_003" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_004.png" alt="owlnest_004" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_004.png"><img src="http://recrudesce.github.io/images/owlnest_004.png" alt="owlnest_004" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_005.png" alt="owlnest_005" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_005.png"><img src="http://recrudesce.github.io/images/owlnest_005.png" alt="owlnest_005" /></a></p>
 
 <p>Once this malicious user is created, it is possible to then log in with the username of &ldquo;admin&rdquo; and the password we set for &ldquo;admin           a&rdquo;.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_006.png" alt="owlnest_006" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_006.png"><img src="http://recrudesce.github.io/images/owlnest_006.png" alt="owlnest_006" /></a></p>
 
 <p>Which allows access to the Upload feature (not that we&rsquo;re going to use it for it&rsquo;s intended use)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_007.png" alt="owlnest_007" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_007.png"><img src="http://recrudesce.github.io/images/owlnest_007.png" alt="owlnest_007" /></a></p>
 
 <hr />
 
@@ -2185,17 +2185,17 @@ NB: in the test version, these 3 ports were in order, in the release version the
 
 <p>Which when called with no arguments shows the following</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_008.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_008.png" alt="owlnest_008" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_008.png"><img src="http://recrudesce.github.io/images/owlnest_008.png" alt="owlnest_008" /></a></p>
 
 <p>It is possible to browse to the application folder, which shows that the application is actually 601kb - a bit much just to parse an upload form.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_009.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/09/owlnest_009.png" alt="owlnest_009" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_009.png"><img src="http://recrudesce.github.io/images/owlnest_009.png" alt="owlnest_009" /></a></p>
 
 <h2>Owls Well That Ends Well</h2>
 
 <p>The uploadform.php page can be used to provide us with a base64 encoded copy of the upload binary, which means it will not be parsed or executed.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/owlnest_010.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/owlnest_010.png" alt="owlnest_010" /></a></p>
+<p><a href="http://recrudesce.github.io/images/owlnest_010.png"><img src="http://recrudesce.github.io/images/owlnest_010.png" alt="owlnest_010" /></a></p>
 
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 
@@ -2751,7 +2751,7 @@ NB: in the test version, these 3 ports were in order, in the release version the
 
 <p>FTP, SSH and HTTP. Lets hit the HTTP server first, as that&rsquo;s where Tr0ll started.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_001.png" alt="tr0ll2_001" /></a></p>
+<p><a href="http://recrudesce.github.io/images/tr0ll2_001.png"><img src="http://recrudesce.github.io/images/tr0ll2_001.png" alt="tr0ll2_001" /></a></p>
 
 <p>So, the usual then. A quick Nikto scan shows that there&rsquo;s a robots.txt file, which has the following in it</p>
 
@@ -2874,7 +2874,7 @@ NB: in the test version, these 3 ports were in order, in the release version the
 
 
 <p>Visiting these URL&rsquo;s provide the following page
-<a href="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/10/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
+<a href="http://recrudesce.github.io/images/tr0ll2_002.png"><img src="http://recrudesce.github.io/images/tr0ll2_002.png" alt="tr0ll2_002" /></a></p>
 
 <p>While it looks like the page is identical for each of the 4 directories, on closer inspection, one of the images shown is slightly larger than the rest - this was determined by downloading each image.</p>
 
@@ -3983,13 +3983,13 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>Looking at the site hosted by the website kinda stops me in my tracks. KITTENS !!! YAY !!!</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_001.png" alt="flick_001" /></a></p>
+<p><a href="http://recrudesce.github.io/images/flick_001.png"><img src="http://recrudesce.github.io/images/flick_001.png" alt="flick_001" /></a></p>
 
 <p>You can log in with the credentials of demo:demo123 on the login page to give you the ability to upload images (note here, it allows you to upload absolutely anything).</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_002.png" alt="flick_002" /></a></p>
+<p><a href="http://recrudesce.github.io/images/flick_002.png"><img src="http://recrudesce.github.io/images/flick_002.png" alt="flick_002" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_003.png" alt="flick_003" /></a></p>
+<p><a href="http://recrudesce.github.io/images/flick_003.png"><img src="http://recrudesce.github.io/images/flick_003.png" alt="flick_003" /></a></p>
 
 <p>I figured that the upload feature was the vulnerability and worked on uploading PHP shells etc, but I was not able to get any PHP to execute. Maybe it&rsquo;s not the <strong>up</strong>load feature that&rsquo;s useful, maybe it&rsquo;s the <strong>down</strong>load feature ? The download feature will present you with a file, called image.jpg, of the file you&rsquo;re requesting. Turns out you can request any file on the filesystem if you bypass the directory traversal filter (same way as with Hell, using &hellip;.// instead of ../). Requesting the following</p>
 
@@ -4454,7 +4454,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/flick_004.png" alt="flick_004" /></a></p>
+<p><a href="http://recrudesce.github.io/images/flick_004.png"><img src="http://recrudesce.github.io/images/flick_004.png" alt="flick_004" /></a></p>
 
 <p>Yes !  Once I renamed the file and installed SQLite tools onto my Kali VM, I was able to wander around the database to get some username and password combos</p>
 
@@ -6436,7 +6436,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>What is interesting about this MP3 is not what you can hear, but what you can see in the waveform. Much like the demon face in Windowlicker by Aphex Twin, here we have a hidden image in the spectrogram. If you want to know how to find this, take a look at <a href="http://lifehacker.com/5807289/how-to-hide-secret-messages-and-codes-in-audio-files">this Lifehacker article</a>.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_001.png" alt="xerxes2_001" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_001.png"><img src="http://recrudesce.github.io/images/xerxes2_001.png" alt="xerxes2_001" /></a></p>
 
 <p>This, however, is just a diversion. The image is of <a href="http://shodan.wikia.com/wiki/Xerxes">Xerxes</a> from System Shock 2, but the whole MP3 is an easter egg - but a cool one none the less ! Let&rsquo;s move on.</p>
 
@@ -6446,11 +6446,11 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>So, with port 4444 crossed out, lets have a look at some other ports. 8888 is my next target, which returns nothing if you netcat to it, but provides an Python based Notebook application. This page also gives us an insight into the name of one of the users - delacroix.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_002.png" alt="xerxes2_002" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_002.png"><img src="http://recrudesce.github.io/images/xerxes2_002.png" alt="xerxes2_002" /></a></p>
 
 <p>It is possible to run commands through this application by creating a new notebook, and prefixing all commands with !. As an example, I&rsquo;ve created a new notebook and have run the whoami command in the screenshot below (you&rsquo;ll note that id didn&rsquo;t work)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_003.png" alt="xerxes2_003" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_003.png"><img src="http://recrudesce.github.io/images/xerxes2_003.png" alt="xerxes2_003" /></a></p>
 
 <p>At this point I decided to be sneaky and make this download and run a reverse Meterpreter binary&hellip; I created my binary using msfpayload, hosted it on an internal HTTP server, and then set up a multi/handler to accept the connection.</p>
 
@@ -6495,7 +6495,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>The following command pasted into the Python notebook application downloads the binary from the HTTP server to /tmp, makes it executable, and then executes it.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_004.png" alt="xerxes2_004" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_004.png"><img src="http://recrudesce.github.io/images/xerxes2_004.png" alt="xerxes2_004" /></a></p>
 
 <p>A reverse connection is received by the multi/handler, which allows us to get a shell as delacroix, but it disconnects after a certain amount of time.</p>
 
@@ -6526,7 +6526,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>It seems that I&rsquo;ve been scuppered, and that Xerxes is terminating my connection, as seen on the Python Notebook page</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_005.png" alt="xerxes2_005" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_005.png"><img src="http://recrudesce.github.io/images/xerxes2_005.png" alt="xerxes2_005" /></a></p>
 
 <p>However, it looks like I have a small window before the session is terminated - because of this I am able to be quick and echo my SSH public key added to the authorized_keys file, which allows me to subsequently SSH in as delacroix sans password.</p>
 
@@ -7915,7 +7915,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>Turns out the PDF I had was corrupt, and that the actual PDF looks like this</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_006.png" alt="xerxes2_006" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_006.png"><img src="http://recrudesce.github.io/images/xerxes2_006.png" alt="xerxes2_006" /></a></p>
 
 <p><img src="http://img3.wikia.nocookie.net/__cb20130417220142/mlp/images/6/61/FANMADE_Derp_by_WorkingOrder.gif" alt="" /></p>
 
@@ -7934,7 +7934,7 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>OK, so, how to I boot this PDF I wonder ? Well, turns out this technique has already been used by <a href="https://www.alchemistowl.org/pocorgtfo/pocorgtfo02.pdf">PoC||GTFO with their 2nd edition</a> - check out section 8 to see instructions on using qemu. X11 forwarding required - luckily I set up X11 forwarding ages ago. Using the command found in PoC||GTFO002, I ended up with the following screen</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/xerxes2_007.png" alt="xerxes2_007" /></a></p>
+<p><a href="http://recrudesce.github.io/images/xerxes2_007.png"><img src="http://recrudesce.github.io/images/xerxes2_007.png" alt="xerxes2_007" /></a></p>
 
 <p>Nice, a password.  Lets get that dump file decrypted.</p>
 
@@ -9048,23 +9048,23 @@ On visual inspection, one line stands out&hellip; (yes, I could probably have wr
 
 <p>Not very exciting - SSH, HTTP and a SQUID proxy. Interestingly SSH is filtered, which means no easy route in :(</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/53193742.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/53193742.jpg" alt="53193742" /></a></p>
+<p><a href="http://recrudesce.github.io/images/53193742.jpg"><img src="http://recrudesce.github.io/images/53193742.jpg" alt="53193742" /></a></p>
 
 <p>HTTP is our next destination, which shows a nicely branded login page.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_001.png" alt="skytower_001" /></a></p>
+<p><a href="http://recrudesce.github.io/images/skytower_001.png"><img src="http://recrudesce.github.io/images/skytower_001.png" alt="skytower_001" /></a></p>
 
 <p>SQLi me-thinks.  Lets try some simple things like entering 123&#8217; or 1=1 into the email field and clicking Login</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_002.png" alt="skytower_002" /></a></p>
+<p><a href="http://recrudesce.github.io/images/skytower_002.png"><img src="http://recrudesce.github.io/images/skytower_002.png" alt="skytower_002" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_003.png" alt="skytower_003" /></a></p>
+<p><a href="http://recrudesce.github.io/images/skytower_003.png"><img src="http://recrudesce.github.io/images/skytower_003.png" alt="skytower_003" /></a></p>
 
 <p>Hmm, no dice. Looks like the code is filtering out simple SQLi.  Can we fool this into filtering out the &lsquo;or&rsquo; and the &lsquo;=&rsquo; but still have an &lsquo;or&rsquo; clause left over ?  Turns out, yes we can ;)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_004.png" alt="skytower_004" /></a></p>
+<p><a href="http://recrudesce.github.io/images/skytower_004.png"><img src="http://recrudesce.github.io/images/skytower_004.png" alt="skytower_004" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/skytower_005.png" alt="skytower_005" /></a></p>
+<p><a href="http://recrudesce.github.io/images/skytower_005.png"><img src="http://recrudesce.github.io/images/skytower_005.png" alt="skytower_005" /></a></p>
 
 <p>This requires a GIF&hellip;</p>
 
@@ -9340,7 +9340,7 @@ It&rsquo;s obvious while looking at the /var/www/login.php file that the applica
 
 <p>A lot of the techniques in this VM are known to me apart from the very last step. I will go through my thought process for each step and how I managed to go from enumeration to a root shell.</p>
 
-<blockquote><p>[@0x42424242](https://twitter.com/0x42424242) Finally rooted your fucking VM :P</p><footer><strong>recrudesce (@recrudesce)</strong> <cite><a href='https://twitter.com/recrudesce/statuses/489505727887978496'>twitter.com/recrudesce/statuses/&hellip;</a></cite></footer></blockquote>
+<blockquote><p>@0x42424242 Finally rooted your fucking VM :P</p><footer><strong>recrudesce (@recrudesce)</strong> <cite><a href='https://twitter.com/recrudesce/statuses/489505727887978496'>twitter.com/recrudesce/statuses/&hellip;</a></cite></footer></blockquote>
 
 
 <!-- more -->
@@ -9391,19 +9391,19 @@ It&rsquo;s obvious while looking at the /var/www/login.php file that the applica
 
 <p>Visting the web server in a browser presents a pretty boring page that welcomes us to the server and shows a cartoon.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_001.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_001.png"><img src="http://recrudesce.github.io/images/hell_001.png" alt="hell_001" /></a></p>
 
 <p>This doesn&rsquo;t give us much to go on, therefore let&rsquo;s try out some simple things any pentester should try - let&rsquo;s see if a robots.txt file exists.  Well what do you know&hellip;</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_002.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_002.png"><img src="http://recrudesce.github.io/images/hell_002.png" alt="hell_002" /></a></p>
 
 <p>The /personal/ folder shows a creepy shrine site (this is incidentally the closest I&rsquo;ve ever been to the face of a cow)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_003.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_003.png"><img src="http://recrudesce.github.io/images/hell_003.png" alt="hell_003" /></a></p>
 
 <p>Yeah, creepy&hellip; The /super_secret_login_path_muhahaha/ folder presents a login page</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_004.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_004.png"><img src="http://recrudesce.github.io/images/hell_004.png" alt="hell_004" /></a></p>
 
 <hr />
 
@@ -9463,28 +9463,28 @@ It&rsquo;s obvious while looking at the /var/www/login.php file that the applica
 
 <p>Success, username <strong>jack</strong>, password <strong>g0tmi1k69</strong> (yes, more creepiness, this Jack guy needs locking up). Using these credentials presents us with a management style interface</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_005.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_005.png"><img src="http://recrudesce.github.io/images/hell_005.png" alt="hell_005" /></a></p>
 
 <p>I won&rsquo;t explain each section, but the two sections we are going to use are Notes and Personal.
 Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temporary storage&rdquo;, which is assumed to be /tmp as this is usually what people define as temporary storage.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_009.png" alt="hell_009" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_009.png"><img src="http://recrudesce.github.io/images/hell_009.png" alt="hell_009" /></a></p>
 
 <p>Personal presents another login page, which sets a cookie which has an attribute that increases with each failed login.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_006.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_006.png"><img src="http://recrudesce.github.io/images/hell_006.png" alt="hell_006" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_007.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_007.png"><img src="http://recrudesce.github.io/images/hell_007.png" alt="hell_007" /></a></p>
 
 <p>When you hit 3 failed logins, the page reverts to the main panel, and adds an error message to the top.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_015.png" alt="hell_015" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_015.png"><img src="http://recrudesce.github.io/images/hell_015.png" alt="hell_015" /></a></p>
 
 <p>On further investigation, the <strong>intruder</strong> attribute of the cookie is set which defines the file that is included at the top of the panel. I wonder if there&rsquo;s a local file inclusion vulnerability there.  I went about editing the cookie to try and include other files on the filesystem.  After a few minutes of frustration, I worked out that the code was filtering any instance of ../ in the include path - however, being the sneaky person I am, I discovered this can be bypassed by using &hellip;.// or &hellip;/./ instead.  Here&rsquo;s /etc/passwd included by setting the <strong>intruder</strong> cookie attribute to &hellip;.//&hellip;.//&hellip;.//&hellip;.//etc/passwd</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_008.png" alt="hell_008" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_008.png"><img src="http://recrudesce.github.io/images/hell_008.png" alt="hell_008" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_010.png" alt="" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_010.png"><img src="http://recrudesce.github.io/images/hell_010.png" alt="hell_010" /></a></p>
 
 <p>It looks like the page parses any code (HTML etc) in the included file, therefore we can poison the note.txt file with PHP via the Notes feature, and include it to execute the code.  First, a PHP based reverse staged Meterpreter is created and hosted on an HTTP server.</p>
 
@@ -9527,19 +9527,19 @@ Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temp
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_011.png" alt="hell_011" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_011.png"><img src="http://recrudesce.github.io/images/hell_011.png" alt="hell_011" /></a></p>
 
 <p>Three failed logins are once again performed via the Personal feature to create the cookie, which is modified to include /tmp/note.txt (which includes our download PHP command)</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_012.png" alt="hell_012" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_012.png"><img src="http://recrudesce.github.io/images/hell_012.png" alt="hell_012" /></a></p>
 
 <p>When the main panel page is reloaded, our poisoned note.txt file is included, the PHP is parsed and our payload file is downloaded.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_013.png" alt="hell_013" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_013.png"><img src="http://recrudesce.github.io/images/hell_013.png" alt="hell_013" /></a></p>
 
 <p>We&rsquo;re onto something here !  The cookie is edited once again to include /tmp/sneaky.txt and the panel page reloaded to execute stage 1 of our Meterpreter payload, which makes a connection to our waiting handler.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/hell_014.png" alt="hell_014" /></a></p>
+<p><a href="http://recrudesce.github.io/images/hell_014.png"><img src="http://recrudesce.github.io/images/hell_014.png" alt="hell_014" /></a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -9650,11 +9650,11 @@ Notes allows us to write arbitrary text to a note.txt file stored in &ldquo;temp
 
 <p>The first thing that draws my eye is the g0tmi1k_pics folder. It&rsquo;s somewhere you know you don&rsquo;t want to go, but seems to have this strange come-hither vibe about it. It&rsquo;s like a car crash&hellip; gruesome but you can&rsquo;t help but look. So I did. Now I wish I didn&rsquo;t. Exhibit A, and B, and C.</p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/1.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/1.jpg" alt="1" /></a></p>
+<p><a href="http://recrudesce.github.io/images/1.jpg"><img src="http://recrudesce.github.io/images/1.jpg" alt="1" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/2.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/2.jpg" alt="2" /></a></p>
+<p><a href="http://recrudesce.github.io/images/2.jpg"><img src="http://recrudesce.github.io/images/2.jpg" alt="2" /></a></p>
 
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/07/3.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/07/3.jpg" alt="3" /></a></p>
+<p><a href="http://recrudesce.github.io/images/3.jpg"><img src="http://recrudesce.github.io/images/3.jpg" alt="3" /></a></p>
 
 <p>Yeah&hellip;
 Jack, you&rsquo;re a strange one, I&rsquo;ll give you that. Hang on, I think I can hear the men in white coats knocking. Yup, they&rsquo;re asking for you - shall I tell them you&rsquo;re &ldquo;out&rdquo; ?</p>
