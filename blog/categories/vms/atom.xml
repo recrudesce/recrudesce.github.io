@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T01:36:12+00:00</updated>
+  <updated>2015-01-02T01:39:24+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -2025,7 +2025,9 @@ OK: wut ?
 &gt; 
 </code></pre>
 
-<p><img src="http://static.fjcdn.com/gifs/MFW+someone+tries+to+open+IE.+that+makes+me+a_c3c81f_4698730.gif" alt="" /> OK, so not knowing the password, I decided to check out SSH.</p>
+<p><img src="http://static.fjcdn.com/gifs/MFW+someone+tries+to+open+IE.+that+makes+me+a_c3c81f_4698730.gif" alt="" /></p>
+
+<p>OK, so not knowing the password, I decided to check out SSH.</p>
 
 <pre><code class="bash">root@pwk:~# ssh blah@192.168.0.106
 
@@ -2186,7 +2188,9 @@ Vm0wd2QyUXlVWGxWV0d4WFlUSm9WMVl3Wkc5V2JGbDNXa1pPVlUxV2NIcFhhMXBQVjBaYWMySkVUbGho
 root@pwk:~#
 </code></pre>
 
-<p><img src="http://d2tq98mqfjyz2l.cloudfront.net/image_cache/1308021750174814.gif" alt="" /> Turns out you have to keep decoding the base64 about 13 more times until you end up with this</p>
+<p><img src="http://d2tq98mqfjyz2l.cloudfront.net/image_cache/1308021750174814.gif" alt="" /></p>
+
+<p>Turns out you have to keep decoding the base64 about 13 more times until you end up with this</p>
 
 <pre><code class="bash">root@pwk:~# echo "dGFidXBKaWV2YXM4S25vag==" | base64 -d
 tabupJievas8Knoj
