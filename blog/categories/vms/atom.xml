@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T01:39:24+00:00</updated>
+  <updated>2015-01-02T19:18:52+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -1108,7 +1108,7 @@ root password is "qVx4UJ*zcUdc9#3C$Q", but you should already have a shell, righ
     <link href="http://recrudesce.github.io/2014/10/26/owl-up-in-my-grill/"/>
     <updated>2014-10-26T17:16:50+00:00</updated>
     <id>http://recrudesce.github.io/2014/10/26/owl-up-in-my-grill</id>
-    <content type="html"><![CDATA[<p>So, while we were all sitting in #vulnhub (on Freenode) waiting for<a href="https://twitter.com/superkojiman">superkojiman</a> to release Persistence, <a href="https://twitter.com/swappage">Swappage</a> released <a href="vulnhub.com/entry/owlnest-102,102/">OwlNest</a>. I thought, what the hell, might as well use it to pass the time, right ? I was, however, not expecting it to take me 4 days&hellip;</p>
+    <content type="html"><![CDATA[<p>So, while we were all sitting in #vulnhub (on Freenode) waiting for <a href="https://twitter.com/superkojiman">superkojiman</a> to release Persistence, <a href="https://twitter.com/swappage">Swappage</a> released <a href="vulnhub.com/entry/owlnest-102,102/">OwlNest</a>. I thought, what the hell, might as well use it to pass the time, right ? I was, however, not expecting it to take me 4 days&hellip;</p>
 
 <!-- more -->
 
@@ -1976,7 +1976,11 @@ a70354f0258dcc00292c72aab3c8b1e4
     <id>http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb</id>
     <content type="html"><![CDATA[<p>Whilst in the middle of cracking <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2</a>, <a href="https://twitter.com/leonjza">leonjza</a> decided to release <a href="http://vulnhub.com/entry/flick-1,99/">Flick</a> - a CTF that is sure to tax minds.  Naturally I decided to make myself feel like an unskilled loser, and downloaded it. Here&rsquo;s the story of how I rooted Flick first.</p>
 
-<p><blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! @leonjza @VulnHub #flick #boot2root #vulnhub</p><footer><strong>Russ Watts (@recrudesce) <a href="https://twitter.com/recrudesce/statuses/499168321150124033">https://twitter.com/recrudesce/statuses/499168321150124033</a></strong></footer></blockquote></p>
+<p>{% blockquote Russ Watts (@recrudesce) <a href="https://twitter.com/recrudesce/statuses/499168321150124033">https://twitter.com/recrudesce/statuses/499168321150124033</a> %}
+root@flick:~# id
+uid=0(root) gid=0(root) groups=0(root)
+First ! @leonjza @VulnHub #flick #boot2root #vulnhub
+{% endblockquote %}</p>
 
 <!-- more -->
 
