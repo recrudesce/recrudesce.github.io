@@ -4,7 +4,7 @@
   <title><![CDATA[Category: events | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/events/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T00:32:47+00:00</updated>
+  <updated>2015-01-02T00:36:25+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[BSides London - A Retrospective]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/04/29/bsides-london-a-retrospective/"/>
+    <link href="http://recrudesce.github.io/2014/04/29/bsides-london-a-retrospective/"/>
     <updated>2014-04-29T21:23:22+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/04/29/bsides-london-a-retrospective</id>
+    <id>http://recrudesce.github.io/2014/04/29/bsides-london-a-retrospective</id>
     <content type="html"><![CDATA[<p>BSides London, BSides London&hellip; what can I say about BSides London&hellip;
 Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention like Defcon you will be sorely disappointed. But the size doesn&rsquo;t matter when you get to meet revered infosec people like <a href="https://twitter.com/jack_daniel">Jack Daniel</a> (Tenable) , <a href="https://twitter.com/mckeay">Martin McKeay</a>, <a href="https://twitter.com/todb">Tod Beardsley</a> (Metasploit) et al and talk to them on a one to one level about anything (I had a conversation about Hello Kitty with Tod B - that says a lot). Oh, and don&rsquo;t forget the fact that staff members from the ever so epic Offensive Security were there too - I&rsquo;m looking at you <a href="https://twitter.com/g0tmi1k">g0tmi1k</a> :D It was also nice to meet up with <a href="https://twitter.com/NullMode_">Nullmode</a> (forever known as N0tmi1k) and <a href="https://twitter.com/arr0way">Arr0way</a> as well and chat randomly about anything and everything that came to mind.</p>
 
@@ -38,9 +38,9 @@ Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention 
   
   <entry>
     <title type="html"><![CDATA[BSidesLondon and Infosec]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/04/24/bsideslondon-and-infosec/"/>
+    <link href="http://recrudesce.github.io/2014/04/24/bsideslondon-and-infosec/"/>
     <updated>2014-04-24T11:17:02+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/04/24/bsideslondon-and-infosec</id>
+    <id>http://recrudesce.github.io/2014/04/24/bsideslondon-and-infosec</id>
     <content type="html"><![CDATA[<p>With less than a week to go before <a href="https://www.securitybsides.org.uk">BSides London</a> and <a href="http://www.infosec.co.uk">Infosec 2014</a>, I&rsquo;m trying to list out all the people/companies I want to talk to, and also determine whether to take my laptop or my tablet - I&rsquo;m thinking laptop&hellip;</p>
 
 <p>Anyway, quick and simple post this one - I&rsquo;ll be at both events.  You can tweet me <a href="https://twitter.com/recrudesce">@recrudesce</a> if you want to meet up and say &ldquo;hi&rdquo;.</p>

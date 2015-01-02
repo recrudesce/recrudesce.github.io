@@ -4,7 +4,7 @@
   <title><![CDATA[Category: oscp | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/oscp/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T00:32:47+00:00</updated>
+  <updated>2015-01-02T00:36:25+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[OSCP Review]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/04/20/oscp-review/"/>
+    <link href="http://recrudesce.github.io/2014/04/20/oscp-review/"/>
     <updated>2014-04-20T17:11:33+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/04/20/oscp-review</id>
+    <id>http://recrudesce.github.io/2014/04/20/oscp-review</id>
     <content type="html"><![CDATA[<p>Have you ever purposefully put yourself in a situation that makes you run around the house in glee, and then five minutes later makes you want to put your head through a door ?  No ?  Maybe you should try OSCP.  If being constantly told to &ldquo;try harder&rdquo; doesn&rsquo;t make you want to embed a brick into your eye socket, then maybe this is for you&hellip;</p>
 
 <p>After much research into the Certified Ethical Hacker course, the term &ldquo;OSCP&rdquo; kept cropping up in my google searches.  OSCP&hellip; OSCP&hellip;  what is this mythical OSCP of which you speak !?</p>

