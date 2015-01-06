@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:22:30+00:00</updated>
+  <updated>2015-01-06T13:23:50+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -424,7 +424,6 @@ I spent a lot of time looking at this, and found out that the response time for 
 <span class='line-number'>41</span>
 <span class='line-number'>42</span>
 <span class='line-number'>43</span>
-<span class='line-number'>44</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
 </span><span class='line'><span class="kn">import</span> <span class="nn">socket</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">string</span><span class="o">,</span> <span class="nn">numpy</span><span class="o">,</span> <span class="nn">sys</span>
 </span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
@@ -458,7 +457,6 @@ I spent a lot of time looking at this, and found out that the response time for 
 </span><span class='line'>                <span class="n">avg</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg1</span><span class="p">,</span> <span class="n">avg2</span><span class="p">,</span> <span class="n">avg3</span><span class="p">,</span> <span class="n">avg4</span><span class="p">,</span> <span class="n">avg5</span><span class="p">]</span>
 </span><span class='line'>                <span class="n">letter_avg</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">avg</span><span class="p">)</span>
 </span><span class='line'>                <span class="k">if</span> <span class="n">letter_avg</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span class='line'>                        <span class="c">#print &quot;Letter&quot;, charnum, &quot;is&quot;, charact</span>
 </span><span class='line'>                        <span class="n">discovered</span> <span class="o">=</span> <span class="n">discovered</span> <span class="o">+</span> <span class="n">charact</span>
 </span><span class='line'>                        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">Password Discovered: &#39;</span><span class="o">+</span> <span class="n">discovered</span><span class="p">)</span>
 </span><span class='line'>                        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
