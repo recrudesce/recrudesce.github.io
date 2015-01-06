@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:02:35+00:00</updated>
+  <updated>2015-01-06T13:07:04+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -12,6 +12,18 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Test]]></title>
+    <link href="http://recrudesce.github.io/2015/01/06/test/"/>
+    <updated>2015-01-06T13:06:03+00:00</updated>
+    <id>http://recrudesce.github.io/2015/01/06/test</id>
+    <content type="html"><![CDATA[<p>Test post</p>
+
+<div class='embed tweet'>Tweet could not be processed</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stealing the Fire from Heaven]]></title>
