@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T12:43:23+00:00</updated>
+  <updated>2015-01-06T12:46:21+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -18,7 +18,16 @@
     <link href="http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven/"/>
     <updated>2015-01-06T12:41:45+00:00</updated>
     <id>http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven</id>
-    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+    <content type="html"><![CDATA[<p>c0ne surprised us all by releasing Pandora&rsquo;s Box, which is a VM geared more towards exploit dev, and breaks the norm for vulnerable VM&rsquo;s, as it doesn&rsquo;t start with a website !</p>
+
+<p>There are 5 challenges, I am going to post them as I crack them.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T12:43:23+00:00</updated>
+  <updated>2015-01-06T12:46:21+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -18,7 +18,14 @@
     <link href="http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven/"/>
     <updated>2015-01-06T12:41:45+00:00</updated>
     <id>http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven</id>
-    <content type="html"><![CDATA[<pre><code class="python">#!/usr/bin/python
+    <content type="html"><![CDATA[<p>c0ne surprised us all by releasing Pandora&rsquo;s Box, which is a VM geared more towards exploit dev, and breaks the norm for vulnerable VM&rsquo;s, as it doesn&rsquo;t start with a website !</p>
+
+<p>There are 5 challenges, I am going to post them as I crack them.</p>
+
+<!-- more -->
+
+
+<pre><code class="python">#!/usr/bin/python
 import socket, time, string, numpy
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(('172.16.231.133', 54311))
