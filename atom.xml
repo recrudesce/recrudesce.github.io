@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:23:50+00:00</updated>
+  <updated>2015-01-06T13:30:20+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -472,101 +472,7 @@ I spent a lot of time looking at this, and found out that the response time for 
 
 <p>This script produces the following output</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# python p_brute2.py
-</span><span class='line'>Letter <span class="m">1</span> is R
-</span><span class='line'>Letter <span class="m">2</span> is 3
-</span><span class='line'>Letter <span class="m">3</span> is s
-</span><span class='line'>Letter <span class="m">4</span> is p
-</span><span class='line'>Letter <span class="m">5</span> is 3
-</span><span class='line'>Letter <span class="m">6</span> is c
-</span><span class='line'>Letter <span class="m">7</span> is t
-</span><span class='line'>Letter <span class="m">8</span> is Y
-</span><span class='line'>Letter <span class="m">9</span> is 0
-</span><span class='line'>Letter <span class="m">10</span> is 4
-</span><span class='line'>Letter <span class="m">11</span> is r
-</span><span class='line'>Letter <span class="m">12</span> is 4
-</span><span class='line'>Letter <span class="m">13</span> is d
-</span><span class='line'>Letter <span class="m">14</span> is m
-</span><span class='line'>Letter <span class="m">15</span> is 1
-</span><span class='line'>Letter <span class="m">16</span> is n
-</span><span class='line'>Letter <span class="m">17</span> is i
-</span><span class='line'>Letter <span class="m">18</span> is S
-</span><span class='line'>Letter <span class="m">19</span> is t
-</span><span class='line'>Letter <span class="m">20</span> is 4
-</span><span class='line'>Letter <span class="m">21</span> is t
-</span><span class='line'>Letter <span class="m">22</span> is 0
-</span><span class='line'>Letter <span class="m">23</span> is r
-</span><span class='line'>Letter <span class="m">24</span> is L
-</span><span class='line'>Letter <span class="m">25</span> is 1
-</span><span class='line'>Letter <span class="m">26</span> is k
-</span><span class='line'>Letter <span class="m">27</span> is e
-</span><span class='line'>Letter <span class="m">28</span> is Y
-</span><span class='line'>Letter <span class="m">29</span> is o
-</span><span class='line'>Letter <span class="m">30</span> is 4
-</span><span class='line'>Letter <span class="m">31</span> is R
-</span><span class='line'>Letter <span class="m">32</span> is 3
-</span><span class='line'>Letter <span class="m">33</span> is s
-</span><span class='line'>Letter <span class="m">34</span> is p
-</span><span class='line'>Letter <span class="m">35</span> is e
-</span><span class='line'>Letter <span class="m">36</span> is c
-</span><span class='line'>Letter <span class="m">37</span> is t
-</span><span class='line'>Letter <span class="m">38</span> is Y
-</span><span class='line'>Letter <span class="m">39</span> is 0
-</span><span class='line'>Letter <span class="m">40</span> is 4
-</span><span class='line'>Letter <span class="m">41</span> is r
-</span><span class='line'>Letter <span class="m">42</span> is G
-</span><span class='line'>Letter <span class="m">43</span> is 0
-</span><span class='line'>Letter <span class="m">44</span> is d
-</span><span class='line'>Got a successful login !
-</span><span class='line'>Password is:  R3sp3ctY04r4dm1niSt4t0rL1keYo4R3spectY04rG0d
-</span></code></pre></td></tr></table></div></figure>
+<script type="text/javascript" src="https://asciinema.org/a/15235.js" id="asciicast-15235" async></script>
 
 
 <p>Once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>

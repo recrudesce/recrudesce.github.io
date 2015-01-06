@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:23:50+00:00</updated>
+  <updated>2015-01-06T13:30:20+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -258,54 +258,8 @@ s.close()
 
 <p>This script produces the following output</p>
 
-<pre><code class="bash">root@kali:~# python p_brute2.py
-Letter 1 is R
-Letter 2 is 3
-Letter 3 is s
-Letter 4 is p
-Letter 5 is 3
-Letter 6 is c
-Letter 7 is t
-Letter 8 is Y
-Letter 9 is 0
-Letter 10 is 4
-Letter 11 is r
-Letter 12 is 4
-Letter 13 is d
-Letter 14 is m
-Letter 15 is 1
-Letter 16 is n
-Letter 17 is i
-Letter 18 is S
-Letter 19 is t
-Letter 20 is 4
-Letter 21 is t
-Letter 22 is 0
-Letter 23 is r
-Letter 24 is L
-Letter 25 is 1
-Letter 26 is k
-Letter 27 is e
-Letter 28 is Y
-Letter 29 is o
-Letter 30 is 4
-Letter 31 is R
-Letter 32 is 3
-Letter 33 is s
-Letter 34 is p
-Letter 35 is e
-Letter 36 is c
-Letter 37 is t
-Letter 38 is Y
-Letter 39 is 0
-Letter 40 is 4
-Letter 41 is r
-Letter 42 is G
-Letter 43 is 0
-Letter 44 is d
-Got a successful login !
-Password is:  R3sp3ctY04r4dm1niSt4t0rL1keYo4R3spectY04rG0d
-</code></pre>
+<script type="text/javascript" src="https://asciinema.org/a/15235.js" id="asciicast-15235" async></script>
+
 
 <p>Once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>
 
