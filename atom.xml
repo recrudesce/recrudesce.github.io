@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:13:55+00:00</updated>
+  <updated>2015-01-06T13:15:37+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -18,7 +18,7 @@
     <link href="http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven/"/>
     <updated>2015-01-06T12:41:45+00:00</updated>
     <id>http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven</id>
-    <content type="html"><![CDATA[<p>c0ne surprised us all by releasing Pandora&rsquo;s Box, which is a VM geared more towards exploit dev, and breaks the norm for vulnerable VM&rsquo;s, as it doesn&rsquo;t start with a website !</p>
+    <content type="html"><![CDATA[<p>c0ne surprised us all by releasing <a href="https://www.vulnhub.com/entry/pandoras-box-1,111/">Pandora&rsquo;s Box</a>, which is a VM geared more towards exploit dev, and breaks the norm for vulnerable VM&rsquo;s, as it doesn&rsquo;t start with a website !</p>
 
 <p>There are 5 challenges, I am going to post them as I crack them.</p>
 
@@ -379,7 +379,7 @@ I spent a lot of time looking at this, and found out that the response time for 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It is sensible to hazard a guess that the first password is &ldquo;R&rdquo;, due to it responding a lot quicker than all other characters attempted.  I then wrapped this into a script to brute the whole password</p>
+<p>It is sensible to hazard a guess that the first character is &ldquo;R&rdquo;, due to it responding a lot quicker than all other characters attempted.  I then wrapped this into a script to brute the whole password</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
