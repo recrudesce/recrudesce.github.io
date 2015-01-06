@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T14:44:09+00:00</updated>
+  <updated>2015-01-06T22:15:43+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Don't Answer the Doorbell]]></title>
+    <link href="http://recrudesce.github.io/2015/01/06/dont-answer-the-doorbell/"/>
+    <updated>2015-01-06T22:13:19+00:00</updated>
+    <id>http://recrudesce.github.io/2015/01/06/dont-answer-the-doorbell</id>
+    <content type="html"><![CDATA[<p><a href="https://www.vulnhub.com/entry/the-purge-1,110/">The Purge</a> was created by strata, and I can tell you it&rsquo;s a hassle to complete.  But I did, and here&rsquo;s how !</p>
+
+<!-- more -->
+
+
+<p>Test</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stealing the Fire from Heaven]]></title>
