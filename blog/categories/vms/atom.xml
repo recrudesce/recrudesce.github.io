@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:34:28+00:00</updated>
+  <updated>2015-01-06T13:36:28+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -137,18 +137,7 @@ s.close()
 <script type="text/javascript" src="https://asciinema.org/a/15235.js" id="asciicast-15235" async></script>
 
 
-<p>Once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>
-
-<pre><code class="bash">root@kali:~# nc -nv 172.16.231.133 54311
-(UNKNOWN) [172.16.231.133] 54311 (?) open
-#######################
-# Secure Remote Shell #
-#######################
-Welcome, please log in
-Password: R3sp3ctY04r4dm1niSt4t0rL1keYo4R3spectY04rG0d
-Logged in successfully, type exit to close the shell
-Shell$ 
-</code></pre>
+<p>As per the video above, once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>
 
 <p>Onto the next step !</p>
 ]]></content>

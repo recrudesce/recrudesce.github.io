@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:34:28+00:00</updated>
+  <updated>2015-01-06T13:36:28+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -225,28 +225,7 @@ I spent a lot of time looking at this, and found out that the response time for 
 <script type="text/javascript" src="https://asciinema.org/a/15235.js" id="asciicast-15235" async></script>
 
 
-<p>Once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nc -nv 172.16.231.133 54311
-</span><span class='line'><span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>172.16.231.133<span class="o">]</span> <span class="m">54311</span> <span class="o">(</span>?<span class="o">)</span> open
-</span><span class='line'><span class="c">#######################</span>
-</span><span class='line'><span class="c"># Secure Remote Shell #</span>
-</span><span class='line'><span class="c">#######################</span>
-</span><span class='line'>Welcome, please log in
-</span><span class='line'>Password: R3sp3ctY04r4dm1niSt4t0rL1keYo4R3spectY04rG0d
-</span><span class='line'>Logged in successfully, <span class="nb">type exit </span>to close the shell
-</span><span class='line'>Shell<span class="nv">$ </span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p>As per the video above, once the bruted password is entered into the application, we&rsquo;re provided with a shell.</p>
 
 <p>Onto the next step !</p>
 ]]></content>
