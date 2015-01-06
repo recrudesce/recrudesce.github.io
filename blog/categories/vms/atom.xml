@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm's | FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/blog/categories/vms/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-06T13:47:25+00:00</updated>
+  <updated>2015-01-06T14:43:42+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -25,7 +25,7 @@
 <!-- more -->
 
 
-<h1>NMAPing</h1>
+<h1>Opening the Jar</h1>
 
 <p>NMAP shows that only 2 ports are open, 22 and 54311.  22 is obviously SSH, whereas 54311 is&hellip; ?</p>
 
