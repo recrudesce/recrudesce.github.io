@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-07T00:51:14+00:00</updated>
+  <updated>2015-01-07T00:56:31+00:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -444,7 +444,7 @@ I already know the server is Varnish, and I know about the PURGE option.  Howeve
 
 
 <p>I spent a lot of time looking through the files from this archive, and eventually found a password of &ldquo;vi.isforleeth@xxors&rdquo; hidden in .bash_history in the jholmes directory.<br/>
-This allowed me to su as the jholmes user and discover that he is able to run the <code>/usr/bin/varnishadm</code> application via <code>sudo</code>.  I also discovered that, with a few tweaks, you can get <code>varnishadm</code> to compile inline C and run commands as the user varnishd is running as.  The last video shows me switching to the jholmes user, creating a malicious shell script to grab a Base64&rsquo;d copy of FTP from my attacking VM and decode it to a binary (you can escape to a shell using the ! command in FTP), running <code>sudo varnishadm</code>, and configuring varnish to run as <code>root</code> instead of the <code>varnish</code> user.  I then configure the cc_compiler parameter to run the malicious script I created earlier, which allows me to drop to a root shell and read the <code>/FLAG.txt</code> file.</p>
+This allowed me to su as the jholmes user and discover that he is able to run the <code>/usr/bin/varnishadm</code> application via <code>sudo</code>.  I also discovered that, with a few tweaks, you can get <code>varnishadm</code> to compile inline C and run commands as the user varnishd is running as.  The last video shows me switching to the jholmes user, creating a malicious shell script to grab a copy of the dash binary from my attacking VM (dash does not drop privileges like bash does, therefore is a much better option for suid shells), running <code>sudo varnishadm</code>, and configuring varnish to run as <code>root</code> instead of the <code>varnish</code> user.  I then configure the cc_compiler parameter to run the malicious script I created earlier, which allows me to drop to a root shell and read the <code>/FLAG.txt</code> file.</p>
 
 <script type="text/javascript" src="https://asciinema.org/a/15256.js" id="asciicast-15256" async></script>
 
