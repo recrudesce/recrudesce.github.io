@@ -7,7 +7,7 @@
 	<meta name="author" content="recrudesce">
 
 	
-	<meta name="description" content="The Purge was created by strata, and I can tell you it&rsquo;s a hassle to complete. But I did, and here&rsquo;s how ! Test vm's ">
+	<meta name="description" content="The Purge was created by strata, and I can tell you it&rsquo;s a hassle to complete. But I did, and here&rsquo;s how ! What&rsquo;s Running I don& &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,7 +82,433 @@
 <!-- more -->
 
 
-<p>Test</p>
+<h1>What&rsquo;s Running</h1>
+
+<p>I don&rsquo;t want to tell you how to do this bit, so here&rsquo;s the output</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nmap -sS -p- -T5 -Pn 172.16.231.134
+</span><span class='line'>
+</span><span class='line'>Starting Nmap 6.47 <span class="o">(</span> http://nmap.org <span class="o">)</span> at 2015-01-06 22:17 GMT
+</span><span class='line'>Nmap scan report <span class="k">for</span> thepurge <span class="o">(</span>172.16.231.134<span class="o">)</span>
+</span><span class='line'>Host is up <span class="o">(</span>0.00027s latency<span class="o">)</span>.
+</span><span class='line'>Not shown: <span class="m">65534</span> filtered ports
+</span><span class='line'>PORT   STATE SERVICE
+</span><span class='line'>80/tcp open  http
+</span><span class='line'>MAC Address: 00:0C:29:AD:9E:6C <span class="o">(</span>VMware<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 52.91 seconds
+</span><span class='line'>root@kali:~#
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Visiting the HTTP server without specifying a hosts entry will provide you with some instructions&hellip;  however once a hosts entry is created, you can reference the VM correctly.
+So, I hit it with a browser to see what I was faced with.</p>
+
+<p><img src="/images/thepurge_001.png" alt="thepurge_001" /></p>
+
+<p>None of the links work on this page, so I&rsquo;m stuck just looking at this.  Using <code>nc</code>, I saw that the page is hosted via Varnish.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>root@kali:~# nc 172.16.231.134 80
+</span><span class='line'>GET / HTTP/1.0
+</span><span class='line'>
+</span><span class='line'>HTTP/1.1 <span class="m">200</span> OK
+</span><span class='line'>Date: Tue, <span class="m">06</span> Jan <span class="m">2015</span> 22:21:12 GMT
+</span><span class='line'>Server: Apache
+</span><span class='line'>Last-Modified: Fri, <span class="m">02</span> Jan <span class="m">2015</span> 22:52:51 GMT
+</span><span class='line'>ETag: <span class="s2">&quot;82a-50bb3334896c0&quot;</span>
+</span><span class='line'>GovPurGe: Blessed be our New Founding Fathers and America
+</span><span class='line'>Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
+</span><span class='line'>X-Varnish: 3
+</span><span class='line'>Age: 0
+</span><span class='line'>Via: 1.1 varnish-v4
+</span><span class='line'>Connection: close
+</span><span class='line'>Accept-Ranges: bytes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Varnish is a caching server, and has a PURGE HTTP option which cleans out any caches.  Also note the GovPurGe header.</p>
+
+<p>My next step was to do some enumeration on the page.  There are 3 reviews, one of which is in pseudo-latin.  However, there are 4 words that immediately stood out to me due to strange captitalisation.  <code>Steg</code>, <code>Hide</code>, <code>Varnish</code>, and <code>Purge</code>.
+I already know the server is Varnish, and I know about the PURGE option.  However, steghide implies that something is hidden in an image&hellip;</p>
+
+<script type="text/javascript" src="https://asciinema.org/a/15244.js" id="asciicast-15244" async></script>
+
+
+<p>So, an ominous message&hellip; I&rsquo;ll note that down for later as it is not required right now.</p>
+
+<p>There&rsquo;s nothing else on this page of interest, so I decided to see what would happen if I send a PURGE request to the main page using <code>curl</code></p>
+
+<script type="text/javascript" src="https://asciinema.org/a/15247.js" id="asciicast-15247" async></script>
+
+
+<p>Once the PURGE completed, I visited the page again with a browser, and was presented with different page content.</p>
+
+<p><img src="/images/thepurge_002.png" alt="thepurge_002" /></p>
+
+<p>Interesting.  I also discovered that the image at the bottom of the page, which I previously ran through steghide had a different filename.  Maybe there&rsquo;s something different inside it ?</p>
+
+<script type="text/javascript" src="https://asciinema.org/a/15248.js" id="asciicast-15248" async></script>
+
+
+<p>Different data - that&rsquo;s interesting.  The Youtube video linked is <a href="https://www.youtube.com/watch?v=2tmc8rJgxUI#7d5,7a69,7cb,16">Knocking on Heavens Door by Guns N Roses</a>, however the random characters after the URL are HEX, which decode to 2005, 31337, 1995, and 22 in decimal.  Sounds like port knocking to me which opens SSH access, but I don&rsquo;t have any usernames, passwords, or private keys to use.</p>
+
+<p>Remember the message we obtained from the first JPEG file ?  <code>The reviewers are fortunate to have homes in today's purged economic climate.</code>.  This implies that we might be able to browse the home folders of the various reviewers.  Looking at the original, and purged versions of the front page, it is possible to obtain a list of possible users.  Bill Williams0n, Zoey Sand1n, James Holmes, Charlie Hanger, and Bin Ladin.  Of these users, only two home folders are accessible.</p>
+
+<h1><a href="http://thepurge/~bwilliams0n">http://thepurge/~bwilliams0n</a></h1>
+
+<p><img src="/images/thepurge_003.png" alt="thepurge_003" /></p>
+
+<p>What an interesting <a href="https://www.youtube.com/watch?v=vca7c04r95I">Youtube video</a></p>
+
+<p>However, the HTML source is much more interesting</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;title&gt;</span>Bill Williamson<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'><span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body</span> <span class="na">bgcolor=</span><span class="s">&quot;black&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;center&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;embed</span> <span class="na">width=</span><span class="s">&quot;840&quot;</span> <span class="na">height=</span><span class="s">&quot;620&quot;</span> <span class="na">src=</span><span class="s">&quot;http://www.youtube.com/v/vca7c04r95I&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/center&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="c">&lt;!--</span>
+</span><span class='line'><span class="c">For the glory of sshaitan, of course!</span>
+</span><span class='line'><span class="c">--&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This didn&rsquo;t tell me much, so I decided to PURGE it too using the <code>curl</code> command from earlier.  This resulted in the following page being made available</p>
+
+<p><img src="/images/thepurge_004.png" alt="thepurge_004" /></p>
+
+<p>The <a href="https://www.youtube.com/watch?v=uV-V1FqaEk8">Youtube video</a> is even weirder, but the source changed too.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;title&gt;</span>Bill Williamson<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'><span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body</span> <span class="na">bgcolor=</span><span class="s">&quot;black&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;center&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;embed</span> <span class="na">width=</span><span class="s">&quot;840&quot;</span> <span class="na">height=</span><span class="s">&quot;620&quot;</span> <span class="na">src=</span><span class="s">&quot;http://www.youtube.com/v/uV-V1FqaEk8&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/center&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="c">&lt;!--</span>
+</span><span class='line'><span class="c">-----BEGIN DSA PRIVATE KEY-----</span>
+</span><span class='line'><span class="c">MIIBvAIBAAKBgQDnNAyaHiNv1SynzOt+E83khP9PRQTmKlyvkx13b/3ARc/WjO9b</span>
+</span><span class='line'><span class="c">dAT//ZgAxttQiu1n8fqU+oop562TXvQyOm83YWkxVbf+YdQ4KUWdOMxFWJdbkCRW</span>
+</span><span class='line'><span class="c">IUa1XgoCVnIwz4I0fjKtvgNgf/TAmwz9sa2sqV6IYsROj6aTt7SdwXCtnQIVAP3b</span>
+</span><span class='line'><span class="c">n9k4O4SZ/8G83X6H/IMcjExRAoGAR2r8Zh/oZx5GOeDBacuy3LcDa3vfpHLfrqCK</span>
+</span><span class='line'><span class="c">X3V6I7VvQJcwjjorZQJqkO/7ECpHfrZIqVoN+TjYH2u2unRH56o55x5/rhUUCl1c</span>
+</span><span class='line'><span class="c">kFUikPwjwyLCjVT2DRD4WFnZcCa2wnCI9sxK70V+TbjMMS3AowxTBI+BhVXyYxLx</span>
+</span><span class='line'><span class="c">ylJw9kQCgYEA0Fggrt1A+DDQ1KS506LKPkT24ny3AMHg1psvjieT9uIO4LvFPq23</span>
+</span><span class='line'><span class="c">4wiZvMLNyapRlNADX/TGRmcC2bgf6P7l9D8zHEqoActThnPfMa05GFFvdF3z9ZEX</span>
+</span><span class='line'><span class="c">jRLP1n8BKjjElprmKYrqh8fLEk1gLA+B/GJRDO6+9oq5Ada4/3EEYuACFQDYW9iL</span>
+</span><span class='line'><span class="c">RQBGwzv7GW+JTy1Q1cmxew==</span>
+</span><span class='line'><span class="c">-----END DSA PRIVATE KEY-----</span>
+</span><span class='line'><span class="c">--&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That, to me, looks like a private key.  So, back to port knocking.</p>
+
+<h1>Who&rsquo;s There</h1>
+
+<p>Once the private key has been saved into a file and chmodded correctly (600), I use <code>knocker</code> to knock the ports, which allows SSH access.</p>
+
+<script type="text/javascript" src="https://asciinema.org/a/15250.js" id="asciicast-15250" async></script>
+
+
+<p>So, now I have a shell.  More enumeration required !  Wandering around the file system identifies that bwilliams0n has access to /home/zsand1n.  Within that folder is an archive encrypted with PGP.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bwilliams0n@thepurge zsand1n<span class="o">]</span><span class="nv">$ </span>ls -la
+</span><span class='line'>total 964
+</span><span class='line'>drwxr-xr-x. <span class="m">3</span> zsand1n zsand1n   <span class="m">4096</span> Jan  <span class="m">1</span> 23:43 .
+</span><span class='line'>drwxr-xr-x. <span class="m">7</span> root    root        <span class="m">81</span> Jan  <span class="m">2</span> 17:57 ..
+</span><span class='line'>-rw-r--r--. <span class="m">1</span> zsand1n zsand1n     <span class="m">18</span> Sep <span class="m">25</span> 21:53 .bash_logout
+</span><span class='line'>-rw-r--r--. <span class="m">1</span> zsand1n zsand1n    <span class="m">193</span> Sep <span class="m">25</span> 21:53 .bash_profile
+</span><span class='line'>-rw-r--r--. <span class="m">1</span> zsand1n zsand1n    <span class="m">231</span> Sep <span class="m">25</span> 21:53 .bashrc
+</span><span class='line'>-rw-r--r--. <span class="m">1</span> zsand1n zsand1n <span class="m">964832</span> Jan  <span class="m">1</span> 23:42 homes-backup-20150101.tar.gz.gpg
+</span><span class='line'>drwxrwxr-x. <span class="m">6</span> zsand1n zsand1n   <span class="m">4096</span> Jan  <span class="m">6</span> 14:45 public_html
+</span><span class='line'><span class="o">[</span>bwilliams0n@thepurge zsand1n<span class="o">]</span><span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To decrypt this file we&rsquo;ll need a copy of the private key used by the encrypting user.</p>
+
+<p>There is a file in public_html that includes a public PGP key, but this is no help to us at all.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bwilliams0n@thepurge public_html<span class="o">]</span><span class="nv">$ </span>cat gpg_key.html
+</span><span class='line'>-----BEGIN PGP PUBLIC KEY BLOCK-----
+</span><span class='line'>Version: GnuPG v2.0.22 <span class="o">(</span>GNU/Linux<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>mQENBFSmEy4BCADRTF4zqER6uVJ3II/tDHRIrWpeA8XGoegtTpjSOwjs8HYjPWzV
+</span><span class='line'>KWQsBj6GpI5zOHGjC7Tbufxn1C0TNotrEpOxCus2s/oaMJ8e1RmmpyP21cMe5Sxn
+</span><span class='line'>+Nu1O+oRA5QP2IYqnZvShqk2vw3UduMxheKik6EVA7EjZBeIdYhQK2fytbydrTIs
+</span><span class='line'>y+9GA1/UNBWQh1lQhRSbmQyiiTbQrybyhVZWrPT9E55mGJq4fLFybGRy+zjIsDfT
+</span><span class='line'>1gcS+BB6zdwp8YkxLR2DgaaSiTEl1YdUehoEoJMgtEdOqfng16O4ZL3rkIYKdjBi
+</span><span class='line'>KkB2sxYTH8PhF63D2h6/8w03ra5HZOivsNGVABEBAAG0HlpvZXkgU2FuZGluIDx6
+</span><span class='line'>c2FuZDFuQHRoZXB1cmdlPokBOQQTAQIAIwUCVKYTLgIbAwcLCQgHAwIBBhUIAgkK
+</span><span class='line'>CwQWAgMBAh4BAheAAAoJEEaUeoP/ScSJkZgIAK9xUZWnr1SnshBYawc6xWNPDdLM
+</span><span class='line'>8RjEPjgFdEXQe3D0xB16i0WC1153e4o6+L6rSGkkIf2siiY2BAS+yyR5YilA2aXv
+</span><span class='line'>CdYbYkcqRpXmGMeIiV9yKU3xZkgJUky28q0YNGEYZUGHYaRpS8PbQhX0a2OeVABV
+</span><span class='line'>vRXhrXju5SHDY4GyrKLheQ1u+pWQjNjeQr4K9jA7oPsB1X1EKzo6w89gZ7RZQCfz
+</span><span class='line'>bZoS+seodRIM32kGQYBvT0gE1aaKZ5OaASn7ezHOILDvCdYJtiGEcTuZ3TO37j4E
+</span><span class='line'>3wONeo6CFT/AJQ6xGGN6dMeCNfvEFJMzjW3ejrfiQyN0z/3BdaIEyAVhMFa5AQ0E
+</span><span class='line'>VKYTLgEIALFyNyOhUAkcFgXMoldw81Lg9ex34MeOix1LpOqInQU92VkmS1uYqKZJ
+</span><span class='line'>T4uW5mye2RLg4P3MHm60kmKIRXZYEx96aRgqxLaogQXv0pQ/t5RMNuvLn7wM934U
+</span><span class='line'>xkct7Ic6B3djnfoYt6UZftOmLmCl2mW8my/07N92Tx6VWbHu/MFgCFnj6EfbX6Vq
+</span><span class='line'>FER6A/0mtlHGbI0ysl+djB0vVw8g6zYUhxn7lTjEHLa237wuGMkWG7COcWzBBadU
+</span><span class='line'>DkTnN5692cpny5oEpMFi7E8xO4TNUw6V6mrMjYZGvBHlsF2akozhizU7dqhI+jlp
+</span><span class='line'>WTXVV2JYyHEM0WGz34ipn1a/kMKUBWMAEQEAAYkBHwQYAQIACQUCVKYTLgIbDAAK
+</span><span class='line'>CRBGlHqD/0nEiWh6B/4xo4G8vNoTgc4jJRHJ0ZezTS/sXRkfZO2eNDXVgcY7pF5Q
+</span><span class='line'>EaA/9VMEpDRz53eAt99mpj+eTQM/kVRKExqcAVDwy0YYXnvsjHFwD5dunIq88OSw
+</span><span class='line'>WLPNMBRgRvggez47zxjKtV6DiL1BYQ0YO3oyDtbA1CKhBHh8KmH0aV+/YE1axnAL
+</span><span class='line'>Qngh/4fF0E4OZ5vuCBsRrHHrH3r4k0jGRHTHvG3e9gfGcPKgr0P6To5wA4B5XEc1
+</span><span class='line'>UgN4YJWe1XeOy7yKCTanvUIrVWolHkao5xdQH8OOBqPQySACcW32T5sQxCqTkeR7
+</span><span class='line'><span class="nv">sH2SRodaWIgc9aVKLI1SAW2oYWJJNsqs1fuJtF1w</span>
+</span><span class='line'><span class="o">=</span>tVjP
+</span><span class='line'>-----END PGP PUBLIC KEY BLOCK-----
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Could I use my old friend PURGE and see if the file changes ?  Why yes, yes I can&hellip; and yes, it does change - I now have a private key instead of a public one.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>-----BEGIN PGP PRIVATE KEY BLOCK-----
+</span><span class='line'>Version: GnuPG v2.0.22 <span class="o">(</span>GNU/Linux<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>lQO+BFSmEy4BCADRTF4zqER6uVJ3II/tDHRIrWpeA8XGoegtTpjSOwjs8HYjPWzV
+</span><span class='line'>KWQsBj6GpI5zOHGjC7Tbufxn1C0TNotrEpOxCus2s/oaMJ8e1RmmpyP21cMe5Sxn
+</span><span class='line'>+Nu1O+oRA5QP2IYqnZvShqk2vw3UduMxheKik6EVA7EjZBeIdYhQK2fytbydrTIs
+</span><span class='line'>y+9GA1/UNBWQh1lQhRSbmQyiiTbQrybyhVZWrPT9E55mGJq4fLFybGRy+zjIsDfT
+</span><span class='line'>1gcS+BB6zdwp8YkxLR2DgaaSiTEl1YdUehoEoJMgtEdOqfng16O4ZL3rkIYKdjBi
+</span><span class='line'>KkB2sxYTH8PhF63D2h6/8w03ra5HZOivsNGVABEBAAH+AwMCPT4eUY3Vk4/b6au7
+</span><span class='line'>6StGV15s0jIxygsFkJPkwEjoE2x5UnN/W6aS9HXm3Y5t67/s0zYpK5SQ+ZcGquRI
+</span><span class='line'>izcCf8dKQIq8bWsLr0GPaLHrS3Xj4iyTpRb8qInxxIZIsA+0RD54liwzKVRrqn16
+</span><span class='line'>y955XJWuFO+5rT2zyI8hBdO8hQlFpsNGRmeWZLbAENDUuMaQLeKfaoU/y9QEhs2T
+</span><span class='line'>RJuM5B5OzT1RCqnP+clXPh9/Y536afIiqAvQwBn6qQIaZLeCvpscyOhOWPUejVBd
+</span><span class='line'>ZxNBZ4gVkr4WseYsk3vBkxCc0E52rGEUf3IFpti5y5pWo6BvN1qZtGkFLm+t8Uv/
+</span><span class='line'>WXMRLPYTuYDPh8+KtNDXhA5EaW8kMUI9y1jhA3DoxhrDqiD1oGv0OInmJXAA4uwZ
+</span><span class='line'>GxzRCaY2fVwJ5giQj8X+8QxhMS61ZDbSl8AJNi6Ns8sY3uy96Al0rw3u72WF5CWb
+</span><span class='line'>nkslDQ4IdZBRYAGOMPLVrQqFO86RaWYMWjiNdm4ZybdgvJzci2jCzKCdevzUQRAZ
+</span><span class='line'>vKOKBGkLO7klCtgMrWTwusocp3+83OPzoO3jC1gY6r2UQms3otz2evsvZEluBXZQ
+</span><span class='line'>EKo13tAUy6LPHn/8Pfg29BglkSAdACt6MtSs7PWkoH2x948sU1HBEiMid8rNxTZW
+</span><span class='line'>d2bOcD+kRcEPPlKUC3ik0IcThAT+DcnWSSaAvugS+9QQhE6Td1SSMiJrUZb9/qBi
+</span><span class='line'>7VY/0GCGpMZJe3B8buclm/e8KaTFpnxktIFpXjHW6Lstpl7aPwsUHJ8e12AW6oBV
+</span><span class='line'>9CconzbhQeDnkOkK0RHIAX6g+gcPo6dN+Gc2wmamGcQ5Ps3tEtj9ptSERmZGhL+S
+</span><span class='line'>XYWrPVGFs2xpv/CxPoJMCkzdViY/ScfmhZuizkIdC4SlD6zAbQARD+1Hf+h5K8om
+</span><span class='line'>Q7QeWm9leSBTYW5kaW4gPHpzYW5kMW5AdGhlcHVyZ2U+iQE5BBMBAgAjBQJUphMu
+</span><span class='line'>AhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQRpR6g/9JxImRmAgAr3FR
+</span><span class='line'>laevVKeyEFhrBzrFY08N0szxGMQ+OAV0RdB7cPTEHXqLRYLXXnd7ijr4vqtIaSQh
+</span><span class='line'>/ayKJjYEBL7LJHliKUDZpe8J1htiRypGleYYx4iJX3IpTfFmSAlSTLbyrRg0YRhl
+</span><span class='line'>QYdhpGlLw9tCFfRrY55UAFW9FeGteO7lIcNjgbKsouF5DW76lZCM2N5Cvgr2MDug
+</span><span class='line'>+wHVfUQrOjrDz2BntFlAJ/NtmhL6x6h1EgzfaQZBgG9PSATVpopnk5oBKft7Mc4g
+</span><span class='line'>sO8J1gm2IYRxO5ndM7fuPgTfA416joIVP8AlDrEYY3p0x4I1+8QUkzONbd6Ot+JD
+</span><span class='line'>I3TP/cF1ogTIBWEwVp0DvgRUphMuAQgAsXI3I6FQCRwWBcyiV3DzUuD17Hfgx46L
+</span><span class='line'>HUuk6oidBT3ZWSZLW5iopklPi5bmbJ7ZEuDg/cwebrSSYohFdlgTH3ppGCrEtqiB
+</span><span class='line'>Be/SlD+3lEw268ufvAz3fhTGRy3shzoHd2Od+hi3pRl+06YuYKXaZbybL/Ts33ZP
+</span><span class='line'>HpVZse78wWAIWePoR9tfpWoURHoD/Sa2UcZsjTKyX52MHS9XDyDrNhSHGfuVOMQc
+</span><span class='line'>trbfvC4YyRYbsI5xbMEFp1QOROc3nr3ZymfLmgSkwWLsTzE7hM1TDpXqasyNhka8
+</span><span class='line'>EeWwXZqSjOGLNTt2qEj6OWlZNdVXYljIcQzRYbPfiKmfVr+QwpQFYwARAQAB/gMD
+</span><span class='line'>Aj0+HlGN1ZOP29ALh3I5yyKsdLOC3OTVGg4vlt4CFDyrU7vEMctGnNn9lAf/yLWd
+</span><span class='line'>s1vWLdzeRJINV8ewRGFPmZvlzAVbipFPw/O6YvayDZA5hKrdGSZHN7/RRf77bLg9
+</span><span class='line'>yTWLOQV+tkba0ojjZrn3BjOuelBnR7yuCtDrkb5E9F+wDSxpQKc0TBOrb/5hgwCT
+</span><span class='line'>7yoKhwF+aiZRi1qBEh8YRTwKdp2DDPdonR4Z0P8ASne5kjucoUvwXQpDZSp2xfM2
+</span><span class='line'>EbyTCxR2zKXr1XRoaJsS6qk8BJkpZuN016SgZh+JvpVaqtW2vzlCkTaSlCZ/Bsgb
+</span><span class='line'>HWnkQsiJrgNPRcKw7MRCpSb2bhJxXPyIV032EEVe8LHyC7unZe0lzgANZXoSand1
+</span><span class='line'>k09t0/Bg53UOZGGgCQbV/6ADshXzqx5QUKbkMpfvAXbBVqn7dYD3Q0ERNF2bXZok
+</span><span class='line'>6rO9p0LGs6ujYNJRveZQZMr39PO5timhj7X4xD6Uw/AjkzaJGulHO1xQ0vRU9j5Q
+</span><span class='line'>vZzy+z/iQa0tyGMljC5r0ps5yKWnN3Eott/TkpL/QontkQBv5ZoVhdijBwP1puSx
+</span><span class='line'>LpHEHHOjJoan5bI0I/IfDa6Iu8eMYTj2xUJ7jE1RVEimalnEJml3zgTGuLU+Qz6o
+</span><span class='line'>vt1LyZXfJDrzaVP2iFecmpwX8HVtF6BqULBqJiJuqiLPnu4G0VOTIaCYMGi4KqFX
+</span><span class='line'>61uSDyKlguI0gcJHIgscglvbEzgz8lE7EhSboOQ14jjo2RWhoG0B23uHwNvWD0Qk
+</span><span class='line'>nJBRA3J/uKZHlhknHOCTRQcKBkzXZVjt7m1vJdXrl6N2RIwD7uWuC4IMQYVKRlZC
+</span><span class='line'>u4YxCZz+gCygIKHejMSUxRWE8paueC5h2kPIz2Bm0qLTHMNf2OfVZVD1DVXgDtoL
+</span><span class='line'>wWmIawCcsFrP2yrHVwqJAR8EGAECAAkFAlSmEy4CGwwACgkQRpR6g/9JxIloegf+
+</span><span class='line'>MaOBvLzaE4HOIyURydGXs00v7F0ZH2TtnjQ11YHGO6ReUBGgP/VTBKQ0c+d3gLff
+</span><span class='line'>ZqY/nk0DP5FUShManAFQ8MtGGF577IxxcA+XbpyKvPDksFizzTAUYEb4IHs+O88Y
+</span><span class='line'>yrVeg4i9QWENGDt6Mg7WwNQioQR4fCph9Glfv2BNWsZwC0J4If+HxdBODmeb7ggb
+</span><span class='line'>Eaxx6x96+JNIxkR0x7xt3vYHxnDyoK9D+k6OcAOAeVxHNVIDeGCVntV3jsu8igk2
+</span><span class='line'>p71CK1VqJR5GqOcXUB/Djgaj0MkgAnFt9k+bEMQqk5Hke7B9kkaHWliIHPWlSiyN
+</span><span class='line'><span class="nv">UgFtqGFiSTbKrNX7ibRdcA</span><span class="o">==</span>
+</span><span class='line'><span class="o">=</span>ZWQm
+</span><span class='line'>-----END PGP PRIVATE KEY BLOCK-----
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This can now be imported into GPG and used to decrypt the archive found earlier.  Remember the GovPurGe header from earlier ?  It contains the passphrase required to use the key.</p>
+
+<script type="text/javascript" src="https://asciinema.org/a/15255.js" id="asciicast-15255" async></script>
+
+
+<p>I spent a lot of time looking through the files from this archive, and eventually found a password of &ldquo;vi.isforleeth@xxors&rdquo; hidden in .bash_history in the jholmes directory.<br/>
+This allowed me to su as the jholmes user and discover that he is able to run the <code>/usr/bin/varnishadm</code> application via <code>sudo</code>.  I also discovered that, with a few tweaks, you can get <code>varnishadm</code> to compile inline C and run commands as the user varnishd is running as.  The last video shows me switching to the jholmes user, creating a malicious shell script to grab a Base64&rsquo;d copy of FTP from my attacking VM and decode it to a binary (you can escape to a shell using the ! command in FTP), running <code>sudo varnishadm</code>, and configuring varnish to run as <code>root</code> instead of the <code>varnish</code> user.  I then configure the cc_compiler parameter to run the malicious script I created earlier, which allows me to drop to a root shell and read the <code>/FLAG.txt</code> file.</p>
+
+<script type="text/javascript" src="https://asciinema.org/a/15256.js" id="asciicast-15256" async></script>
+
+
+<p>Done.</p>
 </div>
 
 
