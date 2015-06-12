@@ -425,7 +425,7 @@ Here&rsquo;s the above sourcecode compiled with the default <code>go build</code
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now we&rsquo;re down to 5.0M, with no debug information, but the file is still quite big, so the next step is to remove the symbols when compiling with <code>go build -ldflags '-w -s'</code></p>
+<p>Now we&rsquo;re down to around 5M, with no debug information, but the file is still quite big, so the next step is to remove the symbols when compiling with <code>go build -ldflags '-w -s'</code></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
