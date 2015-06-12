@@ -1052,7 +1052,7 @@ Here&rsquo;s the above sourcecode compiled with the default <code>go build</code
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Stripping and packing a Go binary in the above way does not guarantee that the binary will function afterwards - I have had about a 50/50 success rate (as an example, the binary shown here doesn&rsquo;t work when compiled with gccgo, whereas the stripped and packed binary that includes the Go runtime continues to function perfectly.  YMMV)</p>
+<p>Stripping and packing a Go binary in the above way is not recommended and does not guarantee that the binary will function afterwards - I have had about a 50/50 success rate (as an example, the binary shown here doesn&rsquo;t work when compiled with gccgo, whereas the stripped and packed binary that includes the Go runtime continues to function perfectly.  YMMV)</p>
 
 <p>So, the lesson here is that you shouldn&rsquo;t expect Go binaries to be small, and it&rsquo;s not a good language to learn if you want small applications - use another language for that.  Go is fun if you want to learn a new language for personal tools.</p>
 </div>
