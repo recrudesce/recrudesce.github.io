@@ -7,7 +7,7 @@
 	<meta name="author" content="recrudesce">
 
 	
-	<meta name="description" content="I will write something here about my exploits regarding the massive size of Go binaries and how to make them smaller. ">
+	<meta name="description" content="Recently I decided to look into the Go language - this was purely due to my inquisitive nature, and I thought it&rsquo;d be fun to learn another &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -77,7 +77,984 @@
 	
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Making Go Go on a Diet</h2>
-	<div class="entry-content"><p>I will write something here about my exploits regarding the massive size of Go binaries and how to make them smaller.</p>
+	<div class="entry-content"><p>Recently I decided to look into the Go language - this was purely due to my inquisitive nature, and I thought it&rsquo;d be fun to learn another language.  However, there&rsquo;s some stranege things going on when you compile the source.</p>
+
+<!-- more -->
+
+
+<p>I wrote a small piece of code that interacted with the Twitter API to get the URL of an image included in a tweet, it&rsquo;s 267 lines long - filesize is not particularly big either - 6.3K.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 16K
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>go build</code> command,, by default will compile with Debug information, and Symbols.  Additionally, it will include the Go runtime, so that the binary will execute in environments that do not have Go installed.
+Here&rsquo;s the above sourcecode compiled with the default <code>go build</code> command</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>go build
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 6.9M
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:54 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 6.9M Jun <span class="m">12</span> 15:54 twitter_put
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>6.9 MEG FROM A 6.3K SOURCE FILE ?!  OK, so lets take a look at what it is and what it includes.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>file twitter_put
+</span><span class='line'>twitter_put: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, not stripped
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>readelf -S twitter_put
+</span><span class='line'>There are <span class="m">33</span> section headers, starting at offset 0x238:
+</span><span class='line'>
+</span><span class='line'>Section Headers:
+</span><span class='line'>  <span class="o">[</span>Nr<span class="o">]</span> Name              Type             Address           Offset
+</span><span class='line'>       Size              EntSize          Flags  Link  Info  Align
+</span><span class='line'>  <span class="o">[</span> 0<span class="o">]</span>                   NULL             <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     0
+</span><span class='line'>  <span class="o">[</span> 1<span class="o">]</span> .text             PROGBITS         0000000000400c00  00000c00
+</span><span class='line'>       0000000000234d3f  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span> 2<span class="o">]</span> .plt              PROGBITS         <span class="m">0000000000635940</span>  00235940
+</span><span class='line'>       <span class="m">0000000000000170</span>  <span class="m">0000000000000010</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 3<span class="o">]</span> .rodata           PROGBITS         <span class="m">0000000000636000</span>  00236000
+</span><span class='line'>       000000000019e4c8  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span> 4<span class="o">]</span> .typelink         PROGBITS         00000000007d44c8  003d44c8
+</span><span class='line'>       <span class="m">0000000000001218</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 5<span class="o">]</span> .gosymtab         PROGBITS         00000000007d56e0  003d56e0
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 6<span class="o">]</span> .gopclntab        PROGBITS         00000000007d56e0  003d56e0
+</span><span class='line'>       00000000000d4858  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span> 7<span class="o">]</span> .rela             RELA             00000000008a9f40  004a9f40
+</span><span class='line'>       <span class="m">0000000000000018</span>  <span class="m">0000000000000018</span>   A      <span class="m">14</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 8<span class="o">]</span> .gnu.version      VERSYM           00000000008a9f60  004a9f60
+</span><span class='line'>       <span class="m">0000000000000038</span>  <span class="m">0000000000000002</span>   A      <span class="m">14</span>     <span class="m">0</span>     2
+</span><span class='line'>  <span class="o">[</span> 9<span class="o">]</span> .gnu.version_r    VERNEED          00000000008a9fa0  004a9fa0
+</span><span class='line'>       <span class="m">0000000000000040</span>  <span class="m">0000000000000000</span>   A      <span class="m">12</span>     <span class="m">2</span>     8
+</span><span class='line'>  <span class="o">[</span>10<span class="o">]</span> .hash             HASH             00000000008a9fe0  004a9fe0
+</span><span class='line'>       <span class="m">0000000000000090</span>  <span class="m">0000000000000004</span>   A      <span class="m">14</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>11<span class="o">]</span> .shstrtab         STRTAB           <span class="m">0000000000000000</span>  004aa080
+</span><span class='line'>       <span class="m">0000000000000185</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>12<span class="o">]</span> .dynstr           STRTAB           00000000008aa220  004aa220
+</span><span class='line'>       <span class="m">0000000000000189</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>13<span class="o">]</span> .rela.plt         RELA             00000000008aa3c0  004aa3c0
+</span><span class='line'>       <span class="m">0000000000000210</span>  <span class="m">0000000000000018</span>   A      <span class="m">14</span>     <span class="m">2</span>     8
+</span><span class='line'>  <span class="o">[</span>14<span class="o">]</span> .dynsym           DYNSYM           00000000008aa5e0  004aa5e0
+</span><span class='line'>       00000000000002a0  <span class="m">0000000000000018</span>   A      <span class="m">12</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>15<span class="o">]</span> .got              PROGBITS         00000000008ab000  004ab000
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000008</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>16<span class="o">]</span> .got.plt          PROGBITS         00000000008ab020  004ab020
+</span><span class='line'>       00000000000000c8  <span class="m">0000000000000008</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>17<span class="o">]</span> .dynamic          DYNAMIC          00000000008ab100  004ab100
+</span><span class='line'>       <span class="m">0000000000000130</span>  <span class="m">0000000000000010</span>  WA      <span class="m">12</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>18<span class="o">]</span> .noptrdata        PROGBITS         00000000008ab240  004ab240
+</span><span class='line'>       0000000000016b0c  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>19<span class="o">]</span> .data             PROGBITS         00000000008c1d60  004c1d60
+</span><span class='line'>       <span class="m">0000000000007110</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>20<span class="o">]</span> .bss              NOBITS           00000000008c8e80  004c8e80
+</span><span class='line'>       0000000000008ee0  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>21<span class="o">]</span> .noptrbss         NOBITS           00000000008d1d60  004d1d60
+</span><span class='line'>       00000000000135c8  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>22<span class="o">]</span> .interp           PROGBITS         0000000000400be4  00000be4
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>23<span class="o">]</span> .symtab           SYMTAB           <span class="m">0000000000000000</span>  004c9000
+</span><span class='line'>       0000000000030b10  <span class="m">0000000000000018</span>          <span class="m">24</span>   <span class="m">197</span>     8
+</span><span class='line'>  <span class="o">[</span>24<span class="o">]</span> .strtab           STRTAB           <span class="m">0000000000000000</span>  004f9b10
+</span><span class='line'>       0000000000035eab  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>25<span class="o">]</span> .tbss             NOBITS           <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000010</span>  <span class="m">0000000000000000</span> WAT       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>26<span class="o">]</span> .debug_abbrev     PROGBITS         <span class="m">0000000000000000</span>  0052f9bb
+</span><span class='line'>       00000000000000fd  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>27<span class="o">]</span> .debug_line       PROGBITS         <span class="m">0000000000000000</span>  0052fab8
+</span><span class='line'>       000000000002f2d9  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>28<span class="o">]</span> .debug_frame      PROGBITS         <span class="m">0000000000000000</span>  0055ed91
+</span><span class='line'>       000000000003952c  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>29<span class="o">]</span> .debug_info       PROGBITS         <span class="m">0000000000000000</span>  005982bd
+</span><span class='line'>       00000000000e6988  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>30<span class="o">]</span> .debug_pubnames   PROGBITS         <span class="m">0000000000000000</span>  0067ec45
+</span><span class='line'>       000000000003d502  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>31<span class="o">]</span> .debug_pubtypes   PROGBITS         <span class="m">0000000000000000</span>  006bc147
+</span><span class='line'>       0000000000017b10  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>32<span class="o">]</span> .debug_aranges    PROGBITS         <span class="m">0000000000000000</span>  006d3c57
+</span><span class='line'>       <span class="m">0000000000000030</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>Key to Flags:
+</span><span class='line'>  W <span class="o">(</span>write<span class="o">)</span>, A <span class="o">(</span>alloc<span class="o">)</span>, X <span class="o">(</span>execute<span class="o">)</span>, M <span class="o">(</span>merge<span class="o">)</span>, S <span class="o">(</span>strings<span class="o">)</span>, l <span class="o">(</span>large<span class="o">)</span>
+</span><span class='line'>  I <span class="o">(</span>info<span class="o">)</span>, L <span class="o">(</span>link order<span class="o">)</span>, G <span class="o">(</span>group<span class="o">)</span>, T <span class="o">(</span>TLS<span class="o">)</span>, E <span class="o">(</span>exclude<span class="o">)</span>, x <span class="o">(</span>unknown<span class="o">)</span>
+</span><span class='line'>  O <span class="o">(</span>extra OS processing required<span class="o">)</span> o <span class="o">(</span>OS specific<span class="o">)</span>, p <span class="o">(</span>processor specific<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, debug information, symbols etc.  It is possible to remove all the DWARF information using <code>go build -ldflags '-w'</code> which will create us a slightly smaller binary</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>go build -ldflags <span class="s1">&#39;-w&#39;</span>
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 5.3M
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:55 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 5.2M Jun <span class="m">12</span> 15:55 twitter_put
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>file twitter_put
+</span><span class='line'>twitter_put: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, not stripped
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>readelf -S twitter_put
+</span><span class='line'>There are <span class="m">26</span> section headers, starting at offset 0x238:
+</span><span class='line'>
+</span><span class='line'>Section Headers:
+</span><span class='line'>  <span class="o">[</span>Nr<span class="o">]</span> Name              Type             Address           Offset
+</span><span class='line'>       Size              EntSize          Flags  Link  Info  Align
+</span><span class='line'>  <span class="o">[</span> 0<span class="o">]</span>                   NULL             <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     0
+</span><span class='line'>  <span class="o">[</span> 1<span class="o">]</span> .text             PROGBITS         0000000000400c00  00000c00
+</span><span class='line'>       0000000000234d3f  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span> 2<span class="o">]</span> .plt              PROGBITS         <span class="m">0000000000635940</span>  00235940
+</span><span class='line'>       <span class="m">0000000000000170</span>  <span class="m">0000000000000010</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 3<span class="o">]</span> .rodata           PROGBITS         <span class="m">0000000000636000</span>  00236000
+</span><span class='line'>       000000000019e4c8  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span> 4<span class="o">]</span> .typelink         PROGBITS         00000000007d44c8  003d44c8
+</span><span class='line'>       <span class="m">0000000000001218</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 5<span class="o">]</span> .gosymtab         PROGBITS         00000000007d56e0  003d56e0
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 6<span class="o">]</span> .gopclntab        PROGBITS         00000000007d56e0  003d56e0
+</span><span class='line'>       00000000000d4858  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span> 7<span class="o">]</span> .rela             RELA             00000000008a9f40  004a9f40
+</span><span class='line'>       <span class="m">0000000000000018</span>  <span class="m">0000000000000018</span>   A      <span class="m">14</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 8<span class="o">]</span> .gnu.version      VERSYM           00000000008a9f60  004a9f60
+</span><span class='line'>       <span class="m">0000000000000038</span>  <span class="m">0000000000000002</span>   A      <span class="m">14</span>     <span class="m">0</span>     2
+</span><span class='line'>  <span class="o">[</span> 9<span class="o">]</span> .gnu.version_r    VERNEED          00000000008a9fa0  004a9fa0
+</span><span class='line'>       <span class="m">0000000000000040</span>  <span class="m">0000000000000000</span>   A      <span class="m">12</span>     <span class="m">2</span>     8
+</span><span class='line'>  <span class="o">[</span>10<span class="o">]</span> .hash             HASH             00000000008a9fe0  004a9fe0
+</span><span class='line'>       <span class="m">0000000000000090</span>  <span class="m">0000000000000004</span>   A      <span class="m">14</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>11<span class="o">]</span> .shstrtab         STRTAB           <span class="m">0000000000000000</span>  004aa080
+</span><span class='line'>       00000000000000dd  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>12<span class="o">]</span> .dynstr           STRTAB           00000000008aa160  004aa160
+</span><span class='line'>       <span class="m">0000000000000189</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>13<span class="o">]</span> .rela.plt         RELA             00000000008aa300  004aa300
+</span><span class='line'>       <span class="m">0000000000000210</span>  <span class="m">0000000000000018</span>   A      <span class="m">14</span>     <span class="m">2</span>     8
+</span><span class='line'>  <span class="o">[</span>14<span class="o">]</span> .dynsym           DYNSYM           00000000008aa520  004aa520
+</span><span class='line'>       00000000000002a0  <span class="m">0000000000000018</span>   A      <span class="m">12</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>15<span class="o">]</span> .got              PROGBITS         00000000008ab000  004ab000
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000008</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>16<span class="o">]</span> .got.plt          PROGBITS         00000000008ab020  004ab020
+</span><span class='line'>       00000000000000c8  <span class="m">0000000000000008</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>17<span class="o">]</span> .dynamic          DYNAMIC          00000000008ab100  004ab100
+</span><span class='line'>       <span class="m">0000000000000130</span>  <span class="m">0000000000000010</span>  WA      <span class="m">12</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>18<span class="o">]</span> .noptrdata        PROGBITS         00000000008ab240  004ab240
+</span><span class='line'>       0000000000016b0c  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>19<span class="o">]</span> .data             PROGBITS         00000000008c1d60  004c1d60
+</span><span class='line'>       <span class="m">0000000000007110</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>20<span class="o">]</span> .bss              NOBITS           00000000008c8e80  004c8e80
+</span><span class='line'>       0000000000008ee0  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>21<span class="o">]</span> .noptrbss         NOBITS           00000000008d1d60  004d1d60
+</span><span class='line'>       00000000000135c8  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>22<span class="o">]</span> .interp           PROGBITS         0000000000400be4  00000be4
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>23<span class="o">]</span> .symtab           SYMTAB           <span class="m">0000000000000000</span>  004c9000
+</span><span class='line'>       0000000000030b10  <span class="m">0000000000000018</span>          <span class="m">24</span>   <span class="m">197</span>     8
+</span><span class='line'>  <span class="o">[</span>24<span class="o">]</span> .strtab           STRTAB           <span class="m">0000000000000000</span>  004f9b10
+</span><span class='line'>       0000000000035eab  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>25<span class="o">]</span> .tbss             NOBITS           <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000010</span>  <span class="m">0000000000000000</span> WAT       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>Key to Flags:
+</span><span class='line'>  W <span class="o">(</span>write<span class="o">)</span>, A <span class="o">(</span>alloc<span class="o">)</span>, X <span class="o">(</span>execute<span class="o">)</span>, M <span class="o">(</span>merge<span class="o">)</span>, S <span class="o">(</span>strings<span class="o">)</span>, l <span class="o">(</span>large<span class="o">)</span>
+</span><span class='line'>  I <span class="o">(</span>info<span class="o">)</span>, L <span class="o">(</span>link order<span class="o">)</span>, G <span class="o">(</span>group<span class="o">)</span>, T <span class="o">(</span>TLS<span class="o">)</span>, E <span class="o">(</span>exclude<span class="o">)</span>, x <span class="o">(</span>unknown<span class="o">)</span>
+</span><span class='line'>  O <span class="o">(</span>extra OS processing required<span class="o">)</span> o <span class="o">(</span>OS specific<span class="o">)</span>, p <span class="o">(</span>processor specific<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we&rsquo;re down to 5.0M, with no debug information, but the file is still quite big, so the next step is to remove the symbols when compiling with <code>go build -ldflags '-w -s'</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>go build -ldflags <span class="s1">&#39;-w -s&#39;</span>
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 4.9M
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:56 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 4.8M Jun <span class="m">12</span> 15:56 twitter_put
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>file twitter_put
+</span><span class='line'>twitter_put: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, stripped
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>readelf -S twitter_put
+</span><span class='line'>There are <span class="m">24</span> section headers, starting at offset 0x238:
+</span><span class='line'>
+</span><span class='line'>Section Headers:
+</span><span class='line'>  <span class="o">[</span>Nr<span class="o">]</span> Name              Type             Address           Offset
+</span><span class='line'>       Size              EntSize          Flags  Link  Info  Align
+</span><span class='line'>  <span class="o">[</span> 0<span class="o">]</span>                   NULL             <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     0
+</span><span class='line'>  <span class="o">[</span> 1<span class="o">]</span> .text             PROGBITS         0000000000400c00  00000c00
+</span><span class='line'>       0000000000234d3f  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span> 2<span class="o">]</span> .plt              PROGBITS         <span class="m">0000000000635940</span>  00235940
+</span><span class='line'>       <span class="m">0000000000000170</span>  <span class="m">0000000000000010</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 3<span class="o">]</span> .rodata           PROGBITS         <span class="m">0000000000636000</span>  00236000
+</span><span class='line'>       000000000019e4c8  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span> 4<span class="o">]</span> .typelink         PROGBITS         00000000007d44c8  003d44c8
+</span><span class='line'>       <span class="m">0000000000001218</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 5<span class="o">]</span> .gosymtab         PROGBITS         00000000007d56e0  003d56e0
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 6<span class="o">]</span> .gopclntab        PROGBITS         00000000007d56e0  003d56e0
+</span><span class='line'>       00000000000d4858  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span> 7<span class="o">]</span> .rela             RELA             00000000008a9f40  004a9f40
+</span><span class='line'>       <span class="m">0000000000000018</span>  <span class="m">0000000000000018</span>   A      <span class="m">14</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 8<span class="o">]</span> .gnu.version      VERSYM           00000000008a9f60  004a9f60
+</span><span class='line'>       <span class="m">0000000000000038</span>  <span class="m">0000000000000002</span>   A      <span class="m">14</span>     <span class="m">0</span>     2
+</span><span class='line'>  <span class="o">[</span> 9<span class="o">]</span> .gnu.version_r    VERNEED          00000000008a9fa0  004a9fa0
+</span><span class='line'>       <span class="m">0000000000000040</span>  <span class="m">0000000000000000</span>   A      <span class="m">12</span>     <span class="m">2</span>     8
+</span><span class='line'>  <span class="o">[</span>10<span class="o">]</span> .hash             HASH             00000000008a9fe0  004a9fe0
+</span><span class='line'>       <span class="m">0000000000000090</span>  <span class="m">0000000000000004</span>   A      <span class="m">14</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>11<span class="o">]</span> .shstrtab         STRTAB           <span class="m">0000000000000000</span>  004aa080
+</span><span class='line'>       00000000000000cd  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>12<span class="o">]</span> .dynstr           STRTAB           00000000008aa160  004aa160
+</span><span class='line'>       <span class="m">0000000000000189</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>13<span class="o">]</span> .rela.plt         RELA             00000000008aa300  004aa300
+</span><span class='line'>       <span class="m">0000000000000210</span>  <span class="m">0000000000000018</span>   A      <span class="m">14</span>     <span class="m">2</span>     8
+</span><span class='line'>  <span class="o">[</span>14<span class="o">]</span> .dynsym           DYNSYM           00000000008aa520  004aa520
+</span><span class='line'>       00000000000002a0  <span class="m">0000000000000018</span>   A      <span class="m">12</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>15<span class="o">]</span> .got              PROGBITS         00000000008ab000  004ab000
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000008</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>16<span class="o">]</span> .got.plt          PROGBITS         00000000008ab020  004ab020
+</span><span class='line'>       00000000000000c8  <span class="m">0000000000000008</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>17<span class="o">]</span> .dynamic          DYNAMIC          00000000008ab100  004ab100
+</span><span class='line'>       <span class="m">0000000000000130</span>  <span class="m">0000000000000010</span>  WA      <span class="m">12</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>18<span class="o">]</span> .noptrdata        PROGBITS         00000000008ab240  004ab240
+</span><span class='line'>       0000000000016b0c  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>19<span class="o">]</span> .data             PROGBITS         00000000008c1d60  004c1d60
+</span><span class='line'>       <span class="m">0000000000007110</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>20<span class="o">]</span> .bss              NOBITS           00000000008c8e80  004c8e80
+</span><span class='line'>       0000000000008ee0  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>21<span class="o">]</span> .noptrbss         NOBITS           00000000008d1d60  004d1d60
+</span><span class='line'>       00000000000135c8  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>22<span class="o">]</span> .interp           PROGBITS         0000000000400be4  00000be4
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>23<span class="o">]</span> .tbss             NOBITS           <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000010</span>  <span class="m">0000000000000000</span> WAT       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>Key to Flags:
+</span><span class='line'>  W <span class="o">(</span>write<span class="o">)</span>, A <span class="o">(</span>alloc<span class="o">)</span>, X <span class="o">(</span>execute<span class="o">)</span>, M <span class="o">(</span>merge<span class="o">)</span>, S <span class="o">(</span>strings<span class="o">)</span>, l <span class="o">(</span>large<span class="o">)</span>
+</span><span class='line'>  I <span class="o">(</span>info<span class="o">)</span>, L <span class="o">(</span>link order<span class="o">)</span>, G <span class="o">(</span>group<span class="o">)</span>, T <span class="o">(</span>TLS<span class="o">)</span>, E <span class="o">(</span>exclude<span class="o">)</span>, x <span class="o">(</span>unknown<span class="o">)</span>
+</span><span class='line'>  O <span class="o">(</span>extra OS processing required<span class="o">)</span> o <span class="o">(</span>OS specific<span class="o">)</span>, p <span class="o">(</span>processor specific<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&rsquo;re getting somewhere, but the issue here is because the Go runtime is included inside every compiled Go binary.  If you plan on using the binary within environments that do not have the Go runtime installed, this is about as small as you could natively make this binary (without packing, of course - we&rsquo;ll get to that later).  If you plan on only using the binary where the Go runtime is installed, we can use <code>gccgo</code> to compile the source, and omit the inclusion of the runtime</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>go build -compiler gccgo
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 736K
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:57 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 718K Jun <span class="m">12</span> 15:57 twitter_put
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>file twitter_put
+</span><span class='line'>twitter_put: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, <span class="k">for</span> GNU/Linux 2.6.32, BuildID<span class="o">[</span>sha1<span class="o">]=</span>28beacf6033290377de9741650fdbb986863dcae, not stripped
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>readelf -S twitter_put
+</span><span class='line'>There are <span class="m">42</span> section headers, starting at offset 0xb2990:
+</span><span class='line'>
+</span><span class='line'>Section Headers:
+</span><span class='line'>  <span class="o">[</span>Nr<span class="o">]</span> Name              Type             Address           Offset
+</span><span class='line'>       Size              EntSize          Flags  Link  Info  Align
+</span><span class='line'>  <span class="o">[</span> 0<span class="o">]</span>                   NULL             <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     0
+</span><span class='line'>  <span class="o">[</span> 1<span class="o">]</span> .interp           PROGBITS         <span class="m">0000000000400238</span>  00000238
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 2<span class="o">]</span> .note.ABI-tag     NOTE             <span class="m">0000000000400254</span>  00000254
+</span><span class='line'>       <span class="m">0000000000000020</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 3<span class="o">]</span> .note.gnu.build-i NOTE             <span class="m">0000000000400274</span>  00000274
+</span><span class='line'>       <span class="m">0000000000000024</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 4<span class="o">]</span> .dynsym           DYNSYM           <span class="m">0000000000400298</span>  00000298
+</span><span class='line'>       <span class="m">0000000000006408</span>  <span class="m">0000000000000018</span>   A       <span class="m">5</span>     <span class="m">1</span>     8
+</span><span class='line'>  <span class="o">[</span> 5<span class="o">]</span> .dynstr           STRTAB           00000000004066a0  000066a0
+</span><span class='line'>       <span class="m">0000000000013188</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 6<span class="o">]</span> .gnu.hash         GNU_HASH         <span class="m">0000000000419828</span>  00019828
+</span><span class='line'>       000000000000197c  <span class="m">0000000000000000</span>   A       <span class="m">4</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 7<span class="o">]</span> .gnu.version      VERSYM           000000000041b1a4  0001b1a4
+</span><span class='line'>       <span class="m">0000000000000856</span>  <span class="m">0000000000000002</span>   A       <span class="m">4</span>     <span class="m">0</span>     2
+</span><span class='line'>  <span class="o">[</span> 8<span class="o">]</span> .gnu.version_r    VERNEED          000000000041b9fc  0001b9fc
+</span><span class='line'>       <span class="m">0000000000000090</span>  <span class="m">0000000000000000</span>   A       <span class="m">5</span>     <span class="m">4</span>     4
+</span><span class='line'>  <span class="o">[</span> 9<span class="o">]</span> .rela.dyn         RELA             000000000041ba90  0001ba90
+</span><span class='line'>       <span class="m">0000000000000468</span>  <span class="m">0000000000000018</span>   A       <span class="m">4</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>10<span class="o">]</span> .rela.plt         RELA             000000000041bef8  0001bef8
+</span><span class='line'>       00000000000015c0  <span class="m">0000000000000018</span>  AI       <span class="m">4</span>    <span class="m">12</span>     8
+</span><span class='line'>  <span class="o">[</span>11<span class="o">]</span> .init             PROGBITS         000000000041d4b8  0001d4b8
+</span><span class='line'>       000000000000001a  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>12<span class="o">]</span> .plt              PROGBITS         000000000041d4e0  0001d4e0
+</span><span class='line'>       0000000000000e90  <span class="m">0000000000000010</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span>13<span class="o">]</span> .text             PROGBITS         000000000041e370  0001e370
+</span><span class='line'>       <span class="m">0000000000017122</span>  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span>14<span class="o">]</span> .fini             PROGBITS         <span class="m">0000000000435494</span>  00035494
+</span><span class='line'>       <span class="m">0000000000000009</span>  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>15<span class="o">]</span> .rodata           PROGBITS         00000000004354a0  000354a0
+</span><span class='line'>       000000000001bde7  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>16<span class="o">]</span> .gcc_except_table PROGBITS         <span class="m">0000000000451288</span>  00051288
+</span><span class='line'>       <span class="m">0000000000000171</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>17<span class="o">]</span> .eh_frame         PROGBITS         <span class="m">0000000000451400</span>  00051400
+</span><span class='line'>       <span class="m">0000000000002404</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>18<span class="o">]</span> .eh_frame_hdr     PROGBITS         <span class="m">0000000000453804</span>  00053804
+</span><span class='line'>       00000000000006e4  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>19<span class="o">]</span> .tbss             NOBITS           <span class="m">0000000000454000</span>  00054000
+</span><span class='line'>       00000000000000c8  <span class="m">0000000000000000</span> WAT       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>20<span class="o">]</span> .dynamic          DYNAMIC          <span class="m">0000000000454000</span>  00054000
+</span><span class='line'>       <span class="m">0000000000000220</span>  <span class="m">0000000000000010</span>  WA       <span class="m">5</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>21<span class="o">]</span> .got              PROGBITS         <span class="m">0000000000454220</span>  00054220
+</span><span class='line'>       <span class="m">0000000000000010</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>22<span class="o">]</span> .got.plt          PROGBITS         <span class="m">0000000000454230</span>  00054230
+</span><span class='line'>       <span class="m">0000000000000758</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>23<span class="o">]</span> .data             PROGBITS         00000000004549a0  000549a0
+</span><span class='line'>       0000000000005a20  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>24<span class="o">]</span> .jcr              PROGBITS         000000000045a3c0  0005a3c0
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>25<span class="o">]</span> .tm_clone_table   PROGBITS         000000000045a3c8  0005a3c8
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>26<span class="o">]</span> .fini_array       FINI_ARRAY       000000000045a3c8  0005a3c8
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>27<span class="o">]</span> .init_array       INIT_ARRAY       000000000045a3d0  0005a3d0
+</span><span class='line'>       <span class="m">0000000000000018</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>28<span class="o">]</span> .bss              NOBITS           000000000045a400  0005a400
+</span><span class='line'>       00000000000009d0  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>29<span class="o">]</span> .comment          PROGBITS         <span class="m">0000000000000000</span>  0005a3e8
+</span><span class='line'>       <span class="m">0000000000000080</span>  <span class="m">0000000000000001</span>  MS       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>30<span class="o">]</span> .go_export        PROGBITS         <span class="m">0000000000000000</span>  0005a468
+</span><span class='line'>       <span class="m">0000000000016635</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>31<span class="o">]</span> .debug_info       PROGBITS         <span class="m">0000000000000000</span>  00070a9d
+</span><span class='line'>       000000000000dbf1  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>32<span class="o">]</span> .debug_abbrev     PROGBITS         <span class="m">0000000000000000</span>  0007e68e
+</span><span class='line'>       0000000000000eb9  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>33<span class="o">]</span> .debug_aranges    PROGBITS         <span class="m">0000000000000000</span>  0007f550
+</span><span class='line'>       <span class="m">0000000000000150</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span>34<span class="o">]</span> .debug_ranges     PROGBITS         <span class="m">0000000000000000</span>  0007f6a0
+</span><span class='line'>       00000000000006d0  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>35<span class="o">]</span> .debug_line       PROGBITS         <span class="m">0000000000000000</span>  0007fd70
+</span><span class='line'>       000000000000223e  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>36<span class="o">]</span> .debug_str        PROGBITS         <span class="m">0000000000000000</span>  00081fae
+</span><span class='line'>       000000000000878f  <span class="m">0000000000000001</span>  MS       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>37<span class="o">]</span> .debug_loc        PROGBITS         <span class="m">0000000000000000</span>  0008a73d
+</span><span class='line'>       0000000000002e6d  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>38<span class="o">]</span> .note.gnu.gold-ve NOTE             <span class="m">0000000000000000</span>  0008d5ac
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>39<span class="o">]</span> .symtab           SYMTAB           <span class="m">0000000000000000</span>  0008d5c8
+</span><span class='line'>       000000000000f948  <span class="m">0000000000000018</span>          <span class="m">40</span>   <span class="m">1593</span>     8
+</span><span class='line'>  <span class="o">[</span>40<span class="o">]</span> .strtab           STRTAB           <span class="m">0000000000000000</span>  0009cf10
+</span><span class='line'>       00000000000158d3  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>41<span class="o">]</span> .shstrtab         STRTAB           <span class="m">0000000000000000</span>  000b27e3
+</span><span class='line'>       00000000000001ab  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>Key to Flags:
+</span><span class='line'>  W <span class="o">(</span>write<span class="o">)</span>, A <span class="o">(</span>alloc<span class="o">)</span>, X <span class="o">(</span>execute<span class="o">)</span>, M <span class="o">(</span>merge<span class="o">)</span>, S <span class="o">(</span>strings<span class="o">)</span>, l <span class="o">(</span>large<span class="o">)</span>
+</span><span class='line'>  I <span class="o">(</span>info<span class="o">)</span>, L <span class="o">(</span>link order<span class="o">)</span>, G <span class="o">(</span>group<span class="o">)</span>, T <span class="o">(</span>TLS<span class="o">)</span>, E <span class="o">(</span>exclude<span class="o">)</span>, x <span class="o">(</span>unknown<span class="o">)</span>
+</span><span class='line'>  O <span class="o">(</span>extra OS processing required<span class="o">)</span> o <span class="o">(</span>OS specific<span class="o">)</span>, p <span class="o">(</span>processor specific<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can get even smaller by combining everything we&rsquo;ve learnt above, substituting <code>-ldflags</code> with <code>-gccgoflags</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>go build -gccgoflags <span class="s1">&#39;-w -s&#39;</span> -compiler gccgo
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 472K
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:57 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 454K Jun <span class="m">12</span> 15:57 twitter_put
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>file twitter_put
+</span><span class='line'>twitter_put: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, <span class="k">for</span> GNU/Linux 2.6.32, BuildID<span class="o">[</span>sha1<span class="o">]=</span>0eed286d69c0b506f591058510c789d8574dbd13, stripped
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>readelf -S twitter_put
+</span><span class='line'>There are <span class="m">33</span> section headers, starting at offset 0x70c00:
+</span><span class='line'>
+</span><span class='line'>Section Headers:
+</span><span class='line'>  <span class="o">[</span>Nr<span class="o">]</span> Name              Type             Address           Offset
+</span><span class='line'>       Size              EntSize          Flags  Link  Info  Align
+</span><span class='line'>  <span class="o">[</span> 0<span class="o">]</span>                   NULL             <span class="m">0000000000000000</span>  00000000
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     0
+</span><span class='line'>  <span class="o">[</span> 1<span class="o">]</span> .interp           PROGBITS         <span class="m">0000000000400238</span>  00000238
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 2<span class="o">]</span> .note.ABI-tag     NOTE             <span class="m">0000000000400254</span>  00000254
+</span><span class='line'>       <span class="m">0000000000000020</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 3<span class="o">]</span> .note.gnu.build-i NOTE             <span class="m">0000000000400274</span>  00000274
+</span><span class='line'>       <span class="m">0000000000000024</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span> 4<span class="o">]</span> .dynsym           DYNSYM           <span class="m">0000000000400298</span>  00000298
+</span><span class='line'>       <span class="m">0000000000006408</span>  <span class="m">0000000000000018</span>   A       <span class="m">5</span>     <span class="m">1</span>     8
+</span><span class='line'>  <span class="o">[</span> 5<span class="o">]</span> .dynstr           STRTAB           00000000004066a0  000066a0
+</span><span class='line'>       <span class="m">0000000000013188</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span> 6<span class="o">]</span> .gnu.hash         GNU_HASH         <span class="m">0000000000419828</span>  00019828
+</span><span class='line'>       000000000000197c  <span class="m">0000000000000000</span>   A       <span class="m">4</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span> 7<span class="o">]</span> .gnu.version      VERSYM           000000000041b1a4  0001b1a4
+</span><span class='line'>       <span class="m">0000000000000856</span>  <span class="m">0000000000000002</span>   A       <span class="m">4</span>     <span class="m">0</span>     2
+</span><span class='line'>  <span class="o">[</span> 8<span class="o">]</span> .gnu.version_r    VERNEED          000000000041b9fc  0001b9fc
+</span><span class='line'>       <span class="m">0000000000000090</span>  <span class="m">0000000000000000</span>   A       <span class="m">5</span>     <span class="m">4</span>     4
+</span><span class='line'>  <span class="o">[</span> 9<span class="o">]</span> .rela.dyn         RELA             000000000041ba90  0001ba90
+</span><span class='line'>       <span class="m">0000000000000468</span>  <span class="m">0000000000000018</span>   A       <span class="m">4</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>10<span class="o">]</span> .rela.plt         RELA             000000000041bef8  0001bef8
+</span><span class='line'>       00000000000015c0  <span class="m">0000000000000018</span>  AI       <span class="m">4</span>    <span class="m">12</span>     8
+</span><span class='line'>  <span class="o">[</span>11<span class="o">]</span> .init             PROGBITS         000000000041d4b8  0001d4b8
+</span><span class='line'>       000000000000001a  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>12<span class="o">]</span> .plt              PROGBITS         000000000041d4e0  0001d4e0
+</span><span class='line'>       0000000000000e90  <span class="m">0000000000000010</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span>13<span class="o">]</span> .text             PROGBITS         000000000041e370  0001e370
+</span><span class='line'>       <span class="m">0000000000017122</span>  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     16
+</span><span class='line'>  <span class="o">[</span>14<span class="o">]</span> .fini             PROGBITS         <span class="m">0000000000435494</span>  00035494
+</span><span class='line'>       <span class="m">0000000000000009</span>  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>15<span class="o">]</span> .rodata           PROGBITS         00000000004354a0  000354a0
+</span><span class='line'>       000000000001bde7  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>16<span class="o">]</span> .gcc_except_table PROGBITS         <span class="m">0000000000451288</span>  00051288
+</span><span class='line'>       <span class="m">0000000000000171</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>17<span class="o">]</span> .eh_frame         PROGBITS         <span class="m">0000000000451400</span>  00051400
+</span><span class='line'>       <span class="m">0000000000002404</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>18<span class="o">]</span> .eh_frame_hdr     PROGBITS         <span class="m">0000000000453804</span>  00053804
+</span><span class='line'>       00000000000006e4  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>19<span class="o">]</span> .tbss             NOBITS           <span class="m">0000000000454000</span>  00054000
+</span><span class='line'>       00000000000000c8  <span class="m">0000000000000000</span> WAT       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>20<span class="o">]</span> .dynamic          DYNAMIC          <span class="m">0000000000454000</span>  00054000
+</span><span class='line'>       <span class="m">0000000000000220</span>  <span class="m">0000000000000010</span>  WA       <span class="m">5</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>21<span class="o">]</span> .got              PROGBITS         <span class="m">0000000000454220</span>  00054220
+</span><span class='line'>       <span class="m">0000000000000010</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>22<span class="o">]</span> .got.plt          PROGBITS         <span class="m">0000000000454230</span>  00054230
+</span><span class='line'>       <span class="m">0000000000000758</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>23<span class="o">]</span> .data             PROGBITS         00000000004549a0  000549a0
+</span><span class='line'>       0000000000005a20  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>24<span class="o">]</span> .jcr              PROGBITS         000000000045a3c0  0005a3c0
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>25<span class="o">]</span> .tm_clone_table   PROGBITS         000000000045a3c8  0005a3c8
+</span><span class='line'>       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>26<span class="o">]</span> .fini_array       FINI_ARRAY       000000000045a3c8  0005a3c8
+</span><span class='line'>       <span class="m">0000000000000008</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>27<span class="o">]</span> .init_array       INIT_ARRAY       000000000045a3d0  0005a3d0
+</span><span class='line'>       <span class="m">0000000000000018</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     8
+</span><span class='line'>  <span class="o">[</span>28<span class="o">]</span> .bss              NOBITS           000000000045a400  0005a400
+</span><span class='line'>       00000000000009d0  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     32
+</span><span class='line'>  <span class="o">[</span>29<span class="o">]</span> .comment          PROGBITS         <span class="m">0000000000000000</span>  0005a3e8
+</span><span class='line'>       <span class="m">0000000000000080</span>  <span class="m">0000000000000001</span>  MS       <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>30<span class="o">]</span> .go_export        PROGBITS         <span class="m">0000000000000000</span>  0005a468
+</span><span class='line'>       <span class="m">0000000000016635</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>  <span class="o">[</span>31<span class="o">]</span> .note.gnu.gold-ve NOTE             <span class="m">0000000000000000</span>  00070aa0
+</span><span class='line'>       000000000000001c  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     4
+</span><span class='line'>  <span class="o">[</span>32<span class="o">]</span> .shstrtab         STRTAB           <span class="m">0000000000000000</span>  00070abc
+</span><span class='line'>       <span class="m">0000000000000142</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     1
+</span><span class='line'>Key to Flags:
+</span><span class='line'>  W <span class="o">(</span>write<span class="o">)</span>, A <span class="o">(</span>alloc<span class="o">)</span>, X <span class="o">(</span>execute<span class="o">)</span>, M <span class="o">(</span>merge<span class="o">)</span>, S <span class="o">(</span>strings<span class="o">)</span>, l <span class="o">(</span>large<span class="o">)</span>
+</span><span class='line'>  I <span class="o">(</span>info<span class="o">)</span>, L <span class="o">(</span>link order<span class="o">)</span>, G <span class="o">(</span>group<span class="o">)</span>, T <span class="o">(</span>TLS<span class="o">)</span>, E <span class="o">(</span>exclude<span class="o">)</span>, x <span class="o">(</span>unknown<span class="o">)</span>
+</span><span class='line'>  O <span class="o">(</span>extra OS processing required<span class="o">)</span> o <span class="o">(</span>OS specific<span class="o">)</span>, p <span class="o">(</span>processor specific<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, now we have two binaries, one with the Go runtime, and one without (you can see the size difference).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lah
+</span><span class='line'>total 5.3M
+</span><span class='line'>drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:59 .
+</span><span class='line'>drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 4.8M Jun <span class="m">12</span> 15:59 twitter_put
+</span><span class='line'>-rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span><span class='line'>-rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 454K Jun <span class="m">12</span> 15:57 twitter_put_gccgo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To get these files smaller, the only real option here is to pack them with something like <code>upx</code> - the best compression can be obtained using the <code>--ultra-brute -9</code> arguments.  Here are the two files packed with <code>upx</code>.  But, before we <code>upx</code>, we have to &ldquo;fix&rdquo; the files using <code>goupx</code> as you will experience a <code>EOFException: premature end of file</code> error when compressing.  We also don&rsquo;t want it to run the <code>upx</code> process, because we&rsquo;re going to pass some custom parameters to it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>../github.com/pwaller/goupx/goupx twitter_put --no-upx
+</span><span class='line'>2015/06/12 16:01:22 <span class="o">{</span>Class:ELFCLASS64 Data:ELFDATA2LSB Version:EV_CURRENT OSABI:ELFOSABI_NONE ABIVersion:0 ByteOrder:LittleEndian Type:ET_EXEC Machine:EM_X86_64 Entry:4438032<span class="o">}</span>
+</span><span class='line'>2015/06/12 16:01:22 Hemming PT_LOAD section
+</span><span class='line'>2015/06/12 16:01:22 File fixed!
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>../github.com/pwaller/goupx/goupx twitter_put_gccgo --no-upx
+</span><span class='line'>2015/06/12 16:01:27 <span class="o">{</span>Class:ELFCLASS64 Data:ELFDATA2LSB Version:EV_CURRENT OSABI:ELFOSABI_NONE ABIVersion:0 ByteOrder:LittleEndian Type:ET_EXEC Machine:EM_X86_64 Entry:4318160<span class="o">}</span>
+</span><span class='line'>2015/06/12 16:01:27 File fixed!
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now to the packing.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>upx --ultra-brute -9 ./twitter_put
+</span><span class='line'>                       Ultimate Packer <span class="k">for</span> eXecutables
+</span><span class='line'>                          Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">1996</span> - 2013
+</span><span class='line'>UPX 3.91        Markus Oberhumer, Laszlo Molnar <span class="p">&amp;</span> John Reiser   Sep 30th 2013
+</span><span class='line'>
+</span><span class='line'>        File size         Ratio      Format      Name
+</span><span class='line'>   --------------------   ------   -----------   -----------
+</span><span class='line'>   <span class="m">5017216</span> -&gt;   <span class="m">1013180</span>   20.19%  linux/ElfAMD   twitter_put
+</span><span class='line'>
+</span><span class='line'>Packed <span class="m">1</span> file.
+</span><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>upx --ultra-brute -9 ./twitter_put_gccgo
+</span><span class='line'>                       Ultimate Packer <span class="k">for</span> eXecutables
+</span><span class='line'>                          Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">1996</span> - 2013
+</span><span class='line'>UPX 3.91        Markus Oberhumer, Laszlo Molnar <span class="p">&amp;</span> John Reiser   Sep 30th 2013
+</span><span class='line'>
+</span><span class='line'>        File size         Ratio      Format      Name
+</span><span class='line'>   --------------------   ------   -----------   -----------
+</span><span class='line'>    <span class="m">463936</span> -&gt;     <span class="m">82340</span>   17.75%  linux/ElfAMD   twitter_put_gccgo
+</span><span class='line'>
+</span><span class='line'>Packed <span class="m">1</span> file.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This results in the following filesizes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>recrudesce@senketsu:~/Documents/Learning/Go/src/twitter_put<span class="nv">$ </span>ls -lahls -lah
+</span><span class='line'>total 1.1M
+</span><span class='line'>4.0K drwxrwxr-x  <span class="m">2</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 16:02 .
+</span><span class='line'>4.0K drwxrwxr-x <span class="m">12</span> recrudesce recrudesce 4.0K Jun <span class="m">12</span> 15:53 ..
+</span><span class='line'>992K -rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce 990K Jun <span class="m">12</span> 16:01 twitter_put
+</span><span class='line'>8.0K -rw-rw-r--  <span class="m">1</span> recrudesce recrudesce 6.3K Jun <span class="m">12</span> 15:53 twitter_put_2.go
+</span><span class='line'> 84K -rwxr-xr-x  <span class="m">1</span> recrudesce recrudesce  81K Jun <span class="m">12</span> 15:57 twitter_put_gccgo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Stripping and packing a Go binary in the above way does not guarantee that the binary will function afterwards - I have had about a 50/50 success rate (as an example, the binary shown here doesn&rsquo;t work when compiled with gccgo, whereas the stripped and packed binary that includes the Go runtime continues to function perfectly.  YMMV)</p>
+
+<p>So, the lesson here is that you shouldn&rsquo;t expect Go binaries to be small, and it&rsquo;s not a good language to learn if you want small applications - use another language for that.  Go is fun if you want to learn a new language for personal tools.</p>
 </div>
 
 
