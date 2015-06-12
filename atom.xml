@@ -4,7 +4,7 @@
   <title><![CDATA[FourFourFourFour]]></title>
   <link href="http://recrudesce.github.io/atom.xml" rel="self"/>
   <link href="http://recrudesce.github.io/"/>
-  <updated>2015-01-07T00:56:31+00:00</updated>
+  <updated>2015-06-12T11:26:30+01:00</updated>
   <id>http://recrudesce.github.io/</id>
   <author>
     <name><![CDATA[recrudesce]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Making Go Go on a Diet]]></title>
+    <link href="http://recrudesce.github.io/2015/06/12/making-go-go-on-a-diet/"/>
+    <updated>2015-06-12T11:21:16+01:00</updated>
+    <id>http://recrudesce.github.io/2015/06/12/making-go-go-on-a-diet</id>
+    <content type="html"><![CDATA[<p>I will write something here about my exploits regarding the massive size of Go binaries and how to make them smaller.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Don't Answer the Doorbell]]></title>
